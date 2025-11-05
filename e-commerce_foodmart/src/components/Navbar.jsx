@@ -52,11 +52,11 @@ export default function Navbar()
                 
                 {/* Logo */}
         
-                    <div className="flex items-center gap-2">
+                    <div className="flex shrink-0 items-center gap-2">
                     
                         <a href="/">
                         
-                            <img src="/images/logo.png" alt="FoodMart" className="h-15" />
+                            <img src="/images/logo.png" alt="FoodMart" />
 
                         </a>
             
@@ -66,20 +66,28 @@ export default function Navbar()
 
                 {/* Centre Search */}
 
-                    <div className="flex /*lg:hidden*/ items-center gap-2">
+                    {/* <div className="flex shrink-0 lg:hidden cursor-pointer items-center gap-5">
                             
                       <input type="text"/>  
                       
-                      <img src="/icons/search.png" alt="FoodMart" className="h-11 justify-end bg-gray-100 hover:bg-gray-200 rounded-full px-[100px] py-2" />
+                      <img src="/icons/search.png" alt="FoodMart" className="h-11 justify-end bg-gray-100 hover:bg-gray-200 rounded-full p-2" />
             
-                    </div>
+                    </div> */}
                   
                   
 
                 {/* Right side icons */}
 
-                    <div className="flex justify-end items-center gap-5">
+                    <div className="flex shrink-0 justify-end items-center gap-3">
+                        
+                      
+                        <div className="lg:hidden cursor-pointer">
+                      
+                            <img src="/icons/search.png" alt="FoodMart" className="h-11 justify-end bg-gray-100 hover:bg-gray-200 rounded-full p-2" />
+            
+                        </div>
 
+                      
                         <a href="#" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2">
                             
                             <img
@@ -88,7 +96,7 @@ export default function Navbar()
                     
                                 alt="User"
                     
-                                className="h-7 cursor-pointer"
+                                className="sm:h-7 cursor-pointer"
                                 
                             />
 
@@ -103,7 +111,7 @@ export default function Navbar()
                     
                                 alt="Wishlist"
                     
-                                className="h-7 cursor-pointer"
+                                className="sm:h-7 cursor-pointer"
                     
                             />
                             
@@ -114,7 +122,7 @@ export default function Navbar()
                 
                             onClick={() => setOpenCart(true)}
                 
-                            className="relative cursor-pointer fle flex flex-row justify-between"
+                            className="relative cursor-pointer flex flex-row justify-between"
                 
                         >
                             
@@ -145,7 +153,7 @@ export default function Navbar()
                             
                 
                         </div>
-            
+                   
                     </div>
 
                 
