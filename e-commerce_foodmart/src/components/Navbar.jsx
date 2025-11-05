@@ -88,7 +88,7 @@ export default function Navbar()
                         </div>
 
                       
-                        <a href="#" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2">
+                        <a href="/profile" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2">
                             
                             <img
 
@@ -103,7 +103,7 @@ export default function Navbar()
                         </a>
                 
                         
-                        <a href="#" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2">
+                        <a href="/wishlist" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2">
 
                             <img
                 
@@ -127,9 +127,9 @@ export default function Navbar()
                         >
                             
                         
-                            <a href="#" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 xl:bg-white xl:hover:bg-white xl:rounded-none xl:p-0">
+                            <div className="flex flex-row bg-gray-100 hover:bg-gray-200 rounded-full p-2">
                                 
-                                <span className="hidden xl:flex xl:flex-row text-xl font-bold cursor-pointer mr-2 ml-4 hover:text-yellow-600"> Your Cart </span>
+                                <span className="hidden xl:flex text-xl font-bold cursor-pointer mr-2 ml-4 hover:text-yellow-600"> Your Cart </span>
                 
 
                                 <img
@@ -138,7 +138,7 @@ export default function Navbar()
                         
                                     alt="Cart"
 
-                                    className="xl:hidden h-7 cursor-pointer"
+                                    className="h-7 cursor-pointer"
 
                                 />
                                 
@@ -149,7 +149,7 @@ export default function Navbar()
                     
                                 </span>
 
-                            </a>
+                            </div>
                             
                 
                         </div>
@@ -172,6 +172,9 @@ export default function Navbar()
           {/* Menu & dropdown placeholders */}
 
             <section className="container mx-auto flex items-center justify-start pt-12 px-5">
+
+                
+              
 
                 <div className="hidden lg:flex text-xl text-gray-700">
                     

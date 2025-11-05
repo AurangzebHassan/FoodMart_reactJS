@@ -64,6 +64,29 @@ export default function CartDrawer({ onClose })
 
             description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ducimus?"
         },
+        
+
+        // Key for how a product's data is going to be saved in appwrite.
+        
+            // {
+            //     "name": "Heinz Tomato Ketchup",
+                
+            //     "slug": "heinz-tomato-ketchup",
+                
+            //     "category_id": "cat_groceries_123",
+                
+            //     "price": 18,
+                
+            //     "stock": 120,
+                
+            //     "image": "/images/products/heinz_tomato_ketchup.png",
+                
+            //     "description": "Classic Heinz ketchup made from fresh tomatoes.",
+                
+            //     "is_new": true,
+                
+            //     "is_trending": true
+            // }
     ];
 
 
@@ -192,7 +215,7 @@ export default function CartDrawer({ onClose })
           
                   <p className="flex justify-between text-[19px] font-semibold">
             
-                      <span>Total:</span> <span>${Math.floor(total_bill).toFixed(2)}</span>
+                      <span>Total (USD):</span> <span>${Math.floor(total_bill).toFixed(2)}</span>
           
                   </p>
           
