@@ -8,9 +8,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 
 // import VerifyEmail from "./pages/VerifyEmail";
 
-import Home from "./Pages/Home";
+import Home from "./pages/Home";
 
-// import Navbar from "./Components/Navbar";
+// import Navbar from "./components/Navbar";
 
 
 
@@ -102,68 +102,7 @@ function App()
       
       <Home />
 
-      {/* <Navbar /> */}
       
-      {/* <nav>
-
-        <div className="flex flex-row justify-between">
-
-          
-          <div id="left-nav-section">
-        
-            <a href="#">
-
-              <img src="./images/logo.png" alt="Logo" className="mt-5 ml-5" />
-
-            </a>
-        
-          </div>
-
-          
-
-          <div id="mid_nav_Section">
-
-            <a href="#" className="rounded-full p-2 mx-2">
-
-              <img src="./icons/search.png" alt="Search" width="28px" className="mt-2" />
-
-            </a>
-
-          </div>
-
-
-
-          <div id="right-nav-section" className="flex flex-row mr-5 mt-6">
-        
-            <a href="#" className="rounded-full p-2">
-
-              <img src="./icons/user.svg" alt="User" width="28px" />
-
-            </a>
-
-
-            <a href="#" className="rounded-full p-2 mx-2">
-
-              <img src="./icons/heart.svg" alt="Favourites" width="28px" />
-
-            </a>
-
-
-            <a href="#" className="rounded-full p-2">
-
-              <img src="./icons/shopping-cart.png" alt="Cart" width="28px" />
-
-            </a>
-
-
-            
-        
-          </div>
-
-          
-        </div>
-
-      </nav> */}
 
       {/* <Router>
 

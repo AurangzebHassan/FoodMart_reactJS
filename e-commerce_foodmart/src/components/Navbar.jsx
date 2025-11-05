@@ -21,10 +21,10 @@ export default function Navbar()
 
         // Navigate if not the default option
     
-            // if (e.target.value !== "shopbydepartments")
-            // {
-            //     window.location.href = `/${e.target.value.toLowerCase()}`;
-            // }
+            if (e.target.value !== "shopbydepartments")
+            {
+                window.location.href = `/${e.target.value.toLowerCase()}`;
+            }
     }
 
 
@@ -193,13 +193,13 @@ export default function Navbar()
                     
                     <ul className="hidden lg:flex lg:flex-row  items-center gap-6">
 
-                        <li className="cursor-pointer hover:text-gray-900">Women</li>
+                        <a href="/women"> <li className="cursor-pointer hover:text-gray-900">Women</li> </a>
 
-                        <li className="cursor-pointer hover:text-gray-900">Men</li>
+                        <a href="/men"> <li className="cursor-pointer hover:text-gray-900" value="men" onClick={handlePageChange}>Men</li> </a>
 
-                        <li className="cursor-pointer hover:text-gray-900">Kids</li>
+                        <a href="/kids"> <li className="cursor-pointer hover:text-gray-900" value="kids" onClick={handlePageChange}>Kids</li> </a>
 
-                        <li className="cursor-pointer hover:text-gray-900">Accessories</li>
+                        <a href="/accessories"> <li className="cursor-pointer hover:text-gray-900" value="accessories" onClick={handlePageChange}>Accessories</li> </a>
                         
                             
                         <li className="cursor-pointer hover:text-gray-900 relative flex items-center">
@@ -250,11 +250,11 @@ export default function Navbar()
                         </li>
 
                             
-                        <li className="cursor-pointer hover:text-gray-900">Brand</li>
+                        <a href="/brand"> <li className="cursor-pointer hover:text-gray-900" value="brand" onClick={handlePageChange}>Brand</li> </a>
 
-                        <li className="cursor-pointer hover:text-gray-900">Sale</li>
+                        <a href="/sale"> <li className="cursor-pointer hover:text-gray-900" value="sale" onClick={handlePageChange}>Sale</li> </a>
 
-                        <li className="cursor-pointer hover:text-gray-900">Blog</li>
+                        <a href="/blog"> <li className="cursor-pointer hover:text-gray-900" value="blog" onClick={handlePageChange}>Blog</li> </a>
 
                     </ul>
 
