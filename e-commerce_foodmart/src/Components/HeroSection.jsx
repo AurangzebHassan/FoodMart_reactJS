@@ -6,24 +6,24 @@ export default function HeroSection()
 {
   return (
 
-      <section className="container mx-auto mt-12 grid grid-cols-1 lg:grid-cols-3 gap-6 px-5">
+      <section className="container mx-auto mt-12 grid grid-cols-1 lg:grid-cols-3 gap-6 px-5 sm:mb-6">
       
         {/* Left main banner */}
       
-            <div className="relative bg-blue-100 rounded-2xl p-8 overflow-hidden w-[700px] h-[750px]">
+            <div className="relative bg-blue-100 rounded-2xl p-8 overflow-hidden w-[610px] h-[805px] md:w-[740px] md:h-[805px] lg:w-[510px] lg:h-[750px] xl:w-[600px] xl:h-[750px] 2xl:w-[680px] 2xl:h-[750px]">
             
                 <div className="ml-6 mt-1">
             
                     <p className="text-yellow-600 font-serif text-4xl mt-12">100% Natural</p>
             
-                    <h2 className="text-6xl font-semibold text-gray-800 mt-6 mr-[250px] leading-snug">
+                    <h2 className="text-6xl font-semibold text-gray-800 mt-6 sm:mr-[350px] md:mr-[350px] 2xl:mr-[250px] leading-snug">
                 
                         Fresh Smoothie &amp; Summer Juice
             
                     </h2>
             
                     
-                    <p className="text-gray-500 text-md mt-4 mr-[250px] text-[17px]">
+                    <p className="text-gray-500 text-md mt-4 sm:mr-[100px] md:mr-[300px] lg:mr-[100px] 2xl:mr-[300px] text-[17px]">
                 
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim
                 
@@ -32,7 +32,7 @@ export default function HeroSection()
                     </p>
             
                     
-                    <button className="mt-8 text-xl border border-gray-700 text-gray-700 px-8 py-5 rounded hover:bg-gray-700 hover:text-white transition">
+                    <button className="mt-8 2xl:mt-10 text-xl border border-gray-700 text-gray-700 lg:max-xl:px-6 px-8 lg:max-xl:py-3 lg:max-xl:mt-5 py-5 rounded hover:bg-gray-700 hover:text-white transition">
                 
                         Shop Now
             
@@ -47,7 +47,7 @@ export default function HeroSection()
             
                     alt="Smoothie"
 
-                    className="absolute right-10 bottom-60 w-70 drop-shadow-lg"
+                    className="absolute sm:right-8 sm:bottom-70 sm:w-65 md:right-2 md:bottom-45 md:w-90 lg:-right-3 lg:bottom-45 lg:w-60 xl:right-2 xl:bottom-50 xl:w-70 2xl:-right-3 2xl:bottom-30 2xl:w-85 drop-shadow-lg"
 
                 />
         
@@ -58,9 +58,9 @@ export default function HeroSection()
       
         {/* Right side small promos */}
       
-            <div className="lg:col-span-2 ml-[300px] flex flex-col gap-6">
+            <div className="lg:col-span-2 lg:ml-[200px] md:mr-0 flex flex-col gap-6">
         
-              <div className="bg-[url('./images/hero/veggie_border.png')] bg-cover rounded-2xl flex items-center justify-between p-6 h-90">
+              <div className="bg-[url('./images/hero/veggie_border.png')] bg-cover rounded-2xl flex items-center justify-between p-6 sm:w-[610px] md:w-[740px] lg:w-[450px] xl:w-[620px] 2xl:w-[790px] h-90">
           
                 <div className="ml-8">
             
@@ -71,7 +71,7 @@ export default function HeroSection()
             
                     <h3 className="text-4xl font-semibold mb-6 mr-[150px]">Fruits &amp; Vegetables</h3>
             
-                    <a href="#" className="text-orange-500 text-md">
+                    <a href="#" className="text-orange-500 hover:text-orange-700 hover:underline text-md">
               
                         Shop Collection →
             
@@ -79,10 +79,10 @@ export default function HeroSection()
           
                 </div>
         
-            </div>
+              </div>
 
 
-              <div className="bg-[url('./images/hero/bread_border.png')] bg-cover bg-no-repeat rounded-2xl flex items-center justify-between p-6 h-92">
+              <div className="bg-[url('./images/hero/bread_border.png')] bg-cover bg-no-repeat rounded-2xl flex items-center justify-between p-6 sm:w-[610px] md:w-[740px] lg:w-[450px] xl:w-[620px] 2xl:w-[790px] h-92">
 
                   <div className="ml-8">
 
@@ -93,7 +93,7 @@ export default function HeroSection()
 
                       <h3 className="text-4xl font-semibold mb-6 mr-[250px]">Baked Products</h3>
 
-                      <a href="#" className="text-orange-500 text-md">
+                      <a href="#" className="text-orange-500 hover:text-orange-700 hover:underline text-md">
 
                           Shop Collection →
 
@@ -107,5 +107,4 @@ export default function HeroSection()
 
       </section>
   );
-    
 }

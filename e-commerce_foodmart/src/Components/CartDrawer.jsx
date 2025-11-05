@@ -68,7 +68,9 @@ export default function CartDrawer({ onClose })
 
 
 
-  const total = items.reduce((sum, i) => sum + i.price * i.qty, 0);
+  const total_bill = items.reduce((sum, i) => sum + i.price * i.qty, 0);
+
+  const total_quantity = items.reduce((sum, i) => sum + i.qty, 0);
 
     
     
@@ -86,15 +88,26 @@ export default function CartDrawer({ onClose })
       
           <div className={`bg-white w-120 h-full shadow-xl p-6 flex flex-col transform transition-transform duration-300 ${isVisible ? "translate-x-0" : "translate-x-full"}`}>
         
-              <div className="flex justify-between items-center mb-6">
+                <div className="flex justify-center">
+                  
+                    <button onClick={handleClose} className="text-gray-600 hover:text-gray-900 text-6xl">
+            
+                        &times;
+          
+                    </button>
+
+                </div>
+
+              
+              <div className="flex justify-between items-center mb-8 mt-4">
           
                   <h1 className="text-3xl font-extrabold text-yellow-500">Your Cart</h1>
-          
-                  <button onClick={handleClose} className="text-gray-700 text-4xl">
-            
-                    &times;
-          
-                  </button>
+
+                    <span className="text-white text-[20px] bg-yellow-500 px-3 rounded-full font-bold mt-1">
+                            
+                        {total_quantity}
+                            
+                    </span>
         
               </div>
 
@@ -147,8 +160,8 @@ export default function CartDrawer({ onClose })
                             </div>
 
                               
-                                {/* ⭐ Line 2: price left, total right */}
-                              
+                                {/* ⭐ Line 2: price left, total_bill right */}
+                                
                                     <div className="flex justify-between mt-1">
                                     
                                         <p className="text-gray-500 text-sm font-mono mt-6">
@@ -179,7 +192,7 @@ export default function CartDrawer({ onClose })
           
                   <p className="flex justify-between text-[19px] font-semibold">
             
-                      <span>Total:</span> <span>${Math.floor(total).toFixed(2)}</span>
+                      <span>Total:</span> <span>${Math.floor(total_bill).toFixed(2)}</span>
           
                   </p>
           

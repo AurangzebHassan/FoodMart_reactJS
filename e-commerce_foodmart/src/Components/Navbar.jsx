@@ -47,87 +47,106 @@ export default function Navbar()
           <header className="bg-white drop-shadow-sm">
         
               
-            <div className="container mx-auto flex items-center justify-between py-6 px-4">
+            <div className="container mx-auto flex items-center justify-between py-6 px-5">
         
                 
                 {/* Logo */}
         
-                <div className="flex items-center gap-2">
-                
-                    <a href="/">
+                    <div className="flex items-center gap-2">
                     
-                        <img src="/images/logo.png" alt="FoodMart" className="h-15" />
+                        <a href="/">
+                        
+                            <img src="/images/logo.png" alt="FoodMart" className="h-15" />
 
-                    </a>
-        
-                </div>
+                        </a>
+            
+                    </div>
+                    
+                  
 
+                {/* Centre Search */}
+
+                    <div className="flex /*lg:hidden*/ items-center gap-2">
+                            
+                      <input type="text"/>  
+                      
+                      <img src="/icons/search.png" alt="FoodMart" className="h-11 justify-end bg-gray-100 hover:bg-gray-200 rounded-full px-[100px] py-2" />
+            
+                    </div>
+                  
+                  
 
                 {/* Right side icons */}
 
-                <div className="flex justify-end items-center gap-5">
+                    <div className="flex justify-end items-center gap-5">
 
-                    <a href="#" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2">
-                        
-                        <img
-
-                            src="/icons/user.svg"
-                
-                            alt="User"
-                
-                            className="h-7 cursor-pointer"
+                        <a href="#" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2">
                             
-                        />
+                            <img
 
-                    </a>
-            
+                                src="/icons/user.svg"
                     
-                    <a href="#" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2">
+                                alt="User"
+                    
+                                className="h-7 cursor-pointer"
+                                
+                            />
 
-                        <img
-            
-                            src="/icons/heart.svg"
+                        </a>
                 
-                            alt="Wishlist"
-                
-                            className="h-7 cursor-pointer"
-                
-                        />
                         
-                    </a>
-            
+                        <a href="#" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2">
+
+                            <img
+                
+                                src="/icons/heart.svg"
                     
+                                alt="Wishlist"
+                    
+                                className="h-7 cursor-pointer"
+                    
+                            />
+                            
+                        </a>
+                
+                        
                         <div
                 
                             onClick={() => setOpenCart(true)}
                 
-                            className="relative cursor-pointer fle ml-[30px] flex flex-row justify-between"
+                            className="relative cursor-pointer fle flex flex-row justify-between"
                 
                         >
                             
-                            <span className="text-xl font-bold cursor-pointer mr-2"> Your Cart </span>
+                        
+                            <a href="#" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 xl:bg-white xl:hover:bg-white xl:rounded-none xl:p-0">
+                                
+                                <span className="hidden xl:flex xl:flex-row text-xl font-bold cursor-pointer mr-2 ml-4 hover:text-yellow-600"> Your Cart </span>
                 
 
-                            <img
-                            
-                                src="/icons/shopping-cart.png"
+                                <img
+                                
+                                    src="/icons/shopping-cart.png"
+                        
+                                    alt="Cart"
+
+                                    className="xl:hidden h-7 cursor-pointer"
+
+                                />
+                                
                     
-                                alt="Cart"
-
-                                className="h-7 cursor-pointer"
-
-                            />
-                            
-                
-                            <span className="absolute -top-4 -right-3 font-bold bg-yellow-500 hover:bg-yellow-600 text-white text-md rounded-full px-2">
+                                <span className="absolute -top-4 -right-3 font-bold bg-yellow-500 hover:bg-yellow-600 text-white text-md rounded-full px-2">
+                        
+                                    2
                     
-                                2
-                
-                            </span>
+                                </span>
+
+                            </a>
+                            
                 
                         </div>
-        
-                </div>
+            
+                    </div>
 
                 
             </div>
@@ -146,7 +165,7 @@ export default function Navbar()
 
             <section className="container mx-auto flex items-center justify-start pt-12 px-5">
 
-                <div className="hidden md:flex text-xl text-gray-700">
+                <div className="hidden lg:flex text-xl text-gray-700">
                     
                     <select name="departments" id="departments" value={selectedDepartment} onChange={handleDepartmentChange} className="justify-start mr-20 focus:borde hover:text-gray-900 py-2 bg-gray-100 text-center rounded-lg">
 
@@ -164,7 +183,7 @@ export default function Navbar()
 
                 <div className="text-gray-700 text-xl">
                     
-                    <ul className="hidden md:flex items-center gap-6">
+                    <ul className="hidden lg:flex lg:flex-row  items-center gap-6">
 
                         <li className="cursor-pointer hover:text-gray-900">Women</li>
 
