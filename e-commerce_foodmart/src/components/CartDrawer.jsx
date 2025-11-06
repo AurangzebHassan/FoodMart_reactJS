@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 export default function CartDrawer({ onClose })
 {
-    // ⭐ state to control animation visibility
+    // ⭐ state to control slide in/out animation visibility
   
       const [isVisible, setIsVisible] = useState(false);
 
@@ -13,8 +13,12 @@ export default function CartDrawer({ onClose })
   
         useEffect(() =>
         {
+            // prevents the body from svrolling when drawer is open
+
+                document.body.style.overflow = "hidden";
+
+            
             setTimeout(() => setIsVisible(true), 10);
-  
         },
             
             []
@@ -28,7 +32,7 @@ export default function CartDrawer({ onClose })
     {
         setIsVisible(false);
     
-        setTimeout(() => onClose(), 300); // wait for animation to end before removing from DOM
+        setTimeout(() => onClose(), 200); // wait for animation to end before removing from DOM
     };
 
 

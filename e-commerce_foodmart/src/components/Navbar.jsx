@@ -2,15 +2,25 @@ import React, { useState } from "react";
 
 import CartDrawer from "./CartDrawer";
 
+import MobileMenuDrawer from "./MenuDrawer";
+
 
 
 export default function Navbar()
 {
-    const [openCart, setOpenCart] = useState(false);
+    // opening of the cart drawer is dependent on this state
+
+        const [openCart, setOpenCart] = useState(false);
+    
     
     let [selectedDepartment, setSelectedDepartment] = useState('shopbydepartments');
 
     let [selectedPage, setSelectedPage] = useState('Pages');
+
+
+    // opening of the mobile menu drawer is dependent on this state
+
+        const [openMobileMenu, setOpenMobileMenu] = useState(false);
 
 
 
@@ -120,8 +130,11 @@ export default function Navbar()
                         
                         <div
                 
-                            onClick={() => setOpenCart(true)}
+                            // setting openCart to true measn that the cart drawer should be opened now.
+                          
+                                onClick={() => setOpenCart(true)}       
                 
+                          
                             className="relative cursor-pointer flex flex-row justify-between"
                 
                         >
@@ -145,7 +158,7 @@ export default function Navbar()
                     
                                 <span className="absolute -top-4 -right-3 font-bold bg-yellow-500 hover:bg-yellow-600 text-white text-md rounded-full px-2">
                         
-                                    2
+                                    3
                     
                                 </span>
 
@@ -163,9 +176,22 @@ export default function Navbar()
           </header>
 
           
-      {/* Cart panel */}
+      {/* Cart Drawer */}
       
-        {openCart && <CartDrawer onClose={() => setTimeout(() => setOpenCart(false), 0)} />}
+          {/* if cart is allowed to open, open it and pass the function to close the drawer to the drawer component. */}
+
+            {openCart && <CartDrawer onClose={() => setTimeout(() => setOpenCart(false), 0)} />}
+                
+          
+      {/* Mobile menu drawer */}
+
+          <MobileMenuDrawer
+
+              openMenuDrawer={openMobileMenu}
+
+              onClose={() => setOpenMobileMenu(false)}
+
+          />
           
 
 
@@ -173,7 +199,15 @@ export default function Navbar()
 
             <section className="container mx-auto flex items-center justify-start pt-12 px-5">
 
-                
+                <button className="lg:hidden" onClick={() => setOpenMobileMenu(true)}>
+                  
+                    <img src="./icons/hamburger_menu.png" alt="hamburger_menu_icon" 
+                        
+                      className="h-13 p-2 cursor-pointer border border-gray-400 hover:bg-gray-100 rounded-lg"
+                  
+                    />
+
+                </button>
               
 
                 <div className="hidden lg:flex text-xl text-gray-700">
@@ -224,7 +258,7 @@ export default function Navbar()
                                 </svg>
                             </label>
                                 
-                            <select name="pages" id="pages" value={selectedPage} onChange={handlePageChange} className="absolute opacity-0 cursor-pointer w-32 h-8 mb-1">
+                            <select name="pages" id="pages" value={selectedPage} onChange={handlePageChange} className="absolute opacity-0 inset-0 cursor-pointer">
 
                                 <option value="about_us"> About Us </option>
                             
