@@ -92,11 +92,11 @@ export default function Navbar()
                 
                 {/* should be visible only from the large(lg) breakpoint */}
 
-                    <div className="hidden lg:flex lg:shrink-0 items-center">
+                    <div className="hidden lg:flex lg:shrink-0 items-center justify-center">
                             
                       {/* departments dropdown */}
                         
-                        <div className="text-lg text-yellow-600 font-semibold rounded-l-full focus:border-0 bg-gray-100 hover:bg-gray-200 cursor-pointer">
+                        <div className="text-lg text-yellow-600 font-semibold rounded-l-full focus:border-0 bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 cursor-pointer">
                                 
                             <select name="departments" id="departments" value={selectedDepartment} onChange={handleDepartmentChange} className="focus:border-none p-3 text-center">
 
@@ -115,9 +115,9 @@ export default function Navbar()
                       
                       {/* search input box + icon */}
                         
-                        <div className="flex bg-gray-100 hover:bg-gray-200 rounded-r-full mr-4">
+                        <div className="flex bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 rounded-r-full">
                           
-                            <input type="text" placeholder="Search" className="w-50 p-3 text-yellow-600 font-extrabold hover:border-none" />  
+                            <input type="text" placeholder="Search" className="w-50 p-3 text-yellow-600 placeholder:text-xl placeholder:font-semibold font-extrabold" />  
                       
                             <img src="/icons/search.png" alt="FoodMart" className="h-12 p-3" />
 
@@ -173,8 +173,7 @@ export default function Navbar()
                 
                             // setting openCart to true measn that the cart drawer should be opened now.
                           
-                                onClick={() => setOpenCart(true)}       
-                
+                                onClick={() => setOpenCart(true)}
                           
                             className="relative cursor-pointer flex flex-row justify-between"
                 

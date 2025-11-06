@@ -35,12 +35,23 @@ export default function CartDrawer({ onClose })
      
     // ⭐ handle close with animation delay
   
-    const handleClose = () =>
-    {
-        setIsVisible(false);
+        const handleClose = () =>
+        {
+            setIsVisible(false);
+        
+            setTimeout(() => onClose(), 200); // wait for animation to end before removing from DOM
+        };
     
-        setTimeout(() => onClose(), 200); // wait for animation to end before removing from DOM
-    };
+    
+    
+    // Now clicking outside the drawer closes it (like MenuDrawer)
+
+        const handleOverlayClick = (e) =>
+        {
+            // ensure we only close if clicking *outside* the drawer
+        
+                if (e.target === e.currentTarget) handleClose();
+        };
 
 
 
@@ -117,6 +128,8 @@ export default function CartDrawer({ onClose })
           //   className="fixed inset-0 bg-black/40 flex justify-end z-50"
           
           className={`fixed inset-0 bg-black/40 flex justify-end z-50 transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}
+
+            onClick={handleOverlayClick}
 
         >
       

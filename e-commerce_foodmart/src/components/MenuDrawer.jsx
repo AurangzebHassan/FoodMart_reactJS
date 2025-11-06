@@ -186,7 +186,7 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
 
         {/* Pages select */}
 
-        <div id="hamburger_pages_container" className="mb-6 p-6">
+        <div id="hamburger_pages_container" className="mb-6 px-6 pt-6">
           
           <select
             id="mobile-pages"
@@ -226,7 +226,7 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
               navigateTo(`/${v.toLowerCase()}`);
             }}
           >
-            <option value="">Select page</option>
+            <option value="">Pages</option>
             <option value="about_us">About Us</option>
             <option value="shop">Shop</option>
             <option value="single_product">Single Product</option>
