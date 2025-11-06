@@ -117,8 +117,8 @@ export default function Navbar()
                         
                         <div className="flex bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 rounded-r-full">
                           
-                            <input type="text" placeholder="Search" className="w-50 p-3 text-yellow-600 placeholder:text-xl placeholder:font-semibold font-extrabold" />  
-                      
+                            <input type="text" placeholder="Search" className="lg:w-50 xl:w-80 2xl:w-120 p-3 text-yellow-600 placeholder:text-xl placeholder:font-semibold font-extrabold" />
+
                             <img src="/icons/search.png" alt="FoodMart" className="h-12 p-3" />
 
                         </div>
@@ -175,7 +175,7 @@ export default function Navbar()
                           
                                 onClick={() => setOpenCart(true)}
                           
-                            className="relative cursor-pointer flex flex-row justify-between"
+                            className="xl:ml-10 2xl:ml-12 relative cursor-pointer flex flex-row justify-between"
                 
                         >
                             
