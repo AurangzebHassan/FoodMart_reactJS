@@ -243,7 +243,7 @@
 
 
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -318,9 +318,17 @@ export default function CategoryCarousel()
     const nextRef = useRef(null);
 
 
+    // 🟢 State to track disabled status
+  
+      const [isBeginning, setIsBeginning] = useState(true);
+  
+        const [isEnd, setIsEnd] = useState(false);
 
 
 
+
+
+    
   return (
     <section className="container mx-auto px-5 py-10 overflow-hidden">
       {/* 🟢 HEADER ROW */}
@@ -336,16 +344,29 @@ export default function CategoryCarousel()
             View All Categories →
           </a>
 
-          {/* 🟢 Custom Swiper navigation buttons */}
+          {/* 🟢 Custom navigation buttons */}
           <button
             ref={prevRef}
-            className="swiper-button-prev-custom bg-gray-200 hover:bg-yellow-500 text-gray-900 text-2xl rounded-md w-12 h-9 flex items-center justify-center shadow-sm"
+            disabled={isBeginning}
+            className={`text-3xl rounded-md w-12 h-9 flex items-center justify-center shadow-sm transition-all duration-200 
+              ${
+                isBeginning
+                  ? "bg-gray-200 text-gray-400"
+                  : "bg-gray-200 hover:bg-yellow-500 text-gray-900"
+              }`}
           >
             ‹
           </button>
+
           <button
             ref={nextRef}
-            className="swiper-button-next-custom bg-gray-200 hover:bg-yellow-500 text-gray-900 text-2xl rounded-md w-12 h-9 flex items-center justify-center shadow-sm"
+            disabled={isEnd}
+            className={`text-3xl rounded-md w-12 h-9 flex items-center justify-center shadow-sm transition-all duration-200 
+              ${
+                isEnd
+                  ? "bg-gray-200 text-gray-400"
+                  : "bg-gray-200 hover:bg-yellow-500 text-gray-900"
+              }`}
           >
             ›
           </button>
@@ -367,11 +388,22 @@ export default function CategoryCarousel()
           1536: { slidesPerView: 5, spaceBetween: 30 },
         }}
         // 🟢 Assign navigation buttons AFTER Swiper initializes
+       // 🟢 Connect Swiper navigation buttons after init
         onInit={(swiper) => {
           swiper.params.navigation.prevEl = prevRef.current;
           swiper.params.navigation.nextEl = nextRef.current;
           swiper.navigation.init();
           swiper.navigation.update();
+
+          // initial state setup
+          setIsBeginning(swiper.isBeginning);
+          setIsEnd(swiper.isEnd);
+
+          // listen for slide change
+          swiper.on("slideChange", () => {
+            setIsBeginning(swiper.isBeginning);
+            setIsEnd(swiper.isEnd);
+          });
         }}
       >
         {categories.map((cat, i) => (
