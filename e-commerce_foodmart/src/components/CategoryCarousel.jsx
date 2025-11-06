@@ -262,11 +262,11 @@ import CategoryCard from "./CategoryCard";
 export default function CategoryCarousel()
 {
 //   const categories = [
-//     { name: "Fruits & Veges", icon: "🥦", color: "#22C55E" },
-//     { name: "Breads & Sweets", icon: "🍞", color: "#F59E0B" },
-//     { name: "Drinks & Juices", icon: "🧃", color: "#EAB308" },
-//     { name: "Snacks", icon: "🍪", color: "#F97316" },
-//     { name: "Frozen Foods", icon: "❄️", color: "#3B82F6" },
+//     { name: "Fruits & Veges", icon: "🥦" },
+//     { name: "Breads & Sweets", icon: "🍞" },
+//     { name: "Drinks & Juices", icon: "🧃" },
+//     { name: "Snacks", icon: "🍪" },
+//     { name: "Frozen Foods", icon: "❄️" },
 //   ];
     
     
@@ -276,48 +276,36 @@ export default function CategoryCarousel()
             name: "Fruits & Veggies",
         
             icon: <img src="/icons/categories/veggies_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        
-            color: "green",
         },
         
         {
             name: "Bread & Sweets",
         
             icon: <img src="/icons/categories/bread_baguette_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        
-            color: "orange",
         },
         
         {
             name: "Drinks & Juices",
         
             icon: <img src="/icons/categories/soft_drinks_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        
-            color: "#EAB308", // yellowish
         },
         
         {
             name: "Herbs & Ingredients",
         
             icon: <img src="/icons/categories/herb_flour_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        
-            color: "dark-green",
         },
         
         {
             name: "Meat & Poultry",
         
             icon: <img src="/icons/categories/animal_products_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        
-            color: "red",
         },
         
         {
             name: "Wine",
         
             icon: <img src="/icons/categories/wine_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        
-            color: "dark-red",
         },
     ];
 
@@ -387,7 +375,7 @@ export default function CategoryCarousel()
       >
         {categories.map((cat, i) => (
           <SwiperSlide key={i}>
-            <CategoryCard icon={cat.icon} name={cat.name} color={cat.color} />
+            <CategoryCard icon={cat.icon} name={cat.name} />
           </SwiperSlide>
         ))}
       </Swiper>

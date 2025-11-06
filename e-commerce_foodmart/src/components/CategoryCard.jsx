@@ -8,12 +8,11 @@ import React from "react";
     It receives props for:
         - icon (image or emoji)
         - name (category name)
-        - color (icon color)
 */
 
 
 
-export default function CategoryCard({ icon, name, color })
+export default function CategoryCard({ icon, name })
 {
     return (
 
@@ -30,7 +29,6 @@ export default function CategoryCard({ icon, name, color })
             
                         className="text-5xl mb-3"
                 
-                        style={{ color }}
                     >
                 
                         {icon}
