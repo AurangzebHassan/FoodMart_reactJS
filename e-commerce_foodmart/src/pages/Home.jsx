@@ -2,6 +2,8 @@ import Navbar from "../components/Navbar";
 
 import HeroSection from "../components/HeroSection";
 
+import CategoryCarousel from "../components/CategoryCarousel";
+
 
 
 export default function Home()
@@ -13,6 +15,13 @@ export default function Home()
           <Navbar />
       
           <HeroSection />
+          
+      
+          <div className="mt-10">
+          
+            <CategoryCarousel />
+            
+          </div>
     
       </>
 
