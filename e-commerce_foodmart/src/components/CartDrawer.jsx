@@ -13,12 +13,19 @@ export default function CartDrawer({ onClose })
   
         useEffect(() =>
         {
-            // prevents the body from svrolling when drawer is open
+            // prevents the body from scrolling when drawer is open
 
                 document.body.style.overflow = "hidden";
 
             
-            setTimeout(() => setIsVisible(true), 10);
+            // Added slight delay for smoother entry animation (same 10ms)
+
+                setTimeout(() => setIsVisible(true), 10);
+                
+            
+            // restore scroll on unmount like MenuDrawer
+        
+                return () => document.body.style.overflow = "";
         },
             
             []

@@ -21,6 +21,16 @@ export default function Navbar()
     // opening of the mobile menu drawer is dependent on this state
 
         const [openMobileMenu, setOpenMobileMenu] = useState(false);
+        
+    
+    // state, which when true, would toggle the search input bar to start taking input
+
+        // const [toggleSearch, setToggleSearch] = useState(false);
+        
+    
+    // state to hold the search input
+
+        // const [searchInput, setSearchInput] = useState('');
 
 
 
@@ -54,6 +64,8 @@ export default function Navbar()
   return (
     <>
       
+        {/* Navbar */}
+          
           <header className="bg-white drop-shadow-sm">
         
               
@@ -61,6 +73,8 @@ export default function Navbar()
         
                 
                 {/* Logo */}
+                
+                {/* Left section of the navbar */}
         
                     <div className="flex shrink-0 items-center gap-2">
                     
@@ -74,19 +88,46 @@ export default function Navbar()
                     
                   
 
-                {/* Centre Search */}
+                {/* Central Search and catgories/departments dropdown. */}
+                
+                {/* should be visible only from the large(lg) breakpoint */}
 
-                    {/* <div className="flex shrink-0 lg:hidden cursor-pointer items-center gap-5">
+                    <div className="hidden lg:flex lg:shrink-0 items-center">
                             
-                      <input type="text"/>  
+                      {/* departments dropdown */}
+                        
+                        <div className="text-lg text-yellow-600 font-semibold rounded-l-full focus:border-0 bg-gray-100 hover:bg-gray-200 cursor-pointer">
+                                
+                            <select name="departments" id="departments" value={selectedDepartment} onChange={handleDepartmentChange} className="focus:border-none p-3 text-center">
+
+                                <option value="shopbydepartments"> Categories </option>
+                                
+                                <option value="Groceries"> Groceries </option>
+                                
+                                <option value="Drinks"> Drinks </option>
+
+                                <option value="Chocolates"> Chocolates </option>
+                                
+                            </select>
+
+                        </div>
+                    
                       
-                      <img src="/icons/search.png" alt="FoodMart" className="h-11 justify-end bg-gray-100 hover:bg-gray-200 rounded-full p-2" />
+                      {/* search input box + icon */}
+                        
+                        <div className="flex bg-gray-100 hover:bg-gray-200 rounded-r-full mr-4">
+                          
+                            <input type="text" placeholder="Search" className="w-50 p-3 text-yellow-600 font-extrabold hover:border-none" />  
+                      
+                            <img src="/icons/search.png" alt="FoodMart" className="h-12 p-3" />
+
+                        </div>
             
-                    </div> */}
+                    </div>
                   
                   
 
-                {/* Right side icons */}
+                {/* Right side icons. Right side of the navbar */}
 
                     <div className="flex shrink-0 justify-end items-center gap-3">
                         
@@ -176,6 +217,7 @@ export default function Navbar()
           </header>
 
           
+
       {/* Cart Drawer */}
       
           {/* if cart is allowed to open, open it and pass the function to close the drawer to the drawer component. */}
@@ -183,6 +225,7 @@ export default function Navbar()
             {openCart && <CartDrawer onClose={() => setTimeout(() => setOpenCart(false), 0)} />}
                 
           
+
       {/* Mobile menu drawer */}
 
           <MobileMenuDrawer
@@ -195,110 +238,125 @@ export default function Navbar()
           
 
 
-          {/* Menu & dropdown placeholders */}
+    {/* Menu & dropdown placeholders */}
 
-            <section className="container mx-auto flex items-center justify-start pt-12 px-5">
+        <section className="container mx-auto flex items-center justify-start pt-12 px-5">
 
+            {/* Hamburger menu for menu and dropdowns */}
+            
+            {/* Only shown until large(lg) breakpoint */}
+                
                 <button className="lg:hidden" onClick={() => setOpenMobileMenu(true)}>
-                  
+                
                     <img src="./icons/hamburger_menu.png" alt="hamburger_menu_icon" 
                         
-                      className="h-13 p-2 cursor-pointer border border-gray-400 hover:bg-gray-100 rounded-lg"
-                  
+                    className="h-13 p-2 cursor-pointer border border-gray-400 hover:bg-gray-100 rounded-lg"
+                
                     />
 
                 </button>
-              
+            
 
-                <div className="hidden lg:flex text-xl text-gray-700">
-                    
-                    <select name="departments" id="departments" value={selectedDepartment} onChange={handleDepartmentChange} className="justify-start mr-20 focus:borde hover:text-gray-900 py-2 bg-gray-100 text-center rounded-lg">
-
-                            <option value="shopbydepartments"> Shop by Departments </option>
-                        
-                        <option value="Groceries"> Groceries </option>
-                        
-                        <option value="Drinks"> Drinks </option>
-
-                        <option value="Chocolates"> Chocolates </option>
-                        
-                    </select>
-
-                </div>
-
-                <div className="text-gray-700 text-xl">
-                    
-                    <ul className="hidden lg:flex lg:flex-row  items-center gap-6">
-
-                        <a href="/women"> <li className="cursor-pointer hover:text-gray-900">Women</li> </a>
-
-                        <a href="/men"> <li className="cursor-pointer hover:text-gray-900" value="men" onClick={handlePageChange}>Men</li> </a>
-
-                        <a href="/kids"> <li className="cursor-pointer hover:text-gray-900" value="kids" onClick={handlePageChange}>Kids</li> </a>
-
-                        <a href="/accessories"> <li className="cursor-pointer hover:text-gray-900" value="accessories" onClick={handlePageChange}>Accessories</li> </a>
-                        
-                            
-                        <li className="cursor-pointer hover:text-gray-900 relative flex items-center">
-                            
-                            <label
-                                htmlFor="pages"
-                                className="cursor-pointer text-xl text-gray-700 hover:text-gray-900 flex items-center"
-                            >
-                                Pages
-                                <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="w-4 h-4 ml-1"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth={2}
-                                >
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </label>
-                                
-                            <select name="pages" id="pages" value={selectedPage} onChange={handlePageChange} className="absolute opacity-0 inset-0 cursor-pointer">
-
-                                <option value="about_us"> About Us </option>
-                            
-                                <option value="shop"> Shop </option>
-                            
-                                <option value="single_product"> Single Product </option>
-
-                                <option value="cart"> Cart </option>
-                                
-                                <option value="checkout"> Checkout </option>
-                                
-                                <option value="blog"> Blog </option>
-
-                                <option value="single_post"> Single Post </option>
-                                
-                                <option value="styles"> Styles </option>
-
-                                <option value="thank_you"> Thank You </option>
-
-                                <option value="my_account"> My Account </option>
-                                
-                                <option value="404_error"> 404 Error  </option>
-                        
-                            </select>
-
-                        </li>
-
-                            
-                        <a href="/brand"> <li className="cursor-pointer hover:text-gray-900" value="brand" onClick={handlePageChange}>Brand</li> </a>
-
-                        <a href="/sale"> <li className="cursor-pointer hover:text-gray-900" value="sale" onClick={handlePageChange}>Sale</li> </a>
-
-                        <a href="/blog"> <li className="cursor-pointer hover:text-gray-900" value="blog" onClick={handlePageChange}>Blog</li> </a>
-
-                    </ul>
-
-                </div>
-                    
-            </section>
+            
+            {/* menu and dropdown bar */}
+            
+            {/* shown from the large(lg) breakpoint to above */}
                 
-        </>
-    );
+                {/* departments dropdown */}
+                    
+                    <div className="hidden lg:flex text-xl text-gray-700">
+                        
+                        <select name="departments" id="departments" value={selectedDepartment} onChange={handleDepartmentChange} className="justify-start mr-20 focus:borde hover:text-gray-900 py-2 bg-gray-100 text-center rounded-lg">
+
+                                <option value="shopbydepartments"> Shop by Departments </option>
+                            
+                            <option value="Groceries"> Groceries </option>
+                            
+                            <option value="Drinks"> Drinks </option>
+
+                            <option value="Chocolates"> Chocolates </option>
+                            
+                        </select>
+
+                    </div>
+
+            
+                {/* menu bar */}
+                
+                    <div className="text-gray-700 text-xl">
+                        
+                        <ul className="hidden lg:flex lg:flex-row  items-center gap-6">
+
+                            <a href="/women"> <li className="cursor-pointer hover:text-gray-900">Women</li> </a>
+
+                            <a href="/men"> <li className="cursor-pointer hover:text-gray-900" value="men" onClick={handlePageChange}>Men</li> </a>
+
+                            <a href="/kids"> <li className="cursor-pointer hover:text-gray-900" value="kids" onClick={handlePageChange}>Kids</li> </a>
+
+                            <a href="/accessories"> <li className="cursor-pointer hover:text-gray-900" value="accessories" onClick={handlePageChange}>Accessories</li> </a>
+                            
+                                
+                            <li className="cursor-pointer hover:text-gray-900 relative flex items-center">
+                                
+                                <label
+                                    htmlFor="pages"
+                                    className="cursor-pointer text-xl text-gray-700 hover:text-gray-900 flex items-center"
+                                >
+                                    Pages
+                                    <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-4 h-4 ml-1"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                    >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </label>
+                                    
+                                <select name="pages" id="pages" value={selectedPage} onChange={handlePageChange} className="absolute opacity-0 inset-0 cursor-pointer">
+
+                                    <option value="about_us"> About Us </option>
+                                
+                                    <option value="shop"> Shop </option>
+                                
+                                    <option value="single_product"> Single Product </option>
+
+                                    <option value="cart"> Cart </option>
+                                    
+                                    <option value="checkout"> Checkout </option>
+                                    
+                                    <option value="blog"> Blog </option>
+
+                                    <option value="single_post"> Single Post </option>
+                                    
+                                    <option value="styles"> Styles </option>
+
+                                    <option value="thank_you"> Thank You </option>
+
+                                    <option value="my_account"> My Account </option>
+                                    
+                                    <option value="404_error"> 404 Error  </option>
+                            
+                                </select>
+
+                            </li>
+
+                                
+                            <a href="/brand"> <li className="cursor-pointer hover:text-gray-900" value="brand" onClick={handlePageChange}>Brand</li> </a>
+
+                            <a href="/sale"> <li className="cursor-pointer hover:text-gray-900" value="sale" onClick={handlePageChange}>Sale</li> </a>
+
+                            <a href="/blog"> <li className="cursor-pointer hover:text-gray-900" value="blog" onClick={handlePageChange}>Blog</li> </a>
+
+                        </ul>
+
+                    </div>
+                
+        </section>
+                
+    </>
+    
+  );
 }
