@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import CartDrawer from "./CartDrawer";
 
@@ -23,9 +23,13 @@ export default function Navbar()
         const [openMobileMenu, setOpenMobileMenu] = useState(false);
         
     
-    // state, which when true, would toggle the search input bar to start taking input
+    // use a ref object to manipulate the DOM node using ref
 
-        // const [toggleSearch, setToggleSearch] = useState(false);
+    // we'll focus on the text input when the search button is clicked
+
+        const searchRef = useRef(null);
+
+        
         
     
     // state to hold the search input
@@ -54,6 +58,13 @@ export default function Navbar()
         setSelectedPage(e.target.value);
 
         window.location.href = `/${e.target.value.toLowerCase()}`;
+    }
+
+
+
+    const handleSearchIconClick = () =>
+    {
+        searchRef.current.focus();
     }
 
     
@@ -117,9 +128,9 @@ export default function Navbar()
                         
                         <div className="flex bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 rounded-r-full">
                           
-                            <input type="text" placeholder="Search" className="lg:w-50 xl:w-80 2xl:w-120 p-3 text-yellow-600 placeholder:text-xl placeholder:font-semibold font-extrabold" />
+                            <input type="text" placeholder="Search" ref={searchRef} className="lg:w-50 xl:w-80 2xl:w-120 p-3 text-yellow-600 placeholder:text-xl placeholder:font-semibold font-extrabold" />
 
-                            <img src="/icons/search.png" alt="FoodMart" className="h-12 p-3" />
+                            <img src="/icons/search.png" alt="FoodMart" className="h-12 p-3" onClick={handleSearchIconClick} />
 
                         </div>
             
