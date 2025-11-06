@@ -322,7 +322,7 @@ export default function CategoryCarousel()
 
 
   return (
-    <section className="container mx-auto px-5 py-10">
+    <section className="container mx-auto px-5 py-10 overflow-hidden">
       {/* 🟢 HEADER ROW */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold text-gray-800">Category</h2>
@@ -364,6 +364,7 @@ export default function CategoryCarousel()
           640: { slidesPerView: 2, spaceBetween: 20 },
           1024: { slidesPerView: 3, spaceBetween: 30 },
           1280: { slidesPerView: 4, spaceBetween: 30 },
+          1536: { slidesPerView: 5, spaceBetween: 30 },
         }}
         // 🟢 Assign navigation buttons AFTER Swiper initializes
         onInit={(swiper) => {
