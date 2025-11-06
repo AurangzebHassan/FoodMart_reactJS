@@ -21,7 +21,7 @@ export default function CategoryCard({ icon, name, color })
 
             <div
 
-                className="flex flex-col items-center justify-center bg-white rounded-2xl shadow-sm hover:shadow-lg border border-gray-100 transition-all duration-300 w-60 h-48 mx-auto cursor-pointer"
+                className="flex flex-col items-center justify-center bg-white rounded-2xl shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 w-60 h-48 mx-auto cursor-pointer"
             >
         
                 {/* Icon section */}

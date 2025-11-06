@@ -103,7 +103,7 @@ export default function CategoryCarousel()
 
         
                 {/* Right side link */}
-        
+
                     <a
                 
                         href="/categories"
@@ -115,7 +115,7 @@ export default function CategoryCarousel()
                         View All Categories →
             
                     </a>
-        
+                        
             </div>
 
           
