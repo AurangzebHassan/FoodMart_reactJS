@@ -268,11 +268,13 @@ export default function Navbar()
                         <button 
                         
                             // className="mt-1 px-2 py-0.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg"
+                            
+                            className="sm:ml-10 md:ml-15 transition-all duration-200"
                       
                             onClick={handleLogout}
                         >
                             
-                        <img src="./icons/logout.png" alt="logout" className="mt-1 w-9 hover:w-10 rounded-full transition-all duration-75" />
+                        <img src="./icons/logout.png" alt="logout" className="mt-1 w-9 sm:hover:w-10 rounded-full transition-all duration-75" />
 
                         </button>
                    
