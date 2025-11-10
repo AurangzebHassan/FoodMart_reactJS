@@ -34,7 +34,7 @@ export default function Navbar()
     
     // state to hold the search input
 
-        // const [searchInput, setSearchInput] = useState('');
+        const [searchInput, setSearchInput] = useState("");
 
 
 
@@ -65,6 +65,15 @@ export default function Navbar()
     const handleSearchIconClick = () =>
     {
         searchRef.current.focus();
+    }
+
+
+
+    const handleSearchChange = (e) =>
+    {
+        setSearchInput(e.target.value);
+
+        // console.log("User typed: ", e.target.value);
     }
 
     
@@ -128,7 +137,19 @@ export default function Navbar()
                         
                         <div className="flex bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 rounded-r-full">
                           
-                            <input type="text" placeholder="Search" ref={searchRef} className="lg:w-50 xl:w-80 2xl:w-120 p-3 text-yellow-600 placeholder:text-xl placeholder:font-semibold font-extrabold" />
+                            <input 
+                            
+                              type="text"
+                              
+                              placeholder="Search"
+
+                              value={searchInput}
+
+                              onChange={handleSearchChange}
+                              
+                              ref={searchRef}
+                              
+                              className="lg:w-50 xl:w-80 2xl:w-120 p-3 text-yellow-600 placeholder:text-xl placeholder:font-semibold font-extrabold" />
 
                             <img src="/icons/search.png" alt="FoodMart" className="h-12 p-3" onClick={handleSearchIconClick} />
 
