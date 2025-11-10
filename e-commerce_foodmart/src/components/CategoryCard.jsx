@@ -12,7 +12,7 @@ import React from "react";
 
 
 
-export default function CategoryCard({ icon, name })
+export default function CategoryCard({ Category })
 {
     return (
 
@@ -25,20 +25,16 @@ export default function CategoryCard({ icon, name })
         
                 {/* Icon section */}
         
-                    <div
-            
-                        className="text-5xl mb-3"
+                    <div className="text-5xl mb-3">
                 
-                    >
-                
-                        {icon}
+                        <img src={Category.image_url} alt={Category.name} className="w-10 h-10 mb-3" />
             
                     </div>
 
         
                 {/* Category name */}
         
-                    <p className="text-lg font-semibold text-gray-700 hover:text-gray-900 transition">{name}</p>
+                    <p className="text-lg font-semibold text-gray-700 hover:text-gray-900 transition">{Category.name}</p>
             
         </div>
         

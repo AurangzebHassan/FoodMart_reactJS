@@ -1,249 +1,4 @@
-// import React from "react";
-
-
-
-// // Swiper imports — main component + subcomponents for navigation
-
-//     import { Swiper, SwiperSlide } from "swiper/react";
-
-//     import { Navigation } from "swiper/modules";
-
-
-// // Import Swiper styles (important!)
-
-//     import "swiper/css";
-
-//     import "swiper/css/navigation";
-
-
-// // Import your CategoryCard
-
-//     import CategoryCard from "./CategoryCard";
-
-
-
-// /*
-//   ✅ This component shows multiple CategoryCards in a carousel.
-//   You can click left/right arrows to slide through them.
-// */
-
-
-
-// export default function CategoryCarousel()
-// {
-//   // Step 1 — Define your category data (array of objects)
-
-//     const categories = 
-//     [
-//         {
-//             name: "Fruits & Veggies",
-        
-//             icon: <img src="/icons/categories/veggies_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        
-//             color: "green",
-//         },
-        
-//         {
-//             name: "Bread & Sweets",
-        
-//             icon: <img src="/icons/categories/bread_baguette_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        
-//             color: "orange",
-//         },
-        
-//         {
-//             name: "Drinks & Juices",
-        
-//             icon: <img src="/icons/categories/soft_drinks_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        
-//             color: "#EAB308", // yellowish
-//         },
-        
-//         {
-//             name: "Herbs & Ingredients",
-        
-//             icon: <img src="/icons/categories/herb_flour_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        
-//             color: "dark-green",
-//         },
-        
-//         {
-//             name: "Meat & Poultry",
-        
-//             icon: <img src="/icons/categories/animal_products_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        
-//             color: "red",
-//         },
-        
-//         {
-//             name: "Wine",
-        
-//             icon: <img src="/icons/categories/wine_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        
-//             color: "dark-red",
-//         },
-//     ];
-
-
-
-
-
-
-//   return (
-    
-//     <section className="container mx-auto px-5 py-10">
-    
-//           {/* Top bar with heading + link */}
-    
-//             <div className="flex justify-between items-center mb-6">
-        
-//                 {/* Left side heading */}
-        
-//                     <h2 className="text-3xl font-bold text-gray-800">Category</h2>
-
-        
-//                 {/* Right side link */}
-
-//                     <a
-                
-//                         href="/categories"
-                
-//                         className="text-gray-600 hover:text-gray-900 font-semibold flex items-center gap-1"
-            
-//                     >
-                
-//                         View All Categories →
-            
-//                     </a>
-                        
-//             </div>
-
-          
-    
-//           {/* Swiper Carousel */}
-
-//           {/* The forward and backward buttons and the mechanism that makes it work */}
-    
-//             <Swiper
-        
-//                 // modules used
-        
-//                     modules={[Navigation]}
-        
-
-//                 // space between slides
-        
-//                     spaceBetween={20}
-        
-        
-//                 // how many slides to show at once
-        
-//                     slidesPerView={3}
-        
-        
-//                 // enable navigation arrows
-        
-//                     navigation={true}
-        
-        
-//                 // responsive breakpoints
-            
-//                     breakpoints=
-//                     {{
-                
-//                         320: { slidesPerView: 1 }, // small screen
-                
-//                         640: { slidesPerView: 2 }, // medium
-                
-//                         1024: { slidesPerView: 3 }, // large
-                
-//                         1280: { slidesPerView: 4 }, // extra large
-            
-//                     }}
-        
-        
-//                 // Tailwind margin-top for spacing
-        
-//                     className="mySwiper"
-        
-//             >
-        
-                
-//                 {/* Map through each category and render inside a SwiperSlide */}
-        
-//                     {categories.map((cat, index) => (
-                
-//                         <SwiperSlide key={index}>
-                
-//                             <CategoryCard icon={cat.icon} name={cat.name} color={cat.color} />
-                
-//                         </SwiperSlide>
-            
-//                     ))}
-            
-//             </Swiper>
-            
-          
-
-//             {/* 🟢 Extra styling for arrows */}
-        
-//                 <style jsx>
-                    
-//                 {`
-//                     /* Target Swiper built-in navigation buttons */
-//                     .swiper-button-next,
-//                     .swiper-button-prev {
-//                     color: #333; /* dark gray arrows */
-//                     background: #f9fafb; /* light gray background */
-//                     padding: 5px;
-//                     border-radius: 8px;
-//                     width: 40px;
-//                     height: 40px;
-//                     top: -55px; /* 🟢 move arrows up near the heading */
-//                     }
-
-//                     /* 🟢 Hover effect for arrows */
-//                     .swiper-button-next:hover,
-//                     .swiper-button-prev:hover {
-//                     background: #e5e7eb; /* darker hover */
-//                     padding: 5px;
-//                     color: black;
-//                     }
-
-//                     /* 🟢 Adjust arrow positions (right side near heading) */
-//                     .swiper-button-prev {
-//                     right: 60px;
-//                     left: auto;
-//                     }
-//                     .swiper-button-next {
-//                     right: 20px;
-//                     }
-
-//                     /* 🟢 Remove default arrow text content */
-//                     .swiper-button-next::after,
-//                     .swiper-button-prev::after {
-//                     font-size: 14px;
-//                     font-weight: bold;
-//                     }
-//             `   }
-                
-//                 </style>
-    
-//       </section>
-      
-//   );
-// }
-
-
-
-
-
-
-
-
-
-
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -259,55 +14,85 @@ import CategoryCard from "./CategoryCard";
 
 
 
+// import Appwrite helpers from your appwrite.js
+
+// Make sure the path is correct relative to this file (adjust "../appwrite" if needed).
+
+    import { database, Query, DATABASE_ID, CATEGORIES_TABLE_ID } from "../appwrite";
+    
+
+
+/*
+
+    CategoryCarousel (Appwrite-backend)
+
+    - On mount, fetch categories from Appwrite collection `CATEGORIES_TABLE_ID`.
+
+    - Shows loading state while fetching.
+
+    - If fetch fails, falls back to a small hardcoded array so UI doesn't break.
+
+    - Keeps your custom prev/next buttons and disables them correctly at ends.
+
+*/
+
+
+
+
+
+
 export default function CategoryCarousel()
 {
-//   const categories = [
-//     { name: "Fruits & Veges", icon: "🥦" },
-//     { name: "Breads & Sweets", icon: "🍞" },
-//     { name: "Drinks & Juices", icon: "🧃" },
-//     { name: "Snacks", icon: "🍪" },
-//     { name: "Frozen Foods", icon: "❄️" },
-//   ];
+    // local UI state
+  
+        const [categories, setCategories] = useState([]); // array of category docs
     
+        const [loading, setLoading] = useState(true); // true while fetching
     
-    const categories = 
-    [
-        {
-            name: "Fruits & Veggies",
+        const [error, setError] = useState(null); // store fetch error (if any)
+
+
         
-            icon: <img src="/icons/categories/veggies_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        },
-        
-        {
-            name: "Bread & Sweets",
-        
-            icon: <img src="/icons/categories/bread_baguette_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        },
-        
-        {
-            name: "Drinks & Juices",
-        
-            icon: <img src="/icons/categories/soft_drinks_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        },
-        
-        {
-            name: "Herbs & Ingredients",
-        
-            icon: <img src="/icons/categories/herb_flour_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        },
-        
-        {
-            name: "Meat & Poultry",
-        
-            icon: <img src="/icons/categories/animal_products_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        },
-        
-        {
-            name: "Wine",
-        
-            icon: <img src="/icons/categories/wine_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
-        },
-    ];
+    // fallback local categories (used only if remote fetch fails)
+    
+        const fallbackCategories = 
+        [
+            {
+                $id: "local_fruits",
+
+                name: "Fruits & Veggies",
+
+                slug: "fruits-veggies",
+
+                image_url: "/icons/categories/veggies_category.png"
+            
+                // icon: <img src="/icons/categories/veggies_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
+            },
+            
+            {
+                $id: "local_bread",
+
+                name: "Bread & Sweets",
+
+                slug: "bread-sweets",
+
+                image_url: "/icons/categories/bread_baguette_category.png"
+            
+                // icon: <img src="/icons/categories/bread_baguette_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
+            },
+            
+            {
+                $id: "local_drinks",
+
+                name: "Drinks & Juices",
+
+                slug: "drinks-juices",
+
+                image_url: "/icons/categories/soft_drinks_category.png"
+            
+                // icon: <img src="/icons/categories/soft_drinks_category.png" alt="fruit" className="w-10 h-10 mb-3" />,
+            },
+        ];
 
 
 
@@ -320,16 +105,134 @@ export default function CategoryCarousel()
 
     // 🟢 State to track disabled status
   
-      const [isBeginning, setIsBeginning] = useState(true);
+        const [isBeginning, setIsBeginning] = useState(true);
   
         const [isEnd, setIsEnd] = useState(false);
+        
+    
+    
+    
+    
+    
+    // fetch categories from Appwrite on mount
+  
+        useEffect(() =>
+        {
+            let mounted = true;
+
+
+            async function loadCategories()
+            {
+                setLoading(true);
+                
+                setError(null);
+
+
+                // Validate env constants
+                
+                    if (!DATABASE_ID || !CATEGORIES_TABLE_ID)
+                    {
+                        setError("Appwrite DATABASE_ID or CATEGORIES_TABLE_ID not configured.");
+
+                        // console.log("FUCK ME");
+                        
+                        setCategories(fallbackCategories);
+                        
+                        setLoading(false);
+                        
+                        return;
+                    }
 
 
 
+                try
+                {
+                    // database.listDocuments(dbId, collectionId, queries)
+                    
+                        const res = await database.listDocuments(DATABASE_ID, CATEGORIES_TABLE_ID, [Query.orderAsc("$createdAt")]);
+
+                    
+                    // Appwrite returns objects in res.documents
+                    
+                        if (mounted)
+                        {
+                            if (res && Array.isArray(res.documents) && res.documents.length > 0)
+                            {
+                                // map documents to expected shape (ensure image_url exists)
+                            
+                                    const mapped = res.documents.map((doc) => (
+                                        
+                                        {
+                                            $id: doc.$id,
+                                
+                                            name: doc.name ?? "Unnamed",
+                                
+                                            image_url: doc.image_url ?? "/icons/categories/placeholder.png",
+                                
+                                            slug: doc.slug ?? "",
+                                
+                                            description: doc.description ?? "",
+                                        }));
+                            
+                            
+                                setCategories(mapped);
+                            } 
+                        
+                            else
+                            {
+                                // no rows found — use fallback
+                            
+                                setCategories(fallbackCategories);
+                            }
+                        }
+                }
+                
+                catch (err)
+                {
+                    // on error, fall back but keep the error visible in console/ state
+                
+                        console.error("Failed to load categories from Appwrite:", err);
+                
+
+                    if (mounted)
+                    {
+                        setError(err.message || "Failed to fetch categories");
+                        
+                        setCategories(fallbackCategories);
+                    }
+                } 
+                
+                finally
+                {
+                    if (mounted) setLoading(false);
+                }
+                
+            }
+
+                loadCategories();
+
+            
+                // cleanup
+            
+                    return () => mounted = false;
+        
+        }, []); // empty deps → run once on mount
+    
+    
+    
 
 
     
-  return (
+    if (loading) return <p className="text-center font-bold text-xl py-10">Loading categories...</p>;
+    
+    if (error) console.warn("Category fetch error:", error);
+
+
+
+
+
+
+  return (   
     <section className="container mx-auto px-5 py-10 overflow-hidden">
       {/* 🟢 HEADER ROW */}
       <div className="flex justify-between items-center mb-6">
@@ -406,11 +309,36 @@ export default function CategoryCarousel()
           });
         }}
       >
-        {categories.map((cat, i) => (
+        
+        {/* {categories.map((cat, i) => (
           <SwiperSlide key={i}>
             <CategoryCard icon={cat.icon} name={cat.name} />
           </SwiperSlide>
-        ))}
+        ))} */}
+              
+
+
+        {/* Render slides from categories (use $id as key) */}
+            
+              {categories.map((cat) => (
+            
+                  <SwiperSlide key={cat.$id}>
+                
+                      
+                    {/* CategoryCard expects icon + name; we pass an <img> for icon */}
+                
+                      <CategoryCard
+                
+                        Category={cat}
+                          
+                        //   icon={<img src={cat.image_url} alt={cat.name} className="w-10 h-10 mb-3" />}
+                
+                        //   name={cat.name}
+                      />
+            
+                  </SwiperSlide>
+              ))}
+              
       </Swiper>
     </section>
   );

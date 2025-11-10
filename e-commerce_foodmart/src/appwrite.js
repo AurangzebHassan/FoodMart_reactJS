@@ -329,17 +329,21 @@
 
 
 
-import { Client, Databases, ID, Query, Account, Permission, Role, /*OAuthProvider*/ } from 'appwrite';
+import { Client, Databases, ID, Query, Account, Permission, Role } from 'appwrite';
 
 
 
 // ENVIRONMENT VARIABLES SETUP:  --------------------------------------------------------------------------------------------
 
-    const PROJECT_ID = import.meta.env.VITE_APPWRITE_PROJECT_ID;
+    export const PROJECT_ID = import.meta.env.VITE_APPWRITE_PROJECT_ID;
 
-    const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;  // foodmart database
+    export const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;  // foodmart database
 
-    const TABLE_ID = import.meta.env.VITE_APPWRITE_TABLE_ID;    // metrics table
+    export const CATEGORIES_TABLE_ID = import.meta.env.VITE_APPWRITE_CATEGORIES_TABLE_ID;    // categories table
+    
+    export const PRODUCTS_TABLE_ID = import.meta.env.VITE_APPWRITE_PRODUCTS_TABLE_ID;    // products table
+
+    export const CART_TABLE_ID = import.meta.env.VITE_APPWRITE_CART_TABLE_ID;    // cart table
 
 
 
@@ -351,7 +355,7 @@ import { Client, Databases, ID, Query, Account, Permission, Role, /*OAuthProvide
 
         const client = new Client()
 
-        .setEndpoint("https://cloud.appwrite.io/v1") // Your Appwrite Endpoint. Tells where your backend lives (Appwrite Cloud in this case).
+        .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT) // Your Appwrite Endpoint. Tells where your backend lives (Appwrite Cloud in this case).
 
         .setProject(PROJECT_ID);     // Your project ID. Identifies which appwrite project to interact with.
 
@@ -373,6 +377,11 @@ import { Client, Databases, ID, Query, Account, Permission, Role, /*OAuthProvide
     // Account: handles all authentication actions (signup, login, logout, session management).
 
         export const account = new Account(client);
+        
+
+    // also export ID and Query helpers from appwrite SDK
+
+        export { ID, Query };
     
 
 
@@ -989,159 +998,159 @@ import { Client, Databases, ID, Query, Account, Permission, Role, /*OAuthProvide
 
         // Either increments existing count or creates a new record.
 
-            export const updateSearchCount = async (searchTerm, movie) =>
-            {
-                try
-                {
-                    const user = await getCurrentUser();    // Get current user info — we need their userId to track searches.
+            // export const updateSearchCount = async (searchTerm, movie) =>
+            // {
+            //     try
+            //     {
+            //         const user = await getCurrentUser();    // Get current user info — we need their userId to track searches.
                     
-                    if (!user) throw new Error("User not logged in");   // /If there’s no logged-in user, throw an error (since metrics are per-user).
+            //         if (!user) throw new Error("User not logged in");   // /If there’s no logged-in user, throw an error (since metrics are per-user).
 
 
-                    const userId = user.$id;
+            //         const userId = user.$id;
 
 
 
-                    // 1. Use appwrite SDK/API to check if a record with the given movie_id for the current user (which exists as we're already here or else we would have skipped) already exists in the database.
+            //         // 1. Use appwrite SDK/API to check if a record with the given movie_id for the current user (which exists as we're already here or else we would have skipped) already exists in the database.
 
 
-                        // PREVIOUS STATEMENT: --------------------------> // const result = await database.listDocuments(DATABASE_ID, TABLE_ID, [Query.equal("searchTerm", searchTerm),]); // 'searchTerm' is the name of the column in the database.
+            //             // PREVIOUS STATEMENT: --------------------------> // const result = await database.listDocuments(DATABASE_ID, TABLE_ID, [Query.equal("searchTerm", searchTerm),]); // 'searchTerm' is the name of the column in the database.
 
-                        // See if a doc exists for this user (userId) + movie (movie_id)
+            //             // See if a doc exists for this user (userId) + movie (movie_id)
                         
-                            const result = await database.listDocuments(DATABASE_ID, TABLE_ID, 
-                            [
-                                // Query: helps construct filters, limits, ordering, etc.
+            //                 const result = await database.listDocuments(DATABASE_ID, TABLE_ID, 
+            //                 [
+            //                     // Query: helps construct filters, limits, ordering, etc.
 
-                                    // Query.equal() → filters matching records.                            
+            //                         // Query.equal() → filters matching records.                            
         
-                                        Query.equal("userId", userId),
+            //                             Query.equal("userId", userId),
                                     
-                                        Query.equal("movie_id", String(movie.id)),
+            //                             Query.equal("movie_id", String(movie.id)),
                                 
-                                Query.limit(1) // We only need to know if it exists, so limit to 1 result.
-                            ]);
+            //                     Query.limit(1) // We only need to know if it exists, so limit to 1 result.
+            //                 ]);
 
                     
                     
-                    // 2. If it exists, increment the count field of that record by 1.
+            //         // 2. If it exists, increment the count field of that record by 1.
 
 
-                        // PREVIOUS STATEMENT: --------------------------------->   // if (result.documents.length > 0) {
-                                                                                    // // Record exists, increment the count field by 1.
+            //             // PREVIOUS STATEMENT: --------------------------------->   // if (result.documents.length > 0) {
+            //                                                                         // // Record exists, increment the count field by 1.
 
-                                                                                    // const doc = result.documents[0];
+            //                                                                         // const doc = result.documents[0];
 
-                                                                                    // const updatedCount = doc.count + 1;
+            //                                                                         // const updatedCount = doc.count + 1;
 
-                                                                                    // await database.updateDocument(DATABASE_ID, TABLE_ID, doc.$id, {
-                                                                                    //     count: updatedCount,
-                                                                                    // });
-                                                                                    // }
+            //                                                                         // await database.updateDocument(DATABASE_ID, TABLE_ID, doc.$id, {
+            //                                                                         //     count: updatedCount,
+            //                                                                         // });
+            //                                                                         // }
                                                                             
-                        // See if we found a document. If so, increment its count.
+            //             // See if we found a document. If so, increment its count.
                         
-                            if (result.documents.length > 0)
-                            {
-                                const doc = result.documents[0];
+            //                 if (result.documents.length > 0)
+            //                 {
+            //                     const doc = result.documents[0];
                                 
-                                const updatedCount = (doc.count ?? 0) + 1;
+            //                     const updatedCount = (doc.count ?? 0) + 1;
                                 
-                                await database.updateDocument(DATABASE_ID, TABLE_ID, doc.$id, { count: updatedCount });
-                            }
+            //                     await database.updateDocument(DATABASE_ID, TABLE_ID, doc.$id, { count: updatedCount });
+            //                 }
                 
 
 
-                    // 3. If it doesn't exist, create a new record with searchTerm and set count to 1.
+            //         // 3. If it doesn't exist, create a new record with searchTerm and set count to 1.
                     
 
-                        // PREVIOUS STATEMENT: -------------------------->  //     else
-                                                                            //     {
-                                                                            //     // Record doesn't exist, create a new record with count set to 1.
+            //             // PREVIOUS STATEMENT: -------------------------->  //     else
+            //                                                                 //     {
+            //                                                                 //     // Record doesn't exist, create a new record with count set to 1.
 
-                                                                            //     await database.createDocument(
-                                                                            //         DATABASE_ID,
-                                                                            //         TABLE_ID,
-                                                                            //         ID.unique(),
-                                                                            //         {
-                                                                            //         searchTerm,
-                                                                            //         count: 1,
-                                                                            //         movie_id: movie.id,
-                                                                            //         poster_url: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
-                                                                            //         }
-                                                                            //     );
-                                                                            //     }
-                                                                            // }
+            //                                                                 //     await database.createDocument(
+            //                                                                 //         DATABASE_ID,
+            //                                                                 //         TABLE_ID,
+            //                                                                 //         ID.unique(),
+            //                                                                 //         {
+            //                                                                 //         searchTerm,
+            //                                                                 //         count: 1,
+            //                                                                 //         movie_id: movie.id,
+            //                                                                 //         poster_url: `https://image.tmdb.org/t/p/w500/${movie.poster_path}`,
+            //                                                                 //         }
+            //                                                                 //     );
+            //                                                                 //     }
+            //                                                                 // }
 
-                        // If no document found, create document with per-document permissions so only this user can read/write it
+            //             // If no document found, create document with per-document permissions so only this user can read/write it
 
-                        // What happens:
+            //             // What happens:
 
-                            // A new document (row) is created in your metrics collection.
+            //                 // A new document (row) is created in your metrics collection.
 
-                            // Appwrite saves those permissions specifically for that document.
+            //                 // Appwrite saves those permissions specifically for that document.
 
-                            // The permissions apply only to that document — not to the rest.
+            //                 // The permissions apply only to that document — not to the rest.
 
-                            // So yes — every single document gets its own private ACL (Access Control List) attached at creation.
+            //                 // So yes — every single document gets its own private ACL (Access Control List) attached at creation.
 
-                            // Each ACL says: “Only this user can read, update, or delete me.”
+            //                 // Each ACL says: “Only this user can read, update, or delete me.”
 
-                                else
-                                {
-                                    await database.createDocument(
+            //                     else
+            //                     {
+            //                         await database.createDocument(
                                     
-                                        DATABASE_ID,
+            //                             DATABASE_ID,
 
-                                        TABLE_ID,
+            //                             TABLE_ID,
 
-                                        "unique()",
+            //                             "unique()",
 
-                                        {
-                                            userId,     // who searched
+            //                             {
+            //                                 userId,     // who searched
 
-                                            searchTerm, // what they searched
+            //                                 searchTerm, // what they searched
 
-                                            count: 1,   // first search
+            //                                 count: 1,   // first search
 
-                                            movie_id: movie.id ? String(movie.id) : '',  // TMDB movie ID (string)
+            //                                 movie_id: movie.id ? String(movie.id) : '',  // TMDB movie ID (string)
         
-                                            poster_url: movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : ''  // movie image
-                                        },
+            //                                 poster_url: movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : ''  // movie image
+            //                             },
 
 
 
-                                        // All users by default have no access to the document so we set per-document permissions here. Users can only create documents aka search records. Creating documents is allowed by default (anyone i.e any user can create it). It's a collection-level permission in appwrite.
+            //                             // All users by default have no access to the document so we set per-document permissions here. Users can only create documents aka search records. Creating documents is allowed by default (anyone i.e any user can create it). It's a collection-level permission in appwrite.
 
 
 
-                                        // Document-level permissions. I left these blank in appwrite to set them below.
+            //                             // Document-level permissions. I left these blank in appwrite to set them below.
                                         
                                     
-                                            // read permission: only this user. Can read only their own search records.
+            //                                 // read permission: only this user. Can read only their own search records.
                                             
-                                            // write permission: only this user. Can update/delete only their own search records.
+            //                                 // write permission: only this user. Can update/delete only their own search records.
 
-                                                [
-                                                    // Only the user who created it can read, update, or delete it.
+            //                                     [
+            //                                         // Only the user who created it can read, update, or delete it.
 
-                                                    // This ensures complete privacy — every user’s searches are stored securely.
+            //                                         // This ensures complete privacy — every user’s searches are stored securely.
 
-                                                        Permission.read(Role.user(userId)),
+            //                                             Permission.read(Role.user(userId)),
                                                         
-                                                        Permission.update(Role.user(userId)),
+            //                                             Permission.update(Role.user(userId)),
 
-                                                        Permission.delete(Role.user(userId))
-                                                ]
-                                    );
-                                }
-                }
+            //                                             Permission.delete(Role.user(userId))
+            //                                     ]
+            //                         );
+            //                     }
+            //     }
                 
-                catch (error)
-                {
-                    console.error(`updateSearchCount error: ${error}`);
-                }
-            }
+            //     catch (error)
+            //     {
+            //         console.error(`updateSearchCount error: ${error}`);
+            //     }
+            // }
 
 
 
@@ -1171,69 +1180,69 @@ import { Client, Databases, ID, Query, Account, Permission, Role, /*OAuthProvide
                                                                 
         // Fetch top 5 searched movies for the current user.
             
-            export const getTrendingMovies = async (userId) =>
-            {
-                try
-                {
-                    // If no userId provided (i.e not logged in), return empty.
+            // export const getTrendingMovies = async (userId) =>
+            // {
+            //     try
+            //     {
+            //         // If no userId provided (i.e not logged in), return empty.
 
-                        if (!userId) return [];
+            //             if (!userId) return [];
                 
                 
-                    // await account.get();
+            //         // await account.get();
                     
-                    const result = await database.listDocuments(DATABASE_ID, TABLE_ID,
-                    [
-                        // Filter by userId to get only this user's metrics
+            //         const result = await database.listDocuments(DATABASE_ID, TABLE_ID,
+            //         [
+            //             // Filter by userId to get only this user's metrics
 
-                        // Filters only the logged-in user’s documents.
+            //             // Filters only the logged-in user’s documents.
 
-                            Query.equal("userId", userId),
+            //                 Query.equal("userId", userId),
                 
-                        Query.orderDesc("count"),
+            //             Query.orderDesc("count"),
                 
-                        Query.limit(50)
-                    ]
+            //             Query.limit(50)
+            //         ]
 
-                    );
+            //         );
                     
                     
 
-                    // Logic implemented to deal with the situation when there are 5 ot less documents with duplicates.
+            //         // Logic implemented to deal with the situation when there are 5 ot less documents with duplicates.
 
-                    // We don't want to show the duplicates.
+            //         // We don't want to show the duplicates.
 
-                    // Returns the clean list of unique trending movies.
+            //         // Returns the clean list of unique trending movies.
 
-                        const seen = new Set();
+            //             const seen = new Set();
                     
-                        const uniqueMovies = [];
-
-                    
-                        for (const doc of result.documents)
-                        {
-                            const id = doc.movie_id || '';
+            //             const uniqueMovies = [];
 
                     
-                            if (!seen.has(id))
-                            {
-                                seen.add(id);
+            //             for (const doc of result.documents)
+            //             {
+            //                 const id = doc.movie_id || '';
+
+                    
+            //                 if (!seen.has(id))
+            //                 {
+            //                     seen.add(id);
                         
-                                uniqueMovies.push(doc);
-                            }
-                        }
+            //                     uniqueMovies.push(doc);
+            //                 }
+            //             }
                 
 
-                    return uniqueMovies;
-                } 
+            //         return uniqueMovies;
+            //     } 
             
-                catch (err) 
-                {
-                    console.error(`getTrendingMovies error: ${err}`);
+            //     catch (err) 
+            //     {
+            //         console.error(`getTrendingMovies error: ${err}`);
                 
-                    return [];
-                }
-            };
+            //         return [];
+            //     }
+            // };
 
 
 
