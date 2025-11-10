@@ -4,6 +4,8 @@ import CartDrawer from "./CartDrawer";
 
 import MobileMenuDrawer from "./MenuDrawer";
 
+import { useNavigate } from "react-router-dom";
+
 
 
 export default function Navbar()
@@ -35,6 +37,10 @@ export default function Navbar()
     // state to hold the search input
 
         const [searchInput, setSearchInput] = useState("");
+        
+    
+    
+    const navigate = useNavigate();
 
 
 
@@ -47,7 +53,9 @@ export default function Navbar()
     
             if (e.target.value !== "shopbydepartments")
             {
-                window.location.href = `/${e.target.value.toLowerCase()}`;
+                // window.location.href = `/${e.target.value.toLowerCase()}`;
+
+                navigate(`/${e.target.value.toLowerCase()}`);
             }
     }
 
@@ -57,7 +65,9 @@ export default function Navbar()
     {
         setSelectedPage(e.target.value);
 
-        window.location.href = `/${e.target.value.toLowerCase()}`;
+        // window.location.href = `/${e.target.value.toLowerCase()}`;
+
+        navigate(`/${e.target.value.toLowerCase()}`);
     }
 
 

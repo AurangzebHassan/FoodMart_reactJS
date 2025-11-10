@@ -216,6 +216,7 @@ export default function CategoryCarousel()
             
                     return () => mounted = false;
         
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []); // empty deps → run once on mount
     
     
@@ -241,7 +242,7 @@ export default function CategoryCarousel()
         {/* 🟢 RIGHT SIDE: 'View All' + arrows */}
         <div className="flex items-center gap-3">
           <a
-            href="/categories"
+            href="/category"
             className="text-gray-600 hover:text-gray-900 font-semibold flex items-center gap-1 mr-2"
           >
             View All Categories →

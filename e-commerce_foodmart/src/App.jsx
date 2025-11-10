@@ -10,8 +10,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 
 import Home from "./pages/Home";
 
-// import Navbar from "./components/Navbar";
-
 
 
 // const ProtectedRoute = ({ children }) =>
@@ -100,30 +98,32 @@ function App()
  
     <>
       
-      <Home />
+      {/* <Home /> */}
 
       
 
-      {/* <Router>
+      <Router>
 
         <Routes>
 
-          <Route path="/login" element={ <Login /> } />
+          {/* <Route path="/login" element={ <Login /> } /> */}
           
-          <Route path="/signup" element={ <Signup /> } />
+          {/* <Route path="/signup" element={ <Signup /> } /> */}
           
-          <Route path="/verify-email" element={ <VerifyEmail /> } />
+          {/* <Route path="/verify-email" element={ <VerifyEmail /> } /> */}
           
 
           <Route path="/" element=
           
             {
               
-              <ProtectedRoute>
+              <Home />
+            
+              // <ProtectedRoute>
               
-                <HomePage />
+              //   <Home />
 
-              </ProtectedRoute>
+              // </ProtectedRoute>
 
             }
           
@@ -131,7 +131,7 @@ function App()
 
         </Routes>
 
-      </Router> */}
+      </Router>
 
     </>
 

@@ -1,19 +1,39 @@
 import React from "react";
 
+import { useNavigate } from "react-router-dom"; // 🟢 For navigation between routes
+
 
 
 /*
   ✅ A simple reusable card that displays one category.
   
-    It receives props for:
-        - icon (image or emoji)
-        - name (category name)
+    It receives prop for:
+        
+        -Category(object)
 */
 
 
 
 export default function CategoryCard({ Category })
 {
+    const navigate = useNavigate();
+
+
+
+    // 🟢 Handle click → navigate to /category/{slug}
+    
+        const handleClick = () =>
+        {
+            if (!Category.slug) return; // safety check
+        
+            navigate(`/category/${Category.slug}`);
+        };
+
+
+
+
+
+
     return (
 
         // wrapper div with hover and shadow
@@ -21,6 +41,8 @@ export default function CategoryCard({ Category })
             <div
 
                 className="flex flex-col items-center justify-center bg-white rounded-2xl shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 w-60 h-48 mx-auto cursor-pointer"
+                
+            onClick={handleClick}
             >
         
                 {/* Icon section */}
