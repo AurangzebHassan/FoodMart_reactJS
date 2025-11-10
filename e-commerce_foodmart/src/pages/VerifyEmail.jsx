@@ -136,7 +136,7 @@ const VerifyEmail = () =>
           
             catch (err)
             {
-                console.error("Verification failed:", err);
+                console.warn("Verification failed:", err);
             
                 setMessage("❌ Verification Failed.\n\n Link may be expired or already used.");
             }
@@ -217,131 +217,223 @@ const VerifyEmail = () =>
 
 
 
-    return (
+    // return (
     
-        <div className="auth-page">
+    //     <div className="auth-page">
         
-            <div className="auth-card">
+    //         <div className="auth-card">
         
-                <h2>Email Verification</h2>
+    //             <h2>Email Verification</h2>
         
-                {/* <p className="text-light-200 100 mt-5 mb-5 text-sm">{message}</p> */}
+    //             {/* <p className="text-light-200 100 mt-5 mb-5 text-sm">{message}</p> */}
 
-                {/* 🔹 Updated message display */}
+    //             {/* 🔹 Updated message display */}
         
-                    <p className="text-light-200 mt-5 mb-5 text-sm whitespace-pre-line">
+    //                 <p className="text-light-200 mt-5 mb-5 text-sm whitespace-pre-line">
             
-                        {message}
+    //                     {message}
             
-                    </p>
+    //                 </p>
         
                 
 
-                {/* optional: small hint for user */}
+    //             {/* optional: small hint for user */}
                 
-                    {message.startsWith("✅") && (
+    //                 {message.startsWith("✅") && (
                         
-                    <p className="text-light-100 mt-8 text-sm">
+    //                 <p className="text-light-100 mt-8 text-sm">
                         
-                        Close this tab and log in from your main window.
+    //                     Close this tab and log in from your main window.
                         
-                    </p>
+    //                 </p>
 
-                )}
+    //             )}
 
 
 
-                {(message.startsWith("❌") || reason === "oauth_unverified") && (
+    //             {(message.startsWith("❌") || reason === "oauth_unverified") && (
   
-                    <>
+    //                 <>
                     
-                        <p className="text-light-100 mt-6 text-sm">The verification link is invalid or expired.</p>
+    //                     <p className="text-light-100 mt-6 text-sm">The verification link is invalid or expired.</p>
 
-                        <hr className="text-[#7c5cff] mt-6"/>
+    //                     <hr className="text-[#7c5cff] mt-6"/>
 
                         
-                        {/* RESEND FORM */}
+    //                     {/* RESEND FORM */}
                             
-                            <div className="mt-6">
+    //                         <div className="mt-6">
 
                             
-                                <p className="muted mb-2">Email & Password (OAuth Credentials)</p>
+    //                             <p className="muted mb-2">Email & Password (OAuth Credentials)</p>
 
                             
-                                <input type="email" placeholder="Email" value={resendEmail} onChange={(e) => setResendEmail(e.target.value)} />
+    //                             <input type="email" placeholder="Email" value={resendEmail} onChange={(e) => setResendEmail(e.target.value)} />
                             
 
-                            {/* <input type="password" placeholder="Password" value={resendPassword} onChange={(e) => setResendPassword(e.target.value)} /> */}
+    //                         {/* <input type="password" placeholder="Password" value={resendPassword} onChange={(e) => setResendPassword(e.target.value)} /> */}
                             
-                            {/* Password field with visibility toggle */}
+    //                         {/* Password field with visibility toggle */}
 
-                                <div className="relative password-field">
+    //                             <div className="relative password-field">
     
-                                    <input
+    //                                 <input
         
-                                        type={showResendPassword ? "text" : "password"}
+    //                                     type={showResendPassword ? "text" : "password"}
                                     
-                                        placeholder="Password"    
+    //                                     placeholder="Password"    
         
-                                        value={resendPassword}
+    //                                     value={resendPassword}
         
-                                        onChange={(e) => setResendPassword(e.target.value)}
+    //                                     onChange={(e) => setResendPassword(e.target.value)}
         
-                                        required
+    //                                     required
         
-                                        className="w-full pr-10"
+    //                                     className="w-full pr-10"
     
-                                    />
+    //                                 />
     
-                                    <span
+    //                                 <span
 
-                                        onClick={() => setShowResendPassword((prev) => !prev)}
+    //                                     onClick={() => setShowResendPassword((prev) => !prev)}
         
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#7c5cff]"
+    //                                     className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#7c5cff]"
         
-                                        title={showResendPassword ? "Hide password" : "Show password"}
+    //                                     title={showResendPassword ? "Hide password" : "Show password"}
     
-                                    >
+    //                                 >
         
-                                        {showResendPassword ? "🙈" : "👁️"}
+    //                                     {showResendPassword ? "🙈" : "👁️"}
     
-                                    </span>
+    //                                 </span>
 
-                                </div>
+    //                             </div>
 
 
  
-                                {resendMsg && <p className="text-red-400 mt-3 mb-3">{resendMsg}</p>}
+    //                             {resendMsg && <p className="text-red-400 mt-3 mb-3">{resendMsg}</p>}
 
 
                             
-                                <button className="auth-btn secondary mt-3 mb-6" onClick={handleResendVerification}>
+    //                             <button className="auth-btn secondary mt-3 mb-6" onClick={handleResendVerification}>
                                 
-                                    Resend Verification Email
+    //                                 Resend Verification Email
                             
-                                </button>
+    //                             </button>
 
                             
-                            </div>
+    //                         </div>
                             
                         
-                        {/* {resendMsg && alert(resendMsg)} */}
+    //                     {/* {resendMsg && alert(resendMsg)} */}
 
 
 
 
-                        <a href="/login" className="text-[20px] text-[#7c5cff]"> ⬅ <span className="hover:underline focus:underline text-[20px] text-[#7c5cff]"> Login </span> </a>
+    //                     <a href="/login" className="text-[20px] text-[#7c5cff]"> ⬅ <span className="hover:underline focus:underline text-[20px] text-[#7c5cff]"> Login </span> </a>
 
-                    </>
+    //                 </>
 
-                )}
+    //             )}
 
         
-            </div>
+    //         </div>
     
-        </div>
+    //     </div>
 
-    );
+    // );
+
+
+
+    return (
+  <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    {/* Centered page container with light background */}
+
+    <div className="bg-white shadow-xl rounded-xl p-8 w-full max-w-md">
+      {/* Card layout with shadow, rounded corners, padding */}
+
+      <h2 className="text-2xl font-extrabold text-yellow-500 text-center mb-6">
+        Email Verification
+      </h2>
+
+      {/* Verification message */}
+      <p className="text-gray-700 mt-5 mb-5 text-md whitespace-pre-line text-center">
+        {message}
+      </p>
+
+      {/* Optional hint when verification succeeded */}
+      {message.startsWith("✅") && (
+        <p className="text-gray-800 mt-8 text-sm text-center">
+          Close this tab and log in from your main window.
+        </p>
+      )}
+
+      {/* Resend form for failed verification */}
+      {(message.startsWith("❌") || reason === "oauth_unverified") && (
+        <>
+          <p className="text-gray-500 mt-6 text-sm text-center">
+            The verification link is invalid or expired.
+          </p>
+
+          <hr className="border-yellow-600 mt-6 mb-6" />
+
+          <div className="mt-6">
+            <p className="text-gray-500 mb-2 text-sm">Email & Password (OAuth Credentials)</p>
+
+            {/* Email Input */}
+            <input
+              type="email"
+              placeholder="Email"
+              value={resendEmail}
+              onChange={(e) => setResendEmail(e.target.value)}
+              className="w-full px-4 py-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent"
+            />
+
+            {/* Password with toggle */}
+            <div className="relative w-full mb-4">
+              <input
+                type={showResendPassword ? "text" : "password"}
+                placeholder="Password"
+                value={resendPassword}
+                onChange={(e) => setResendPassword(e.target.value)}
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent pr-12"
+              />
+              <span
+                onClick={() => setShowResendPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-yellow-500"
+                title={showResendPassword ? "Hide password" : "Show password"}
+              >
+                {showResendPassword ? "🙈" : "👁️"}
+              </span>
+            </div>
+
+            {/* Resend error message */}
+            {resendMsg && <p className="text-red-500 text-sm mb-3 text-center">{resendMsg}</p>}
+
+            {/* Resend button */}
+            <button
+              className="w-full bg-yellow-500 text-white py-3 rounded-lg font-bold hover:bg-yellow-600 transition mb-6"
+              onClick={handleResendVerification}
+            >
+              Resend Verification Email
+            </button>
+          </div>
+
+          {/* Back to login link */}
+          <div className="text-center">
+            <a
+              href="/login"
+              className="text-yellow-600 text-lg font-bold hover:text-yellow-800 hover:underline transition"
+            >
+              ⬅ Login
+            </a>
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+);
 };
 
 

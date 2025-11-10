@@ -1,5 +1,7 @@
 import React, { useState, useRef } from "react";
 
+import { logout } from "../appwrite";
+
 import CartDrawer from "./CartDrawer";
 
 import MobileMenuDrawer from "./MenuDrawer";
@@ -87,6 +89,17 @@ export default function Navbar()
 
         // console.log("User typed: ", e.target.value);
     }
+
+
+
+    // Logs the user out (via Appwrite) and redirects to login.
+
+        const handleLogout = async () =>
+        {
+            await logout();
+        
+            window.location.href = '/login';
+        };
 
 
     
@@ -181,8 +194,8 @@ export default function Navbar()
                             <img src="/icons/search.png" alt="FoodMart" className="h-11 justify-end bg-gray-100 hover:bg-gray-200 rounded-full p-2" />
             
                         </div>
+                        
 
-                      
                         <a href="/profile" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2">
                             
                             <img
@@ -250,6 +263,18 @@ export default function Navbar()
                             
                 
                         </div>
+                        
+                      
+                        <button 
+                        
+                            // className="mt-1 px-2 py-0.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg"
+                      
+                            onClick={handleLogout}
+                        >
+                            
+                        <img src="./icons/logout.png" alt="logout" className="mt-1 w-9 hover:w-10 rounded-full transition-all duration-75" />
+
+                        </button>
                    
                     </div>
 

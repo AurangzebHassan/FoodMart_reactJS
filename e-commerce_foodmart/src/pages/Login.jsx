@@ -500,204 +500,323 @@ const Login = () =>
 		};
 
 
-	if (checkingUser) return <p className="text-white text-center mt-6">Checking user status...</p>;
+	if (checkingUser) return <p className="text-black text-center mt-6">Checking user status...</p>;
 
 
 
 
+
+
+	// return (
+		
+	// 	<div className="">
+		
+	// 		<form className="" onSubmit={handleLogin}>
+
+				
+							
+	// 			<h2>Login</h2>
+				
+							
+	// 			<input
+
+	// 				type="email"
+
+	// 				placeholder="Email"
+
+	// 				value={email}
+
+	// 				onChange={(e) => setEmail(e.target.value)}
+
+	// 				required
+
+	// 			/>
+
+				
+	// 			{/* <input
+				
+	// 				type="password"
+					
+	// 				placeholder="Password"
+					
+	// 				value={password}
+					
+	// 				onChange={(e) => setPassword(e.target.value)}
+					
+	// 				required
+ 
+	// 			/> */}
+
+				
+	// 			{/* Password field with toggle eye */}
+					
+	// 				<div className="relative password-field mt-3">
+					
+	// 					<input
+							
+	// 						type={showPassword ? "text" : "password"}
+							
+	// 						placeholder="Password"
+							
+	// 						value={password}
+							
+	// 						onChange={(e) => setPassword(e.target.value)}
+							
+	// 						className="w-full pr-10"
+						
+	// 					/>
+						
+	// 					<span
+							
+	// 						onClick={() => setShowPassword((prev) => !prev)}
+							
+	// 						className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#7c5cff]"
+							
+	// 						title={showPassword ? "Hide password" : "Show password"}
+						
+	// 					>
+							
+	// 						{showPassword ? "🙈" : "👁️"}
+						
+	// 					</span>
+
+	// 				</div>
+
+
+
+	// 			{error && <p className="auth-error mt-3 mb-3">{error}</p>}
+
+
+
+	// 			{/* Only show resend button when needed */}
+
+				
+	// 			{showResend && (
+				
+	// 				<button
+				
+	// 					type="button"
+				
+	// 					className="auth-btn secondary mt-3 mb-3"
+				
+	// 					onClick={handleSendVerification}
+				
+	// 				>
+						
+	// 					Resend Verification Email
+					
+	// 				</button>
+				
+	// 			)}
+				
+
+	// 			<button type="submit" className="auth-btn">
+				
+	// 				Login
+				
+	// 			</button>
+
+				
+	// 			{/* Google sign-in button: disabled while showResend is true */}
+
+				
+	// 			<button
+				
+	// 				type="button"
+				
+	// 				className={`btn-165 google-btn mt-4 mb-1 ${showResend ? "opacity-50 cursor-not-allowed" : ""}`}
+					
+	// 				onClick={ handleGoogleClick }
+					
+	// 				disabled={showResend}
+				
+	// 			>
+				
+	// 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 262">
+				
+	// 					<path
+				
+	// 						fill="#4285F4"
+				
+	// 						d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
+	// 					>
+ 
+	// 					</path>
+
+						
+	// 					<path
+						
+	// 						fill="#34A853"
+							
+	// 						d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
+						
+	// 					>
+
+	// 					</path>
+
+						
+	// 					<path
+						
+	// 						fill="#FBBC05"
+						
+	// 						d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
+						
+	// 					>
+
+	// 					</path>
+
+						
+	// 					<path
+
+	// 						fill="#EB4335"
+							
+	// 						d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
+						
+	// 					>
+
+	// 					</path>
+					
+	// 				</svg>
+
+					
+	// 				<span> Continue with Google </span>
+				
+				
+	// 			</button>
+				
+
+	// 			<p className="muted">
+				
+	// 				Don't have an account? <a href="/signup">Sign up</a>
+				
+	// 			</p>
+
+
+
+	// 		</form>
+		
+	// 	</div>
+	
+	// );
 
 
 	return (
-		
-		<div className="auth-page">
-		
-			<form className="auth-card" onSubmit={handleLogin}>
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      {/* Centered container with light background */}
 
-				
-							
-				<h2>Login</h2>
-				
-							
-				<input
+      <form
+        onSubmit={handleLogin}
+        className="bg-white shadow-xl rounded-xl p-8 w-full max-w-md"
+        /* White card with padding, shadow, rounded corners, and responsive width */
+      >
+        <h2 className="text-2xl font-extrabold /*text-[#7c5cff]*/ text-yellow-500 text-center mb-6">
+          Login
+        </h2>
+        {/* Heading with theme color and spacing */}
 
-					type="email"
+        {/* Email Input */}
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="w-full px-4 py-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 /*focus:ring-[#7c5cff]*/ focus:ring-yellow-600 focus:border-transparent"
+          /* Full width, padding, rounded, focus ring matches theme */
+        />
 
-					placeholder="Email"
+        {/* Password Input with toggle */}
+        <div className="relative w-full mb-4">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 /*focus:ring-[#7c5cff]*/ focus:ring-yellow-600 focus:border-transparent pr-12"
+          />
+          {/* pr-12 ensures space for eye icon */}
 
-					value={email}
+          <span
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer /*text-[#7c5cff]*/ text-yellow-500"
+            title={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? "🙈" : "👁️"}
+          </span>
+        </div>
 
-					onChange={(e) => setEmail(e.target.value)}
+        {/* Error Message */}
+        {error && (
+          <p className="text-red-500 text-sm mb-3 text-center">{error}</p>
+        )}
 
-					required
+        {/* Resend Verification */}
+        {showResend && (
+          <button
+            type="button"
+            onClick={handleSendVerification}
+            className="w-full bg-yellow-500 /*text-[#7c5cff]*/ text-white py-3 rounded-lg font-bold mb-4 /*hover:bg-gray-200*/ hover:bg-yellow-600 focus focus:bg-yellow-600 transition"
+          >
+            Resend Verification Email
+          </button>
+        )}
 
-				/>
+        {/* Login Button */}
+        <button
+          type="submit"
+          className="w-full /*bg-[#7c5cff]*/ bg-yellow-500 text-white py-3 rounded-lg font-bold /*hover:bg-[#5a3ecc]/* hover:bg-yellow-600 focus focus:bg-yellow-600 transition mb-4"
+        >
+          Login
+        </button>
 
-				
-				{/* <input
-				
-					type="password"
-					
-					placeholder="Password"
-					
-					value={password}
-					
-					onChange={(e) => setPassword(e.target.value)}
-					
-					required
- 
-				/> */}
+        {/* Google Sign-in Button */}
+        <button
+          type="button"
+          onClick={handleGoogleClick}
+          disabled={showResend}
+          className={`w-full flex items-center justify-center gap-2 py-3 rounded-lg border border-gray-300 bg-gray-100 font-medium hover:bg-gray-300 focus:bg-gray-300 transition ${
+            showResend ? "opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 256 262"
+            className="w-5 h-5"
+          >
+            {/* Google colors path */}
+            <path
+              fill="#4285F4"
+              d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
+            ></path>
+            <path
+              fill="#34A853"
+              d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
+            ></path>
+            <path
+              fill="#FBBC05"
+              d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
+            ></path>
+            <path
+              fill="#EB4335"
+              d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
+            ></path>
+          </svg>
+          Continue with Google
+        </button>
 
-				
-				{/* Password field with toggle eye */}
-					
-					<div className="relative password-field mt-3">
-					
-						<input
-							
-							type={showPassword ? "text" : "password"}
-							
-							placeholder="Password"
-							
-							value={password}
-							
-							onChange={(e) => setPassword(e.target.value)}
-							
-							className="w-full pr-10"
-						
-						/>
-						
-						<span
-							
-							onClick={() => setShowPassword((prev) => !prev)}
-							
-							className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#7c5cff]"
-							
-							title={showPassword ? "Hide password" : "Show password"}
-						
-						>
-							
-							{showPassword ? "🙈" : "👁️"}
-						
-						</span>
-
-					</div>
-
-
-
-				{error && <p className="auth-error mt-3 mb-3">{error}</p>}
-
-
-
-				{/* Only show resend button when needed */}
-
-				
-				{showResend && (
-				
-					<button
-				
-						type="button"
-				
-						className="auth-btn secondary mt-3 mb-3"
-				
-						onClick={handleSendVerification}
-				
-					>
-						
-						Resend Verification Email
-					
-					</button>
-				
-				)}
-				
-
-				<button type="submit" className="auth-btn">
-				
-					Login
-				
-				</button>
-
-				
-				{/* Google sign-in button: disabled while showResend is true */}
-
-				
-				<button
-				
-					type="button"
-				
-					className={`btn-165 google-btn mt-4 mb-1 ${showResend ? "opacity-50 cursor-not-allowed" : ""}`}
-					
-					onClick={ handleGoogleClick }
-					
-					disabled={showResend}
-				
-				>
-				
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 262">
-				
-						<path
-				
-							fill="#4285F4"
-				
-							d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
-						>
- 
-						</path>
-
-						
-						<path
-						
-							fill="#34A853"
-							
-							d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
-						
-						>
-
-						</path>
-
-						
-						<path
-						
-							fill="#FBBC05"
-						
-							d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
-						
-						>
-
-						</path>
-
-						
-						<path
-
-							fill="#EB4335"
-							
-							d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
-						
-						>
-
-						</path>
-					
-					</svg>
-
-					
-					<span> Continue with Google </span>
-				
-				
-				</button>
-				
-
-				<p className="muted">
-				
-					Don't have an account? <a href="/signup">Sign up</a>
-				
-				</p>
-
-
-
-			</form>
-		
-		</div>
-	
-	);
+        {/* Signup Link */}
+        <p className="text-center text-gray-600 text-sm mt-6">
+          Don't have an account?{" "}
+          <a
+            href="/signup"
+            className="/*text-[#7c5cff]*/ text-yellow-600 hover:text-yellow-800 hover:underline"
+          >
+            Sign up
+          </a>
+        </p>
+      </form>
+    </div>
+  );
 };
 
 
