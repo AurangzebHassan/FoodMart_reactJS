@@ -65,6 +65,8 @@ export default function Navbar()
     const handleSearchIconClick = () =>
     {
         searchRef.current.focus();
+
+        searchRef.current?.select();
     }
 
 
@@ -76,9 +78,9 @@ export default function Navbar()
         // console.log("User typed: ", e.target.value);
     }
 
-    
-    
 
+    
+    
 
 
   return (
