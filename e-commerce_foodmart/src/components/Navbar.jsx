@@ -98,7 +98,7 @@ export default function Navbar()
                 
                 {/* Left section of the navbar */}
         
-                    <div className="flex shrink-0 items-center gap-2">
+                    <div className="flex shrink-0 items-center gap-2 transition-all duration-200">
                     
                         <a href="/">
                         
@@ -114,7 +114,7 @@ export default function Navbar()
                 
                 {/* should be visible only from the large(lg) breakpoint */}
 
-                    <div className="hidden lg:flex lg:shrink-0 items-center justify-center">
+                    <div className="hidden lg:flex lg:shrink-0 items-center justify-center transition-all duration-200">
                             
                       {/* departments dropdown */}
                         
@@ -163,7 +163,7 @@ export default function Navbar()
 
                 {/* Right side icons. Right side of the navbar */}
 
-                    <div className="flex shrink-0 justify-end items-center gap-3">
+                    <div className="flex shrink-0 justify-end items-center gap-3 transition-all duration-200">
                         
                       
                         <div className="lg:hidden cursor-pointer">
@@ -273,7 +273,7 @@ export default function Navbar()
 
     {/* Menu & dropdown placeholders */}
 
-        <section className="container mx-auto flex items-center justify-start pt-12 px-5">
+        <section className="container mx-auto flex items-center justify-start pt-12 px-5 transition-all duration-200">
 
             {/* Hamburger menu for menu and dropdowns */}
             
