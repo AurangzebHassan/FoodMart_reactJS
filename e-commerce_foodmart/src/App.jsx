@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 
 import { useState, useEffect } from "react";
 
-import { getCurrentUser } from "./appwrite";
+import { getCurrentUser } from "./appwrite/appwrite";
 
 import Login from "./pages/Login";
 
@@ -33,7 +33,7 @@ const ProtectedRoute = ({ children }) =>
       
   }, []);     // Runs once when component mounts.
 
-  
+
   if (checking) return <p className="text-white text-center mt-10">Checking authentication...</p>;
   
   if (!user) return <Navigate to="/login" replace />;   // Navigate redirects users (for example, here, to login if unauthenticated).

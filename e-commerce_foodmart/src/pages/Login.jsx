@@ -268,7 +268,7 @@
 
 import React, { useState, useEffect } from "react";
 
-import { login, getCurrentUser, sendVerificationEmail, loginWithGoogle } from "../appwrite.js";
+import { login, getCurrentUser, sendVerificationEmail, loginWithGoogle } from "../appwrite/appwrite.js";
 
 import { useLocation } from "react-router-dom";
 

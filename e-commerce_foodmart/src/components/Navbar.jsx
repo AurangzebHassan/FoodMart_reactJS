@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-import { logout } from "../appwrite";
+import { logout } from "../appwrite/appwrite";
 
 import CartDrawer from "./CartDrawer";
 
@@ -269,12 +269,12 @@ export default function Navbar()
                         
                             // className="mt-1 px-2 py-0.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg"
                             
-                            className="sm:ml-10 md:ml-15 transition-all duration-200"
+                            className="sm:ml-10 md:ml-15 transition-all duration-200 rounded-full mt-1"
                       
                             onClick={handleLogout}
                         >
                             
-                        <img src="./icons/logout.png" alt="logout" className="mt-1 w-9 sm:hover:w-10 rounded-full transition-all duration-75" />
+                        <img src="./icons/logout.png" alt="logout" className="w-9 hover:w-10 rounded-full transition-all duration-75" />
 
                         </button>
                    

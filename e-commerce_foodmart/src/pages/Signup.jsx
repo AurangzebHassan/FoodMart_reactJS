@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { signup } from "../appwrite";
+import { signup } from "../appwrite/appwrite";
 
 import { useNavigate } from "react-router";
 

@@ -63,6 +63,8 @@ export default function CartDrawer({ onClose })
             id: 1,
     
             name: "Heinz Tomato ketchup",
+
+            slug: "heinz-tomato-ketchup",
     
             price: 18,
     
@@ -76,13 +78,15 @@ export default function CartDrawer({ onClose })
         {
             id: 2,
         
-            name: "Sardine Can",
+            name: "Fruita Vitals Orange Juice",
+
+            slug: "fruita-vitals-orange-juice",
         
-            price: 12,
+            price: 22,
         
             qty: 2,
         
-            image: "/images/products/sardine_can.jpg",
+            image: "/images/products/orange_juice.png",
 
             description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ducimus?"
         },

@@ -18,7 +18,7 @@ import CategoryCard from "./CategoryCard";
 
 // Make sure the path is correct relative to this file (adjust "../appwrite" if needed).
 
-    import { database, Query, DATABASE_ID, CATEGORIES_TABLE_ID } from "../appwrite";
+    import { database, Query, DATABASE_ID, CATEGORIES_TABLE_ID } from "../appwrite/appwrite";
     
 
 
