@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import { formatPrice } from "../utils/formatPrice";
+
 
 
 export default function CartDrawer({ onClose })
@@ -66,7 +68,7 @@ export default function CartDrawer({ onClose })
 
             slug: "heinz-tomato-ketchup",
     
-            price: 18,
+            price: 18.05,
     
             qty: 1,
     
@@ -82,7 +84,7 @@ export default function CartDrawer({ onClose })
 
             slug: "fruita-vitals-orange-juice",
         
-            price: 22,
+            price: 22.69,
         
             qty: 2,
         
@@ -175,7 +177,7 @@ export default function CartDrawer({ onClose })
                 
                               alt={item.name}
                 
-                              className="w-20 h-20 rounded-lg object-scale-down"
+                              className="w-20 h-25 rounded-lg object-scale-down"
               
                           />
               
@@ -202,7 +204,7 @@ export default function CartDrawer({ onClose })
                             
                                     <p className="font-mono text-lg text-gray-800 font-semibold mt-1">{item.name}</p>
                             
-                                    <span className="text-white text-[20px] bg-yellow-500 px-3 rounded-full font-bold mt-1">
+                                    <span className="text-white text-[20px] bg-yellow-500 px-3 rounded-full font-bold mt-1 ml-8">
                             
                                       {item.qty}
                             
@@ -217,13 +219,17 @@ export default function CartDrawer({ onClose })
                                     
                                         <p className="text-gray-500 text-sm font-mono mt-6">
                                     
-                                            ${item.price}
+                                            {/* ${item.price} */}
+                                            
+                                            {formatPrice(item.price, "USD")}
                                     
                                         </p>
                                     
                                         <p className="text-gray-700 font-mono mt-6">
                                     
-                                            ${(item.price * item.qty).toFixed(2)}
+                                            {/* ${(item.price * item.qty).toFixed(2)} */}
+                                            
+                                            {formatPrice((((item.price * 100) * item.qty) / 100), "USD")}
                                     
                                         </p>
                                     
@@ -243,7 +249,7 @@ export default function CartDrawer({ onClose })
           
                   <p className="flex justify-between text-[19px] font-semibold">
             
-                      <span>Total (USD):</span> <span>${Math.floor(total_bill).toFixed(2)}</span>
+                      <span>Total (USD):</span> <span> {/* ${Math.floor(total_bill).toFixed(2)} */} {formatPrice(total_bill, "USD")} </span>
           
                   </p>
           
