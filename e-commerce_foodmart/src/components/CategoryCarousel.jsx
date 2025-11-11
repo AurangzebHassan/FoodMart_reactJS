@@ -14,11 +14,9 @@ import CategoryCard from "./CategoryCard";
 
 
 
-// import Appwrite helpers from your appwrite.js
+// import Appwrite helpers from your db.js
 
-// Make sure the path is correct relative to this file (adjust "../appwrite" if needed).
-
-    import { database, Query, DATABASE_ID, CATEGORIES_TABLE_ID } from "../appwrite/appwrite";
+  import { getAllCategories } from "../appwrite/db";
     
 
 
@@ -26,7 +24,7 @@ import CategoryCard from "./CategoryCard";
 
     CategoryCarousel (Appwrite-backend)
 
-    - On mount, fetch categories from Appwrite collection `CATEGORIES_TABLE_ID`.
+    - On mount, fetch categories from Appwrite collection `CATEGORIES_TABLE_ID` using db.js helper function.
 
     - Shows loading state while fetching.
 
@@ -128,39 +126,20 @@ export default function CategoryCarousel()
                 setError(null);
 
 
-                // Validate env constants
-                
-                    if (!DATABASE_ID || !CATEGORIES_TABLE_ID)
-                    {
-                        setError("Appwrite DATABASE_ID or CATEGORIES_TABLE_ID not configured.");
-
-                        // console.log("FUCK ME");
-                        
-                        setCategories(fallbackCategories);
-                        
-                        setLoading(false);
-                        
-                        return;
-                    }
-
-
-
                 try
-                {
-                    // database.listDocuments(dbId, collectionId, queries)
-                    
-                        const res = await database.listDocuments(DATABASE_ID, CATEGORIES_TABLE_ID, [Query.orderAsc("$createdAt")]);
+                {                  
+                    const docs = await getAllCategories();
 
                     
-                    // Appwrite returns objects in res.documents
+                    // Appwrite returns objects in docs
                     
                         if (mounted)
                         {
-                            if (res && Array.isArray(res.documents) && res.documents.length > 0)
+                            if (docs && docs.length > 0)
                             {
                                 // map documents to expected shape (ensure image_url exists)
                             
-                                    const mapped = res.documents.map((doc) => (
+                                    const mapped = docs.map((doc) => (
                                         
                                         {
                                             $id: doc.$id,
@@ -182,7 +161,7 @@ export default function CategoryCarousel()
                             {
                                 // no rows found — use fallback
                             
-                                setCategories(fallbackCategories);
+                                  setCategories(fallbackCategories);
                             }
                         }
                 }
