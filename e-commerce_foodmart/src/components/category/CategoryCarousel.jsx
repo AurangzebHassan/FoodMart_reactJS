@@ -16,7 +16,7 @@ import CategoryCard from "./CategoryCard";
 
 // import Appwrite helpers from your db.js
 
-  import { getAllCategories } from "../appwrite/db";
+  import { getAllCategories } from "../../appwrite/db";
     
 
 

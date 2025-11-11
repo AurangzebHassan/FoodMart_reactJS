@@ -145,6 +145,8 @@ import { database, DATABASE_ID, PRODUCTS_TABLE_ID, CATEGORIES_TABLE_ID, Query } 
                     // not relying on isNew. We're dynamically calculating the newness.
                     
                         Query.orderDesc("$createdAt"),
+                        
+                        Query.limit(7)
                 ]
             );
 

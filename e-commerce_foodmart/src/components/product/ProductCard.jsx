@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-import { ScrollRestoration, useNavigate } from "react-router-dom"; // 🟢 For navigation between routes
+import { useNavigate } from "react-router-dom"; // 🟢 For navigation between routes
 
-import { formatPrice } from "../utils/formatPrice";
+import { formatPrice } from "../../utils/formatPrice";
 
-import { formatRating } from "../utils/formatRating";
+import { formatRating } from "../../utils/formatRating";
 
-import { formatDiscount } from "../utils/formatDiscount";
+import { formatDiscount } from "../../utils/formatDiscount";
 
 
 
@@ -140,7 +140,7 @@ export default function ProductCard({ Product })
                                         
                                             className="flex justify-center items-center bg-gray-100 hover:bg-gray-200 w-7 font-bold rounded-md text-md"
                                         
-                                            onClick={() => setQuantity(++quantity)}
+                                            onClick={() => {if(quantity < Product.stock) setQuantity(++quantity)}}
                                     
                                         > + </button>
 
@@ -166,23 +166,32 @@ export default function ProductCard({ Product })
                         
                                 {/* Add to cart button */}
                                 
-                                    {(quantity > 0) && 
+                                    {/* {(quantity > 0) && 
                                     
                                         (
                                             <button
                                             
                                                 className="font-semibold text-gray-400 hover:text-gray-500 cursor-pointer transition-all duration-300"
-                                        
-                                                // className={`font-semibold ${quantity ? "text-gray-500 hover:text-gray-600 cursor-pointer" : "text-gray-400"}`}
                                             
-                                                // disabled={quantity === 0}    
                                             > 
                                             
                                                 Add to Cart 
                                             
                                             </button> 
                                         )
-                                    }
+                                    } */}
+                                    
+                    
+                                    <button
+                                    
+                                        className={`font-semibold ${quantity ? "text-gray-500 hover:text-gray-600 cursor-pointer" : "text-gray-400"}`}
+                                    
+                                        disabled={quantity === 0}    
+                                    > 
+                                    
+                                        Add to Cart 
+                                    
+                                    </button> 
                     
                             </div>
 
