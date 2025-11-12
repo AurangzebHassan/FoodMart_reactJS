@@ -110,36 +110,6 @@ import { Permission, Role } from "appwrite"
 
     /* ------------------- 🟩 5. Get new arrivals ------------------- */
 
-        // export async function getNewProducts()
-        // {
-        //     try
-        //     {
-        //         const res = await database.listDocuments(DATABASE_ID, PRODUCTS_TABLE_ID,
-                    
-        //             [
-        //                 Query.equal("isNew", true),
-            
-        //                 Query.orderDesc("$createdAt"),
-        //             ]
-        //         );
-            
-        //         return res.documents;
-        //     }
-        
-        //     catch (err)
-        //     {
-        //         console.error("Error fetching new products:", err);
-            
-        //         return [];
-        //     }
-        // }
-        
-        
-
-        // appwrite/db.js
-
-            
-
         export async function getNewProducts()
         {
             try
@@ -221,6 +191,20 @@ import { Permission, Role } from "appwrite"
 
 
     /* ------------------- 🟩 7. Create user profile (if missing) ------------------- */
+    
+        // ------------------------ START: Helper to get stored profile pic ------------------------
+
+            function getStoredProfilePic(email)
+            {
+                // sanitize email if needed
+
+                const username = email.split("@")[0];
+
+                return `/images/user_profile_pics/${username}_pfp.jpeg`;
+            }
+
+        // ------------------------ FINISH: Helper to get stored profile pic ------------------------
+
 
         export async function createUserProfile(user)
         {
@@ -245,7 +229,7 @@ import { Permission, Role } from "appwrite"
                 
                             email: user.email,
                 
-                            profile_pic: "/icons/user.png",
+                            profile_pic: getStoredProfilePic(user.email) || "/icons/user.svg",
 
                             bio: null,
                 
@@ -271,6 +255,7 @@ import { Permission, Role } from "appwrite"
                     );
 
                 console.log(res);
+                
 
                 return res;
             }
@@ -381,6 +366,8 @@ import { Permission, Role } from "appwrite"
 
             const user = await account.get();
 
+            // console.log("check profile field", user);
+
             let profile = await getUserProfile(user.$id);
 
             console.log("Existing profile:", profile);
@@ -436,6 +423,44 @@ import { Permission, Role } from "appwrite"
                 }
             }
 
+            else
+            {
+                // ------------------------ START: Sync existing profile if changed ------------------------
 
-        return profile;
+                    // google users could change their name (username), email or their profile pics 
+        
+                        const updates = {};
+            
+            
+                    
+                        if (profile.name !== user.name && user.name) updates.name = user.name;
+            
+                
+                
+                        // if (profile.profile_pic !== user.prefs?.picture && user.prefs?.picture) updates.profile_pic = user.prefs.picture;
+                        
+                        const storedPic = getStoredProfilePic(user.email);
+
+                        if (profile.profile_pic !== storedPic) updates.profile_pic = storedPic;
+        
+                
+            
+                        if (profile.email !== user.email) updates.email = user.email;
+
+                    
+                    
+                        if (Object.keys(updates).length > 0)
+                        {
+                            await database.updateDocument(DATABASE_ID, USERS_TABLE_ID, profile.$id, updates);
+                    
+                            console.log("Profile synced with OAuth:", updates);
+                    
+                            profile = await getUserProfile(user.$id); // fetch updated profile
+                        }
+            
+                // ------------------------ FINISH: Sync existing profile if changed ------------------------
+            }
+
+
+            return profile;
         }

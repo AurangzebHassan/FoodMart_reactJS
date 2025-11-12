@@ -143,7 +143,7 @@ const Login = () =>
 				}
 
 
-			console.log("before redirection to home");
+			// console.log("before redirection to home");
 
 
 			// No logs or documents -> window.location.href cancels async before they start -> Replace with navigate()
@@ -163,7 +163,7 @@ const Login = () =>
 					navigate("/", { replace: true });
 			
 			
-			console.log("after redirection to home");
+			// console.log("after redirection to home");
 		} 
 		
 		catch (err)
