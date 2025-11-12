@@ -10,7 +10,7 @@ export default function HeroSection()
       
         {/* Left main banner */}
       
-            <div className="relative bg-blue-100 rounded-2xl p-8 overflow-hidden w-[610px] h-[805px] md:w-[740px] md:h-[805px] lg:w-[510px] lg:h-[750px] xl:w-[600px] xl:h-[750px] 2xl:w-[680px] 2xl:h-[750px] transition-all duration-200">
+            <div className="relative bg-blue-100 hover:-translate-y-3 hover:translate-x-1 hover:bg-blue-200 rounded-2xl p-8 overflow-hidden w-[610px] h-[805px] md:w-[740px] md:h-[805px] lg:w-[510px] lg:h-[750px] xl:w-[600px] xl:h-[750px] 2xl:w-[680px] 2xl:h-[750px] transition-all duration-200">
             
                 <div className="ml-6 mt-1">
             
@@ -47,7 +47,7 @@ export default function HeroSection()
             
                     alt="Smoothie"
 
-                    className="absolute sm:right-8 sm:bottom-70 sm:w-65 md:right-2 md:bottom-45 md:w-90 lg:-right-3 lg:bottom-45 lg:w-60 xl:right-2 xl:bottom-50 xl:w-70 2xl:-right-3 2xl:bottom-30 2xl:w-85 drop-shadow-lg"
+                    className="absolute hover:-translate-10 sm:right-8 sm:bottom-70 sm:w-65 md:right-2 md:bottom-45 md:w-90 lg:-right-3 lg:bottom-45 lg:w-60 xl:right-2 xl:bottom-50 xl:w-70 2xl:-right-3 2xl:bottom-30 2xl:w-85 drop-shadow-lg transition-all duration-200"
 
                 />
         
@@ -58,9 +58,9 @@ export default function HeroSection()
       
         {/* Right side small promos */}
       
-            <div className="lg:col-span-2 lg:ml-[200px] md:mr-0 flex flex-col gap-6">
+            <div className="lg:col-span-2 lg:ml-[200px] md:mr-0 flex flex-col gap-6 transition-all duration-200">
         
-              <div className="bg-[url('./images/hero/veggie_border.png')] bg-cover rounded-2xl flex items-center justify-between p-6 sm:w-[610px] md:w-[740px] lg:w-[450px] xl:w-[620px] 2xl:w-[790px] h-90 transition-all duration-200">
+              <div className="bg-[url('./images/hero/veggie_border.png')] bg-cover hover:bg-center hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-6 sm:w-[610px] md:w-[740px] lg:w-[450px] xl:w-[620px] 2xl:w-[790px] h-90 transition-all duration-200">
           
                 <div className="ml-8">
             
@@ -82,7 +82,7 @@ export default function HeroSection()
               </div>
 
 
-              <div className="bg-[url('./images/hero/bread_border.png')] bg-cover bg-no-repeat rounded-2xl flex items-center justify-between p-6 sm:w-[610px] md:w-[740px] lg:w-[450px] xl:w-[620px] 2xl:w-[790px] h-92 transition-all duration-200">
+              <div className="bg-[url('./images/hero/bread_border.png')] bg-cover bg-no-repeat hover:bg-center hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-6 sm:w-[610px] md:w-[740px] lg:w-[450px] xl:w-[620px] 2xl:w-[790px] h-92 transition-all duration-200">
 
                   <div className="ml-8">
 
