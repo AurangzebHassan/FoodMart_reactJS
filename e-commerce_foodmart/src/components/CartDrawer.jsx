@@ -92,42 +92,20 @@ export default function CartDrawer({ onClose })
 
             description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ducimus?"
         },
+
+    ]
+
+
+
+    const total_bill = items.reduce((sum, i) => sum + i.price * i.qty, 0);
+
+    const total_quantity = items.reduce((sum, i) => sum + i.qty, 0);
+
+
+    
+    
+    
         
-
-        // Key for how a product's data is going to be saved in appwrite.
-        
-            // {
-            //     "name": "Heinz Tomato Ketchup",
-                
-            //     "slug": "heinz-tomato-ketchup",
-                
-            //     "category_id": "cat_groceries_123",
-                
-            //     "price": 18,
-                
-            //     "stock": 120,
-                
-            //     "image": "/images/products/heinz_tomato_ketchup.png",
-                
-            //     "description": "Classic Heinz ketchup made from fresh tomatoes.",
-                
-            //     "is_new": true,
-                
-            //     "is_trending": true
-            // }
-    ];
-
-
-
-  const total_bill = items.reduce((sum, i) => sum + i.price * i.qty, 0);
-
-  const total_quantity = items.reduce((sum, i) => sum + i.qty, 0);
-
-    
-    
-    
-    
-    
   return (
     
       <div
@@ -150,7 +128,7 @@ export default function CartDrawer({ onClose })
                     </button>
 
                 </div>
-
+    
               
               <div className="flex justify-between items-center mb-8 mt-4">
           

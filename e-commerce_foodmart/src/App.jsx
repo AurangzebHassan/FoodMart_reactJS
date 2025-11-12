@@ -93,11 +93,45 @@ const ProtectedRoute = ({ children }) =>
 
 
 
+// const ProtectedRoute = ({ children, profile, sessionChecked }) => {
+//   // 🟨 Step 1 — wait until App has finished checking session/profile
+//   if (!sessionChecked) {
+//     return (
+//       <div className="flex h-screen w-full items-center justify-center text-3xl font-extrabold bg-yellow-500 text-white">
+//         Loading...
+//       </div>
+//     );
+//   }
+
+//   // 🟨 Step 2 — if no profile, redirect to login
+//   if (!profile) return <Navigate to="/login" replace />;
+
+//   // 🟨 Step 3 — handle email verification for non-OAuth users
+//   const isOAuthUser = profile?.identities && profile.identities.length > 0;
+//   if (!isOAuthUser && !profile.emailVerification) {
+//     return <Navigate to="/verify-email" replace />;
+//   }
+
+//   // 🟩 Step 4 — otherwise render children
+//   return children;
+// };
+
+
+
 
 
 
 function App()
 {
+	// 🟩 Add new global states for profile and loading
+  
+		// const [profile, setProfile] = useState(null);
+  
+		// const [sessionChecked, setSessionChecked] = useState(false);
+
+
+
+
 	// 🟩 Add a global useEffect that ensures user profile after any login or OAuth redirect
   
 		useEffect(() =>
@@ -119,24 +153,60 @@ function App()
 						console.log("🌐 Session detected:", user.email);
 					
 						await ensureUserProfile();
+
+						// const userProfile = await ensureUserProfile();
+
+						// setProfile(userProfile); // <--- store profile globally
 					}
 					
 					else
 					{
 						console.log("❌ No active session found.");
+
+						// setProfile(null);
 					}
 				}
 			
 				catch (err)
 				{
 					console.warn("⚠️ App init failed:", err.message);
+
+					// setProfile(null);
 				}
+
+				// finally
+				// {
+				// 	// 🟩 Ensure UI only renders after everything finishes
+
+				// 		setSessionChecked(true); // <--- indicate that session check is done
+				// }
 			};
 
 
 			init();
 
 		}, []); // 🟩 runs only once at app load
+	
+	
+	
+	// // 🟩 Show nothing until session is confirmed
+  
+	// 	if (!sessionChecked)
+	// 	{
+	// 		return (
+				
+	// 			<>
+				
+	// 				<div className="flex h-screen w-full items-center justify-center text-3xl font-extrabold font-mono bg-yellow-500 text-white ">
+
+	// 					Loading...
+
+	// 				</div>
+				
+	// 			</>
+
+	// 		)
+	// 	} 
 
 
 
@@ -144,19 +214,14 @@ function App()
 
 
   return (
- 
     <>
-      
       <Router>
-
         <Routes>
+          <Route path="/login" element={<Login />} />
 
-          <Route path="/login" element={ <Login /> } />
-          
-          <Route path="/signup" element={ <Signup /> } />
-          
-          <Route path="/verify-email" element={ <VerifyEmail /> } />
-          
+          <Route path="/signup" element={<Signup />} />
+
+          <Route path="/verify-email" element={<VerifyEmail />} />
 
           <Route path="/" element=
           
@@ -172,13 +237,26 @@ function App()
           
           />
 
-        </Routes>
-
+          {/* 🟩 Protected route — pass profile + sessionChecked
+          
+				  <Route
+            
+					  	path="/"
+            
+						element=
+					  	{
+							<ProtectedRoute profile={profile} sessionChecked={sessionChecked}>
+                	
+								<Home loggedInUser={profile} />
+              
+						  	</ProtectedRoute>
+						}
+          		/> */}
+			  
+			  </Routes>			  
       </Router>
-
     </>
-
-  )
+  );
 }
 
 

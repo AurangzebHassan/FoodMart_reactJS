@@ -194,13 +194,31 @@ import { Permission, Role } from "appwrite"
     
         // ------------------------ START: Helper to get stored profile pic ------------------------
 
-            function getStoredProfilePic(email)
+            export function getStoredProfilePic(email)
             {
-                // sanitize email if needed
-
                 const username = email.split("@")[0];
 
-                return `/images/user_profile_pics/${username}_pfp.jpeg`;
+                const possibleExtensions = [".jpeg", ".jpg", ".png", ".svg"];
+
+                
+                for (let ext of possibleExtensions)
+                {
+                    const path = `/images/user_profile_pics/${username}_pfp${ext}`;
+
+                    // console.log("pfp path: ", path);
+                
+
+                    // Check if image exists (this is async in the browser)
+                
+                    // We'll optimistically return the first path; if the file doesn't exist, browser shows broken image
+                
+                        return path;
+                }
+
+
+                // Fallback default
+                    
+                    return "/icons/user.svg";
             }
 
         // ------------------------ FINISH: Helper to get stored profile pic ------------------------
@@ -364,9 +382,41 @@ import { Permission, Role } from "appwrite"
 
             console.log("ensureUserprofile() called");
 
-            const user = await account.get();
 
-            // console.log("check profile field", user);
+
+            // const user = await account.get();
+
+                let user = null;
+
+                for (let i = 0; i < 3; i++)
+                {
+                    // retry up to 3 times
+                    
+                        try
+                        {
+                            user = await account.get();
+                        
+                        
+                            if (user) break;
+                        }
+                    
+                        catch
+                        {
+                            console.warn("Appwrite session not ready yet, retrying...");
+                            
+                            await new Promise((res) => setTimeout(res, 500)); // wait 0.5 sec
+                        }
+                }
+
+
+                if (!user)
+                {
+                    console.error("No Appwrite session detected after retries.");
+                
+                    return null;
+                }
+
+
 
             let profile = await getUserProfile(user.$id);
 
@@ -440,6 +490,8 @@ import { Permission, Role } from "appwrite"
                         // if (profile.profile_pic !== user.prefs?.picture && user.prefs?.picture) updates.profile_pic = user.prefs.picture;
                         
                         const storedPic = getStoredProfilePic(user.email);
+                        
+                        console.log("stored pic path", storedPic);
 
                         if (profile.profile_pic !== storedPic) updates.profile_pic = storedPic;
         
@@ -453,7 +505,7 @@ import { Permission, Role } from "appwrite"
                         {
                             await database.updateDocument(DATABASE_ID, USERS_TABLE_ID, profile.$id, updates);
                     
-                            console.log("Profile synced with OAuth:", updates);
+                            console.log("Profile synced with OAuth Provider:", updates);
                     
                             profile = await getUserProfile(user.$id); // fetch updated profile
                         }

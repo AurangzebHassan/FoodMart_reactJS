@@ -8,7 +8,7 @@ import NewArrivalsCarousel from "../components/product/NewArrivalsCarousel";
 
 
 
-export default function Home()
+export default function Home( /*{ loggedInUser }*/ )
 {
   // const product = {
   //   $id: "6911f09b0018b147c00d",

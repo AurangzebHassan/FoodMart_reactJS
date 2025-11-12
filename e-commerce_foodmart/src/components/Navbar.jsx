@@ -2,6 +2,8 @@ import React, { useState, useRef } from "react";
 
 import { logout } from "../appwrite/appwrite";
 
+// import { getStoredProfilePic } from "../appwrite/db";
+
 import CartDrawer from "./CartDrawer";
 
 import MobileMenuDrawer from "./MenuDrawer";
@@ -10,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-export default function Navbar()
+export default function Navbar( /*{ loggedInUser }*/ )
 {
     // opening of the cart drawer is dependent on this state
 
@@ -32,10 +34,8 @@ export default function Navbar()
     // we'll focus on the text input when the search button is clicked
 
         const searchRef = useRef(null);
+        
 
-        
-        
-    
     // state to hold the search input
 
         const [searchInput, setSearchInput] = useState("");
@@ -100,12 +100,12 @@ export default function Navbar()
         
             window.location.href = '/login';
         };
+ 
+
 
 
     
     
-
-
   return (
     <>
       
@@ -137,7 +137,7 @@ export default function Navbar()
                 
                 {/* should be visible only from the large(lg) breakpoint */}
 
-                    <div className="hidden lg:flex lg:shrink-0 items-center justify-center transition-all duration-200">
+                    <div className="hidden lg:flex lg:shrink lg:max-2xl:ml-3  2xl:w-3xl items-center justify-center transition-all duration-200">
                             
                       {/* departments dropdown */}
                         
@@ -186,7 +186,7 @@ export default function Navbar()
 
                 {/* Right side icons. Right side of the navbar */}
 
-                    <div className="flex shrink-0 justify-end items-center gap-3 transition-all duration-200">
+                    <div className="flex shrink-0 justify-end items-center lg:ml-3 2xl:-ml:20 gap-3 transition-all duration-200">
                         
                       
                         <div className="lg:hidden cursor-pointer">
@@ -200,6 +200,8 @@ export default function Navbar()
                             
                             <img
 
+                                // src={loggedInUser ? getStoredProfilePic(loggedInUser.email) : "/icons/user.svg"}
+                                
                                 src="/icons/user.svg"
                     
                                 alt="User"
@@ -232,7 +234,7 @@ export default function Navbar()
                           
                                 onClick={() => setOpenCart(true)}
                           
-                            className="xl:ml-10 2xl:ml-12 relative cursor-pointer flex flex-row justify-between"
+                            className="xl:ml-8 xl:mr-4 2xl:ml-12 2xl:mr-10 relative cursor-pointer flex flex-row justify-between"
                 
                         >
                             
@@ -263,20 +265,32 @@ export default function Navbar()
                             
                 
                         </div>
-                        
-                      
-                        <button 
-                        
-                            // className="mt-1 px-2 py-0.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg"
-                            
-                            className="sm:ml-10 md:ml-15 transition-all duration-200 rounded-full mt-1"
-                      
-                            onClick={handleLogout}
-                        >
-                            
-                        <img src="./icons/logout.png" alt="logout" className="w-9 hover:w-10 rounded-full transition-all duration-75" />
 
-                        </button>
+                      
+                        {/* <div className="flex items-center gap-2 sm:ml-5 md:ml-18 lg:ml-6 2xl:ml-12 mt-1">
+                          
+                            <span className="text-lg font-extrabold font-mono text-red-600">
+                            
+                                {loggedInUser ? loggedInUser?.name : "Guest"}
+
+                            </span> */}
+                        
+                      
+                            <button 
+                            
+                                // className="mt-1 px-2 py-0.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg"
+                                
+                                className="mt-1 md:ml-5 lg:ml-10 xl:ml-5 transition-all duration-200 rounded-full"
+                        
+                                onClick={handleLogout}
+                            >
+                                
+                                <img src="./icons/logout.png" alt="logout" className="w-9 hover:w-10 rounded-full transition-all duration-75" />
+
+                            </button>
+
+                        {/* </div> */}
+                        
                    
                     </div>
 
@@ -336,7 +350,7 @@ export default function Navbar()
                     
                     <div className="hidden lg:flex text-xl text-gray-700">
                         
-                        <select name="departments" id="departments" value={selectedDepartment} onChange={handleDepartmentChange} className="justify-start mr-20 focus:borde hover:text-gray-900 py-2 bg-gray-100 text-center rounded-lg">
+                        <select name="departments" id="departments" value={selectedDepartment} onChange={handleDepartmentChange} className="justify-start lg:mr-22 xl:mr-21 2xl:mr-27 focus:borde hover:text-gray-900 py-2 bg-gray-100 text-center rounded-lg">
 
                                 <option value="shopbydepartments"> Shop by Departments </option>
                             
