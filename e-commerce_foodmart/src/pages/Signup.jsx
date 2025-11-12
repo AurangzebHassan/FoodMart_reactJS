@@ -55,80 +55,7 @@ const Signup = () =>
 
 
 
-
-  // return (
-    
-  //   <div className="auth-page">
-      
-  //     <form className="auth-card" onSubmit={handleSignup}>
-        
-  //       <h2>Create Account</h2>
-        
-
-  //       <input type="text" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required />
-        
-  //       <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        
-  //       {/* <input type="password" placeholder="Password (min 8 chars)" value={password} onChange={(e) => setPassword(e.target.value)} required /> */}
-
-  //       {/* Password field with visibility toggle */}
-
-  //         <div className="relative password-field">
-    
-  //           <input
-      
-  //             type={showPassword ? "text" : "password"}
-      
-  //             placeholder="Password"
-      
-  //             value={password}
-      
-  //             onChange={(e) => setPassword(e.target.value)}
-      
-  //             required
-      
-  //             className="w-full pr-10"
-    
-  //           />
-    
-  //           <span
-      
-  //             onClick={() => setShowPassword((prev) => !prev)}
-      
-  //             className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-[#7c5cff]"
-      
-  //             title={showPassword ? "Hide password" : "Show password"}
-    
-  //           >
-      
-  //             {showPassword ? "🙈" : "👁️"}
-    
-  //           </span>
-
-  //         </div>
-
-        
-
-  //       {error && <p className="auth-error">{error}</p>}
-        
-
-  //       <button className="auth-btn mb-1" type="submit">Sign up</button>
-
-        
-  //       <p className="muted">
-          
-  //         Already have an account? <a href="/login">Login</a>
-        
-  //       </p>
-      
-  //     </form>
-    
-  //   </div>
-
-  // );
-
-
-
+  
   return (
   <div className="flex items-center justify-center min-h-screen bg-gray-50">
     {/* Centered page container with light background */}
@@ -150,7 +77,7 @@ const Signup = () =>
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
-        className="w-full px-4 py-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent"
+        className="w-full font-mono px-4 py-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent"
       />
       {/* Full width, padding, rounded, focus ring yellow */}
 
@@ -161,7 +88,7 @@ const Signup = () =>
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className="w-full px-4 py-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent"
+        className="w-full font-mono px-4 py-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent"
       />
 
       {/* Password Input with toggle */}
@@ -172,7 +99,7 @@ const Signup = () =>
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent pr-12"
+          className="w-full font-mono px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent pr-12"
           /* pr-12 leaves space for the eye icon */
         />
         <span

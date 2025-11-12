@@ -329,7 +329,7 @@
 
 
 
-import { Client, Databases, ID, Query, Account, Permission, Role } from 'appwrite';
+import { Client, Databases, ID, Query, Account } from 'appwrite';
 
 
 
@@ -343,7 +343,7 @@ import { Client, Databases, ID, Query, Account, Permission, Role } from 'appwrit
     
     export const PRODUCTS_TABLE_ID = import.meta.env.VITE_APPWRITE_PRODUCTS_TABLE_ID;    // products table
 
-    export const CART_TABLE_ID = import.meta.env.VITE_APPWRITE_CART_TABLE_ID;    // cart table
+    export const USERS_TABLE_ID = import.meta.env.VITE_APPWRITE_USERS_TABLE_ID;    // users table
 
 
 
@@ -955,7 +955,7 @@ import { Client, Databases, ID, Query, Account, Permission, Role } from 'appwrit
                 
                 catch (err)
                 {
-                    console.err(`Error getting current user: ${err}`);
+                    console.error(`Error getting current user: ${err}`);
 
                     return null;    // Returns null if not logged in (session expired, etc.).
 

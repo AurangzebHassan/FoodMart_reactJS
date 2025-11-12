@@ -200,15 +200,15 @@ export default function NewArrivalsCarousel()
       {/* 🟩 SWIPER SECTION */}
       <Swiper
         modules={[Navigation]}
-        spaceBetween={0}
+        spaceBetween={30}
         slidesPerView={3}
         style={{ overflow: "visible" }}
         breakpoints={{
-          320: { slidesPerView: 3, spaceBetween: 0 },
-          640: { slidesPerView: 3, spaceBetween: 0 },
-          1024: { slidesPerView: 3, spaceBetween: 0 },
-          1280: { slidesPerView: 4, spaceBetween: 0 },
-          1536: { slidesPerView: 5, spaceBetween: 0 },
+          320: { slidesPerView: 1, spaceBetween: 20 },
+          640: { slidesPerView: 2, spaceBetween: 20 },
+          1024: { slidesPerView: 3, spaceBetween: 30 },
+          1280: { slidesPerView: 4, spaceBetween: 30 },
+          1536: { slidesPerView: 5, spaceBetween: 30 },
         }}
         onInit={(swiper) => {
           swiper.params.navigation.prevEl = prevRef.current;

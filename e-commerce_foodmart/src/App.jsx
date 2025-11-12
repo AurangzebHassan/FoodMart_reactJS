@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 
 import { getCurrentUser } from "./appwrite/appwrite";
 
+import { ensureUserProfile } from "./appwrite/db";
+
 import Login from "./pages/Login";
 
 import Signup from "./pages/Signup";
@@ -96,6 +98,51 @@ const ProtectedRoute = ({ children }) =>
 
 function App()
 {
+	// 🟩 Add a global useEffect that ensures user profile after any login or OAuth redirect
+  
+		useEffect(() =>
+		{
+			const init = async () =>
+			{
+				try
+				{
+					// Wait 1s to let OAuth session settle after redirect
+
+						await new Promise(res => setTimeout(res, 1000));
+
+					
+					const user = await getCurrentUser();
+					
+					
+					if (user)
+					{
+						console.log("🌐 Session detected:", user.email);
+					
+						await ensureUserProfile();
+					}
+					
+					else
+					{
+						console.log("❌ No active session found.");
+					}
+				}
+			
+				catch (err)
+				{
+					console.warn("⚠️ App init failed:", err.message);
+				}
+			};
+
+
+			init();
+
+		}, []); // 🟩 runs only once at app load
+
+
+
+
+
+
   return (
  
     <>
