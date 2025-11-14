@@ -48,22 +48,22 @@ export default function Home( /*{ loggedInUser }*/ )
 
   return (
 
-      <>
-      
-          <Navbar />
-      
-          <HeroSection />
-          
-      
-          <div className="mt-10 mb-30">
-          
+        <>
+        
+            <Navbar />
+
+            <HeroSection />
+
+
+            <div className="mt-10 mb-30">
+            
             <CategoryCarousel />
             
             <NewArrivalsCarousel />
             
-          </div>
+            </div>
 
-      </>
+        </>
 
-  );
+    );
 }

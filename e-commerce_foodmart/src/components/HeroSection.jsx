@@ -10,7 +10,7 @@ export default function HeroSection()
       
         {/* Left main banner */}
       
-            <div className="relative bg-blue-100 hover:-translate-y-3 hover:translate-x-1 hover:bg-blue-200 rounded-2xl p-8 overflow-hidden w-[610px] h-[805px] md:w-[740px] md:h-[805px] lg:w-[510px] lg:h-[750px] xl:w-[600px] xl:h-[750px] 2xl:w-[680px] 2xl:h-[750px] transition-all duration-200">
+            <div className="relative bg-blue-100 hover:-translate-y-3 hover:translate-x-1 rounded-2xl p-8 overflow-hidden w-[610px] h-[805px] md:w-[740px] md:h-[805px] lg:w-[510px] lg:h-[750px] xl:w-[600px] xl:h-[750px] 2xl:w-[680px] 2xl:h-[750px] transition-all duration-200">
             
                 <div className="ml-6 mt-1">
             
