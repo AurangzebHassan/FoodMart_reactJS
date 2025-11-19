@@ -66,7 +66,7 @@ export default function HeroSection()
             
                     <p className="text-black text-4xl font-serif mb-2 mt-4">20% Off</p>
                     
-                    <p className="flex flex-row mb-2">一一一一一 <pre> 𝑺𝑨𝑳𝑬 </pre></p>
+                    <div className="flex flex-row mb-2">一一一一一 <pre> 𝑺𝑨𝑳𝑬 </pre></div>
                     
             
                     <h3 className="text-4xl font-semibold mb-6 mr-[150px]">Fruits &amp; Vegetables</h3>
@@ -88,7 +88,7 @@ export default function HeroSection()
 
                       <p className="text-black text-4xl font-serif mb-2">15% Off</p>
 
-                        <p className="flex flex-row mb-2">一一一一一 <pre> 𝑺𝑨𝑳𝑬 </pre></p>
+                        <div className="flex flex-row mb-2">一一一一一 <pre> 𝑺𝑨𝑳𝑬 </pre></div>
 
 
                       <h3 className="text-4xl font-semibold mb-6 mr-[250px]">Baked Products</h3>

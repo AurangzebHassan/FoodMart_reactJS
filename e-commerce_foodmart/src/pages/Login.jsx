@@ -6,10 +6,16 @@ import { ensureUserProfile } from "../appwrite/db.js";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
+import { useAuth } from "../context/AuthContext.jsx";
+
 
 
 const Login = () =>
 {
+	const { setUser, setProfile } = useAuth();
+
+
+
 	const [email, setEmail] = useState("");
 
 	const [password, setPassword] = useState("");
@@ -132,7 +138,11 @@ const Login = () =>
 				{
 					const profile = await ensureUserProfile();
 
-					await new Promise((r) => setTimeout(r, 2000));
+					setProfile(profile);
+
+					setUser(user);
+
+					// await new Promise((r) => setTimeout(r, 2000));
 				
 					console.log("User profile ensured:", profile);
 				}
@@ -275,31 +285,22 @@ const Login = () =>
 			
 			// After redirect, ensure profile exists in useEffect
 		};
-	
-	
-	
-	useEffect(() =>
-	{
-		const initProfile = async () =>
-		{
-			const user = await getCurrentUser();
-	
-	
-			if (user)
-			{
-				await ensureUserProfile(); // creates profile if missing
-			}
-		};
 
-		initProfile();
-	},
+	
+	
+	if (checkingUser) return (
+
+		<div className="flex w-full h-screen items-center justify-center bg-yellow-500">
+
+			<p className="text-3xl font-bold text-white text-center">
 		
-		[]
+				Checking User Status...
 	
+			</p>
+
+		</div>
+
 	);
-
-
-	if (checkingUser) return <p className="text-black text-center mt-6">Checking user status...</p>;
 
 
 

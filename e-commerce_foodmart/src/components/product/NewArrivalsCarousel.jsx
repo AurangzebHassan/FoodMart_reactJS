@@ -50,7 +50,7 @@ export default function NewArrivalsCarousel()
             price: 18,
             currency: "USD",
             stock: 5,
-            image_url: "/images/products/heinz-tomato-ketchup.png",
+            image_url: "/images/products/heinz_tomato_ketchup.png",
             rating: 4.6,
             discount_tag: "-30%",
             },

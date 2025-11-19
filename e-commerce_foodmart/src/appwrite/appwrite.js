@@ -430,7 +430,7 @@ import { Client, Databases, ID, Query, Account } from 'appwrite';
                     
                     try
                     {
-                            await account.createEmailPasswordSession({ email, password });
+                        await account.createEmailPasswordSession({ email, password });
                     }
                     
                     catch (err)
@@ -640,49 +640,6 @@ import { Client, Databases, ID, Query, Account } from 'appwrite';
 
             // A clean start
         
-                // export const loginWithGoogle = async () =>
-                // {
-                //     try
-                //     {
-                //         // This triggers Appwrite -> Google OAuth flow. Appwrite will redirect user to Google's login,
-                    
-                //         // then Appwrite will create a session and redirect back to the success URL.
-
-                //         // appwrite auto creates user and session on first google login.
-
-                //         // This is why we don't need a login with google button on signup page.
-
-                //         // Oauth itself is both signup and login.
-                    
-                //             await account.createOAuth2Session(
-                    
-                //                 // OAuthProvider.Google,
-
-                //                 'google',
-                    
-                //                 `${window.location.origin}/`,     // success redirect (after OAuth completes and session created)
-                    
-                //                 `${window.location.origin}/login` // failure redirect (optional)
-                    
-                //             );
-                    
-                        
-                //         // Note: createOAuth2Session triggers a redirect; code after this line won't run.
-                //     }
-                    
-                //     catch (error)
-                //     {
-                //         console.error("Google login error:", error);
-                    
-                    
-                //         // Show friendly alert
-                    
-                //             alert("⚠️ Failed to sign in with Google. Please try again.");
-                //     }
-                // };
-                
-
-
                 // ✅ SAFE GOOGLE LOGIN HANDLER — no more invalid verification link issues
                     
                     export const loginWithGoogle = async () => 
@@ -691,17 +648,17 @@ import { Client, Databases, ID, Query, Account } from 'appwrite';
                         {
                             // 1️⃣ Clean up any stale or partial sessions first
                             
-                                try
-                                {
-                                    await account.deleteSessions();
+                                // try
+                                // {
+                                //     await account.deleteSessions();
                                     
-                                    console.log("✅ Cleared old sessions before OAuth login");
-                                } 
+                                //     console.log("✅ Cleared old sessions before OAuth login");
+                                // } 
                                 
-                                catch (err)
-                                {
-                                    console.warn("⚠️ No existing session to delete (safe to ignore):", err);
-                                }
+                                // catch (err)
+                                // {
+                                //     console.warn("⚠️ No existing session to delete (safe to ignore):", err);
+                                // }
 
                             
                             // 2️⃣ Wait a short delay to avoid Appwrite's rate limit (prevents 429)
@@ -752,55 +709,6 @@ import { Client, Databases, ID, Query, Account } from 'appwrite';
 
 
 
-
-
-
-
-    // // Function to verify email.
-    
-    //     export const verifyEmail = async (userId, secret) =>
-    //     {
-    //         try
-    //         {
-    //             return await account.updateVerification(userId, secret);
-    //         }
-            
-    //         catch (err)
-    //         {
-    //             console.error("Verification failed:", err);
-            
-    //             throw err;
-    //         }
-    //     };
-
-
-
-    // // Function to send verification email.
-    
-    //     export const sendVerificationEmail_ = async () =>
-    //     {
-    //         try
-    //         {
-    //             // Replace URL with your frontend's verification route
-            
-    //                 await account.createVerification(`${window.location.origin}/verify-email`);
-            
-    //                 alert("Verification email sent! Please check your inbox.");
-    //         }
-            
-    //         catch (err)
-    //         {
-    //             console.error("Failed to send verification email:", err);
-            
-    //             alert("Could not send verification email. Try logging in again.");
-    //         }
-    //     };
-
-
-    
-
-
-
     // Function to send verification email to already present unverified users
     
         // Function to resend verification email to already registered (unverified) users
@@ -846,15 +754,15 @@ import { Client, Databases, ID, Query, Account } from 'appwrite';
                 {
                     // Always clear any existing session before logging in.
                        
-                        try
-                        {
-                            await account.deleteSession("current");
-                        }
+                        // try
+                        // {
+                        //     await account.deleteSession("current");
+                        // }
                     
-                        catch (error)
-                        {
-                            console.warn("No existing session to delete (safe to ignore): ", error);
-                        }
+                        // catch (error)
+                        // {
+                        //     console.warn("No existing session to delete (safe to ignore): ", error);
+                        // }
 
                     
                     // Wait briefly to avoid rate limit collision
@@ -869,7 +777,49 @@ import { Client, Databases, ID, Query, Account } from 'appwrite';
                         password,
                     });
 
-                    const user = await account.get();
+                    // const user = await account.get();
+
+
+
+                    // After session creation, retry account.get() until it returns user (Appwrite may be eventual)
+    
+                    let user = null;
+    
+
+                    for (let i = 0; i < 6; i++)
+                    {
+                        try
+                        {
+                            user = await account.get();
+        
+        
+                            if (user) break;
+                        }
+                        
+                        catch (err)
+                        {
+                            console.warn(`login(): account.get() attempt ${i + 1} failed:`, err);
+        
+                            // If it fails with 401 and subsequent attempts also fail, continue retries
+                        }
+      
+                        await new Promise(r => setTimeout(r, 400 + i * 200));
+                    }
+
+    
+                    if (!user)
+                    {
+                        // No user after retries — do NOT delete current; instead surface a clear error
+      
+                          console.error("login(): account.get() returned null after retries.");
+      
+                        const e = new Error("NO_SESSION_AFTER_LOGIN");
+      
+                        e.code = "NO_SESSION_AFTER_LOGIN";
+      
+                        throw e;
+                    }
+
 
 
                     // // 🟢 Check if user’s email is verified

@@ -1,5 +1,7 @@
 import React, { useState, useRef } from "react";
 
+import { useAuth } from "../context/AuthContext";
+
 import { logout } from "../appwrite/appwrite";
 
 // import { getStoredProfilePic } from "../appwrite/db";
@@ -14,6 +16,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function Navbar( /*{ loggedInUser }*/ )
 {
+    const { user, profile, setUser, setProfile } = useAuth();
+
+
+
     // opening of the cart drawer is dependent on this state
 
         const [openCart, setOpenCart] = useState(false);
@@ -55,8 +61,6 @@ export default function Navbar( /*{ loggedInUser }*/ )
     
             if (e.target.value !== "shopbydepartments")
             {
-                // window.location.href = `/${e.target.value.toLowerCase()}`;
-
                 navigate(`/${e.target.value.toLowerCase()}`);
             }
     }
@@ -66,8 +70,6 @@ export default function Navbar( /*{ loggedInUser }*/ )
     const handlePageChange = (e) =>
     {
         setSelectedPage(e.target.value);
-
-        // window.location.href = `/${e.target.value.toLowerCase()}`;
 
         navigate(`/${e.target.value.toLowerCase()}`);
     }
@@ -96,9 +98,15 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
         const handleLogout = async () =>
         {
-            await logout();
-        
-            window.location.href = '/login';
+            await logout();     // clear appwrite session
+
+            
+            setUser(null);       // clear AuthContext user
+    
+            setProfile(null);    // clear AuthContext profile
+
+
+            navigate('/login');
         };
  
 
@@ -137,7 +145,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                 
                 {/* should be visible only from the large(lg) breakpoint */}
 
-                    <div className="hidden lg:flex lg:shrink lg:max-2xl:ml-3  2xl:w-3xl items-center justify-center transition-all duration-200">
+                    <div className="hidden lg:flex lg:shrink lg:max-2xl:ml-3 2xl:w-3xl items-center justify-center transition-all duration-200">
                             
                       {/* departments dropdown */}
                         
@@ -174,7 +182,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                               
                               ref={searchRef}
                               
-                              className="lg:w-50 xl:w-80 2xl:w-120 p-3 text-yellow-600 placeholder:text-xl placeholder:font-semibold font-extrabold" />
+                              className="lg:w-17 xl:w-61 2xl:w-93 p-3 text-yellow-600 placeholder:text-xl placeholder:font-semibold font-extrabold" />
 
                             <img src="/icons/search.png" alt="FoodMart" className="h-12 p-3" onClick={handleSearchIconClick} />
 
@@ -186,27 +194,41 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
                 {/* Right side icons. Right side of the navbar */}
 
-                    <div className="flex shrink-0 justify-end items-center lg:ml-3 2xl:-ml:20 gap-3 transition-all duration-200">
+                    <div className="flex shrink-0 justify-end items-center xl:-ml-4 2xl:-ml:20 gap-3 transition-all duration-200">
                         
                       
-                        <div className="lg:hidden cursor-pointer">
+                        <div className="lg:hidden">
                       
-                            <img src="/icons/search.png" alt="FoodMart" className="h-11 justify-end bg-gray-100 hover:bg-gray-200 rounded-full p-2" />
+                            <img src="/icons/search.png" alt="FoodMart" className="h-11 p-2 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer" />
             
                         </div>
                         
 
-                        <a href="/profile" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2">
+                        <a 
+                        
+                          href="/profile" 
+                          
+                        //   className={`bg-gray-100 hover:bg-gray-200 rounded-full ${(profile?.profile_pic !== "/icons/user.svg" || getStoredProfilePic(user?.email) !== "/icons/user.svg") ? `` : `p-2`}`}
+                        
+                            className="bg-gray-100 hover:bg-gray-200 rounded-full p-2"
+                        
+                        >
                             
                             <img
 
-                                // src={loggedInUser ? getStoredProfilePic(loggedInUser.email) : "/icons/user.svg"}
+                                // src={(profile || user) ? (getStoredProfilePic(user?.email) || profile.profile_pic) : "/icons/user.svg"}
                                 
                                 src="/icons/user.svg"
                     
-                                alt="User"
+                              
+                                alt={(profile || user) ? "User" : "Guest"}
+                                
+                                title={(profile || user) ? (profile?.name || user?.name) : "Guest"}
                     
-                                className="sm:h-7 cursor-pointer"
+                              
+                              // className={(profile?.profile_pic !== "/icons/user.svg" || getStoredProfilePic(user?.email) !== "/icons/user.svg") ? "h-10 cursor-pointer rounded-full" : "h-7 cursor-pointer"}
+                              
+                              className="h-7 cursor-pointer"
                                 
                             />
 
@@ -234,7 +256,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                           
                                 onClick={() => setOpenCart(true)}
                           
-                            className="xl:ml-8 xl:mr-4 2xl:ml-12 2xl:mr-10 relative cursor-pointer flex flex-row justify-between"
+                            className="xl:ml-3 xl:mr-4 2xl:ml-10 2xl:mr-11 relative cursor-pointer flex flex-row justify-between"
                 
                         >
                             
@@ -267,20 +289,35 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         </div>
 
                       
-                        {/* <div className="flex items-center gap-2 sm:ml-5 md:ml-18 lg:ml-6 2xl:ml-12 mt-1">
+                        <div className="flex items-center gap-2 sm:ml-5 md:ml-9 lg:ml-7 xl:ml-0 2xl:ml-3 mt-1">
                           
-                            <span className="text-lg font-extrabold font-mono text-red-600">
+                            <span className="lg:hidden text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
                             
-                                {loggedInUser ? loggedInUser?.name : "Guest"}
+                                {user ? user?.name.slice(0, 8) + "..." : "Guest"}
+                                {/* Guest */}
 
-                            </span> */}
+                            </span>
+                            
+                            <span className="hidden lg:max-xl:flex text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
+                            
+                                {user ? user?.name.slice(0, 10) + "..." : "Guest"}
+                                {/* Guest */}
+
+                            </span>
+                            
+                            <span className="hidden xl:flex text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
+                            
+                                {user ? user?.name.slice(0, 12) : "Guest"}
+                                {/* Guest */}
+
+                            </span>
                         
                       
                             <button 
                             
                                 // className="mt-1 px-2 py-0.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg"
                                 
-                                className="mt-1 md:ml-5 lg:ml-10 xl:ml-5 transition-all duration-200 rounded-full"
+                                // className="mt-1 md:ml-5 lg:ml-10 xl:ml-5 transition-all duration-200 rounded-full"
                         
                                 onClick={handleLogout}
                             >
@@ -289,7 +326,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
                             </button>
 
-                        {/* </div> */}
+                        </div>
                         
                    
                     </div>

@@ -126,12 +126,20 @@ import { Permission, Role } from "appwrite"
                 );
 
 
-                // Filter client-side: last 7 days
-            
-                    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+                // Time-based
+                    
+                    // Filter client-side: last 7 days
+                
+                        // const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
 
-                return all.documents.filter(prod => new Date(prod.$createdAt) >= sevenDaysAgo);            
+                    // return all.documents.filter(prod => new Date(prod.$createdAt) >= sevenDaysAgo);
+
+                
+
+                // recency-based
+
+                    return (all.documents);
             }
             
             catch (err)
@@ -158,7 +166,7 @@ import { Permission, Role } from "appwrite"
 
         export async function getUserProfile(userId)
         {
-            console.log("getUserprofile() called");
+            console.log("\t\tgetUserprofile() called");
 
             try
             {
@@ -226,7 +234,15 @@ import { Permission, Role } from "appwrite"
 
         export async function createUserProfile(user)
         {
-            console.log("createUserprofile() called");
+            console.log("\t\tcreateUserprofile() called");
+
+
+
+            const existingProfile = await getUserProfile(user.$id);
+    
+            if (existingProfile) return existingProfile; // don’t create a new one
+
+
 
             try
             {
@@ -297,222 +313,90 @@ import { Permission, Role } from "appwrite"
 
     /* ------------------- 🟩 8. Use above 2 helpers to ensure user profile/doc is created ------------------- */
 
-        
-    // 1️⃣ Where hasEnsuredProfile lives In your db.js:
-
-        // let hasEnsuredProfile = false; // local guard
-        // export async function ensureUserProfile() {
-        //     if (hasEnsuredProfile) return;
-        //     hasEnsuredProfile = true;
-        //     ...
-        // }
-
-
-        // hasEnsuredProfile is declared at the module level in db.js.
-
-        // That means it exists once per module, not per function call.
-
-        // Any call to ensureUserProfile() that imports this module will share the same variable.
-
-
-    // 2️⃣ How imports work
-
-        //     In App.jsx or Login.jsx you do something like:
-
-        //     import { ensureUserProfile } from "./db.js";
-
-
-        //     JavaScript ES modules are singletons.
-
-        //     No matter how many files import db.js, the module is executed once.
-
-        //     That means hasEnsuredProfile is shared across all imports.
-
-        //     So:
-
-        //     ensureUserProfile(); // first call
-        //     ensureUserProfile(); // second call
-
-
-        //     First call → hasEnsuredProfile is false, function runs, sets it to true.
-
-        //     Second call → hasEnsuredProfile is now true, function returns immediately, preventing duplicate execution.
-
-
-    // 3️⃣ Why it works across App.jsx and Login.jsx
-
-        //     Even if you call ensureUserProfile() in two different components, they both import the same db.js module, so they see the same hasEnsuredProfile:
-
-        //     App.jsx               Login.jsx
-        //         │                     │
-        //         ├─ import ensureUserProfile ─┐
-        //         │                             │
-        //         └─ calls ensureUserProfile() ─┘
-
-
-        //     First component that runs sets hasEnsuredProfile = true.
-
-        //     Any subsequent call from another component sees it and skips execution.
-
-
-    // 4️⃣ Key points
-
-        //     Module-level variable = shared across imports → singleton behavior.
-
-        //     Prevents duplicate profile creation within the same tab/session.
-
-        //     Does not prevent duplication across different browser tabs (for that you rely on the Appwrite unique constraint).
-
-
-    // 💡 Analogy:
-        
-        //    Think of hasEnsuredProfile as a “flag on the door” in your db.js module.Once one function sets it to true, everyone else who tries to go through that door sees it’s already closed.
-
-
-            let hasEnsuredProfile = false; // local guard
-
-
-        export async function ensureUserProfile() 
+        export async function ensureUserProfile()
         {
-            if (hasEnsuredProfile) return;
+          console.log("\t\tensureUserprofile() called");
 
-            hasEnsuredProfile = true;
+          let user = null;
 
+          // retry to get Appwrite session (handles OAuth redirects and Appwrite eventual consistency)
 
-
-            console.log("ensureUserprofile() called");
-
-
-
-            // const user = await account.get();
-
-                let user = null;
-
-                for (let i = 0; i < 3; i++)
-                {
-                    // retry up to 3 times
-                    
-                        try
-                        {
-                            user = await account.get();
-                        
-                        
-                            if (user) break;
-                        }
-                    
-                        catch
-                        {
-                            console.warn("Appwrite session not ready yet, retrying...");
-                            
-                            await new Promise((res) => setTimeout(res, 500)); // wait 0.5 sec
-                        }
-                }
-
-
-                if (!user)
-                {
-                    console.error("No Appwrite session detected after retries.");
-                
-                    return null;
-                }
-
-
-
-            let profile = await getUserProfile(user.$id);
-
-            console.log("Existing profile:", profile);
-
-            
-            if (!profile)
-            {
-                try
-                {
-                    // Optional small delay to avoid race with another tab/component
-        
-                    await new Promise((res) => setTimeout(res, 200));
-            
-                    
-                    // Double-check if profile exists (another call might have created it)
-        
-                    const doubleCheck = await getUserProfile(user.$id);
-
-                    
-                    if (!doubleCheck)
-                    {
-                        // Attempt creation (unique constraint on `user_id` prevents duplicates)
-
-                            await createUserProfile(user);
-        
-                        
-                        profile = await getUserProfile(user.$id);
-
-                        console.log("Profile created successfully", profile);
-                    }
-
-                    else
-                    {
-                        profile = doubleCheck;
-            
-                        console.log("Profile already created by another call:", profile);
-                    }
-                }
-                
-                catch (err)
-                {
-                    if (err.code === 409)
-                    {
-                        console.warn("User profile already exists (unique constraint).");
-            
-                        profile = await getUserProfile(user.$id); // fetch the existing one
-                    }
-                    
-                    else
-                    {
-                        console.error("Failed to create user profile:", err);
-                    }
-                }
+          for (let i = 0; i < 3; i++) {
+            try {
+              user = await account.get();
+              if (user) break;
+            } catch {
+              console.warn("Appwrite session not ready yet, retrying...");
+              await new Promise((res) => setTimeout(res, 500));
             }
+          }
 
-            else
-            {
-                // ------------------------ START: Sync existing profile if changed ------------------------
+          if (!user) {
+            console.error("No Appwrite session detected after retries.");
+            return null;
+          }
 
-                    // google users could change their name (username), email or their profile pics 
-        
-                        const updates = {};
-            
-            
-                    
-                        if (profile.name !== user.name && user.name) updates.name = user.name;
-            
-                
-                
-                        // if (profile.profile_pic !== user.prefs?.picture && user.prefs?.picture) updates.profile_pic = user.prefs.picture;
-                        
-                        const storedPic = getStoredProfilePic(user.email);
-                        
-                        console.log("stored pic path", storedPic);
+          // Fetch all profiles for this user_id
+          let profiles = await database.listDocuments(
+            DATABASE_ID,
+            USERS_TABLE_ID,
+            [Query.equal("user_id", user.$id)]
+          );
 
-                        if (profile.profile_pic !== storedPic) updates.profile_pic = storedPic;
-        
-                
-            
-                        if (profile.email !== user.email) updates.email = user.email;
+          let profile = null;
 
-                    
-                    
-                        if (Object.keys(updates).length > 0)
-                        {
-                            await database.updateDocument(DATABASE_ID, USERS_TABLE_ID, profile.$id, updates);
-                    
-                            console.log("Profile synced with OAuth Provider:", updates);
-                    
-                            profile = await getUserProfile(user.$id); // fetch updated profile
-                        }
-            
-                // ------------------------ FINISH: Sync existing profile if changed ------------------------
+          if (profiles.documents.length === 0) {
+            // No profile exists → create one
+            await createUserProfile(user);
+            profile = await getUserProfile(user.$id);
+            console.log("Profile created successfully:", profile);
+          } else if (profiles.documents.length === 1) {
+            // Only one profile exists → use it
+            profile = profiles.documents[0];
+          } else {
+            // Duplicate profiles detected → keep newest, delete others
+            console.warn("Duplicate profiles detected for user_id:", user.$id);
+
+            // Sort by createdAt descending → newest first
+            profiles.documents.sort(
+              (a, b) => new Date(b.$createdAt) - new Date(a.$createdAt)
+            );
+
+            profile = profiles.documents[0];
+
+            // Delete all older duplicates
+            for (let i = 1; i < profiles.documents.length; i++) {
+              await database.deleteDocument(
+                DATABASE_ID,
+                USERS_TABLE_ID,
+                profiles.documents[i].$id
+              );
+              console.log(
+                "Deleted duplicate profile:",
+                profiles.documents[i].$id
+              );
             }
+          }
 
+          // Sync profile fields with current user info
+          const updates = {};
+          const storedPic = getStoredProfilePic(user.email);
 
-            return profile;
+          if (profile.name !== user.name && user.name) updates.name = user.name;
+          if (profile.email !== user.email) updates.email = user.email;
+          if (profile.profile_pic !== storedPic)
+            updates.profile_pic = storedPic;
+
+          if (Object.keys(updates).length > 0) {
+            await database.updateDocument(
+              DATABASE_ID,
+              USERS_TABLE_ID,
+              profile.$id,
+              updates
+            );
+            console.log("Profile synced with OAuth Provider:", updates);
+            profile = await getUserProfile(user.$id); // refresh
+          }
+
+          return profile;
         }

@@ -138,14 +138,14 @@ export default function ProductCard({ Product })
                                     
                                         <button 
                                         
-                                            className="flex justify-center items-center bg-gray-100 hover:bg-gray-200 w-7 font-bold rounded-md text-md"
+                                            className="flex cursor-pointer justify-center items-center bg-gray-100 hover:bg-gray-200 w-7 font-bold rounded-md text-md"
                                         
                                             onClick={() => {if(quantity < Product.stock) setQuantity(++quantity)}}
                                     
                                         > + </button>
 
                             
-                                        <span className="font-mono"> 
+                                        <span className="font-mono cursor-default"> 
                                         
                                             {quantity} 
                                         
@@ -154,7 +154,7 @@ export default function ProductCard({ Product })
                             
                                         <button 
                                         
-                                            className="flex justify-center items-center bg-gray-100 hover:bg-gray-200 w-6 font-bold rounded-md text-md"
+                                            className="flex cursor-pointer justify-center items-center bg-gray-100 hover:bg-gray-200 w-6 font-bold rounded-md text-md"
                                             
                                             onClick={() => {if(quantity > 0) setQuantity(--quantity)}}
                                             
