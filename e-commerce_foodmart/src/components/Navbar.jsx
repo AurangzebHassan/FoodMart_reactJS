@@ -1,10 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import { useAuth } from "../context/AuthContext";
 
 import { logout } from "../appwrite/appwrite";
 
 // import { getStoredProfilePic } from "../appwrite/db";
+
+import { getCartItems } from "../appwrite/db";
 
 import CartDrawer from "./CartDrawer";
 
@@ -100,7 +102,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
         {
             await logout();     // clear appwrite session
 
-            
+
             setUser(null);       // clear AuthContext user
     
             setProfile(null);    // clear AuthContext profile
@@ -108,12 +110,34 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
             navigate('/login');
         };
+    
+    
+    
+    const [cartQuantity, setCartQuantity] = useState(0);
+
+    const refreshCartCount = async () => {
+      if (!user) return;
+      const items = await getCartItems(user.$id);
+
+      // ⭐ CHANGED: total quantity instead of unique items
+      const totalQty = items.reduce((sum, i) => sum + i.quantity, 0);
+
+      setCartQuantity(totalQty);
+    };
+
+
+
+    // initial load
+    useEffect(() => {
+      refreshCartCount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user]);
+
  
 
 
 
-    
-    
+        
   return (
     <>
       
@@ -277,9 +301,9 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                 />
                                 
                     
-                                <span className="absolute -top-4 -right-3 font-bold bg-yellow-500 hover:bg-yellow-600 text-white text-md rounded-full px-2">
+                                <span className="absolute -top-4 -right-3 font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full px-2">
                         
-                                    3
+                                    {cartQuantity}
                     
                                 </span>
 
@@ -343,7 +367,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
       
           {/* if cart is allowed to open, open it and pass the function to close the drawer to the drawer component. */}
 
-            {openCart && <CartDrawer onClose={() => setTimeout(() => setOpenCart(false), 0)} />}
+            {openCart && <CartDrawer onClose={() => setTimeout(() => setOpenCart(false), 0)} onCartChange={refreshCartCount} />}
                 
           
 

@@ -1,4 +1,4 @@
-import { account, database, DATABASE_ID, PRODUCTS_TABLE_ID, CATEGORIES_TABLE_ID, USERS_TABLE_ID, Query } from "./appwrite.js";
+import { account, database, DATABASE_ID, PRODUCTS_TABLE_ID, CATEGORIES_TABLE_ID, USERS_TABLE_ID, CART_TABLE_ID, Query } from "./appwrite.js";
 
 import { Permission, Role } from "appwrite"
 
@@ -399,4 +399,178 @@ import { Permission, Role } from "appwrite"
           }
 
           return profile;
+        }
+
+
+
+
+
+
+
+
+
+
+// ------------------- CART COLLECTION ----------------------------------------------------------------------
+
+
+    // 1️⃣ Get all cart items for a user
+        
+            export async function getCartItems(userId) 
+            {
+                try
+                {
+                    const res = await database.listDocuments(
+                    
+                        DATABASE_ID,
+                    
+                        CART_TABLE_ID,
+                    
+                        [Query.equal("user_id", userId)]
+                    );
+                
+                    return res.documents;
+                }
+                
+                catch (err)
+                {
+                    console.error("Error fetching cart items:", err);
+                
+                    return [];
+                }
+            }
+
+
+
+    // 2️⃣ Add/update a cart item (if exists, increment qty)
+    
+        export async function addOrUpdateCartItem(userId, productId, quantity = 1) 
+        {
+            try
+            {
+                const existingItems = await database.listDocuments(
+            
+                    DATABASE_ID,
+            
+                    CART_TABLE_ID,
+            
+                    [
+                        Query.equal("user_id", userId),
+            
+                        Query.equal("product_id", productId)
+                    ]
+                );
+
+
+                if (existingItems.documents.length > 0)
+                {
+                    // Update quantity as product already exists in cart
+                
+                        const item = existingItems.documents[0];
+                    
+                        const newQty = item.quantity + quantity;
+                    
+                            const updated = await database.updateDocument(
+                        
+                                DATABASE_ID,
+                        
+                                CART_TABLE_ID,
+                        
+                                item.$id,
+                        
+                                { quantity: newQty }
+                            );
+                    
+                    return updated;
+                }
+                
+                else
+                {
+                    // Create new cart doc a product is new to cart
+                
+                        const created = await database.createDocument(
+                    
+                            DATABASE_ID,
+                    
+                            CART_TABLE_ID,
+                    
+                            "unique()",
+                    
+                            {
+                                user_id: userId,
+                    
+                                product_id: productId,
+                    
+                                quantity: quantity,
+                            },
+                    
+                            [
+                    
+                                Permission.read(Role.user(userId)),
+                    
+                                Permission.update(Role.user(userId)),
+                    
+                                Permission.delete(Role.user(userId))
+                    
+                            ]
+                        );
+                
+                    
+                    return created;
+                }
+            }
+            
+            catch (err)
+            {
+                console.error("Error adding/updating cart item:", err);
+            
+                return null;
+            }
+        }
+
+
+
+    // 3️⃣ Remove a cart item
+    
+        export async function removeCartItem(cartItemId) 
+        {
+            try
+            {
+                await database.deleteDocument(DATABASE_ID, CART_TABLE_ID, cartItemId);
+            
+                return true;
+            } 
+            
+            catch (err)
+            {
+                console.error("Error removing cart item:", err);
+            
+                return false;
+            }
+        }
+
+
+
+    // 4️⃣ Clear cart (after checkout)
+    
+        export async function clearUserCart(userId) 
+        {
+            try
+            {
+                const items = await getCartItems(userId);
+            
+            
+                for (let item of items)
+                {
+                    await database.deleteDocument(DATABASE_ID, CART_TABLE_ID, item.$id);
+                }
+                
+                return true;
+            } 
+            
+            catch (err)
+            {
+                console.error("Error clearing user cart:", err);
+            
+                return false;
+            }
         }

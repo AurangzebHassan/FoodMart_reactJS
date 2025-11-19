@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 
+import { useAuth } from "../../context/AuthContext";
+
+import { addOrUpdateCartItem } from "../../appwrite/db";
+
 import { useNavigate } from "react-router-dom"; // 🟢 For navigation between routes
 
 import { formatPrice } from "../../utils/formatPrice";
@@ -22,7 +26,11 @@ import { formatDiscount } from "../../utils/formatDiscount";
 
 export default function ProductCard({ Product })
 {
-    // stae to hold the counter quantity
+    const { user } = useAuth();
+    
+    
+    
+    // state to hold the counter quantity
 
     let [quantity, setQuantity] = useState(0);
 
@@ -38,6 +46,46 @@ export default function ProductCard({ Product })
             if (!Product.slug) return; // safety check
         
             navigate(`/product/${Product.slug}`);
+        };
+    
+    
+    
+    // Add to Cart handler
+    
+        const handleAddToCart = async () =>
+        {
+            if (!user)
+            {
+                alert("You need to log in first.");
+            
+                return;
+            }
+            
+            
+            if (quantity === 0) return;
+
+
+            try
+            {
+                // 🔥 Add/update cart in Appwrite
+            
+                // addOrUpdateCartItem(userId, productId, quantity)
+            
+                    await addOrUpdateCartItem(user.$id, Product.$id, quantity);
+
+                alert(`${quantity}× ${Product.name} added to cart!`);
+
+
+                // Reset counter to 0 after adding
+                
+                    setQuantity(0);
+
+            }
+            
+            catch (error)
+            {
+                console.error("Failed to add to cart:", error);
+            }
         };
 
 
@@ -140,7 +188,7 @@ export default function ProductCard({ Product })
                                         
                                             className="flex cursor-pointer justify-center items-center bg-gray-100 hover:bg-gray-200 w-7 font-bold rounded-md text-md"
                                         
-                                            onClick={() => {if(quantity < Product.stock) setQuantity(++quantity)}}
+                                            onClick={() => {if(quantity < Product.stock) setQuantity(quantity + 1)}}
                                     
                                         > + </button>
 
@@ -156,7 +204,7 @@ export default function ProductCard({ Product })
                                         
                                             className="flex cursor-pointer justify-center items-center bg-gray-100 hover:bg-gray-200 w-6 font-bold rounded-md text-md"
                                             
-                                            onClick={() => {if(quantity > 0) setQuantity(--quantity)}}
+                                            onClick={() => {if(quantity > 0) setQuantity(quantity - 1)}}
                                             
                                         > − </button>
 
@@ -186,7 +234,9 @@ export default function ProductCard({ Product })
                                     
                                         className={`font-semibold ${quantity ? "text-gray-500 hover:text-gray-600 cursor-pointer" : "text-gray-400"}`}
                                     
-                                        disabled={quantity === 0}    
+                                        disabled={quantity === 0}
+                                        
+                                        onClick={handleAddToCart}
                                     > 
                                     
                                         Add to Cart 
