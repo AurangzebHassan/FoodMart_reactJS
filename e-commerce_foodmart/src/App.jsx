@@ -49,6 +49,10 @@ import Home from "./pages/Home";
 
 
 
+import { CartProvider } from "./context/CartContext";
+
+
+
 
 
 
@@ -244,33 +248,37 @@ function App()
 	  
 			<AuthProvider>
 		
-				<Router>
+				<CartProvider>
+					
+					<Router>
 				
-					<Routes>
+						<Routes>
+					
+							<Route path="/login" element={<Login />} />
+
+							<Route path="/signup" element={<Signup />} />
 				
-						<Route path="/login" element={<Login />} />
+							<Route path="/verify-email" element={<VerifyEmail />} />
 
-						<Route path="/signup" element={<Signup />} />
-			
-						<Route path="/verify-email" element={<VerifyEmail />} />
+							<Route path="/" element=      
+							
+								{
+					
+									<ProtectedRoute>
+					
+									<Home />
 
-						<Route path="/" element=      
-						
-							{
+									</ProtectedRoute>
+
+								}
 				
-								<ProtectedRoute>
-				
-								<Home />
+							/>
 
-								</ProtectedRoute>
+						</Routes>			  
 
-							}
-			
-						/>
+					</Router>
 
-					</Routes>			  
-
-				</Router>
+				</CartProvider>
 			
 			</AuthProvider>
     

@@ -175,7 +175,7 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
           {["Women", "Men", "Kids", "Accessories"].map((item) => (
             <li key={item}>
               <button
-                onClick={() => navigateTo(`/${item.toLowerCase()}`)}
+                onClick={(e) => {e.preventDefault(); navigateTo(`/${item.toLowerCase()}`)}}
                 className="w-full text-left px-1 py-3 rounded hover:text-yellow-600"
               >
                 {item}
@@ -247,7 +247,7 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
           {["Brand", "Sale", "Blog"].map((item) => (
             <li key={item}>
               <button
-                onClick={() => navigateTo(`/${item.toLowerCase()}`)}
+                onClick={(e) => {e.preventDefault(); navigateTo(`/${item.toLowerCase()}`)}}
                 className="w-full text-left px-1 py-3 rounded hover:text-yellow-600"
               >
                 {item}

@@ -33,17 +33,18 @@ const currencySymbols = {
   INR: "₹",
 };
 
-export function formatPrice(price, currencyCode, discount_tag = "-0%") {
-  const symbol = currencySymbols[currencyCode] || currencyCode; // fallback to code if symbol not found
+export function formatPrice(price, currencyCode = "USD", discount_tag = "-0%") {
+  const symbol = currencySymbols[currencyCode] || currencyCode;
 
-  // Extract numeric part from the discount string
-  const match = discount_tag.match(/-?\d+(\.\d+)?/);
+  // SAFETY: normalize discount_tag so null / undefined never crash
+  const safeTag = typeof discount_tag === "string" ? discount_tag : "-0%";
+
+  // Extract the number
+  const match = safeTag.match(/-?\d+(\.\d+)?/);
   const discount_value = match ? parseFloat(match[0]) : 0;
 
-  // Apply discount
-    const discountedPrice = price - (price * discount_value) / 100;
+  // Calculate
+  const discountedPrice = price - (price * discount_value) / 100;
 
-
-  // Return formatted string
   return `${symbol}${discountedPrice.toFixed(2)}`;
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { useAuth } from "../../context/AuthContext";
 
-import { addOrUpdateCartItem } from "../../appwrite/db";
+import { useCart } from "../../context/CartContext";
 
 import { useNavigate } from "react-router-dom"; // 🟢 For navigation between routes
 
@@ -27,6 +27,8 @@ import { formatDiscount } from "../../utils/formatDiscount";
 export default function ProductCard({ Product })
 {
     const { user } = useAuth();
+
+    const { addItem } = useCart();
     
     
     
@@ -39,7 +41,7 @@ export default function ProductCard({ Product })
 
 
 
-    // 🟢 Handle click → navigate to /category/{slug}
+    // 🟢 Handle click → navigate to /product/{slug}
     
         const handleClick = () =>
         {
@@ -52,7 +54,7 @@ export default function ProductCard({ Product })
     
     // Add to Cart handler
     
-        const handleAddToCart = async () =>
+        const handleAddToCart = async () => 
         {
             if (!user)
             {
@@ -60,28 +62,19 @@ export default function ProductCard({ Product })
             
                 return;
             }
-            
-            
-            if (quantity === 0) return;
-
 
             try
             {
-                // 🔥 Add/update cart in Appwrite
+                // CartContext version → handles Appwrite, stock validation & refresh automatically
             
-                // addOrUpdateCartItem(userId, productId, quantity)
-            
-                    await addOrUpdateCartItem(user.$id, Product.$id, quantity);
+                    await addItem(Product.$id, quantity);
 
-                alert(`${quantity}× ${Product.name} added to cart!`);
-
-
-                // Reset counter to 0 after adding
                 
-                    setQuantity(0);
-
-            }
+                alert(`${quantity}× ${Product.name} added to cart!`);
             
+                setQuantity(0);
+            } 
+          
             catch (error)
             {
                 console.error("Failed to add to cart:", error);
@@ -173,7 +166,20 @@ export default function ProductCard({ Product })
                 
                         {/* price */}
                     
-                            <p className="text-left w-full font-bold font-mono text-2xl mt-2"> {formatPrice(Product.price, Product.currency)} </p>
+                            <div className="flex gap-2 items-center">
+                                
+                                <p className="font-bold font-mono text-2xl mt-2"> {formatPrice(Product.price, Product.currency)} </p>
+                                
+                                {
+                                    formatDiscount(Product.discount_tag) && 
+                                    
+                                    ( 
+                                        <p className="text-gray-500 mt-3 text-left font-bold text-lg line-through font-mono">{formatPrice(Product.price, "USD", Product.discount_tag)}</p>
+                                    )
+                                }
+                                
+                                
+                            </div>
                         
                 
                         {/* counter + Add to cart button */}

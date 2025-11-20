@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 
 import { useAuth } from "../context/AuthContext";
 
@@ -6,19 +6,21 @@ import { logout } from "../appwrite/appwrite";
 
 // import { getStoredProfilePic } from "../appwrite/db";
 
-import { getCartItems } from "../appwrite/db";
-
 import CartDrawer from "./CartDrawer";
 
 import MobileMenuDrawer from "./MenuDrawer";
 
 import { useNavigate } from "react-router-dom";
 
+import { useCart } from "../context/CartContext";
+
 
 
 export default function Navbar( /*{ loggedInUser }*/ )
 {
     const { user, profile, setUser, setProfile } = useAuth();
+
+    const { cartQuantity, cartTotal } = useCart();
 
 
 
@@ -110,28 +112,6 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
             navigate('/login');
         };
-    
-    
-    
-    const [cartQuantity, setCartQuantity] = useState(0);
-
-    const refreshCartCount = async () => {
-      if (!user) return;
-      const items = await getCartItems(user.$id);
-
-      // ⭐ CHANGED: total quantity instead of unique items
-      const totalQty = items.reduce((sum, i) => sum + i.quantity, 0);
-
-      setCartQuantity(totalQty);
-    };
-
-
-
-    // initial load
-    useEffect(() => {
-      refreshCartCount();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user]);
 
  
 
@@ -143,7 +123,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
       
         {/* Navbar */}
           
-          <header className="bg-white drop-shadow-sm">
+          <header className="bg-white sticky top-0 z-50 drop-shadow-sm">
         
               
             <div className="container mx-auto flex items-center justify-between py-6 px-5">
@@ -206,7 +186,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                               
                               ref={searchRef}
                               
-                              className="lg:w-17 xl:w-61 2xl:w-93 p-3 text-yellow-600 placeholder:text-xl placeholder:font-semibold font-extrabold" />
+                              className="lg:w-37 xl:w-61 2xl:w-93 p-3 text-yellow-600 placeholder:text-xl placeholder:font-semibold font-extrabold" />
 
                             <img src="/icons/search.png" alt="FoodMart" className="h-12 p-3" onClick={handleSearchIconClick} />
 
@@ -235,6 +215,8 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         //   className={`bg-gray-100 hover:bg-gray-200 rounded-full ${(profile?.profile_pic !== "/icons/user.svg" || getStoredProfilePic(user?.email) !== "/icons/user.svg") ? `` : `p-2`}`}
                         
                             className="bg-gray-100 hover:bg-gray-200 rounded-full p-2"
+                            
+                            onClick={(e) => { e.preventDefault(); navigate("/profile"); }}
                         
                         >
                             
@@ -259,7 +241,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         </a>
                 
                         
-                        <a href="/wishlist" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2">
+                        <a href="/wishlist" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2" onClick={(e) => { e.preventDefault(); navigate("/wishlist"); }}>
 
                             <img
                 
@@ -280,14 +262,20 @@ export default function Navbar( /*{ loggedInUser }*/ )
                           
                                 onClick={() => setOpenCart(true)}
                           
-                            className="xl:ml-3 xl:mr-4 2xl:ml-10 2xl:mr-11 relative cursor-pointer flex flex-row justify-between"
+                            className="xl:mx-7 2xl:mx-14 relative cursor-pointer flex flex-row justify-between"
                 
                         >
                             
                         
-                            <div className="flex flex-row bg-gray-100 hover:bg-gray-200 rounded-full p-2">
+                            <div className="flex flex-row bg-gray-100 hover:bg-gray-200 rounded-full p-2 2xl:w-50">
                                 
-                                <span className="hidden xl:flex text-xl font-bold cursor-pointer mr-2 ml-4 hover:text-yellow-600"> Your Cart </span>
+                                <div className="hidden xl:flex xl:flex-col xl:items-center xl:mx-1 2xl:mr-0.5 cursor-pointer px-3 2xl:px-4">
+                                    
+                                    <span className="text-2xl font-bold"> Your Cart </span>
+
+                                    <span className="text-xl font-bold text-yellow-600 hover:text-orange-600"> {cartTotal ? `$${cartTotal}` : "$0.00"} </span>    
+                              
+                                </div>                
                 
 
                                 <img
@@ -296,12 +284,12 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         
                                     alt="Cart"
 
-                                    className="h-7 cursor-pointer"
+                                    className="xl:mt-3 xl:mr-2 2xl:mt-3.5 h-7 cursor-pointer"
 
                                 />
                                 
                     
-                                <span className="absolute -top-4 -right-3 font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full px-2">
+                                <span className={`absolute ${cartQuantity > 9 ? `-top-3.5 -right-4 xl:top-px xl:-right-2.5 2xl:top-px 2xl:-right-0.5` : `-top-3 -right-2 xl:-top-0.5 xl:right-1 2xl:top-px 2xl:right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full px-2`}>
                         
                                     {cartQuantity}
                     
@@ -367,7 +355,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
       
           {/* if cart is allowed to open, open it and pass the function to close the drawer to the drawer component. */}
 
-            {openCart && <CartDrawer onClose={() => setTimeout(() => setOpenCart(false), 0)} onCartChange={refreshCartCount} />}
+            {openCart && <CartDrawer onClose={() => setTimeout(() => setOpenCart(false), 0)} />}
                 
           
 
@@ -413,7 +401,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         
                         <select name="departments" id="departments" value={selectedDepartment} onChange={handleDepartmentChange} className="justify-start lg:mr-22 xl:mr-21 2xl:mr-27 focus:borde hover:text-gray-900 py-2 bg-gray-100 text-center rounded-lg">
 
-                                <option value="shopbydepartments"> Shop by Departments </option>
+                            <option value="shopbydepartments"> Shop by Departments </option>
                             
                             <option value="Groceries"> Groceries </option>
                             
@@ -432,13 +420,13 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         
                         <ul className="hidden lg:flex lg:flex-row  items-center gap-6">
 
-                            <a href="/women"> <li className="cursor-pointer hover:text-gray-900">Women</li> </a>
+                            <a href="/women" onClick={(e) => { e.preventDefault(); navigate("/women"); }}> <li className="cursor-pointer hover:text-gray-900">Women</li> </a>
 
-                            <a href="/men"> <li className="cursor-pointer hover:text-gray-900" value="men" onClick={handlePageChange}>Men</li> </a>
+                            <a href="/men" onClick={(e) => { e.preventDefault(); navigate("/men"); }}> <li className="cursor-pointer hover:text-gray-900" value="men" onClick={handlePageChange}>Men</li> </a>
 
-                            <a href="/kids"> <li className="cursor-pointer hover:text-gray-900" value="kids" onClick={handlePageChange}>Kids</li> </a>
+                            <a href="/kids" onClick={(e) => { e.preventDefault(); navigate("/kids"); }}> <li className="cursor-pointer hover:text-gray-900" value="kids" onClick={handlePageChange}>Kids</li> </a>
 
-                            <a href="/accessories"> <li className="cursor-pointer hover:text-gray-900" value="accessories" onClick={handlePageChange}>Accessories</li> </a>
+                            <a href="/accessories" onClick={(e) => { e.preventDefault(); navigate("/accessories"); }}> <li className="cursor-pointer hover:text-gray-900" value="accessories" onClick={handlePageChange}>Accessories</li> </a>
                             
                                 
                             <li className="cursor-pointer hover:text-gray-900 relative flex items-center">
@@ -489,11 +477,11 @@ export default function Navbar( /*{ loggedInUser }*/ )
                             </li>
 
                                 
-                            <a href="/brand"> <li className="cursor-pointer hover:text-gray-900" value="brand" onClick={handlePageChange}>Brand</li> </a>
+                            <a href="/brand" onClick={(e) => { e.preventDefault(); navigate("/brand"); }}> <li className="cursor-pointer hover:text-gray-900" value="brand" onClick={handlePageChange}>Brand</li> </a>
 
-                            <a href="/sale"> <li className="cursor-pointer hover:text-gray-900" value="sale" onClick={handlePageChange}>Sale</li> </a>
+                            <a href="/sale" onClick={(e) => { e.preventDefault(); navigate("/sale"); }}> <li className="cursor-pointer hover:text-gray-900" value="sale" onClick={handlePageChange}>Sale</li> </a>
 
-                            <a href="/blog"> <li className="cursor-pointer hover:text-gray-900" value="blog" onClick={handlePageChange}>Blog</li> </a>
+                            <a href="/blog" onClick={(e) => { e.preventDefault(); navigate("/blog"); }}> <li className="cursor-pointer hover:text-gray-900" value="blog" onClick={handlePageChange}>Blog</li> </a>
 
                         </ul>
 
