@@ -6,8 +6,6 @@ import { getAllProducts, getCartItems, addOrUpdateCartItem, removeCartItem, clea
 
 import { formatPrice } from "../utils/formatPrice";
 
-import { formatDiscount } from "../utils/formatDiscount";
-
 
 
 // -----------------------------------------------------------
@@ -37,34 +35,54 @@ import { formatDiscount } from "../utils/formatDiscount";
         const { user } = useAuth(); // get logged-in user
 
 
-        // Raw cart items from Appwrite: [$id, user_id, product_id, quantity]
-    
-            const [cartDocs, setCartDocs] = useState([]);
- 
-        // Full product table for hydration
-    
-            const [productsMap, setProductsMap] = useState({});
 
-        // Final enriched cart items (used by UI)
-    
-            const [cartItems, setCartItems] = useState([]);
+        // State Variables
 
-        // Quantity badge (sum of quantities)
-    
-            const [cartQuantity, setCartQuantity] = useState(0);
+            //      State	        Purpose	                                                            Example
+            //      -----           -------                                                             -------
 
-        // Total cost
+                // cartDocs	        Raw cart items from DB                                              ($id, user_id, product_id, quantity)[{ $id: 'c1', user_id: 'u1', product_id: 'p1', quantity: 2 }]
+
+                // productsMap	    All products fetched from DB as an object keyed by product ID	    { p1: { name: "Apple", price: 2, stock: 10, discount_tag: "-10%" } }
+
+                // cartItems	    Hydrated / enriched cart items combining cartDocs + productsMap     [{ $id: 'c1', quantity: 2, product: { name: "Apple", price: 2 }, unitPrice: 1.8, subtotal: 3.6 }]
+
+                // cartQuantity	    Total number of items in cart	                                    2
+
+                // cartTotal	    Total price of cart	                                                3.60
+
+                // loading	        True while fetching cart / products	                                true / false
+
         
-            const [cartTotal, setCartTotal] = useState(0);
+                    // Raw cart items from Appwrite: [$id, user_id, product_id, quantity]
+                
+                        const [cartDocs, setCartDocs] = useState([]);
+            
+                    // Full product table for hydration
+                
+                        const [productsMap, setProductsMap] = useState({});
 
-        // Loading state for initial sync
-    
-            const [loading, setLoading] = useState(true);
+                    // Final enriched cart items (used by UI)
+                
+                        const [cartItems, setCartItems] = useState([]);
+
+                    // Quantity badge (sum of quantities)
+                
+                        const [cartQuantity, setCartQuantity] = useState(0);
+
+                    // Total cost
+                    
+                        const [cartTotal, setCartTotal] = useState(0);
+
+                    // Loading state for initial sync
+                
+                        const [loading, setLoading] = useState(true);
 
         
         
         // -----------------------------------------------------------
             // 1. Fetch all products ONCE
+                // Creates productsMap for quick lookup when hydrating cart.
         // -----------------------------------------------------------
         
             const fetchProducts = useCallback(async () => 
@@ -124,56 +142,32 @@ import { formatDiscount } from "../utils/formatDiscount";
                 }
 
 
-                const enriched = cartDocs.map(
-                    
-                    (item) =>
-                    {
-                        const product = productsMap[item.product_id];
-                    
-                        if (!product) return null;
+                // ====================== START FIXED DISCOUNT LOGIC ======================
+                    const enrichedCart = cartDocs
+                        .map((item) => {
+                            const product = productsMap[item.product_id];
+                            if (!product) return null;
 
+                            // Compute discounted price dynamically
+                            const discountedPrice = parseFloat(
+                            formatPrice(product.price, product.currency, product.discount_tag).replace(/[^\d.]/g, '')
+                            );
 
-                        const safeDiscount = formatDiscount(product.discount_tag);
-                        
-                        const discountedPrice = formatPrice(product.price, product.currency, safeDiscount);
+                            const subtotal = +(discountedPrice * item.quantity).toFixed(2);
 
-                        // extract numeric part from formatted price
-                        
-                            const numericUnitPrice = parseFloat(discountedPrice.replace(/[^0-9.]/g, ""));
-                        
-                            const subtotal = numericUnitPrice * item.quantity;
-
-
-                        return {
-                        
-                            ...item, // includes: $id, product_id, quantity. Basically, the cart doc
-                        
-                            product, // full product object (name, price, image, discount).  The full product doc.
-
-                            unitPrice: numericUnitPrice,
-                        
+                            return {
+                            ...item,
+                            product,
                             subtotal,
-                        };
-                    }
-                
-                ).filter(Boolean);
+                            };
+                        })
+                        .filter(Boolean);
 
+                        setCartItems(enrichedCart);
+                        setCartQuantity(enrichedCart.reduce((sum, i) => sum + i.quantity, 0));
+                        setCartTotal(enrichedCart.reduce((sum, i) => sum + i.subtotal, 0).toFixed(2));
+                // ====================== END FIXED DISCOUNT LOGIC ======================
 
-                setCartItems(enriched);
-
-
-                // Total quantity
-                
-                    const qty = enriched.reduce((s, i) => s + i.quantity, 0);
-                
-                    setCartQuantity(qty);
-
-                
-                // Total price
-                
-                    const total = enriched.reduce((s, i) => s + i.subtotal, 0);
-                
-                    setCartTotal(total.toFixed(2));
 
             }, [cartDocs, productsMap]);
 

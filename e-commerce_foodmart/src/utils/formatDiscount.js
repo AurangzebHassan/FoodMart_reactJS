@@ -6,44 +6,31 @@
  * - Keeps up to 2 decimals, trimming trailing zeros.
  *
  * Examples:
- *  "30"       -> "-30%"
- *  "-30%"     -> "-30%"
- *  "05.5"     -> "-5.5%"
- *  " - 25.750"-> "-25.75%"
- *  "0"        -> null
- *  "-"        -> null
- *  "abc"      -> null
+ * "30" -> "-30%"
+ * "-30%" -> "-30%"
+ * "05.5" -> "-5.5%"
+ * " - 25.750"-> "-25.75%"
+ * "0" -> null
+ * "-" -> null
+ * "abc" -> null
  */
 export function formatDiscount(tag) {
-  if (tag == null) return null;
+  if (!tag) return null;
 
   const s = String(tag).trim();
+  if (!s || s === "-" || s === "%" || s === "0") return null;
 
-  // reject empty or single dash
-  if (s === "" || s === "-" || s === "%" || s === "0") return null;
-
-  // Find first numeric token (allows decimals). Examples found: "05.50", "30", "7.25", "-30.5"
-  const match = s.match(/-?\d+(\.\d+)?/); // capture optional leading minus if present
+  // Extract first numeric value, always positive for discount calculation
+  const match = s.match(/\d+(\.\d+)?/); // Remove optional leading minus
   if (!match) return null;
 
-  // parseFloat removes leading zeros: "05" -> 5
-  // Use absolute value so "-30" or "30" both are treated as positive discount amounts
-  let num = Math.abs(parseFloat(match[0]));
-
-  // reject zero or NaN
+  let num = parseFloat(match[0]);
   if (!isFinite(num) || num === 0) return null;
 
-  // Round to 2 decimals (you can change to Math.floor for truncation)
+  // Round to 2 decimals and trim unnecessary zeros
   num = Math.round(num * 100) / 100;
+  const display =
+    Number(num.toFixed(2)) % 1 === 0 ? num.toFixed(0) : num.toFixed(2);
 
-  // Format: remove unnecessary trailing zeros
-  // e.g., 25.00 -> "25", 5.50 -> "5.5", 5.25 -> "5.25"
-  const asNumber = Number(num.toFixed(2)); // ensures up to 2 decimals
-  const display = asNumber % 1 === 0 ? asNumber.toFixed(0) : String(asNumber);
-  
-//   const final_string = "-" + display + "%"
-
-      return `-${display}%`;
-    
-    // return final_string
+  return `-${display}%`;
 }

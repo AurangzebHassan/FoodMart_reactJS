@@ -168,13 +168,13 @@ export default function ProductCard({ Product })
                     
                             <div className="flex gap-2 items-center">
                                 
-                                <p className="font-bold font-mono text-2xl mt-2"> {formatPrice(Product.price, Product.currency)} </p>
+                                <p className="font-bold font-mono text-2xl mt-2"> {formatPrice(Product.price, Product.currency, Product.discount_tag)} </p>
                                 
                                 {
                                     formatDiscount(Product.discount_tag) && 
                                     
                                     ( 
-                                        <p className="text-gray-500 mt-3 text-left font-bold text-lg line-through font-mono">{formatPrice(Product.price, "USD", Product.discount_tag)}</p>
+                                        <p className="text-gray-500 mt-3 text-left font-bold text-lg line-through font-mono">{formatPrice(Product.price, "USD")}</p>
                                     )
                                 }
                                 
