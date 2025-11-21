@@ -70,6 +70,11 @@ export default function Navbar( /*{ loggedInUser }*/ )
         const [showDropdown, setShowDropdown] = useState(false);
         
     
+    // state used to make the dropdown search items tabbale
+
+        const [highlightedIndex, setHighlightedIndex] = useState(-1);
+        
+    
     // stores the previous search results for the user. Only the ones where the user chose one to navigate to.
 
         // const [pastSearches, setPastSearches] = useState([]);
@@ -110,7 +115,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
         searchRef.current?.select();
 
-
+        
         if (searchInput.trim().length > 0)
         {
             setShowDropdown(!showDropdown);
@@ -165,12 +170,6 @@ export default function Navbar( /*{ loggedInUser }*/ )
         setSearchResults([...catMatches, ...prodMatches]);
 
         setShowDropdown(true);
-
-
-        // if (setSearchResults.length === 0)
-        // {
-        //     setSearchResults("No Result Found");
-        // }
     };
 
 
@@ -331,7 +330,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
         
                     <div className="flex shrink-0 items-center gap-2 transition-all duration-200">
                     
-                        <a href="/">
+                        <a href="/" tabIndex={-1}>
                         
                             <img src="/images/logo.png" alt="FoodMart" />
 
@@ -385,7 +384,68 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
                                 onChange={handleSearchChange}
 
-                                onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
+                                // onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
+                                
+                                onKeyDown={(e) => 
+                                {
+                                    if (showDropdown && searchResults.length > 0)
+                                    {
+                                        // Move DOWN: Tab or ArrowDown
+                                        
+                                            if ((e.key === "Tab" && !e.shiftKey) || (e.key === "ArrowDown"))
+                                            {
+                                                e.preventDefault();
+                                            
+                                                setHighlightedIndex((prev) => (prev < searchResults.length - 1) ? (prev + 1) : 0);
+                                                
+                                                return;
+                                            }
+
+                                        // Move UP: Shift+Tab or ArrowUp
+    
+                                            if ((e.key === "Tab" && e.shiftKey) || (e.key === "ArrowUp"))
+                                            {
+                                                e.preventDefault();
+                                            
+                                                setHighlightedIndex((prev) => (prev > 0) ? (prev - 1) : (searchResults.length - 1));
+                                                
+                                                return;
+                                            }
+
+                                        // Enter selects highlighted item
+                                        
+                                            if ((e.key === "Enter") && (highlightedIndex >= 0))
+                                            {
+                                                const picked = searchResults[highlightedIndex];
+
+                                            
+                                                setShowDropdown(false);
+
+                                                if (picked.type === "product")
+                                                    navigate(`/product/${picked.item.slug}`);
+
+                                                if (picked.type === "category")
+                                                    navigate(`/category/${picked.item.slug}`);
+
+                                                setSearchResults([]);
+                                            
+                                                setSearchInput("");
+                                            
+                                                return;
+                                            }
+
+                                        // Escape closes dropdown
+                                        
+                                            if (e.key === "Escape")
+                                            {
+                                                setShowDropdown(false);
+                                                return;
+                                            }
+                                    }
+
+                                    if (e.key === "Enter") handleSearchSubmit();
+                                }}
+
                                 
                                 ref={searchRef}
                                 
@@ -394,7 +454,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                             />
 
                             
-                            <img src="/icons/search.png" alt="FoodMart" className="h-12 p-3" onClick={handleSearchIconClick} />
+                            <img src="/icons/search.png" alt="FoodMart" tabIndex={0} className="h-12 p-3" onClick={handleSearchIconClick} />
                             
                         
                             
@@ -404,14 +464,20 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                     
                                     <div className="absolute left-0 top-24 w-full bg-white border border-gray-300 rounded-lg shadow-xl mt-1 z-300">
                                         
-                                        {searchResults.map((res) => (
+                                        {searchResults.map((res, index) => (
                                             
                                             <div
                                                 
                                                 key={res.item.$id}
+
+                                                tabIndex={0}    // make HTML element focusable.
                                                 
-                                                className="p-3 hover:bg-gray-100 border-b border-gray-200 cursor-pointer text-black"
-                                                
+                                                // className="p-3 hover:bg-gray-100 focus:bg-gray-100 focus:outline-0 border-b border-gray-200 cursor-pointer text-black"
+
+                                                className={`p-3 border-b border-gray-200 cursor-pointer text-black ${highlightedIndex === index ? "bg-gray-200" : "hover:bg-gray-100"}`}
+
+                                                onMouseEnter={() => setHighlightedIndex(index)}
+
                                                 onClick={() =>
                                                 {
                                                     setShowDropdown(false);
@@ -458,7 +524,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                     </div>
                                     
                                 )}
-
+                             
                         </div>           
             
                     </div>
@@ -532,6 +598,8 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                 onClick={() => setOpenCart(true)}
                             
                             className="xl:mx-7 2xl:mx-14 relative cursor-pointer flex flex-row justify-between"
+                            
+                            tabIndex={0}
                 
                         >
                             
@@ -708,6 +776,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                         <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         className="w-4 h-4 ml-1"
+                                        tabIndex={0}
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -746,11 +815,11 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                 </li>
 
                                     
-                                <a href="/brand" onClick={(e) => { e.preventDefault(); navigate("/brand"); }}> <li className="cursor-pointer hover:text-gray-900" value="brand" onClick={handlePageChange}>Brand</li> </a>
+                                <a href="/brand" tabIndex={0} onClick={(e) => { e.preventDefault(); navigate("/brand"); }}> <li className="cursor-pointer hover:text-gray-900" value="brand" onClick={handlePageChange}>Brand</li> </a>
 
-                                <a href="/sale" onClick={(e) => { e.preventDefault(); navigate("/sale"); }}> <li className="cursor-pointer hover:text-gray-900" value="sale" onClick={handlePageChange}>Sale</li> </a>
+                                <a href="/sale" tabIndex={0} onClick={(e) => { e.preventDefault(); navigate("/sale"); }}> <li className="cursor-pointer hover:text-gray-900" value="sale" onClick={handlePageChange}>Sale</li> </a>
 
-                                <a href="/blog" onClick={(e) => { e.preventDefault(); navigate("/blog"); }}> <li className="cursor-pointer hover:text-gray-900" value="blog" onClick={handlePageChange}>Blog</li> </a>
+                                <a href="/blog" tabIndex={0} onClick={(e) => { e.preventDefault(); navigate("/blog"); }}> <li className="cursor-pointer hover:text-gray-900" value="blog" onClick={handlePageChange}>Blog</li> </a>
 
                             </ul>
 
