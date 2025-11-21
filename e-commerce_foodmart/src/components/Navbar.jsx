@@ -1,10 +1,12 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { useAuth } from "../context/AuthContext";
 
 import { logout } from "../appwrite/appwrite";
 
 // import { getStoredProfilePic } from "../appwrite/db";
+
+import { getAllProducts, getAllCategories } from "../appwrite/db";
 
 import CartDrawer from "./CartDrawer";
 
@@ -51,7 +53,29 @@ export default function Navbar( /*{ loggedInUser }*/ )
         const [searchInput, setSearchInput] = useState("");
         
     
+    // we need all products and categories beforehand to then filter using search term
+
+        const [allProducts, setAllProducts] = useState([]);
+
+        const [allCategories, setAllCategories] = useState([]);
+        
     
+    // This detects matches and creates the dropdown list as you type.
+
+        const [searchResults, setSearchResults] = useState([]);
+        
+    
+    // state to set the visiblity of search dropdown bar
+
+        const [showDropdown, setShowDropdown] = useState(false);
+        
+    
+    // stores the previous search results for the user. Only the ones where the user chose one to navigate to.
+
+        // const [pastSearches, setPastSearches] = useState([]);
+
+
+            
     const navigate = useNavigate();
 
 
@@ -67,7 +91,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
             {
                 navigate(`/${e.target.value.toLowerCase()}`);
             }
-    }
+    };
 
 
 
@@ -76,7 +100,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
         setSelectedPage(e.target.value);
 
         navigate(`/${e.target.value.toLowerCase()}`);
-    }
+    };
 
 
 
@@ -85,16 +109,143 @@ export default function Navbar( /*{ loggedInUser }*/ )
         searchRef.current.focus();
 
         searchRef.current?.select();
-    }
+
+
+        if (searchInput.trim().length > 0)
+        {
+            setShowDropdown(!showDropdown);
+        }
+    };
 
 
 
-    const handleSearchChange = (e) =>
+    const handleSearchChange = async (e) =>
     {
-        setSearchInput(e.target.value);
+        const value = e.target.value;
+        
+        setSearchInput(value);
 
-        // console.log("User typed: ", e.target.value);
-    }
+
+        if (!value.trim())
+        {
+            setSearchResults([]);
+
+            setShowDropdown(false);
+        
+            return;
+        }
+
+
+        const q = value.toLowerCase();
+
+
+        // Find matching categories
+        
+            const catMatches = allCategories
+          
+                .filter((c) => c.name.toLowerCase().includes(q))
+          
+                .slice(0, 5)
+          
+                .map((item) => ({ type: "category", item }));
+
+        
+        // Find matching products
+        
+            const prodMatches = allProducts
+          
+                .filter((p) => p.name.toLowerCase().includes(q))
+          
+                .slice(0, 5)
+          
+                .map((item) => ({ type: "product", item }));
+
+        
+        
+        setSearchResults([...catMatches, ...prodMatches]);
+
+        setShowDropdown(true);
+
+
+        // if (setSearchResults.length === 0)
+        // {
+        //     setSearchResults("No Result Found");
+        // }
+    };
+
+
+
+    // ===================== Highlight matched text =====================
+  
+        const highlightMatch = (text, term) =>
+        {
+            const lower = term.toLowerCase();
+            
+            const index = text.toLowerCase().indexOf(lower);
+        
+        
+            if (index === -1) return text;
+
+        
+            return (
+        
+                <div className="-ml-5">
+            
+                    {text.slice(0, index)}
+            
+                    <span className="bg-yellow-500 font-bold">{text.slice(index, index + term.length)}</span>
+            
+                    {text.slice(index + term.length)}
+        
+                </div>
+        
+            );
+        };
+
+
+
+    // ===================== Close dropdown when clicking outside =====================
+  
+        const wrapperRef = useRef(null);
+
+        useEffect(() =>
+        {
+            const handleClickOutside = (e) =>
+            {
+                if (wrapperRef.current && !wrapperRef.current.contains(e.target))
+                {
+                    setShowDropdown(false);
+                }
+            };
+
+            document.addEventListener("mousedown", handleClickOutside);
+
+
+            return () => document.removeEventListener("mousedown", handleClickOutside);
+    
+        }, []);
+
+
+
+    // ENTER to navigate to the best match
+    
+        const handleSearchSubmit = () =>
+        {
+            if (searchResults.length === 0) return;
+
+
+            const first = searchResults[0];
+
+
+            if (first.type === "product") navigate(`/product/${first.item.slug}`);
+            
+            if (first.type === "category") navigate(`/category/${first.item.slug}`);
+
+
+            setSearchResults([]);
+            
+            setSearchInput("");
+        };
 
 
 
@@ -112,9 +263,34 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
             navigate('/login');
         };
+    
+    
+    
+    
+    
+    
+    // load all the products and categories at initial mount and fill states
+
+        useEffect(() => 
+        {
+            async function loadData()
+            {
+                const prods = await getAllProducts();
+            
+                const cats = await getAllCategories();
+
+
+                setAllProducts(prods);
+
+                setAllCategories(cats);
+            }
+          
+            loadData();
+
+        }, []);
+
 
  
-
 
 
         
@@ -122,10 +298,30 @@ export default function Navbar( /*{ loggedInUser }*/ )
     <>
       
         {/* Navbar */}
-          
-          <header className="bg-white sticky top-0 z-50 drop-shadow-sm">
         
-              
+                
+            {/* Background blur overlay */}
+                    
+                {(showDropdown && searchResults.length > 0) && (
+                
+                    <div
+                    
+                        className="fixed inset-0 bg-black/5 backdrop-blur-sm z-40"
+                    
+                        onClick={() => setShowDropdown(false)}
+                    >
+                
+                    </div>
+                )} 
+          
+
+
+
+
+
+            <header className="bg-white sticky top-0 z-50 drop-shadow-sm">
+        
+                
             <div className="container mx-auto flex items-center justify-between py-6 px-5">
         
                 
@@ -143,15 +339,20 @@ export default function Navbar( /*{ loggedInUser }*/ )
             
                     </div>
                     
-                  
+                    
 
                 {/* Central Search and catgories/departments dropdown. */}
                 
                 {/* should be visible only from the large(lg) breakpoint */}
 
-                    <div className="hidden lg:flex lg:shrink lg:max-2xl:ml-3 2xl:w-3xl items-center justify-center transition-all duration-200">
+                    <div 
+                    
+                        className="hidden lg:flex lg:shrink lg:max-2xl:ml-3 2xl:w-3xl items-center justify-center transition-all duration-200"
+                        
+                        ref={wrapperRef}    
+                    >
                             
-                      {/* departments dropdown */}
+                        {/* departments dropdown */}
                         
                         <div className="text-lg text-yellow-600 font-semibold rounded-l-full focus:border-0 bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 cursor-pointer">
                                 
@@ -169,40 +370,108 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
                         </div>
                     
-                      
-                      {/* search input box + icon */}
+                        
+                        {/* search input box + icon */}
                         
                         <div className="flex bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 rounded-r-full">
-                          
+                            
                             <input 
                             
-                              type="text"
-                              
-                              placeholder="Search"
+                                type="text"
+                                
+                                placeholder="Search"
 
-                              value={searchInput}
+                                value={searchInput}
 
-                              onChange={handleSearchChange}
-                              
-                              ref={searchRef}
-                              
-                              className="lg:w-37 xl:w-61 2xl:w-93 p-3 text-yellow-600 placeholder:text-xl placeholder:font-semibold font-extrabold" />
+                                onChange={handleSearchChange}
 
+                                onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
+                                
+                                ref={searchRef}
+                                
+                                className={`relative ${user?.name.length > 9 ? `lg:w-20 xl:w-42 2xl:w-73` : `lg:w-36 xl:w-63 2xl:w-93`} p-3 text-yellow-600 placeholder:text-xl placeholder:font-semibold font-extrabold`}
+                            
+                            />
+
+                            
                             <img src="/icons/search.png" alt="FoodMart" className="h-12 p-3" onClick={handleSearchIconClick} />
+                            
+                        
+                            
+                            {/* ====================== START: SEARCH FEATURE CHANGES ====================== */}
+                                
+                                {(showDropdown && searchResults.length > 0) && (
+                                    
+                                    <div className="absolute left-0 top-24 w-full bg-white border border-gray-300 rounded-lg shadow-xl mt-1 z-300">
+                                        
+                                        {searchResults.map((res) => (
+                                            
+                                            <div
+                                                
+                                                key={res.item.$id}
+                                                
+                                                className="p-3 hover:bg-gray-100 border-b border-gray-200 cursor-pointer text-black"
+                                                
+                                                onClick={() =>
+                                                {
+                                                    setShowDropdown(false);
 
-                        </div>
+                                                    if (res.type === "product")
+                                                        navigate(`/product/${res.item.slug}`);
+                                                
+                                                    if (res.type === "category")
+                                                        navigate(`/category/${res.item.slug}`);
+
+                                                    setSearchResults([]);
+                                                    setSearchInput("");
+                                                }}
+                                            >
+                                                
+                                                <div className="flex justify-between items-center gap-2">
+
+                                                    <span className="text-yellow-500 font-extrabold text-lg">
+                                                        
+                                                        {res.type === "category" ? "Category: " : "Product: "}
+
+                                                    </span>
+                                                    
+
+                                                    <span className={`font-mono flex items-center ${(res.type === "category") ? `gap-5.5` : `gap-4`}`}>
+                                                        
+                                                        {/* {res.item.name} */}
+
+                                                        {highlightMatch(res.item.name, searchInput)}
+
+                                                        {console.log(res.item.image_url)}
+
+                                                        <img src={res.item.image_url} alt="icon" className={`${(res.type === "product") ? `w-14` : `w-10 mr-2.5`}`} />
+
+
+                                                    </span>
+
+                                                </div>
+
+                                            </div>
+
+                                        ))}
+                                    
+                                    </div>
+                                    
+                                )}
+
+                        </div>           
             
                     </div>
-                  
-                  
-
+                
+                    
+                    
                 {/* Right side icons. Right side of the navbar */}
 
-                    <div className="flex shrink-0 justify-end items-center xl:-ml-4 2xl:-ml:20 gap-3 transition-all duration-200">
+                    <div className={`flex shrink-0 justify-end items-center ${user?.name.length > 9 ? `2xl:-ml:20` : `xl:-ml-2 2xl:-ml:20`} gap-3 transition-all duration-200`}>
                         
-                      
+                        
                         <div className="lg:hidden">
-                      
+                        
                             <img src="/icons/search.png" alt="FoodMart" className="h-11 p-2 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer" />
             
                         </div>
@@ -210,8 +479,8 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
                         <a 
                         
-                          href="/profile" 
-                          
+                            href="/profile" 
+                            
                         //   className={`bg-gray-100 hover:bg-gray-200 rounded-full ${(profile?.profile_pic !== "/icons/user.svg" || getStoredProfilePic(user?.email) !== "/icons/user.svg") ? `` : `p-2`}`}
                         
                             className="bg-gray-100 hover:bg-gray-200 rounded-full p-2"
@@ -226,15 +495,15 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                 
                                 src="/icons/user.svg"
                     
-                              
+                                
                                 alt={(profile || user) ? "User" : "Guest"}
                                 
                                 title={(profile || user) ? (profile?.name || user?.name) : "Guest"}
                     
-                              
-                              // className={(profile?.profile_pic !== "/icons/user.svg" || getStoredProfilePic(user?.email) !== "/icons/user.svg") ? "h-10 cursor-pointer rounded-full" : "h-7 cursor-pointer"}
-                              
-                              className="h-7 cursor-pointer"
+                                
+                                // className={(profile?.profile_pic !== "/icons/user.svg" || getStoredProfilePic(user?.email) !== "/icons/user.svg") ? "h-10 cursor-pointer rounded-full" : "h-7 cursor-pointer"}
+                                
+                                className="h-7 cursor-pointer"
                                 
                             />
 
@@ -259,9 +528,9 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         <div
                 
                             // setting openCart to true measn that the cart drawer should be opened now.
-                          
+                            
                                 onClick={() => setOpenCart(true)}
-                          
+                            
                             className="xl:mx-7 2xl:mx-14 relative cursor-pointer flex flex-row justify-between"
                 
                         >
@@ -274,7 +543,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                     <span className="text-2xl font-bold"> Your Cart </span>
 
                                     <span className="text-xl font-bold text-yellow-600 hover:text-orange-600"> {cartTotal ? `$${cartTotal}` : "$0.00"} </span>    
-                              
+                                
                                 </div>                
                 
 
@@ -300,31 +569,31 @@ export default function Navbar( /*{ loggedInUser }*/ )
                 
                         </div>
 
-                      
-                        <div className="flex items-center gap-2 sm:ml-5 md:ml-9 lg:ml-7 xl:ml-0 2xl:ml-3 mt-1">
-                          
+                        
+                        <div className={`flex items-center gap-2 mt-1 ${user?.name.length > 9 ? `sm:ml-5 md:ml-10 lg:ml-7 xl:ml-0 2xl:ml-3` : `sm:ml-5 md:ml-20 lg:ml-7 xl:ml-0 2xl:ml-3`}`}>
+                            
                             <span className="lg:hidden text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
                             
-                                {user ? user?.name.slice(0, 8) + "..." : "Guest"}
+                                {(user && user?.name.length > 9) ? user?.name.slice(0, 8) + "..." : user?.name}
                                 {/* Guest */}
 
                             </span>
                             
                             <span className="hidden lg:max-xl:flex text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
                             
-                                {user ? user?.name.slice(0, 10) + "..." : "Guest"}
+                                {(user && user?.name.length > 11) ? user?.name.slice(0, 10) + "..." : user?.name}
                                 {/* Guest */}
 
                             </span>
                             
                             <span className="hidden xl:flex text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
                             
-                                {user ? user?.name.slice(0, 12) : "Guest"}
+                                {(user && user?.name.length > 13) ? user?.name.slice(0, 12) : user?.name}
                                 {/* Guest */}
 
                             </span>
-                        
-                      
+                            
+
                             <button 
                             
                                 // className="mt-1 px-2 py-0.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg"
@@ -340,155 +609,155 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
                         </div>
                         
-                   
+                    
                     </div>
 
                 
             </div>
 
-              
-          </header>
+                
+            </header>
 
           
 
-      {/* Cart Drawer */}
+        {/* Cart Drawer */}
       
-          {/* if cart is allowed to open, open it and pass the function to close the drawer to the drawer component. */}
+            {/* if cart is allowed to open, open it and pass the function to close the drawer to the drawer component. */}
 
-            {openCart && <CartDrawer onClose={() => setTimeout(() => setOpenCart(false), 0)} />}
+                {openCart && <CartDrawer onClose={() => setTimeout(() => setOpenCart(false), 0)} />}
                 
           
 
-      {/* Mobile menu drawer */}
+        {/* Mobile menu drawer */}
 
-          <MobileMenuDrawer
+            <MobileMenuDrawer
 
-              openMenuDrawer={openMobileMenu}
+                openMenuDrawer={openMobileMenu}
 
-              onClose={() => setOpenMobileMenu(false)}
+                onClose={() => setOpenMobileMenu(false)}
 
-          />
+            />
           
 
 
-    {/* Menu & dropdown placeholders */}
+        {/* Menu & dropdown placeholders */}
 
-        <section className="container mx-auto flex items-center justify-start pt-12 px-5 transition-all duration-200">
+            <section className="container mx-auto flex items-center justify-start pt-12 px-5 transition-all duration-200">
 
-            {/* Hamburger menu for menu and dropdowns */}
-            
-            {/* Only shown until large(lg) breakpoint */}
+                {/* Hamburger menu for menu and dropdowns */}
                 
-                <button className="lg:hidden" onClick={() => setOpenMobileMenu(true)}>
-                
-                    <img src="./icons/hamburger_menu.png" alt="hamburger_menu_icon" 
-                        
-                    className="h-13 p-2 cursor-pointer border border-gray-400 hover:bg-gray-100 rounded-lg"
-                
-                    />
-
-                </button>
-            
-
-            
-            {/* menu and dropdown bar */}
-            
-            {/* shown from the large(lg) breakpoint to above */}
-                
-                {/* departments dropdown */}
+                {/* Only shown until large(lg) breakpoint */}
                     
-                    <div className="hidden lg:flex text-xl text-gray-700">
-                        
-                        <select name="departments" id="departments" value={selectedDepartment} onChange={handleDepartmentChange} className="justify-start lg:mr-22 xl:mr-21 2xl:mr-27 focus:borde hover:text-gray-900 py-2 bg-gray-100 text-center rounded-lg">
-
-                            <option value="shopbydepartments"> Shop by Departments </option>
+                    <button className="lg:hidden" onClick={() => setOpenMobileMenu(true)}>
+                    
+                        <img src="./icons/hamburger_menu.png" alt="hamburger_menu_icon" 
                             
-                            <option value="Groceries"> Groceries </option>
-                            
-                            <option value="Drinks"> Drinks </option>
+                        className="h-13 p-2 cursor-pointer border border-gray-400 hover:bg-gray-100 rounded-lg"
+                    
+                        />
 
-                            <option value="Chocolates"> Chocolates </option>
-                            
-                        </select>
-
-                    </div>
-
-            
-                {/* menu bar */}
+                    </button>
                 
-                    <div className="text-gray-700 text-xl">
+
+                
+                {/* menu and dropdown bar */}
+                
+                {/* shown from the large(lg) breakpoint to above */}
+                    
+                    {/* departments dropdown */}
                         
-                        <ul className="hidden lg:flex lg:flex-row  items-center gap-6">
-
-                            <a href="/women" onClick={(e) => { e.preventDefault(); navigate("/women"); }}> <li className="cursor-pointer hover:text-gray-900">Women</li> </a>
-
-                            <a href="/men" onClick={(e) => { e.preventDefault(); navigate("/men"); }}> <li className="cursor-pointer hover:text-gray-900" value="men" onClick={handlePageChange}>Men</li> </a>
-
-                            <a href="/kids" onClick={(e) => { e.preventDefault(); navigate("/kids"); }}> <li className="cursor-pointer hover:text-gray-900" value="kids" onClick={handlePageChange}>Kids</li> </a>
-
-                            <a href="/accessories" onClick={(e) => { e.preventDefault(); navigate("/accessories"); }}> <li className="cursor-pointer hover:text-gray-900" value="accessories" onClick={handlePageChange}>Accessories</li> </a>
+                        <div className="hidden lg:flex text-xl text-gray-700">
                             
+                            <select name="departments" id="departments" value={selectedDepartment} onChange={handleDepartmentChange} className="justify-start lg:mr-22 xl:mr-21 2xl:mr-27 focus:borde hover:text-gray-900 py-2 bg-gray-100 text-center rounded-lg">
+
+                                <option value="shopbydepartments"> Shop by Departments </option>
                                 
-                            <li className="cursor-pointer hover:text-gray-900 relative flex items-center">
+                                <option value="Groceries"> Groceries </option>
                                 
-                                <label
-                                    htmlFor="pages"
-                                    className="cursor-pointer text-xl text-gray-700 hover:text-gray-900 flex items-center"
-                                >
-                                    Pages
-                                    <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="w-4 h-4 ml-1"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth={2}
+                                <option value="Drinks"> Drinks </option>
+
+                                <option value="Chocolates"> Chocolates </option>
+                                
+                            </select>
+
+                        </div>
+
+                
+                    {/* menu bar */}
+                    
+                        <div className="text-gray-700 text-xl">
+                            
+                            <ul className="hidden lg:flex lg:flex-row  items-center gap-6">
+
+                                <a href="/women" onClick={(e) => { e.preventDefault(); navigate("/women"); }}> <li className="cursor-pointer hover:text-gray-900">Women</li> </a>
+
+                                <a href="/men" onClick={(e) => { e.preventDefault(); navigate("/men"); }}> <li className="cursor-pointer hover:text-gray-900" value="men" onClick={handlePageChange}>Men</li> </a>
+
+                                <a href="/kids" onClick={(e) => { e.preventDefault(); navigate("/kids"); }}> <li className="cursor-pointer hover:text-gray-900" value="kids" onClick={handlePageChange}>Kids</li> </a>
+
+                                <a href="/accessories" onClick={(e) => { e.preventDefault(); navigate("/accessories"); }}> <li className="cursor-pointer hover:text-gray-900" value="accessories" onClick={handlePageChange}>Accessories</li> </a>
+                                
+                                    
+                                <li className="cursor-pointer hover:text-gray-900 relative flex items-center">
+                                    
+                                    <label
+                                        htmlFor="pages"
+                                        className="cursor-pointer text-xl text-gray-700 hover:text-gray-900 flex items-center"
                                     >
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                </label>
-                                    
-                                <select name="pages" id="pages" value={selectedPage} onChange={handlePageChange} className="absolute opacity-0 inset-0 cursor-pointer">
+                                        Pages
+                                        <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="w-4 h-4 ml-1"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth={2}
+                                        >
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </label>
+                                        
+                                    <select name="pages" id="pages" value={selectedPage} onChange={handlePageChange} className="absolute opacity-0 inset-0 cursor-pointer">
 
-                                    <option value="about_us"> About Us </option>
+                                        <option value="about_us"> About Us </option>
+                                    
+                                        <option value="shop"> Shop </option>
+                                    
+                                        <option value="single_product"> Single Product </option>
+
+                                        <option value="cart"> Cart </option>
+                                        
+                                        <option value="checkout"> Checkout </option>
+                                        
+                                        <option value="blog"> Blog </option>
+
+                                        <option value="single_post"> Single Post </option>
+                                        
+                                        <option value="styles"> Styles </option>
+
+                                        <option value="thank_you"> Thank You </option>
+
+                                        <option value="my_account"> My Account </option>
+                                        
+                                        <option value="404_error"> 404 Error  </option>
                                 
-                                    <option value="shop"> Shop </option>
-                                
-                                    <option value="single_product"> Single Product </option>
+                                    </select>
 
-                                    <option value="cart"> Cart </option>
+                                </li>
+
                                     
-                                    <option value="checkout"> Checkout </option>
-                                    
-                                    <option value="blog"> Blog </option>
+                                <a href="/brand" onClick={(e) => { e.preventDefault(); navigate("/brand"); }}> <li className="cursor-pointer hover:text-gray-900" value="brand" onClick={handlePageChange}>Brand</li> </a>
 
-                                    <option value="single_post"> Single Post </option>
-                                    
-                                    <option value="styles"> Styles </option>
+                                <a href="/sale" onClick={(e) => { e.preventDefault(); navigate("/sale"); }}> <li className="cursor-pointer hover:text-gray-900" value="sale" onClick={handlePageChange}>Sale</li> </a>
 
-                                    <option value="thank_you"> Thank You </option>
+                                <a href="/blog" onClick={(e) => { e.preventDefault(); navigate("/blog"); }}> <li className="cursor-pointer hover:text-gray-900" value="blog" onClick={handlePageChange}>Blog</li> </a>
 
-                                    <option value="my_account"> My Account </option>
-                                    
-                                    <option value="404_error"> 404 Error  </option>
-                            
-                                </select>
+                            </ul>
 
-                            </li>
-
-                                
-                            <a href="/brand" onClick={(e) => { e.preventDefault(); navigate("/brand"); }}> <li className="cursor-pointer hover:text-gray-900" value="brand" onClick={handlePageChange}>Brand</li> </a>
-
-                            <a href="/sale" onClick={(e) => { e.preventDefault(); navigate("/sale"); }}> <li className="cursor-pointer hover:text-gray-900" value="sale" onClick={handlePageChange}>Sale</li> </a>
-
-                            <a href="/blog" onClick={(e) => { e.preventDefault(); navigate("/blog"); }}> <li className="cursor-pointer hover:text-gray-900" value="blog" onClick={handlePageChange}>Blog</li> </a>
-
-                        </ul>
-
-                    </div>
-                
-        </section>
-                
+                        </div>
+                    
+            </section>
+                    
     </>
     
   );
