@@ -8,6 +8,8 @@ import { logout } from "../appwrite/appwrite";
 
 import { getAllProducts, getAllCategories } from "../appwrite/db";
 
+import { incrementProductSearchCount, incrementCategorySearchCount } from "../appwrite/db";
+
 import CartDrawer from "./CartDrawer";
 
 import MobileMenuDrawer from "./MenuDrawer";
@@ -170,6 +172,32 @@ export default function Navbar( /*{ loggedInUser }*/ )
         setSearchResults([...catMatches, ...prodMatches]);
 
         setShowDropdown(true);
+
+
+
+        // Increment search stats for each matching result
+
+        // Each match gets counted as "was searched"
+
+            [...catMatches, ...prodMatches].forEach(
+                
+                res =>
+                {
+                    if (res.type === "product")
+                    {
+                        // Count product search event
+                
+                            incrementProductSearchCount(res.item.$id);
+                    }
+                    
+                    else
+                    {
+                        // Count category search event
+                
+                            incrementCategorySearchCount(res.item.$id);
+                    }
+                }
+            );
     };
 
 
@@ -236,9 +264,19 @@ export default function Navbar( /*{ loggedInUser }*/ )
             const first = searchResults[0];
 
 
-            if (first.type === "product") navigate(`/product/${first.item.slug}`);
+            if (first.type === "product")
+            {
+                incrementProductSearchCount(first.item.$id);
+
+                navigate(`/product/${first.item.slug}`);
+            }
             
-            if (first.type === "category") navigate(`/category/${first.item.slug}`);
+            if (first.type === "category")
+            {
+                incrementCategorySearchCount(first.item.$id);
+
+                navigate(`/category/${first.item.slug}`);
+            }
 
 
             setSearchResults([]);
@@ -483,10 +521,18 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                                     setShowDropdown(false);
 
                                                     if (res.type === "product")
+                                                    {
+                                                        incrementProductSearchCount(res.item.$id);
+                                                     
                                                         navigate(`/product/${res.item.slug}`);
-                                                
+                                                    }
+                                                    
                                                     if (res.type === "category")
+                                                    {
+                                                        incrementCategorySearchCount(res.item.$id);
+
                                                         navigate(`/category/${res.item.slug}`);
+                                                    }
 
                                                     setSearchResults([]);
                                                     setSearchInput("");
@@ -508,7 +554,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
                                                         {highlightMatch(res.item.name, searchInput)}
 
-                                                        {console.log(res.item.image_url)}
+                                                        {/*{console.log(res.item.image_url)}*/}
 
                                                         <img src={res.item.image_url} alt="icon" className={`${(res.type === "product") ? `w-14` : `w-10 mr-2.5`}`} />
 
@@ -671,7 +717,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                 onClick={handleLogout}
                             >
                                 
-                                <img src="./icons/logout.png" alt="logout" className="w-9 hover:w-10 rounded-full transition-all duration-75" />
+                                <img src="/icons/logout.png" alt="logout" className="w-9 hover:w-10 rounded-full transition-all duration-75" />
 
                             </button>
 
@@ -718,7 +764,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                     
                     <button className="lg:hidden" onClick={() => setOpenMobileMenu(true)}>
                     
-                        <img src="./icons/hamburger_menu.png" alt="hamburger_menu_icon" 
+                        <img src="/icons/hamburger_menu.png" alt="hamburger_menu_icon" 
                             
                         className="h-13 p-2 cursor-pointer border border-gray-400 hover:bg-gray-100 rounded-lg"
                     

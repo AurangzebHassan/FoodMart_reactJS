@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback } from "rea
 
 import { useAuth } from "./AuthContext"; // you already have this
 
-import { getAllProducts, getCartItems, addOrUpdateCartItem, removeCartItem, clearUserCart } from "../appwrite/db";
+import { getAllProducts, getCartItems, addOrUpdateCartItem, removeCartItem, clearUserCart, decreaseProductStock, increaseProductStock } from "../appwrite/db";
 
 import { formatPrice } from "../utils/formatPrice";
 
@@ -142,32 +142,34 @@ import { formatPrice } from "../utils/formatPrice";
                 }
 
 
-                // ====================== START FIXED DISCOUNT LOGIC ======================
-                    const enrichedCart = cartDocs
-                        .map((item) => {
-                            const product = productsMap[item.product_id];
-                            if (!product) return null;
+                const enrichedCart = cartDocs.map(
+                    
+                    (item) =>
+                    {
+                        const product = productsMap[item.product_id];
+                    
+                    
+                        if (!product) return null;
 
-                            // Compute discounted price dynamically
-                            const discountedPrice = parseFloat(
-                            formatPrice(product.price, product.currency, product.discount_tag).replace(/[^\d.]/g, '')
-                            );
 
-                            const subtotal = +(discountedPrice * item.quantity).toFixed(2);
+                        // Compute discounted price dynamically
+                    
+                            const discountedPrice = parseFloat(formatPrice(product.price, product.currency, product.discount_tag).replace(/[^\d.]/g, ''));
 
-                            return {
-                            ...item,
-                            product,
-                            subtotal,
-                            };
-                        })
-                        .filter(Boolean);
+                        
+                        const subtotal = +(discountedPrice * item.quantity).toFixed(2);
 
-                        setCartItems(enrichedCart);
-                        setCartQuantity(enrichedCart.reduce((sum, i) => sum + i.quantity, 0));
-                        setCartTotal(enrichedCart.reduce((sum, i) => sum + i.subtotal, 0).toFixed(2));
-                // ====================== END FIXED DISCOUNT LOGIC ======================
+                        return { ...item, product, subtotal,};
+                    }
 
+                ).filter(Boolean);
+
+                    
+                setCartItems(enrichedCart);
+                
+                setCartQuantity(enrichedCart.reduce((sum, i) => sum + i.quantity, 0));
+                
+                setCartTotal(enrichedCart.reduce((sum, i) => sum + i.subtotal, 0).toFixed(2));
 
             }, [cartDocs, productsMap]);
 
@@ -183,104 +185,291 @@ import { formatPrice } from "../utils/formatPrice";
             }, [fetchCartDocs]);
 
         
-        // -----------------------------------------------------------
-            // 5. Add item to cart
-        // -----------------------------------------------------------
+    
+        // -----------------------------------------------------
+            
+            // 5. addItem(productId, qty)
         
+                // Purpose:
+                            // - Add a product to cart OR increase its quantity.
+                            // - Reserve stock by decreasing it IN THE DATABASE.
+                            // - Update local productsMap so UI stays in sync.
+                            
+        // -----------------------------------------------------
+ 
             const addItem = async (productId, qty = 1) => 
             {
-                if (!user) return;
+                try
+                {
+                    if (!user) return;
 
 
-                const product = productsMap[productId];
+                    // const cartItem = cartItems.find(i => i.productId === productId);
 
-                if (!product) return;
+                    const product = productsMap[productId];
 
 
-                // Find existing cart item
-                
-                    const existing = cartDocs.find((c) => c.product_id === productId);
-
-                const currentQty = existing ? existing.quantity : 0;
-                
-                const newQty = currentQty + qty;
-
-                // Prevent exceeding stock
-                
-                    if (newQty > product.stock) 
+                    if (!product)
                     {
-                        alert(`Only ${product.stock} unit(s) available in stock.`);
+                        console.error("Product not found in productsMap");
                         
                         return;
                     }
 
+                
+                    // Since stock is already DB-reflecting available units,
+                
+                    // we ONLY check if the *incoming qty* exceeds remaining stock.
+                
+                        if (qty > product.stock)
+                        {
+                            alert(`Only ${product.stock} unit(s) available`);
+                    
+                            return;
+                        }
 
-                await addOrUpdateCartItem(user.$id, productId, qty);
-            
-                await refreshCart();
+                
+                    // Add item OR increase quantity in the cart
+                
+                        await addOrUpdateCartItem( user.$id, productId, qty );
+
+                
+                    // Decrease stock in DB and get updated product back
+                
+                        const updatedProduct = await decreaseProductStock(productId, qty);
+
+                
+                    // Update local productsMap so UI shows new stock instantly
+                
+                        if (updatedProduct?.$id)
+                        {
+                            setProductsMap(prev => ({ ...prev, [productId]: updatedProduct}));
+                        }
+
+                
+                    await refreshCart(); // Re-hydrate cart with updated prices + quantities
+                }
+                
+                catch (error)
+                {
+                    console.error("Error in addItem:", error);
+                }
             };
 
+
+
+        // -----------------------------------------------------
         
-        // -----------------------------------------------------------
-            // 6. Update quantity (+1 or -1), same as your Drawer
-        // -----------------------------------------------------------
+            // updateItem(cartItemId, productId, qtyChange)
+            
+                // Purpose:
+            
+                            // - Increase/decrease quantity of an item ALREADY in cart.
+                            // - Adjust stock in DB accordingly (increase or decrease).
+                            // - Update productsMap so UI updates instantly.
+
+        // -----------------------------------------------------
         
             const updateItem = async (cartItemId, productId, qtyChange) => 
             {
-                if (!user) return;
+                try
+                {
+                    if (!user) return;
 
-
-                const product = productsMap[productId];
                 
-                if (!product) return;
-
-
-                const cartItem = cartDocs.find((c) => c.$id === cartItemId);
+                    const cartItem = cartItems.find(i => i.$id === cartItemId);
                 
-                if (!cartItem) return;
+                    const product = productsMap[productId];
 
-
-                const newQty = cartItem.quantity + qtyChange;
-
-                // BLOCK below 1
                 
-                    if (newQty < 1) return;
+                    if (!cartItem || !product) return;
 
-                // BLOCK above stock
                 
-                    if (newQty > product.stock) return;
+                    // If user tries to INCREASE quantity
+                
+                        if (qtyChange > 0)
+                        {
+                    
+                            // quantity change must not exceed DB remaining stock
+                    
+                                if (qtyChange > product.stock) return;
 
+                    
+                            const updatedProduct = await decreaseProductStock(productId, qtyChange);
 
-                await addOrUpdateCartItem(user.$id, productId, qtyChange);
+                    
+                            if (updatedProduct?.$id)
+                            {
+                                setProductsMap(prev => ({ ...prev, [productId]: updatedProduct }));
+                            }
+                        }
+
+                
+                    // If user DECREASES cart item quantity
+                
+                        if (qtyChange < 0)
+                        {
+                            const updatedProduct = await increaseProductStock( productId, Math.abs(qtyChange) );
+
+                
+                            if (updatedProduct?.$id)
+                            {
+                                setProductsMap(prev => ({ ...prev, [productId]: updatedProduct }));
+                            }
+                        }
+
+               
+                    // Finally update the cart record
+                
+                        await addOrUpdateCartItem( user.$id, productId, qtyChange );
+
+                
+                    await refreshCart();
+                } 
             
-                await refreshCart();
+                catch (error)
+                {
+                    console.error("Error in updateItem:", error);
+                }
             };
 
+
+
+        // -----------------------------------------------------
+       
+            // removeItem(cartItemId, productId)
+            
+                // Purpose:
+            
+                            // - Remove item completely from cart.
+                            // - Restore all reserved units back to stock in the DB.
+                            // - Sync productsMap so UI stays correct.
+                            
+        // -----------------------------------------------------
         
-        // -----------------------------------------------------------
-            // 7. Remove item completely
-        // -----------------------------------------------------------
-        
-            const removeItem = async (cartItemId) => 
+            const removeItem = async (cartItemId, productId) => 
             {
-                await removeCartItem(cartItemId);
-            
-                await refreshCart();
+                try
+                {
+                    if (!user) return;
+
+                
+                    // Find the cart item to know how many units to restore
+                
+                        const cartItem = cartItems.find((i) => i.$id === cartItemId);
+                
+                
+                    if (!cartItem) return;
+
+                
+                    // Get the product document from productsMap to obtain its Appwrite $id
+                
+                        const productDoc = productsMap[productId];
+                
+                    
+                        if (!productDoc || !productDoc.$id)
+                        {
+                            console.error( "Product document not found for stock restoration", productId );
+                    
+                            return;
+                        }
+
+                
+                    // Restore all reserved stock in the DB
+                
+                        const updatedProduct = await increaseProductStock( productDoc.$id, cartItem.quantity );
+
+                
+                    // Update local productsMap so UI reflects live stock
+                
+                        if (updatedProduct?.$id)
+                        {
+                            setProductsMap((prev) => ({ ...prev, [productId]: updatedProduct }));
+                        }
+
+                
+                    // Remove the cart item from the DB
+                
+                        await removeCartItem(cartItemId);
+
+                
+                    // Refresh the cart to update cartItems, cartQuantity, cartTotal
+                
+                        await refreshCart();
+                }
+                
+                catch (error)
+                {
+                    console.error("Error in removeItem:", error);
+                }
             };
 
+
+
+        // -----------------------------------------------------
         
-        // -----------------------------------------------------------
-            // 8. Clear entire cart
-        // -----------------------------------------------------------
+            // clearCart()
+            
+                // Purpose:
+            
+                            // - Empty the entire cart.
+                            // - Return ALL reserved stock to inventory in DB.
+                            // - Update productsMap for each returned product.
+
+        // -----------------------------------------------------
         
             const clearCart = async () => 
             {
-                if (!user) return;
+               try
+               {
+                   if (!user) return;
 
-                await clearUserCart(user.$id);
-            
-                await refreshCart();
-            };
+               
+                   // Iterate over all cart items
+               
+                        for (const item of cartItems)
+                        {
+                            const productDoc = productsMap[item.product_id];
+                        
+
+                            if (!productDoc || !productDoc.$id)
+                            {
+                                console.error( "Product document not found for stock restoration", item.product_id );
+                        
+                                continue;
+                            }
+
+                        
+                            // Restore each product's stock
+                        
+                                const updatedProduct = await increaseProductStock( productDoc.$id, item.quantity );
+
+                        
+                            // Update productsMap locally
+                        
+                                if (updatedProduct?.$id)
+                                {
+                                    setProductsMap((prev) => ({ ...prev, [item.product_id]: updatedProduct }));
+                                }
+                        }
+
+               
+                   // Remove all cart items from DB
+               
+                        await clearUserCart(user.$id);
+
+               
+                   // Refresh cart to update totals and UI
+               
+                       await refreshCart();
+                } 
+             
+                catch (error)
+                {
+                    console.error("Error clearing cart:", error);
+                }
+           };
+
 
 
         // -----------------------------------------------------------
@@ -325,6 +514,8 @@ import { formatPrice } from "../utils/formatPrice";
                 loading,
             
                 cartItems, // enriched objects (product + quantity + subtotal)
+
+                productsMap,
             
                 cartQuantity, // for navbar badge
             

@@ -18,6 +18,10 @@ import VerifyEmail from "./pages/VerifyEmail";
 
 import Home from "./pages/Home";
 
+import ProductPage from "./pages/ProductPage";
+
+import CategoryPage from "./pages/CategoryPage";
+
 
 
 // ⭐ WHAT WE CHANGED
@@ -250,10 +254,12 @@ function App()
 		
 				<CartProvider>
 					
+				  
 					<Router>
 				
 						<Routes>
 					
+						  
 							<Route path="/login" element={<Login />} />
 
 							<Route path="/signup" element={<Signup />} />
@@ -266,18 +272,44 @@ function App()
 					
 									<ProtectedRoute>
 					
-									<Home />
+										<Home />
 
 									</ProtectedRoute>
 
 								}
 				
 							/>
+							
+							<Route path="/product/:slug" element=
+							
+								{
+									<ProtectedRoute>
 
+										<ProductPage />
+								  
+									</ProtectedRoute>	
+								}
+						  
+						  	/>
+							
+							<Route path="/category/:slug" element=
+							
+								{
+									<ProtectedRoute>
+
+										<CategoryPage />
+								  
+									</ProtectedRoute>	
+								}
+						  
+						  	/>
+
+						  
 						</Routes>			  
 
 					</Router>
 
+				  
 				</CartProvider>
 			
 			</AuthProvider>
