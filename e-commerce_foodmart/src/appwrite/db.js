@@ -73,7 +73,8 @@ import { Permission, Role } from "appwrite";
         export async function getMostSearchedProducts() {
             try {
                 const res = await database.listDocuments(DATABASE_ID, PRODUCTS_TABLE_ID, [
-                    Query.orderDesc("search_count")
+                    Query.orderDesc("search_count"),
+                    Query.limit(7)
                 ]);
                 return res.documents;
             } catch (err) {
@@ -89,7 +90,8 @@ import { Permission, Role } from "appwrite";
         export async function getMostAddedToCartProducts() {
             try {
                 const res = await database.listDocuments(DATABASE_ID, PRODUCTS_TABLE_ID, [
-                    Query.orderDesc("cart_add_count")
+                    Query.orderDesc("cart_add_count"),
+                    Query.limit(7)
                 ]);
                 return res.documents;
             } catch (err) {
@@ -113,6 +115,41 @@ import { Permission, Role } from "appwrite";
                 console.error("Error fetching new products:", err);
                 return [];
             }
+        }
+
+
+
+    /* ------------------- 🟩 8. Get favourtie/wishlist products ------------------- */
+    
+        export async function getFavouriteProducts() {
+            try {
+                const res = await database.listDocuments(DATABASE_ID, PRODUCTS_TABLE_ID, [
+                    Query.equal("isFavourite", true),
+                    Query.orderDesc("$updatedAt")
+                ]);
+                return res.documents;
+            } catch (err) {
+                console.error("Error fetching trending products:", err);
+                return [];
+            }
+        }
+
+
+
+    /* ------------------- 🟩 9. Toggle product favourite ------------------- */
+    
+        export async function ToggleFavourite(productId, currentvalue) {
+          try {
+            return await database.updateDocument(
+              DATABASE_ID,
+              PRODUCTS_TABLE_ID,
+              productId,
+              { isFavourite: !currentvalue }
+            );
+          } catch (err) {
+            console.error("Failed to update favourite:", err);
+            throw err;
+          }
         }
 
 

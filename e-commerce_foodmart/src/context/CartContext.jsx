@@ -183,6 +183,29 @@ import { formatPrice } from "../utils/formatPrice";
                 await fetchCartDocs();
 
             }, [fetchCartDocs]);
+        
+        
+        
+        // -----------------------------------------------------------
+            // 5. Update the products' changed field in the products map.
+            
+                // Adding this for the isfavourite flag reflection/updation in UI
+        // -----------------------------------------------------------
+
+            function updateProductField(productId, field, value) 
+            {
+                setProductsMap(
+                
+                    (prev) =>
+                    (
+                        {
+                            ...prev,
+                
+                            [productId]: { ...prev[productId], [field]: value, }
+                        }
+                    )
+                );
+            }
 
         
     
@@ -522,6 +545,8 @@ import { formatPrice } from "../utils/formatPrice";
                 cartTotal, // formatted string total
             
                 refreshCart,
+
+                updateProductField,
             
                 addItem,
             

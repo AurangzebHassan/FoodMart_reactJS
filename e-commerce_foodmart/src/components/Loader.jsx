@@ -12,7 +12,7 @@ import React from "react";
 
     large: "h-8 w-8",
 	
-	xl: "h-10 w-10"
+	  xl: "h-10 w-10"
 };
 
 

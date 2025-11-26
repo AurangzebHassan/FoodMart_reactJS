@@ -12,7 +12,7 @@ import { formatRating } from "../../utils/formatRating";
 
 import { formatDiscount } from "../../utils/formatDiscount";
 
-import { incrementProductCartAddCount } from "../../appwrite/db";
+import { incrementProductCartAddCount, ToggleFavourite } from "../../appwrite/db";
 
 import Loader from "../Loader";
 
@@ -31,13 +31,13 @@ import Loader from "../Loader";
 export default function ProductCard({ Product }) {
     const { user } = useAuth();
 
-    const { addItem, productsMap } = useCart();
+    const { updateProductField, addItem, productsMap } = useCart();
 
 
 
     const [addToCartLoading, setAddToCartLoading] = useState(false);
-
-
+    
+    
 
      // always use freshest product data from CartContext
   
@@ -51,6 +51,7 @@ export default function ProductCard({ Product }) {
     
     let [existingStock, setExistingStock] = useState(liveProduct.stock);
 
+    const [isFavourite, setIsFavourite] = useState(liveProduct.isFavourite || false);
 
 
     const navigate = useNavigate();
@@ -73,8 +74,10 @@ export default function ProductCard({ Product }) {
             
         
         setExistingStock(liveProduct.stock);
+
+        setIsFavourite(liveProduct.isFavourite);
         
-    }, [liveProduct.stock]);
+    }, [liveProduct.stock, liveProduct.isFavourite]);
 
     
     
@@ -85,6 +88,28 @@ export default function ProductCard({ Product }) {
         
         navigate(`/product/${liveProduct.slug}`);
     };
+
+
+
+    // handle the product being made or removed as/from favourites/wishlist
+
+        const handleFavouriteClick = async () =>
+        {
+            try
+            {
+                await ToggleFavourite(liveProduct.$id, isFavourite); // backend update
+              
+                updateProductField(liveProduct.$id, "isFavourite", !isFavourite); // global state
+                
+                setIsFavourite(!isFavourite); // local state to re-render this card
+            }
+            
+            catch (error)
+            {
+                console.error("Failed to toggle favourite/wishlist status:", error);
+            }
+        };
+
 
 
 
@@ -136,20 +161,20 @@ export default function ProductCard({ Product }) {
     
                 <div
             
-                    className="absolute top-7 right-7 bg-white hover:bg-red-500 p-3 rounded-full transition-all duration-300"
+                    className={`absolute top-7 right-7 bg-white hover:-translate-y-0.5 p-3 rounded-full transition-all duration-200`}
             
-                    onClick={() => {!addToCartLoading && navigate("/wishlist");}}
+                    onClick={() => {handleFavouriteClick()}}
                 >
-            
+
                     <img
-                
-                        src="/icons/heart.svg"
+            
+                        src={isFavourite ? `/icons/heart.png` : `/icons/heart.svg`}
                 
                         alt="wishlist"
-                
-                        className="w-8 hover:fill-current hover:text-white"
+                        
+                        className="w-8"
                     />
-            
+                
                 </div>
         
         

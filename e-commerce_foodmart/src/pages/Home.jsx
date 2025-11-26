@@ -25,7 +25,7 @@ export default function Home( /*{ loggedInUser }*/ )
             <HeroSection />
 
 
-            <div className="mt-10 mb-30">
+            <div className="mt-10 mb-20">
             
                 <CategoryCarousel />
                 

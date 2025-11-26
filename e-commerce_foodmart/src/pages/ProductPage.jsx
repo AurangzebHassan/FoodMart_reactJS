@@ -18,6 +18,8 @@ import { formatDiscount } from "../utils/formatDiscount";
 
 import Loader from "../components/Loader";
 
+import { ToggleFavourite } from "../appwrite/db";
+
 
 
 export default function ProductPage()
@@ -35,7 +37,7 @@ export default function ProductPage()
 
     const { user } = useAuth();
     
-    const { addItem, productsMap } = useCart(); // use CartContext for stock and cart operations
+    const { updateProductField, addItem, productsMap } = useCart(); // use CartContext for stock and cart operations
 
 
     const [product, setProduct] = useState(null); // original product fetched from DB
@@ -100,6 +102,42 @@ export default function ProductPage()
         // Always use the freshest stock and data from CartContext
         
             const liveProduct = productsMap[product?.$id] || product;
+            
+    
+    
+    const [isFavourite, setIsFavourite] = useState(liveProduct?.isFavourite || false);
+
+    useEffect(() =>
+    {
+        if (liveProduct)
+        {
+            setIsFavourite(liveProduct.isFavourite || false);
+        }
+
+    }, [liveProduct]);
+
+
+
+
+
+    // handle the product being made or removed as/from favourites/wishlist
+
+        const handleFavouriteClick = async () =>
+        {
+            try
+            {
+                await ToggleFavourite(liveProduct.$id, isFavourite); // backend update
+                
+                updateProductField(liveProduct.$id, "isFavourite", !isFavourite); // global state
+                
+                setIsFavourite(!isFavourite); // local state to re-render this card
+            }
+            
+            catch (error)
+            {
+                console.error("Failed to toggle favourite/wishlist status:", error);
+            }
+        };
 
     
     
@@ -208,6 +246,27 @@ export default function ProductPage()
                                 
                                 className="relative w-full h-full max-w-md max-h-md bg-gray-200 rounded-xl shadow-lg object-cover"
                             />
+
+
+                            {/* wishlist heart */}
+    
+                                <div
+
+                                    className={`absolute top-3 right-3 bg-white hover:-translate-y-0.5 p-3 rounded-full transition-all duration-200`}
+
+                                    onClick={() => {handleFavouriteClick()}}
+                                >
+
+                                    <img
+
+                                        src={isFavourite ? `/icons/heart.png` : `/icons/heart.svg`}
+                                
+                                        alt="wishlist"
+                                        
+                                        className="w-8"
+                                    />
+                                
+                                </div>
                         
                             
                             {/* Discount Tag */}
@@ -450,7 +509,7 @@ export default function ProductPage()
                                                         (
                                                             <div className="flex items-center justify-center">
                                                                 
-                                                                <Loader size="xl" color="border-yellow-500" />
+                                                                <Loader size="large" color="border-yellow-500" />
                                     
                                                             </div>
                                                         )         

@@ -22,6 +22,8 @@ import ProductPage from "./pages/ProductPage";
 
 import CategoryPage from "./pages/CategoryPage";
 
+import Wishlist from "./pages/Wishlist";
+
 import Loader from "./components/Loader";
 
 
@@ -298,6 +300,18 @@ function App()
 									<ProtectedRoute>
 
 										<CategoryPage />
+								  
+									</ProtectedRoute>	
+								}
+						  
+						  	/>
+							
+							<Route path="/wishlist" element=
+							
+								{
+									<ProtectedRoute>
+
+										<Wishlist />
 								  
 									</ProtectedRoute>	
 								}

@@ -160,7 +160,7 @@ export default function MostSearchedCarousel()
 
 
   return (
-    <section className="container mx-auto px-5 py-10 overflow-hidden">
+    <section className="container mx-auto px-5 py-6 overflow-hidden">
       {/* 🟩 HEADER ROW */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold text-gray-800">Most Searched</h2>
