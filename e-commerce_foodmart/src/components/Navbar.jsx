@@ -77,9 +77,10 @@ export default function Navbar( /*{ loggedInUser }*/ )
         const [highlightedIndex, setHighlightedIndex] = useState(-1);
         
     
-    // stores the previous search results for the user. Only the ones where the user chose one to navigate to.
+    // state to handle the visibility of the search modal at md or lower sizes
 
-        // const [pastSearches, setPastSearches] = useState([]);
+        const [showSearchModal, setShowSearchModal] = useState(false);
+
 
 
             
@@ -121,6 +122,8 @@ export default function Navbar( /*{ loggedInUser }*/ )
         if (searchInput.trim().length > 0)
         {
             setShowDropdown(!showDropdown);
+
+            setShowSearchModal(!showSearchModal);
         }
     };
 
@@ -303,9 +306,24 @@ export default function Navbar( /*{ loggedInUser }*/ )
     
     
     
+    useEffect(() =>
+    {
+        if (showSearchModal || showDropdown)
+        {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "";
+      }
+      return () => {
+        document.body.style.overflow = "";
+      };
+    }, [showSearchModal, showDropdown]);
+
+
     
     
     
+        
     // load all the products and categories at initial mount and fill states
 
         useEffect(() => 
@@ -339,13 +357,13 @@ export default function Navbar( /*{ loggedInUser }*/ )
                 
             {/* Background blur overlay */}
                     
-                {(showDropdown && searchResults.length > 0) && (
+                {((showDropdown && searchResults.length > 0) || showSearchModal) && (
                 
                     <div
                     
-                        className="fixed inset-0 bg-black/5 backdrop-blur-sm z-40"
+                        className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
                     
-                        onClick={() => setShowDropdown(false)}
+                        onClick={() => {setShowDropdown(false); setShowSearchModal(false);}}
                     >
                 
                     </div>
@@ -500,7 +518,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                 
                                 {(showDropdown && searchResults.length > 0) && (
                                     
-                                    <div className="absolute left-0 top-24 w-full bg-white border border-gray-300 rounded-lg shadow-xl mt-1 z-300">
+                                    <div className="absolute left-[5%] lg:left-[22%] top-24 xl:top-29.75 xl:w-[53%] 2xl:w-[40%] 2xl:left-[22%] xl:left-[17.5%] w-[55%] bg-white border border-gray-300 rounded-lg shadow-xl mt-1 z-300">
                                         
                                         {searchResults.map((res, index) => (
                                             
@@ -582,7 +600,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                     <div className={`flex shrink-0 justify-end items-center ${user?.name.length > 9 ? `2xl:-ml:20` : `xl:-ml-2 2xl:-ml:20`} gap-3 transition-all duration-200`}>
                         
                         
-                        <div className="lg:hidden">
+                    <div className="lg:hidden" onClick={() => { setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50);}}>
                         
                             <img src="/icons/search.png" alt="FoodMart" className="h-11 p-2 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer" />
             
@@ -872,6 +890,133 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         </div>
                     
             </section>
+            
+          
+
+        {/* Mobile Search Modal */}
+        
+            {/* Mobile search modal for md and below */}
+
+               {/* ================= MOBILE SEARCH MODAL ================= */}
+
+                    {showSearchModal && (
+                        <>
+                            {/* Backdrop
+                                <div
+                                    className="lg:hidden fixed inset-0 bg-black/5 backdrop-blur-sm z-40"
+                                    onClick={() => {
+                                        setShowSearchModal(false);
+                                        setSearchInput("");
+                                        setHighlightedIndex(-1);
+                                    }}
+                                /> */}
+
+                            {/* Modal */}
+                            
+                                <div className="lg:hidden fixed top-25.5 left-1/2 -translate-x-1/2 w-[70%] bg-white rounded-xl shadow-xl p-4 z-50">
+
+                                        
+                                    {/* Search Input */}
+                                    
+                                        <div className="flex bg-gray-100 rounded-full p-2 mb-2 items-center">
+                                            <input
+                                                type="text"
+                                                placeholder="Search"
+                                                value={searchInput}
+                                                ref={searchRef}
+                                                onChange={handleSearchChange}
+                                                onKeyDown={(e) => {
+                                                    if (!showDropdown || searchResults.length === 0) {
+                                                        if (e.key === "Enter") handleSearchSubmit();
+                                                        return;
+                                                    }
+
+                                                    if (e.key === "ArrowDown" || (e.key === "Tab" && !e.shiftKey)) {
+                                                        e.preventDefault();
+                                                        setHighlightedIndex((prev) =>
+                                                            prev < searchResults.length - 1 ? prev + 1 : 0
+                                                        );
+                                                    }
+
+                                                    if (e.key === "ArrowUp" || (e.key === "Tab" && e.shiftKey)) {
+                                                        e.preventDefault();
+                                                        setHighlightedIndex((prev) =>
+                                                            prev > 0 ? prev - 1 : searchResults.length - 1
+                                                        );
+                                                    }
+
+                                                    if (e.key === "Enter" && highlightedIndex >= 0) {
+                                                        const res = searchResults[highlightedIndex];
+
+                                                        if (res.type === "category") {
+                                                            navigate(`/category/${res.item.slug}`);
+                                                        } else {
+                                                            navigate(`/product/${res.item.slug}`);
+                                                        }
+
+                                                        setShowSearchModal(false);
+                                                        setSearchInput("");
+                                                    }
+
+                                                    if (e.key === "Escape") {
+                                                        setShowSearchModal(false);
+                                                    }
+                                                }}
+                                                className="w-full bg-transparent outline-none p-2 text-yellow-600 font-extrabold placeholder:text-xl"
+                                            />
+
+                                            <img
+                                                src="/icons/search.png"
+                                                className="h-10 p-2 cursor-pointer"
+                                                onClick={handleSearchSubmit}
+                                            />
+                                        </div>
+
+                                            
+                                    {/* Results */}
+                                    
+                                        {searchResults.length > 0 && (
+                                            <div className="bg-white border border-gray-300 rounded-lg shadow-xl overflow-y-auto">
+
+                                                {searchResults.map((res, index) => (
+                                                    <div
+                                                        key={res.item.$id}
+                                                        tabIndex={0}
+                                                        onMouseEnter={() => setHighlightedIndex(index)}
+                                                        onClick={() => {
+                                                            if (res.type === "category") {
+                                                                navigate(`/category/${res.item.slug}`);
+                                                            } else {
+                                                                navigate(`/product/${res.item.slug}`);
+                                                            }
+
+                                                            setShowSearchModal(false);
+                                                            setSearchInput("");
+                                                        }}
+                                                        className={`p-3 border-b border-gray-200 cursor-pointer flex justify-between items-center gap-3
+                                                            ${highlightedIndex === index ? "bg-gray-200" : "hover:bg-gray-100"}
+                                                        `}
+                                                    >
+                                                        <span className={`text-yellow-500 font-extrabold text-lg`}>
+                                                            {res.type === "category" ? "Category: " : "Product: "}
+                                                        </span>
+
+                                                        <span className="flex items-center gap-4 font-mono">
+                                                            {highlightMatch(res.item.name, searchInput)}
+                                                            <img
+                                                                src={res.item.image_url}
+                                                                className={res.type === "product" ? "w-14" : "w-10 mr-2.75"}
+                                                            />
+                                                        </span>
+                                                    </div>
+                                                ))}
+
+                                            </div>
+                                        )}
+                            
+                                </div>
+                        </>
+                    )}
                     
     </>
     

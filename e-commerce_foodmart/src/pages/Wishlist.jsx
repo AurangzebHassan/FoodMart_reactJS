@@ -138,7 +138,7 @@ export default function Wishlist()
                     :
 
                     (
-                        <div className="flex w-full h-100 items-center justify-center pl-20 text-yellow-500 font-bold text-3xl">
+                        <div className="flex w-full h-100 items-center justify-center pl-20 text-gray-400 font-bold text-2xl">
 
                             No Products in Wishlist
 

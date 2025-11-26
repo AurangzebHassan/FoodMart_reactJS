@@ -10,6 +10,8 @@ import { formatPrice } from "../utils/formatPrice";
 
 import { formatDiscount } from "../utils/formatDiscount.js";
 
+import { ToggleFavourite } from "../appwrite/db.js";
+
 import Loader from "./Loader.jsx"
 
 
@@ -24,6 +26,8 @@ export default function CartDrawer({ onClose })
 	updateItem,
 	removeItem,
 	clearCart,
+	productsMap,
+	updateProductField
 	} = useCart();
 
 	const navigate = useNavigate();
@@ -44,6 +48,11 @@ export default function CartDrawer({ onClose })
 
 
 
+	const [localCart, setLocalCart] = useState(cartItems); // local copy remapped from productsMap
+
+
+
+
 	useEffect(() =>
 	{
 		document.body.style.overflow = "hidden";
@@ -52,6 +61,26 @@ export default function CartDrawer({ onClose })
 			document.body.style.overflow = "";
 		};
 	}, []);
+
+
+
+	 // --- Sync localCart with latest cartItems + productsMap ---
+	
+		useEffect(() =>
+		{
+			const remapped = cartItems.map((item) =>
+			{
+				const prodFromMap = productsMap[item.product?.$id];
+			
+				if (!prodFromMap) return item; // fallback to original
+			
+				return { ...item, product: { ...prodFromMap } };
+			});
+		
+			setLocalCart(remapped);
+			
+		}, [cartItems, productsMap]);
+
 
 
 
@@ -75,25 +104,85 @@ export default function CartDrawer({ onClose })
 
 
 
-	if (!cartItems)
-	return (
-		<div
-		className={`fixed inset-0 bg-black/40 flex justify-end z-50 transition-opacity duration-300 ${
-			isVisible ? "opacity-100" : "opacity-0"
-		}`}
-		onClick={handleOverlayClick}
-		>
-		<div
-			className={`bg-white w-120 h-full shadow-xl p-6 flex flex-col transform transition-transform duration-300 ${
-			isVisible ? "translate-x-0" : "translate-x-full"
-			}`}
-		>
-			<div className="flex h-screen justify-center items-center text-4xl text-yellow-500 font-bold">
-			Loading...
+	// --- Toggle favourite handler ---
+		
+		const handleFavouriteClick = async (productId) =>
+		{
+			if (!productId || !productsMap[productId])
+			{
+				console.error("Invalid productId for ToggleFavourite:", productId);
+			
+				return;
+			}
+
+			const current = productsMap[productId].isFavourite;
+
+			try
+			{
+				await ToggleFavourite(productId, current); // backend
+			
+				updateProductField(productId, "isFavourite", !current); // global state
+
+			
+				// Update localCart immediately
+			
+				setLocalCart((prev) =>
+			
+					prev.map((item) =>
+			
+						item.product.$id === productId
+			
+							?
+							
+							{
+			
+								...item,
+			
+								product: { ...productsMap[productId], isFavourite: !current },
+			
+							}
+			
+							: item
+					)
+				);
+			}
+			
+			catch (err)
+			{
+				console.error("Failed to toggle favourite:", err);
+			}
+		};
+
+
+
+
+	if (!localCart)
+	
+		return (
+	
+			<div
+	
+				className={`fixed inset-0 bg-black/40 flex justify-end z-50 transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}
+	
+				onClick={handleOverlayClick}
+			>
+		
+				<div
+
+					className={`bg-white w-120 h-full shadow-xl p-6 flex flex-col transform transition-transform duration-300 ${isVisible ? "translate-x-0" : "translate-x-full"}`}
+				>
+			
+					<div className="flex h-screen justify-center items-center text-4xl text-yellow-500 font-bold">
+			
+						Loading...
+			
+					</div>
+		
+				</div>
+		
 			</div>
-		</div>
-		</div>
-	);
+	
+		);
 
 
 
@@ -184,7 +273,7 @@ export default function CartDrawer({ onClose })
 				{/* Cart Items */}
 				
 					<div className="flex-1 [&::-webkit-scrollbar]:hidden overflow-y-scroll space-y-2">
-						{cartItems.map((item) => {
+						{localCart.map((item) => {
 						const product = item.product;
 						if (!product) return null;
 						
@@ -196,10 +285,10 @@ export default function CartDrawer({ onClose })
 								
 									{formatDiscount(product.discount_tag) && (
 										<div
-										className={`absolute ${
+										className={`absolute left-2 top-31.75 ${
 											product.price > 9.99
-											? "top-2 left-12 px-0.75"
-											: "left-12 px-1.5"
+											? "px-0.75"
+											: "px-1.5"
 										} bg-green-700 text-white font-extrabold text-sm cursor-pointer hover:-translate-y-1 p-0.5 rounded-full transition-all duration-200`}
 										>
 										{product.discount_tag}
@@ -209,23 +298,23 @@ export default function CartDrawer({ onClose })
 								
 								{/* wishlist heart */}
 			
-									{/* <div
+									<div
 								
-										className={`absolute top-7 right-7 bg-white hover:-translate-y-0.5 p-3 rounded-full transition-all duration-200`}
+										className={`absolute top-30 left-12 hover:-translate-y-0.5 p-2 rounded-full transition-all duration-200`}
 								
-										onClick={() => {handleFavouriteClick()}}
+										onClick={() => {handleFavouriteClick(item.product.$id)}}
 									>
 
 										<img
 								
-											src={isFavourite ? `/icons/heart.png` : `/icons/heart.svg`}
+											src={product.isFavourite ? `/icons/heart.png` : `/icons/heart.svg`}
 									
 											alt="wishlist"
 											
-											className="w-8"
+											className="w-6"
 										/>
 									
-									</div> */}
+									</div>
 
 								
 								{/* Product image */}

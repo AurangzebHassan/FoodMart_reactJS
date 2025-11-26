@@ -120,7 +120,7 @@ export default function CategoryPage()
                             
                                 <img src={category.image_url} alt={category.name} className="w-10" />
 
-                                <h1 className="text-3xl text-yellow-500 font-bold">
+                                <h1 className="text-4xl text-yellow-500 font-extrabold">
 
                                     {category.name}
 
@@ -151,7 +151,7 @@ export default function CategoryPage()
                     :
 
                     (
-                        <div className="flex w-full h-100 items-center justify-center pl-20 text-yellow-500 font-bold text-3xl">
+                        <div className="flex w-full h-100 items-center justify-center pl-20 text-gray-400 font-bold text-2xl">
 
                             No Products in Category
 

@@ -12,6 +12,8 @@ import MostSearchedCarousel from "../components/product/MostSearchedCarousel";
 
 import MostAddedToCartCarousel from "../components/product/MostAddedToCartCarousel";
 
+import MostViewedCarousel from "../components/product/MostViewedCarousel";
+
 
 
 export default function Home( /*{ loggedInUser }*/ )
@@ -34,6 +36,8 @@ export default function Home( /*{ loggedInUser }*/ )
                 <TrendingCarousel />
                 
                 <MostSearchedCarousel />
+                
+                <MostViewedCarousel />
                 
                 <MostAddedToCartCarousel />
                 

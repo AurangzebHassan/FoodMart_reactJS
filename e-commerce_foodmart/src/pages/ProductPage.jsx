@@ -252,7 +252,7 @@ export default function ProductPage()
     
                                 <div
 
-                                    className={`absolute top-3 right-3 bg-white hover:-translate-y-0.5 p-3 rounded-full transition-all duration-200`}
+                                    className={`absolute top-2.5 right-3.5 xl:right-13.5 2xl:right-23.5 bg-white hover:-translate-y-0.5 p-3 rounded-full transition-all duration-200`}
 
                                     onClick={() => {handleFavouriteClick()}}
                                 >
@@ -275,7 +275,7 @@ export default function ProductPage()
                                 
                                     (
                             
-                                        <div className="absolute top-4 right-5 xl:right-15 2xl:right-25 bg-green-700 text-white hover:-translate-y-1 cursor-pointer transition-all duration-200 text-2xl font-extrabold px-3 py-1 rounded-xl">
+                                        <div className="absolute top-4 left-4.5 xl:left-14.5 2xl:left-24.5 bg-green-700 text-white hover:-translate-y-1 cursor-pointer transition-all duration-200 text-2xl font-extrabold px-3 py-1 rounded-xl">
                                         
                                             {liveProduct.discount_tag}
                                         

@@ -102,7 +102,24 @@ import { Permission, Role } from "appwrite";
 
 
 
-    /* ------------------- 🟩 7. Get new arrivals ------------------- */
+    /* ------------------- 🟩 7. Get most searched products ------------------- */
+    
+        export async function getMostViewedProducts() {
+            try {
+                const res = await database.listDocuments(DATABASE_ID, PRODUCTS_TABLE_ID, [
+                    Query.orderDesc("view_count"),
+                     Query.limit(7)
+                ]);
+                return res.documents;
+            } catch (err) {
+                console.error("Error fetching most viewed products:", err);
+                return [];
+            }
+        }
+
+
+
+    /* ------------------- 🟩 8. Get new arrivals ------------------- */
 
         export async function getNewProducts() {
             try {
@@ -119,7 +136,7 @@ import { Permission, Role } from "appwrite";
 
 
 
-    /* ------------------- 🟩 8. Get favourtie/wishlist products ------------------- */
+    /* ------------------- 🟩 9. Get favourtie/wishlist products ------------------- */
     
         export async function getFavouriteProducts() {
             try {
@@ -136,7 +153,7 @@ import { Permission, Role } from "appwrite";
 
 
 
-    /* ------------------- 🟩 9. Toggle product favourite ------------------- */
+    /* ------------------- 🟩 10. Toggle product favourite ------------------- */
     
         export async function ToggleFavourite(productId, currentvalue) {
           try {
