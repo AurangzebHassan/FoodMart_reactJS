@@ -58,7 +58,7 @@ import { Permission, Role } from "appwrite";
             try {
                 const res = await database.listDocuments(DATABASE_ID, PRODUCTS_TABLE_ID, [
                     Query.equal("isTrending", true),
-                    Query.orderDesc("rating")
+                    Query.orderDesc("score")
                 ]);
                 return res.documents;
             } catch (err) {
@@ -68,8 +68,39 @@ import { Permission, Role } from "appwrite";
         }
 
 
+    /* ------------------- 🟩 5. Get most searched products ------------------- */
+    
+        export async function getMostSearchedProducts() {
+            try {
+                const res = await database.listDocuments(DATABASE_ID, PRODUCTS_TABLE_ID, [
+                    Query.orderDesc("search_count")
+                ]);
+                return res.documents;
+            } catch (err) {
+                console.error("Error fetching most searched products:", err);
+                return [];
+            }
+        }
 
-    /* ------------------- 🟩 5. Get new arrivals ------------------- */
+
+
+    /* ------------------- 🟩 6. Get most searched products ------------------- */
+    
+        export async function getMostAddedToCartProducts() {
+            try {
+                const res = await database.listDocuments(DATABASE_ID, PRODUCTS_TABLE_ID, [
+                    Query.orderDesc("cart_add_count")
+                ]);
+                return res.documents;
+            } catch (err) {
+                console.error("Error fetching most added to cart products:", err);
+                return [];
+            }
+        }
+
+
+
+    /* ------------------- 🟩 7. Get new arrivals ------------------- */
 
         export async function getNewProducts() {
             try {
@@ -345,7 +376,7 @@ import { Permission, Role } from "appwrite";
                 (product.purchase_count || 0) * 1.0;
             
                 
-            const isTrending = score >= 20;   // <-- add threshold logic
+            const isTrending = score >= 15;   // <-- add threshold logic
 
         
             await database.updateDocument(DATABASE_ID, PRODUCTS_TABLE_ID, productId, { score, isTrending });
@@ -429,7 +460,7 @@ import { Permission, Role } from "appwrite";
                 (category.purchase_count || 0) * 1.0;
             
             
-            const isTrending = score >= 25;   // <-- add threshold logic
+            const isTrending = score >= 15;   // <-- add threshold logic
         
         
             await database.updateDocument(DATABASE_ID, CATEGORIES_TABLE_ID, categoryId, { score, isTrending });

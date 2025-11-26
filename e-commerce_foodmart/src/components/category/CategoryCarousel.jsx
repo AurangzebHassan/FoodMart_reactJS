@@ -12,6 +12,8 @@ import "swiper/css/navigation";
 
 import CategoryCard from "./CategoryCard";
 
+import Loader from "../Loader";
+
 
 
 // import Appwrite helpers from your db.js
@@ -114,96 +116,106 @@ export default function CategoryCarousel()
 		
 		// fetch categories from Appwrite on mount
 	
-				useEffect(() =>
+			useEffect(() =>
+			{
+				let mounted = true;
+
+
+				async function loadCategories()
 				{
-						let mounted = true;
+						setLoading(true);
+						
+						setError(null);
 
 
-						async function loadCategories()
-						{
-								setLoading(true);
-								
-								setError(null);
+						try
+						{                  
+							const docs = await getAllCategories();
 
-
-								try
-								{                  
-										const docs = await getAllCategories();
-
-										
-										// Appwrite returns objects in docs
-										
-												if (mounted)
-												{
-														if (docs && docs.length > 0)
-														{
-																// map documents to expected shape (ensure image_url exists)
-														
-																		const mapped = docs.map((doc) => (
-																				
-																				{
-																						$id: doc.$id,
-																
-																						name: doc.name ?? "Unnamed",
-																
-																						image_url: doc.image_url ?? "/icons/categories/placeholder.png",
-																
-																						slug: doc.slug ?? "",
-																
-																						description: doc.description ?? "",
-																				}));
-														
-														
-																setCategories(mapped);
-														} 
-												
-														else
-														{
-																// no rows found — use fallback
-														
-																	setCategories(fallbackCategories);
-														}
-												}
-								}
-								
-								catch (err)
+							
+							// Appwrite returns objects in docs
+						
+								if (mounted)
 								{
-										// on error, fall back but keep the error visible in console/ state
+									if (docs && docs.length > 0)
+									{
+										// map documents to expected shape (ensure image_url exists)
+							
+											const mapped = docs.map((doc) => (
+													
+											{
+												$id: doc.$id,
+						
+												name: doc.name ?? "Unnamed",
+						
+												image_url: doc.image_url ?? "/icons/categories/placeholder.png",
+						
+												slug: doc.slug ?? "",
+						
+												description: doc.description ?? "",
+											}));
 								
-												console.error("Failed to load categories from Appwrite:", err);
+										
+											setCategories(mapped);
+										} 
 								
-
-										if (mounted)
-										{
-												setError(err.message || "Failed to fetch categories");
-												
-												setCategories(fallbackCategories);
-										}
-								} 
+									else
+									{
+										// no rows found — use fallback
 								
-								finally
-								{
-										if (mounted) setLoading(false);
+											setCategories(fallbackCategories);
+									}
 								}
-								
 						}
-
-								loadCategories();
-
 						
-								// cleanup
+						catch (err)
+						{
+							// on error, fall back but keep the error visible in console/ state
+					
+								console.error("Failed to load categories from Appwrite:", err);
 						
-										return () => mounted = false;
-				
-				// eslint-disable-next-line react-hooks/exhaustive-deps
-				}, []); // empty deps → run once on mount
+
+							if (mounted)
+							{
+								setError(err.message || "Failed to fetch categories");
+								
+								setCategories(fallbackCategories);
+							}
+						} 
+						
+						finally
+						{
+							if (mounted) setLoading(false);
+						}
+						
+				}
+
+					loadCategories();
+
+			
+					// cleanup
+			
+						return () => mounted = false;
+			
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			}, []); // empty deps → run once on mount
 		
 		
 		
 
 
 		
-		if (loading) return <p className="text-center font-bold text-xl py-10">Loading categories...</p>;
+		if (loading) return (
+		
+			<div className="py-10 flex w-full gap-2 items-center justify-center">
+
+				<span className="text-yellow-500 text-2xl font-extrabold"> Loading categories </span>
+			
+				<Loader size="xl" color="border-yellow-500" />
+
+			</div>
+		
+		);
 		
 		if (error) console.warn("Category fetch error:", error);
 

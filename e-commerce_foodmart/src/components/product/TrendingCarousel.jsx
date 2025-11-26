@@ -12,13 +12,13 @@ import "swiper/css/navigation";
 
 import ProductCard from "./ProductCard";
 
-import { getNewProducts } from "../../appwrite/db";
+import { getTrendingProducts } from "../../appwrite/db";
 
 import Loader from "../Loader";
 
 
 
-export default function NewArrivalsCarousel()
+export default function TrendingCarousel()
 {
     // local state
   
@@ -36,10 +36,13 @@ export default function NewArrivalsCarousel()
         const nextRef = useRef(null);
   
 
-        const [isBeginning, setIsBeginning] = useState(true);
+      const [isBeginning, setIsBeginning] = useState(true);
 
-        const [isEnd, setIsEnd] = useState(false);
+      const [isEnd, setIsEnd] = useState(false);
 
+      const [isLocked, setIsLocked] = useState(false);
+
+  
   
     // fallback data (used if Appwrite fails)
   
@@ -87,7 +90,7 @@ export default function NewArrivalsCarousel()
     
                 try
                 {
-                    const docs = await getNewProducts();
+                    const docs = await getTrendingProducts();
 
 
                     if (mounted)
@@ -106,12 +109,12 @@ export default function NewArrivalsCarousel()
                 
                 catch (err)
                 {
-                    console.error("Failed to load new arrivals:", err);
+                    console.error("Failed to load trending products:", err);
             
             
                     if (mounted)
                     {
-                        setError(err.message || "Failed to fetch new arrivals");
+                        setError(err.message || "Failed to fetch trending products");
             
                         setProducts(fallbackProducts);
                     }
@@ -133,7 +136,7 @@ export default function NewArrivalsCarousel()
             // eslint-disable-next-line react-hooks/exhaustive-deps
             []
         
-    );
+        );
 
 
 
@@ -143,7 +146,7 @@ export default function NewArrivalsCarousel()
       
         <div className="py-10 flex w-full gap-2 items-center justify-center">
         
-          <span className="text-yellow-500 text-2xl font-extrabold"> Loading New Arrivals </span>
+          <span className="text-yellow-500 text-2xl font-extrabold"> Loading Trending Products </span>
 
           <Loader size="xl" color="border-yellow-500" />
         
@@ -152,7 +155,7 @@ export default function NewArrivalsCarousel()
       );
   
     
-    if (error) console.warn("New arrivals fetch error:", error);
+    if (error) console.warn("Trending products fetch error:", error);
 
 
 
@@ -163,17 +166,22 @@ export default function NewArrivalsCarousel()
     <section className="container mx-auto px-5 py-10 overflow-hidden">
       {/* 🟩 HEADER ROW */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800">New Arrivals</h2>
+        <h2 className="text-3xl font-bold text-gray-800">Trending Products</h2>
 
         {/* 🟩 RIGHT SIDE: 'View All' + arrows */}
         <div className="flex items-center gap-3">
-          <a
-            href="/products/new"
-            className="text-gray-600 hover:text-gray-900 font-semibold flex items-center gap-1 mr-2"
-          >
-            View All →
-          </a>
-
+          
+          {
+            !isLocked && 
+           
+              (<a
+                href="/products/trending-products"
+                className="text-gray-600 hover:text-gray-900 font-semibold flex items-center gap-1 mr-2"
+              >
+                View All →
+              </a>)
+          }
+            
           <button
             ref={prevRef}
             disabled={isBeginning}
@@ -224,9 +232,16 @@ export default function NewArrivalsCarousel()
           // update arrow states on slide change
           setIsBeginning(swiper.isBeginning);
           setIsEnd(swiper.isEnd);
+          setIsLocked(swiper.isLocked);
+
           swiper.on("slideChange", () => {
             setIsBeginning(swiper.isBeginning);
             setIsEnd(swiper.isEnd);
+            setIsLocked(swiper.isLocked)
+          });
+
+          swiper.on("resize", () => {
+            setIsLocked(swiper.isLocked);
           });
         }}
       >

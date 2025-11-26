@@ -14,6 +14,8 @@ import { formatDiscount } from "../../utils/formatDiscount";
 
 import { incrementProductCartAddCount } from "../../appwrite/db";
 
+import Loader from "../Loader";
+
 
 
 /*
@@ -30,6 +32,10 @@ export default function ProductCard({ Product }) {
     const { user } = useAuth();
 
     const { addItem, productsMap } = useCart();
+
+
+
+    const [addToCartLoading, setAddToCartLoading] = useState(false);
 
 
 
@@ -107,7 +113,7 @@ export default function ProductCard({ Product }) {
             // await decreaseProductStock(Product.$id, quantity);
                 
                 
-            alert(`${quantity}× ${liveProduct.name} added to cart!`);
+            // alert(`${quantity}× ${liveProduct.name} added to cart!`);
                 
             setQuantity(0);
         }
@@ -132,7 +138,7 @@ export default function ProductCard({ Product }) {
             
                     className="absolute top-7 right-7 bg-white hover:bg-red-500 p-3 rounded-full transition-all duration-300"
             
-                    onClick={() => navigate("/wishlist")}
+                    onClick={() => {!addToCartLoading && navigate("/wishlist");}}
                 >
             
                     <img
@@ -166,7 +172,7 @@ export default function ProductCard({ Product }) {
             
                     className="flex justify-center items-center bg-gray-200 w-full h-[60%] rounded-2xl p-3"
             
-                    onClick={handleClick}
+                    onClick={!addToCartLoading && handleClick}
                 >
             
                     <img
@@ -189,7 +195,7 @@ export default function ProductCard({ Product }) {
     
                         <p className="mt-3 text-lg font-bold text-gray-700 hover:text-gray-900 transition"
                     
-                            onClick={handleClick}
+                            onClick={!addToCartLoading && handleClick}
                         >
                     
                             {liveProduct.name}
@@ -288,9 +294,9 @@ export default function ProductCard({ Product }) {
 
                                             <button
 
-                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${(quantity === liveProduct.stock) ? `` : `hover:bg-gray-200`} w-7 font-bold rounded-md text-md`}
+                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === liveProduct.stock) || addToCartLoading) ? `` : `hover:bg-gray-200`} w-7 font-bold rounded-md text-md`}
 
-                                                disabled={quantity === existingStock}
+                                                disabled={(quantity === existingStock) || addToCartLoading}
                                         
                                                 onClick={() =>
                                                 {
@@ -315,9 +321,9 @@ export default function ProductCard({ Product }) {
                                     
                                             <button
                                         
-                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${(quantity === 0) ? `` : `hover:bg-gray-200`} w-6 font-bold rounded-md text-md`}
+                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === 0) || addToCartLoading) ? `` : `hover:bg-gray-200`} w-6 font-bold rounded-md text-md`}
 
-                                                disabled={quantity === 0}
+                                                disabled={(quantity === 0) || addToCartLoading}
                                         
                                                 onClick={() => 
                                                 {
@@ -345,12 +351,36 @@ export default function ProductCard({ Product }) {
                             
                                             className={`font-semibold ${quantity ? "text-gray-500 hover:text-gray-600 cursor-pointer" : "text-gray-400"}`}
                                     
-                                            disabled={quantity === 0}
+                                            disabled={quantity === 0 || addToCartLoading}
                                     
-                                            onClick={handleAddToCart}
+                                            onClick=
+                                            {
+                                                async () =>
+                                                {
+                                                    setAddToCartLoading(true);
+
+                                                    await handleAddToCart();
+
+                                                    setAddToCartLoading(false);
+                                                }
+                                            }
                                         >
                                     
-                                            Add to Cart
+                                            {
+                                                addToCartLoading ? 
+                                                
+                                                (
+                                                    <div className="flex items-center justify-center">
+                            
+                                                        <Loader size="medium" color="border-yellow-500" />
+                            
+                                                    </div>
+                                                )         
+                                        
+                                                :
+                                        
+                                                "Add to Cart"
+                                            }
                                     
                                         </button>
             

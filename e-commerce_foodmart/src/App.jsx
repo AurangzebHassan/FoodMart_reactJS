@@ -22,6 +22,8 @@ import ProductPage from "./pages/ProductPage";
 
 import CategoryPage from "./pages/CategoryPage";
 
+import Loader from "./components/Loader";
+
 
 
 // ⭐ WHAT WE CHANGED
@@ -159,13 +161,11 @@ import { CartProvider } from "./context/CartContext";
 			
 				return (
 			
-					<div className="flex w-full h-screen items-center justify-center bg-yellow-500">
+					<div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
 
-						<p className="text-3xl font-bold text-white text-center">
-					
-							Checking authentication...
-				
-						</p>
+						<span className="text-3xl font-bold text-white text-center"> Checking authentication </span>
+
+						<Loader size="xl" color="border-white" />
 
 					</div>
 					

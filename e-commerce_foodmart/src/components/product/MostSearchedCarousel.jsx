@@ -12,13 +12,13 @@ import "swiper/css/navigation";
 
 import ProductCard from "./ProductCard";
 
-import { getNewProducts } from "../../appwrite/db";
+import { getMostSearchedProducts } from "../../appwrite/db";
 
 import Loader from "../Loader";
 
 
 
-export default function NewArrivalsCarousel()
+export default function MostSearchedCarousel()
 {
     // local state
   
@@ -87,7 +87,7 @@ export default function NewArrivalsCarousel()
     
                 try
                 {
-                    const docs = await getNewProducts();
+                    const docs = await getMostSearchedProducts();
 
 
                     if (mounted)
@@ -106,12 +106,12 @@ export default function NewArrivalsCarousel()
                 
                 catch (err)
                 {
-                    console.error("Failed to load new arrivals:", err);
+                    console.error("Failed to load msot searched products:", err);
             
             
                     if (mounted)
                     {
-                        setError(err.message || "Failed to fetch new arrivals");
+                        setError(err.message || "Failed to fetch most searched products");
             
                         setProducts(fallbackProducts);
                     }
@@ -143,7 +143,7 @@ export default function NewArrivalsCarousel()
       
         <div className="py-10 flex w-full gap-2 items-center justify-center">
         
-          <span className="text-yellow-500 text-2xl font-extrabold"> Loading New Arrivals </span>
+          <span className="text-yellow-500 text-2xl font-extrabold"> Loading Most Searched </span>
 
           <Loader size="xl" color="border-yellow-500" />
         
@@ -152,7 +152,7 @@ export default function NewArrivalsCarousel()
       );
   
     
-    if (error) console.warn("New arrivals fetch error:", error);
+    if (error) console.warn("Most Searched products fetch error:", error);
 
 
 
@@ -163,12 +163,12 @@ export default function NewArrivalsCarousel()
     <section className="container mx-auto px-5 py-10 overflow-hidden">
       {/* 🟩 HEADER ROW */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800">New Arrivals</h2>
+        <h2 className="text-3xl font-bold text-gray-800">Most Searched</h2>
 
         {/* 🟩 RIGHT SIDE: 'View All' + arrows */}
         <div className="flex items-center gap-3">
           <a
-            href="/products/new"
+            href="/products/most-searched"
             className="text-gray-600 hover:text-gray-900 font-semibold flex items-center gap-1 mr-2"
           >
             View All →

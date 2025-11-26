@@ -6,6 +6,12 @@ import CategoryCarousel from "../components/category/CategoryCarousel";
 
 import NewArrivalsCarousel from "../components/product/NewArrivalsCarousel";
 
+import TrendingCarousel from "../components/product/TrendingCarousel";
+
+import MostSearchedCarousel from "../components/product/MostSearchedCarousel";
+
+import MostAddedToCartCarousel from "../components/product/MostAddedToCartCarousel";
+
 
 
 export default function Home( /*{ loggedInUser }*/ )
@@ -24,7 +30,13 @@ export default function Home( /*{ loggedInUser }*/ )
                 <CategoryCarousel />
                 
                 <NewArrivalsCarousel />
-            
+                
+                <TrendingCarousel />
+                
+                <MostSearchedCarousel />
+                
+                <MostAddedToCartCarousel />
+                
             </div>
 
         </>
