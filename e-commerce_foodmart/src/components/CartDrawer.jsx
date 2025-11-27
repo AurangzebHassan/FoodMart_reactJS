@@ -21,7 +21,7 @@ export default function CartDrawer({ onClose })
 	cartItems,
 	cartQuantity,
 	cartTotal,
-	refreshCart,
+	refreshCartDocsAndProducts,
 	updateItem,
 	removeItem,
 	clearCart,
@@ -41,6 +41,8 @@ export default function CartDrawer({ onClose })
 	const [updatingItemId, setUpdatingItemId] = useState(null);
 
 	const [clearCartLoading, setClearCartLoading] = useState(false);
+
+	const [RefreshCartLoading, setRefreshCartLoading] = useState(false);
 
 
 
@@ -221,7 +223,26 @@ export default function CartDrawer({ onClose })
 							</button>		
 							
 							
-							<button onClick={refreshCart} title="Refresh Cart" className="mr-2 hover:-translate-y-1 transition-all duration-200">
+							<button 
+								
+								onClick=
+								{
+									async () => 
+									{
+										setRefreshCartLoading(true);
+
+										refreshCartDocsAndProducts();
+
+										setRefreshCartLoading(false);
+									}
+								}
+								
+								title="Refresh Cart" 
+								
+								className={`mr-2 ${(!cartQuantity || clearCartLoading || removingItemId || updatingItemId/* || checkoutLoading*/) ? `` : `hover:-translate-y-1 transition-all duration-200`}`}
+								
+								disabled={!cartQuantity || clearCartLoading || removingItemId || updatingItemId/* || checkoutLoading*/}
+							>
 							
 								<img src="/icons/refresh.png" alt="refresh" className="w-9" />
 							
@@ -242,7 +263,7 @@ export default function CartDrawer({ onClose })
 						} rounded-full font-bold transition-all duration-200`}
 						>
 						{
-							((updatingItemId) || (removingItemId) || clearCartLoading/* || checkoutLoading*/) ?
+							((updatingItemId) || (removingItemId) || clearCartLoading || RefreshCartLoading/* || checkoutLoading*/) ?
 							
 							(
 								<div className={`flex items-center justify-center py-3 ${cartQuantity > 9 ? `px-1.25`: ``}`}>
@@ -316,8 +337,8 @@ export default function CartDrawer({ onClose })
 										src={product.image_url}
 										alt={product.name}
 										className="cursor-pointer w-20 h-25 rounded-lg object-cover"
-										disabled={(updatingItemId === item.$id || removingItemId === item.$id || clearCartLoading/* || checkoutLoading*/)}
-										onClick={() => {!((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading)/* || !checkoutLoading*/ && handleClick(product);}}
+										disabled={(updatingItemId === item.$id || removingItemId === item.$id || clearCartLoading || RefreshCartLoading/* || checkoutLoading*/)}
+										onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || RefreshCartLoading)/* || !checkoutLoading*/ && handleClick(product);}}
 									/>
 
 								
@@ -331,7 +352,7 @@ export default function CartDrawer({ onClose })
 												<p
 													className="font-mono text-lg text-gray-700 cursor-pointer hover:text-gray-900 font-semibold mt-1"
 													disabled={(updatingItemId === item.$id || removingItemId === item.$id || clearCartLoading/* || checkoutLoading*/)}
-													onClick={() => {!((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading)/* || !checkoutLoading*/ && handleClick(product);}}
+													onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || RefreshCartLoading)/* || !checkoutLoading*/ && handleClick(product);}}
 												>
 													{product.name}
 												</p>

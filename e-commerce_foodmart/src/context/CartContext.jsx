@@ -188,13 +188,20 @@ import { formatPrice } from "../utils/formatPrice";
             // 4. Refresh function used everywhere (Navbar, ProductCard, Drawer)
         // -----------------------------------------------------------
         
-            const refreshCart = useCallback(async () => 
+            const refreshCartDocsAndProducts = useCallback(async () => 
             {
                 await fetchProducts();   // refresh product prices
             
                 await fetchCartDocs();   // refresh cart rows
 
             }, [fetchProducts, fetchCartDocs]);
+            
+        
+            const refreshCartDocsOnly = useCallback(async () => 
+            {
+                await fetchCartDocs(); // fetch only cart collection
+            
+            }, [fetchCartDocs]);
         
         
         
@@ -315,7 +322,7 @@ import { formatPrice } from "../utils/formatPrice";
                         }
 
                 
-                    await refreshCart(); // Re-hydrate cart with updated prices + quantities
+                    await refreshCartDocsOnly(); // Re-hydrate cart with updated prices + quantities
                 }
                 
                 catch (error)
@@ -392,7 +399,7 @@ import { formatPrice } from "../utils/formatPrice";
                         await addOrUpdateCartItem( user.$id, productId, qtyChange );
 
                 
-                    await refreshCart();
+                    await refreshCartDocsOnly();
                 } 
             
                 catch (error)
@@ -463,7 +470,7 @@ import { formatPrice } from "../utils/formatPrice";
                 
                     // Refresh the cart to update cartItems, cartQuantity, cartTotal
                 
-                        await refreshCart();
+                        await refreshCartDocsOnly();
                 }
                 
                 catch (error)
@@ -529,7 +536,7 @@ import { formatPrice } from "../utils/formatPrice";
                
                    // Refresh cart to update totals and UI
                
-                       await refreshCart();
+                       await refreshCartDocsAndProducts();
                 } 
              
                 catch (error)
@@ -627,7 +634,9 @@ import { formatPrice } from "../utils/formatPrice";
             
                 cartTotal, // formatted string total
             
-                refreshCart,
+                refreshCartDocsOnly,
+
+                refreshCartDocsAndProducts,
             
                 addItem,
             
