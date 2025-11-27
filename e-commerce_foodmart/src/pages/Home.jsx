@@ -14,6 +14,8 @@ import MostAddedToCartCarousel from "../components/product/MostAddedToCartCarous
 
 import MostViewedCarousel from "../components/product/MostViewedCarousel";
 
+import FilteredProductsGrid from "../components/product/FilteredProductsGrid";
+
 
 
 export default function Home( /*{ loggedInUser }*/ )
@@ -40,6 +42,8 @@ export default function Home( /*{ loggedInUser }*/ )
                 <MostViewedCarousel />
                 
                 <MostAddedToCartCarousel />
+                
+                <FilteredProductsGrid />
                 
             </div>
 
