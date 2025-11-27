@@ -21,6 +21,7 @@ export default function CartDrawer({ onClose })
 	cartItems,
 	cartQuantity,
 	cartTotal,
+	refreshCart,
 	updateItem,
 	removeItem,
 	clearCart,
@@ -204,27 +205,34 @@ export default function CartDrawer({ onClose })
 					isVisible ? "translate-x-0" : "translate-x-full"
 				}`}
 				>
-				{/* Close Button */}
+				{/* Close + Refresh button */}
 					
-						<div className="flex justify-center">
+						<div className="flex justify-end items-center">
 
 							<button
 						
 								onClick={handleClose}
 						
-								className="text-gray-600 hover:text-gray-900 text-6xl"
+								className="text-gray-600 hover:text-gray-900 text-6xl mr-33"
 							>
 						
 								&times;
 					
 							</button>		
+							
+							
+							<button onClick={refreshCart} title="Refresh Cart" className="mr-2 hover:-translate-y-1 transition-all duration-200">
+							
+								<img src="/icons/refresh.png" alt="refresh" className="w-9" />
+							
+							</button>
 						
 						</div>
 
 
 				{/* Header */}
 				
-					<div className="flex justify-between items-center mb-10 mt-4">
+					<div className="flex justify-between items-center mb-10 mt-6">
 
 						<h1 className="text-3xl font-extrabold text-yellow-500">Your Cart</h1>
 						
@@ -237,7 +245,7 @@ export default function CartDrawer({ onClose })
 							((updatingItemId) || (removingItemId) || clearCartLoading/* || checkoutLoading*/) ?
 							
 							(
-								<div className="flex items-center justify-center py-3 px-1.5">
+								<div className={`flex items-center justify-center py-3 ${cartQuantity > 9 ? `px-1.25`: ``}`}>
 
 									<Loader size="small" color="border-white" />
 
@@ -459,9 +467,9 @@ export default function CartDrawer({ onClose })
 						
 						<p className="flex justify-between font-extrabold text-orange-500">
 						
-						<span className="text-black text-[19px]">Total (USD):</span>
-						
-						<span className="text-[25px]">{formatPrice(cartTotal, "USD")}</span>
+							<span className="text-black text-[19px]">Total (USD):</span>
+							
+							<span className="text-[25px]">{formatPrice(cartTotal, "USD")}</span>
 						
 						</p>
 						
@@ -470,7 +478,7 @@ export default function CartDrawer({ onClose })
 
 							<button
 						
-								className={`w-full ${(!cartQuantity || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `bg-yellow-500 text-white hover:bg-orange-600 hover:-translate-y-1 transition-all duration-200`} col-span-2 py-2 rounded-full mt-3 text-[18px] font-extrabold`}
+								className={`w-full ${(!cartQuantity || clearCartLoading/* || removingItemId !== null || updatingItemId !== null*/) ? `bg-gray-400 text-black` : `bg-yellow-500 text-white hover:bg-orange-600 hover:-translate-y-1 transition-all duration-200`} col-span-2 py-2 rounded-full mt-3 text-[18px] font-extrabold`}
 								
 								// onClick=
 								// {
@@ -511,7 +519,7 @@ export default function CartDrawer({ onClose })
 									
 							<button 
 						
-								className={`${(!cartQuantity || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `bg-red-600 text-white hover:-translate-y-1 transition-all duration-200`} rounded-full mt-3 py-2 font-extrabold`}
+								className={`${(!cartQuantity/* || checkoutLoading || removingItemId !== null || updatingItemId !== null*/) ? `bg-gray-400 text-black` : `bg-red-600 text-white hover:-translate-y-1 transition-all duration-200`} rounded-full mt-3 py-2 font-extrabold`}
 								
 								onClick=
 								{

@@ -190,9 +190,11 @@ import { formatPrice } from "../utils/formatPrice";
         
             const refreshCart = useCallback(async () => 
             {
-                await fetchCartDocs();
+                await fetchProducts();   // refresh product prices
+            
+                await fetchCartDocs();   // refresh cart rows
 
-            }, [fetchCartDocs]);
+            }, [fetchProducts, fetchCartDocs]);
         
         
         

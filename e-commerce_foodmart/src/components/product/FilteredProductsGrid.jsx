@@ -4,6 +4,8 @@ import { getAllProducts, getAllCategories } from "../../appwrite/db"; // your DB
 
 import ProductCard from "./ProductCard";
 
+import Loader from "../Loader";
+
 
 
 export default function FilteredProductsGrid()
@@ -15,6 +17,11 @@ export default function FilteredProductsGrid()
     const [selectedCategory, setSelectedCategory] = useState("all");
 
 
+    const [loading, setLoading] = useState(true);
+        
+    const [error, setError] = useState(null);
+
+
 
   // fetch products and categories
   
@@ -22,6 +29,11 @@ export default function FilteredProductsGrid()
         {
             async function loadData()
             {
+                setLoading(true);
+
+                setError(null);
+
+
                 const prods = await getAllProducts();
         
                 const cats = await getAllCategories();
@@ -30,6 +42,8 @@ export default function FilteredProductsGrid()
                 setProducts(prods);
         
                 setCategories(cats);
+
+                setLoading(false);
             }
         
             loadData();
@@ -40,7 +54,26 @@ export default function FilteredProductsGrid()
     
     // filtered products
   
-    const filteredProducts = selectedCategory === "all" ? products : products.filter((p) => p.category_id === selectedCategory);
+        const filteredProducts = selectedCategory === "all" ? products : products.filter((p) => p.category_id === selectedCategory);
+
+
+    
+    if (loading)
+      
+      return (
+      
+        <div className="py-10 flex w-full gap-2 items-center justify-center">
+        
+          <span className="text-yellow-500 text-2xl font-extrabold"> Loading Filtered Products Grid </span>
+
+          <Loader size="xl" color="border-yellow-500" />
+        
+        </div>
+      
+      );
+  
+    
+    if (error) console.warn("Filtered products grid fetch error:", error);
 
 
 
