@@ -1,9 +1,13 @@
-
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function HeroSection()
 {
+    const navigate = useNavigate();
+
+
+
   return (
 
       <section className="container mx-auto mt-12 grid grid-cols-1 lg:grid-cols-3 gap-6 px-5 sm:mb-6">
@@ -32,7 +36,12 @@ export default function HeroSection()
                     </p>
             
                     
-                    <button className="mt-8 2xl:mt-10 text-xl border border-gray-700 text-gray-700 lg:max-xl:px-6 px-8 lg:max-xl:py-3 lg:max-xl:mt-5 py-5 rounded hover:bg-gray-700 hover:text-white transition">
+                    <button 
+                    
+                        className="mt-8 2xl:mt-10 text-xl border border-gray-700 text-gray-700 lg:max-xl:px-6 px-8 lg:max-xl:py-3 lg:max-xl:mt-5 py-5 rounded hover:bg-gray-700 hover:text-white transition"
+                        
+                        onClick={() => navigate(`/category/drinks-juices`)}    
+                    >
                 
                         Shop Now
             
@@ -71,35 +80,47 @@ export default function HeroSection()
             
                     <h3 className="text-4xl font-semibold mb-6 mr-[150px]">Fruits &amp; Vegetables</h3>
             
-                    <a href="#" className="text-orange-500 hover:text-orange-700 hover:underline text-md">
+                    <button 
+                        
+                        className="text-orange-500 hover:text-orange-700 hover:underline text-md"
+                        
+                        onClick={() => navigate(`/category/fruits-veggies`)}    
+                    >
+                            
+
               
                         Shop Collection →
             
-                    </a>
+                    </button>
           
                 </div>
         
               </div>
 
 
-              <div className="bg-[url('/images/hero/bread_border.png')] bg-cover bg-no-repeat hover:bg-center hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-6 sm:w-[610px] md:w-[740px] lg:w-[450px] xl:w-[620px] 2xl:w-[790px] h-92 transition-all duration-200">
+              <div className="bg-[url('/images/hero/bread_border.png')] bg-top-right bg-cover bg-no-repeat hover:bg-center hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-6 sm:w-[610px] md:w-[740px] lg:w-[450px] xl:w-[620px] 2xl:w-[790px] h-92 transition-all duration-200">
 
-                  <div className="ml-8">
+                    <div className="ml-8">
 
-                      <p className="text-black text-4xl font-serif mb-2">15% Off</p>
+                        <p className="text-black text-4xl font-serif mb-2">15% Off</p>
 
                         <div className="flex flex-row mb-2">一一一一一 <pre> 𝑺𝑨𝑳𝑬 </pre></div>
 
 
-                      <h3 className="text-4xl font-semibold mb-6 mr-[250px]">Baked Products</h3>
+                        <h3 className="text-4xl font-semibold mb-6 mr-[250px]">Baked Products</h3>
 
-                      <a href="#" className="text-orange-500 hover:text-orange-700 hover:underline text-md">
+                        <button 
+                            
+                            className="text-blue-200 hover:text-orange-700 hover:underline text-md"
+                            
+                            onClick={() => navigate(`/category/bread-sweets`)}    
+                        >
 
-                          Shop Collection →
+                            Shop Collection →
 
-                      </a>
+                        </button>
 
-                  </div>
+                    </div>
 
               </div>
 

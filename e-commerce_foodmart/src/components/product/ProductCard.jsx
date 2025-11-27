@@ -12,7 +12,7 @@ import { formatRating } from "../../utils/formatRating";
 
 import { formatDiscount } from "../../utils/formatDiscount";
 
-import { incrementProductCartAddCount, ToggleFavourite } from "../../appwrite/db";
+import { incrementProductCartAddCount } from "../../appwrite/db";
 
 import Loader from "../Loader";
 
@@ -31,7 +31,7 @@ import Loader from "../Loader";
 export default function ProductCard({ Product }) {
     const { user } = useAuth();
 
-    const { updateProductField, addItem, productsMap } = useCart();
+    const { addItem, productsMap, isProductFavourite, toggleProductFavourite } = useCart();
 
 
 
@@ -51,7 +51,6 @@ export default function ProductCard({ Product }) {
     
     let [existingStock, setExistingStock] = useState(liveProduct.stock);
 
-    const [isFavourite, setIsFavourite] = useState(liveProduct.isFavourite || false);
 
 
     const navigate = useNavigate();
@@ -74,10 +73,8 @@ export default function ProductCard({ Product }) {
             
         
         setExistingStock(liveProduct.stock);
-
-        setIsFavourite(liveProduct.isFavourite);
         
-    }, [liveProduct.stock, liveProduct.isFavourite]);
+    }, [liveProduct.stock]);
 
     
     
@@ -93,15 +90,14 @@ export default function ProductCard({ Product }) {
 
     // handle the product being made or removed as/from favourites/wishlist
 
-        const handleFavouriteClick = async () =>
+        const handleFavouriteClick = async () => 
         {
+            if (!user) return alert("You need to log in to favourite items.");
+
+          
             try
             {
-                await ToggleFavourite(liveProduct.$id, isFavourite); // backend update
-              
-                updateProductField(liveProduct.$id, "isFavourite", !isFavourite); // global state
-                
-                setIsFavourite(!isFavourite); // local state to re-render this card
+                await toggleProductFavourite(liveProduct.$id);
             }
             
             catch (error)
@@ -109,6 +105,7 @@ export default function ProductCard({ Product }) {
                 console.error("Failed to toggle favourite/wishlist status:", error);
             }
         };
+
 
 
 
@@ -168,7 +165,7 @@ export default function ProductCard({ Product }) {
 
                     <img
             
-                        src={isFavourite ? `/icons/heart.png` : `/icons/heart.svg`}
+                        src={isProductFavourite(liveProduct.$id) ? `/icons/heart.png` : `/icons/heart.svg`}
                 
                         alt="wishlist"
                         
@@ -397,7 +394,7 @@ export default function ProductCard({ Product }) {
                                                 (
                                                     <div className="flex items-center justify-center">
                             
-                                                        <Loader size="medium" color="border-yellow-500" />
+                                                        <Loader size="medium" color="border-yellow-500 border-5" />
                             
                                                     </div>
                                                 )         

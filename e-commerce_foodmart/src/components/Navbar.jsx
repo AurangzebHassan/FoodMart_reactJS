@@ -24,7 +24,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
 {
     const { user, profile, setUser, setProfile } = useAuth();
 
-    const { cartQuantity, cartTotal } = useCart();
+    const { cartQuantity, cartTotal, wishlistQuantity } = useCart();
 
 
 
@@ -640,7 +640,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         </a>
                 
                         
-                        <a href="/wishlist" className="bg-gray-100 hover:bg-gray-200 rounded-full p-2" onClick={(e) => { e.preventDefault(); navigate("/wishlist"); }}>
+                        <a href="/wishlist" className="relative bg-gray-100 hover:bg-gray-200 rounded-full p-2" onClick={(e) => { e.preventDefault(); navigate("/wishlist"); }}>
 
                             <img
                 
@@ -651,6 +651,13 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                 className="sm:h-7 cursor-pointer"
                     
                             />
+                            
+                                
+                            <span className={`absolute ${wishlistQuantity > 9 ? `-top-3.75 -right-3.75 xl:-top-4 xl:-right-3 2xl:-top-4 2xl:-right-3.5` : `-top-3.25 -right-2 xl:-top-4 xl:-right-1.25 2xl:-top-4 2xl:-right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full px-2`}>
+                        
+                                    {wishlistQuantity}
+                    
+                            </span>
                             
                         </a>
                 

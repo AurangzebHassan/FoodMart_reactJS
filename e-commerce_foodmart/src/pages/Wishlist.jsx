@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useCart } from "../context/CartContext";
-
-import { getFavouriteProducts } from "../appwrite/db";
 
 import Navbar from "../components/Navbar";
 
@@ -16,74 +14,68 @@ import Loader from "../components/Loader";
 
 export default function Wishlist()
 {
-    const { slug } = useParams();
-
-
     const navigate = useNavigate();
 
+
+    const { productsMap, favouritesOrder, loading } = useCart();
+
+
+
+    // ⬅️ NEW local delay state
+
+        const [delayDone, setDelayDone] = useState(false);
+
     
-    const [products, setProducts] = useState([]);
-
-
-    const [loading, setLoading] = useState(true);
-
-
-
-    const { productsMap } = useCart();
-
-    useEffect(() =>
-    {
-      setProducts(products.filter((p) => productsMap[p.$id].isFavourite));
-        
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [productsMap]);
-
-
-
-
-    useEffect(() =>
-    {
-        async function fetchData()
+    // ⬅️ Wait 300–500ms so spinner shows briefly
+    
+        useEffect(() =>
         {
-            setLoading(true);
-
-
-            const prods = await getFavouriteProducts();
-
+            const t = setTimeout(() => setDelayDone(true), 1000);
+        
+            return () => clearTimeout(t);
             
-            if (!prods)
-            {
-                setLoading(false);
-             
-                return;
-            }
+        }, []);
 
 
-            setProducts(prods);
-
-            setLoading(false); // only stop AFTER cat + products fetched
-        }
-
-        fetchData();
-
-    }, [slug]);
 
 
-    
-    if (loading)
+    const isLoading = loading || !delayDone || Object.keys(productsMap || {}).length === 0;
+
+
+
+    if (isLoading)
     {
         return (
     
             <div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
-            
-                <p className="text-3xl font-bold text-white text-center"> Loading Wishlist </p>
-
-                <Loader size="xl" color="border-white" />
-            
-            </div>
+      
+                <p className="text-4xl font-extrabold text-white text-center">
         
+                    Loading Wishlist
+      
+                </p>
+      
+                
+                <Loader size="xl" color="border-white border-9" />
+
+                <Loader size="large" color="border-white border-7" />
+
+                <Loader size="medium" color="border-white border-6" />
+    
+            </div>
+  
         );
     }
+
+
+
+    // Derive favourite products safely (favouritesMap might be empty)
+  
+       const favouriteProducts = favouritesOrder
+         
+           .map((id) => productsMap[id])
+         
+           .filter(Boolean);
 
 
 
@@ -122,12 +114,12 @@ export default function Wishlist()
                 </div>
 
                 
-                {(products.length > 0) ? 
+                {(favouriteProducts.length > 0) ? 
             
                     (
                         < div className="mb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:pl-20 md:pr-8 gap-x-10">
                         
-                            {products.map(p =>
+                            {favouriteProducts.map(p =>
                             (
                                 <ProductCard key={p.$id} Product={p} />
                             ))}

@@ -75,9 +75,14 @@ export default function CategoryPage()
     
             <div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
             
-                <p className="text-3xl font-bold text-white text-center"> Loading Category </p>
+                <p className="text-4xl font-extrabold text-white text-center"> Loading Category </p>
 
-                <Loader size="xl" color="border-white" />
+                
+                <Loader size="xl" color="border-white border-9" />
+
+                <Loader size="large" color="border-white border-7" />
+
+                <Loader size="medium" color="border-white border-6" />
             
             </div>
         

@@ -4,6 +4,8 @@ import { useAuth } from "./AuthContext"; // you already have this
 
 import { getAllProducts, getCartItems, addOrUpdateCartItem, removeCartItem, clearUserCart, decreaseProductStock, increaseProductStock } from "../appwrite/db";
 
+import { getUserFavourites, addFavourite, removeFavourite } from "../appwrite/db";
+
 import { formatPrice } from "../utils/formatPrice";
 
 
@@ -61,6 +63,14 @@ import { formatPrice } from "../utils/formatPrice";
                     // Full product table for hydration
                 
                         const [productsMap, setProductsMap] = useState({});
+                        
+                    // store which products this user added to wishlist    
+                    
+                        const [favouritesMap, setFavouritesMap] = useState({});
+                        
+                     // store the favourites order for correct protrayal of wishlist
+                    
+                        const [favouritesOrder, setFavouritesOrder] = useState([]);
 
                     // Final enriched cart items (used by UI)
                 
@@ -191,24 +201,57 @@ import { formatPrice } from "../utils/formatPrice";
             
                 // Adding this for the isfavourite flag reflection/updation in UI
         // -----------------------------------------------------------
-
-            function updateProductField(productId, field, value) 
-            {
-                setProductsMap(
-                
-                    (prev) =>
-                    (
-                        {
-                            ...prev,
-                
-                            [productId]: { ...prev[productId], [field]: value, }
-                        }
-                    )
-                );
-            }
-
         
-    
+            const toggleProductFavourite = async (productId) => 
+            {
+                if (!user) return;
+
+              
+                const currentFavId = favouritesMap[productId];
+
+              
+                // Case 1: product is currently a favourite → remove it
+              
+                    if (currentFavId)
+                    {
+                        await removeFavourite(currentFavId);
+
+                    
+                        setFavouritesMap((prev) =>
+                        {
+                            const copy = { ...prev };
+                    
+                            delete copy[productId];
+                    
+                            return copy;
+                        });
+
+
+                        setFavouritesOrder((prev) => prev.filter((id) => id !== productId));
+
+
+                        return false;
+                    }
+
+              
+                // Case 2: product is not favourite → add it
+              
+                    const newFav = await addFavourite(user.$id, productId);
+
+                
+                    if (newFav?.$id)
+                    {
+                        setFavouritesMap((prev) => ({ ...prev, [productId]: newFav.$id }));
+                        
+                        setFavouritesOrder((prev) => [productId, ...prev]); // newest at top
+                    }
+
+              
+                return true;
+            };
+
+
+            
         // -----------------------------------------------------
             
             // 5. addItem(productId, qty)
@@ -508,6 +551,34 @@ import { formatPrice } from "../utils/formatPrice";
                     await fetchProducts();
                 
                     await fetchCartDocs();
+
+
+                    // Load user favourites
+        
+                        if (user)
+                        {
+                            const favDocs = await getUserFavourites(user.$id);
+                
+
+                            const favMap = {};
+                            
+                            const favOrder = [];
+
+
+                           // favDocs already sorted DESC by createdAt from DB
+                           
+                            favDocs.forEach((f) =>
+                            {
+                                favMap[f.product_id] = f.$id;
+                                
+                                favOrder.push(f.product_id);
+                            });
+
+                           
+                            setFavouritesMap(favMap);
+                           
+                            setFavouritesOrder(favOrder);
+                        }
                 
                     setLoading(false);
 
@@ -539,14 +610,22 @@ import { formatPrice } from "../utils/formatPrice";
                 cartItems, // enriched objects (product + quantity + subtotal)
 
                 productsMap,
+
+                favouritesMap,
+
+                favouritesOrder,
+
+                wishlistQuantity: favouritesOrder.length, // ← add this
+
+                isProductFavourite: (pid) => Boolean(favouritesMap[pid]),
+    
+                toggleProductFavourite,
             
                 cartQuantity, // for navbar badge
             
                 cartTotal, // formatted string total
             
                 refreshCart,
-
-                updateProductField,
             
                 addItem,
             

@@ -1,4 +1,4 @@
-import { account, database, DATABASE_ID, PRODUCTS_TABLE_ID, CATEGORIES_TABLE_ID, USERS_TABLE_ID, CART_TABLE_ID, Query } from "./appwrite.js";
+import { account, database, DATABASE_ID, PRODUCTS_TABLE_ID, CATEGORIES_TABLE_ID, USERS_TABLE_ID, CART_TABLE_ID, FAVOURITES_TABLE_ID, Query } from "./appwrite.js";
 
 import { Permission, Role } from "appwrite";
 
@@ -136,37 +136,143 @@ import { Permission, Role } from "appwrite";
 
 
 
-    /* ------------------- 🟩 9. Get favourtie/wishlist products ------------------- */
-    
-        export async function getFavouriteProducts() {
-            try {
-                const res = await database.listDocuments(DATABASE_ID, PRODUCTS_TABLE_ID, [
-                    Query.equal("isFavourite", true),
-                    Query.orderDesc("$updatedAt")
-                ]);
+    /* ------------------- 🟩 9. favourtie/wishlist functions ------------------- */
+        
+        export async function getUserFavourites(userId) 
+        {
+            try
+            {
+                const res = await database.listDocuments(
+              
+                    DATABASE_ID,
+              
+                    FAVOURITES_TABLE_ID,
+              
+                    [
+                        Query.equal("user_id", userId),
+                        
+                        Query.orderDesc("$createdAt")
+                    ]
+            );
+            
                 return res.documents;
-            } catch (err) {
-                console.error("Error fetching trending products:", err);
+            }
+            
+            catch (err)
+            {
+                console.error("Error fetching user favourites:", err);
+                
                 return [];
+          }
+        }
+
+
+
+        export async function findFavourite(userId, productId) 
+        {
+            try
+            {
+                const res = await database.listDocuments(
+              
+                    DATABASE_ID,
+              
+                    FAVOURITES_TABLE_ID,
+              
+                    [
+                        Query.equal("user_id", userId),
+                
+                        Query.equal("product_id", productId),
+                    ]
+            );
+            
+                return res.documents[0] || null;
+            }
+            
+            catch (err)
+            {
+                console.error("Error finding favourite:", err);
+            
+                return null;
+          }
+        }
+
+
+
+        export async function addFavourite(userId, productId) 
+        {
+            try
+            {
+                return await database.createDocument(
+              
+                    DATABASE_ID,
+              
+                    FAVOURITES_TABLE_ID,
+              
+                    "unique()",
+              
+                    {
+                        user_id: userId,
+                        
+                        product_id: productId
+                    },
+              
+                    [
+                        Permission.read(Role.user(userId)),
+                
+                        Permission.delete(Role.user(userId)),
+                    ]
+                );
+            }
+            
+            catch (err)
+            {
+                console.error("Error adding favourite:", err);
+            
+                return null;
             }
         }
 
 
 
-    /* ------------------- 🟩 10. Toggle product favourite ------------------- */
-    
-        export async function ToggleFavourite(productId, currentvalue) {
-          try {
-            return await database.updateDocument(
-              DATABASE_ID,
-              PRODUCTS_TABLE_ID,
-              productId,
-              { isFavourite: !currentvalue }
-            );
-          } catch (err) {
-            console.error("Failed to update favourite:", err);
-            throw err;
-          }
+        export async function removeFavourite(favId) 
+        {
+            try
+            {
+                return await database.deleteDocument(
+              
+                    DATABASE_ID,
+              
+                    FAVOURITES_TABLE_ID,
+              
+                    favId
+                );
+            }
+            
+            catch (err)
+            {
+                console.error("Error removing favourite:", err);
+            
+                return null;
+            }
+        }
+
+
+        
+        export async function toggleFavourite(userId, productId) 
+        {
+            const existing = await findFavourite(userId, productId);
+
+          
+            if (existing)
+            {
+                await removeFavourite(existing.$id);
+            
+                return { isFavourite: false };
+            }
+
+            await addFavourite(userId, productId);
+          
+            return { isFavourite: true };
         }
 
 

@@ -10,8 +10,6 @@ import { formatPrice } from "../utils/formatPrice";
 
 import { formatDiscount } from "../utils/formatDiscount.js";
 
-import { ToggleFavourite } from "../appwrite/db.js";
-
 import Loader from "./Loader.jsx"
 
 
@@ -27,7 +25,8 @@ export default function CartDrawer({ onClose })
 	removeItem,
 	clearCart,
 	productsMap,
-	updateProductField
+	isProductFavourite,
+	toggleProductFavourite
 	} = useCart();
 
 	const navigate = useNavigate();
@@ -106,52 +105,38 @@ export default function CartDrawer({ onClose })
 
 	// --- Toggle favourite handler ---
 		
-		const handleFavouriteClick = async (productId) =>
-		{
-			if (!productId || !productsMap[productId])
+			const handleFavouriteClick = async (productId) => 
 			{
-				console.error("Invalid productId for ToggleFavourite:", productId);
-			
-				return;
-			}
+				if (!user) return alert("You need to log in to favourite items.");
 
-			const current = productsMap[productId].isFavourite;
+		
+				try
+				{
+					await toggleProductFavourite(productId);
+			
+					// localCart will auto-update because productsMap / favouritesMap are reactive
+			
+					// Optionally, we can force a re-map to include the latest product from productsMap:
+			
+						setLocalCart((prev) =>
+				
+							prev.map((item) =>
+					
+								item.product.$id === productId
+					
+									? { ...item, product: { ...productsMap[productId] } }
+					
+									: item
+								)
+							);
+				} 
+		
+				catch (err)
+				{
+					console.error("Failed to toggle favourite:", err);
+				}
+			};
 
-			try
-			{
-				await ToggleFavourite(productId, current); // backend
-			
-				updateProductField(productId, "isFavourite", !current); // global state
-
-			
-				// Update localCart immediately
-			
-				setLocalCart((prev) =>
-			
-					prev.map((item) =>
-			
-						item.product.$id === productId
-			
-							?
-							
-							{
-			
-								...item,
-			
-								product: { ...productsMap[productId], isFavourite: !current },
-			
-							}
-			
-							: item
-					)
-				);
-			}
-			
-			catch (err)
-			{
-				console.error("Failed to toggle favourite:", err);
-			}
-		};
 
 
 
@@ -307,7 +292,7 @@ export default function CartDrawer({ onClose })
 
 										<img
 								
-											src={product.isFavourite ? `/icons/heart.png` : `/icons/heart.svg`}
+											src={isProductFavourite(product.$id) ? `/icons/heart.png` : `/icons/heart.svg`}
 									
 											alt="wishlist"
 											
@@ -548,7 +533,7 @@ export default function CartDrawer({ onClose })
 									(
 										<div className="flex items-center justify-center">
 				
-											<Loader size="medium" color="border-white" />
+											<Loader size="medium" color="border-white border-5" />
 				
 										</div>
 									) 

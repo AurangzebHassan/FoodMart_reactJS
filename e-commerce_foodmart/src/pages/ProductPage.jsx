@@ -18,8 +18,6 @@ import { formatDiscount } from "../utils/formatDiscount";
 
 import Loader from "../components/Loader";
 
-import { ToggleFavourite } from "../appwrite/db";
-
 
 
 export default function ProductPage()
@@ -37,7 +35,7 @@ export default function ProductPage()
 
     const { user } = useAuth();
     
-    const { updateProductField, addItem, productsMap } = useCart(); // use CartContext for stock and cart operations
+    const { addItem, productsMap, isProductFavourite, toggleProductFavourite } = useCart(); // use CartContext for stock and cart operations
 
 
     const [product, setProduct] = useState(null); // original product fetched from DB
@@ -102,35 +100,19 @@ export default function ProductPage()
         // Always use the freshest stock and data from CartContext
         
             const liveProduct = productsMap[product?.$id] || product;
-            
-    
-    
-    const [isFavourite, setIsFavourite] = useState(liveProduct?.isFavourite || false);
-
-    useEffect(() =>
-    {
-        if (liveProduct)
-        {
-            setIsFavourite(liveProduct.isFavourite || false);
-        }
-
-    }, [liveProduct]);
-
-
-
+ 
 
 
     // handle the product being made or removed as/from favourites/wishlist
 
-        const handleFavouriteClick = async () =>
+        const handleFavouriteClick = async () => 
         {
+            if (!user) return alert("You need to log in to favourite items.");
+
+          
             try
             {
-                await ToggleFavourite(liveProduct.$id, isFavourite); // backend update
-                
-                updateProductField(liveProduct.$id, "isFavourite", !isFavourite); // global state
-                
-                setIsFavourite(!isFavourite); // local state to re-render this card
+                await toggleProductFavourite(liveProduct.$id);
             }
             
             catch (error)
@@ -194,9 +176,14 @@ export default function ProductPage()
             
                 <div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
                 
-                    <p className="text-3xl font-bold text-white text-center"> Loading Product </p>
-                    
-                    <Loader size="xl" color="border-white" />
+                    <p className="text-4xl font-extrabold text-white text-center"> Loading Product </p>
+
+
+                    <Loader size="xl" color="border-white border-9" />
+
+                    <Loader size="large" color="border-white border-7" />
+
+                    <Loader size="medium" color="border-white border-6" />
                 
                 </div>
         
@@ -259,7 +246,7 @@ export default function ProductPage()
 
                                     <img
 
-                                        src={isFavourite ? `/icons/heart.png` : `/icons/heart.svg`}
+                                        src={isProductFavourite(liveProduct.$id) ? `/icons/heart.png` : `/icons/heart.svg`}
                                 
                                         alt="wishlist"
                                         

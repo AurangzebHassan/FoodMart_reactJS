@@ -346,6 +346,8 @@ import { Client, Databases, ID, Query, Account } from 'appwrite';
     export const USERS_TABLE_ID = import.meta.env.VITE_APPWRITE_USERS_TABLE_ID;    // users table
     
     export const CART_TABLE_ID = import.meta.env.VITE_APPWRITE_CART_TABLE_ID;    // cart table
+    
+    export const FAVOURITES_TABLE_ID = import.meta.env.VITE_APPWRITE_FAVOURITES_TABLE_ID;    // favourites table
 
 
 
