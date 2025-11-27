@@ -384,7 +384,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                 
                 {/* Left section of the navbar */}
         
-                    <div className="flex shrink-0 items-center gap-2 transition-all duration-200">
+                    <div className="flex max-w-[25%] md:max-w-none shrink-0 grow-0 items-center gap-2 transition-all duration-200">
                     
                         <a href="/" tabIndex={-1}>
                         
@@ -597,10 +597,10 @@ export default function Navbar( /*{ loggedInUser }*/ )
                     
                 {/* Right side icons. Right side of the navbar */}
 
-                    <div className={`flex shrink-0 justify-end items-center ${user?.name.length > 9 ? `2xl:-ml:20` : `xl:-ml-2 2xl:-ml:20`} gap-3 transition-all duration-200`}>
+                    <div className={`flex shrink-0 justify-end items-center ${user?.name.length > 9 ? `` : `xl:-ml-2`} gap-3 transition-all duration-200`}>
                         
                         
-                    <div className="lg:hidden" onClick={() => { setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50);}}>
+                        <div className="lg:hidden" onClick={() => { setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50);}}>
                         
                             <img src="/icons/search.png" alt="FoodMart" className="h-11 p-2 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer" />
             
@@ -648,7 +648,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                     
                                 alt="Wishlist"
                     
-                                className="sm:h-7 cursor-pointer"
+                                className="h-7 cursor-pointer"
                     
                             />
                             
