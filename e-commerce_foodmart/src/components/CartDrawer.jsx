@@ -42,7 +42,7 @@ export default function CartDrawer({ onClose })
 
 	const [clearCartLoading, setClearCartLoading] = useState(false);
 
-	const [RefreshCartLoading, setRefreshCartLoading] = useState(false);
+	const [refreshCartLoading, setRefreshCartLoading] = useState(false);
 
 
 
@@ -231,7 +231,7 @@ export default function CartDrawer({ onClose })
 									{
 										setRefreshCartLoading(true);
 
-										refreshCartDocsAndProducts();
+										await refreshCartDocsAndProducts();
 
 										setRefreshCartLoading(false);
 									}
@@ -239,7 +239,7 @@ export default function CartDrawer({ onClose })
 								
 								title="Refresh Cart" 
 								
-								className={`mr-2 ${(!cartQuantity || clearCartLoading || removingItemId || updatingItemId/* || checkoutLoading*/) ? `` : `hover:-translate-y-1 transition-all duration-200`}`}
+								className={`mr-2 ${(!cartQuantity || clearCartLoading || removingItemId || updatingItemId/* || checkoutLoading*/) ? `opacity-30` : `hover:-translate-y-1 transition-all duration-200`}`}
 								
 								disabled={!cartQuantity || clearCartLoading || removingItemId || updatingItemId/* || checkoutLoading*/}
 							>
@@ -263,7 +263,7 @@ export default function CartDrawer({ onClose })
 						} rounded-full font-bold transition-all duration-200`}
 						>
 						{
-							((updatingItemId) || (removingItemId) || clearCartLoading || RefreshCartLoading/* || checkoutLoading*/) ?
+							((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading/* || checkoutLoading*/) ?
 							
 							(
 								<div className={`flex items-center justify-center py-3 ${cartQuantity > 9 ? `px-1.25`: ``}`}>
@@ -337,8 +337,8 @@ export default function CartDrawer({ onClose })
 										src={product.image_url}
 										alt={product.name}
 										className="cursor-pointer w-20 h-25 rounded-lg object-cover"
-										disabled={(updatingItemId === item.$id || removingItemId === item.$id || clearCartLoading || RefreshCartLoading/* || checkoutLoading*/)}
-										onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || RefreshCartLoading)/* || !checkoutLoading*/ && handleClick(product);}}
+										disabled={(updatingItemId === item.$id || removingItemId === item.$id || clearCartLoading || refreshCartLoading/* || checkoutLoading*/)}
+										onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading)/* || !checkoutLoading*/ && handleClick(product);}}
 									/>
 
 								
@@ -351,8 +351,8 @@ export default function CartDrawer({ onClose })
 											
 												<p
 													className="font-mono text-lg text-gray-700 cursor-pointer hover:text-gray-900 font-semibold mt-1"
-													disabled={(updatingItemId === item.$id || removingItemId === item.$id || clearCartLoading/* || checkoutLoading*/)}
-													onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || RefreshCartLoading)/* || !checkoutLoading*/ && handleClick(product);}}
+													disabled={(updatingItemId === item.$id || removingItemId === item.$id || clearCartLoading || refreshCartLoading/* || checkoutLoading*/)}
+													onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading)/* || !checkoutLoading*/ && handleClick(product);}}
 												>
 													{product.name}
 												</p>
@@ -365,7 +365,7 @@ export default function CartDrawer({ onClose })
 												
 													<button
 														className={`flex mb-1 ${
-														((product.stock === 0) || clearCartLoading || (updatingItemId === item.$id) || removingItemId === item.$id/* || checkoutLoading*/)
+														((product.stock === 0) || clearCartLoading || refreshCartLoading || (updatingItemId === item.$id) || removingItemId === item.$id/* || checkoutLoading*/)
 															? "bg-gray-300"
 															: "bg-yellow-300 hover:bg-orange-600"
 														} cursor-pointer justify-center items-center w-5 h-5 font-bold rounded-md text-sm`}
@@ -380,14 +380,14 @@ export default function CartDrawer({ onClose })
 																setUpdatingItemId(null);
 															}
 														}
-														disabled={(product.stock === 0) || (updatingItemId === item.$id) || clearCartLoading || removingItemId === item.$id/* || checkoutLoading*/}
+														disabled={(product.stock === 0) || (updatingItemId === item.$id) || clearCartLoading || refreshCartLoading || removingItemId === item.$id/* || checkoutLoading*/}
 													>
 														+
 													</button>
 													
 													<button
 														className={`flex mb-1 ${
-														((item.quantity === 1) || clearCartLoading || updatingItemId === item.$id || removingItemId === item.$id/* || checkoutLoading*/)
+														((item.quantity === 1) || clearCartLoading || refreshCartLoading || updatingItemId === item.$id || removingItemId === item.$id/* || checkoutLoading*/)
 															? "bg-gray-300"
 															: "bg-yellow-300 hover:bg-orange-600"
 														} cursor-pointer justify-center items-center w-5 h-5 font-bold rounded-md text-sm`}
@@ -402,15 +402,15 @@ export default function CartDrawer({ onClose })
 																setUpdatingItemId(null);
 															}
 														}
-														disabled={(item.quantity === 1) || updatingItemId === item.$id || clearCartLoading || removingItemId === item.$id/* || checkoutLoading*/}
+														disabled={(item.quantity === 1) || updatingItemId === item.$id || clearCartLoading || refreshCartLoading || removingItemId === item.$id/* || checkoutLoading*/}
 													>
 														−
 													</button>
 													
 													<button
-														className={`flex justify-center items-center rounded-md w-5 h-5 cursor-pointer ${(clearCartLoading || (removingItemId === item.$id) || updatingItemId === item.$id/* || checkoutLoading*/) ? `bg-gray-300` : `bg-red-400 hover:bg-red-500`}`}
+														className={`flex justify-center items-center rounded-md w-5 h-5 cursor-pointer ${(clearCartLoading || refreshCartLoading || (removingItemId === item.$id) || updatingItemId === item.$id/* || checkoutLoading*/) ? `bg-gray-300` : `bg-red-400 hover:bg-red-500`}`}
 														onClick={async() => {setRemovingItemId(item.$id); await removeItem(item.$id, product.$id); setRemovingItemId(null);}}
-														disabled={removingItemId === item.$id || clearCartLoading || updatingItemId === item.$id/* || checkoutLoading*/}
+														disabled={removingItemId === item.$id || clearCartLoading || refreshCartLoading || updatingItemId === item.$id/* || checkoutLoading*/}
 													>
 														<img src="/icons/delete.png" alt="delete" />
 													</button>
@@ -425,7 +425,7 @@ export default function CartDrawer({ onClose })
 												} rounded-full font-bold transition-all duration-200`}
 												>
 												{
-													((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading/* || checkoutLoading*/) ?
+													((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading/* || checkoutLoading*/) ?
 													
 													(
 														<div className={`flex items-center justify-center py-3 ${item.quantity > 9 ? `px-1.5` : ``}`}>
@@ -499,7 +499,7 @@ export default function CartDrawer({ onClose })
 
 							<button
 						
-								className={`w-full ${(!cartQuantity || clearCartLoading/* || removingItemId !== null || updatingItemId !== null*/) ? `bg-gray-400 text-black` : `bg-yellow-500 text-white hover:bg-orange-600 hover:-translate-y-1 transition-all duration-200`} col-span-2 py-2 rounded-full mt-3 text-[18px] font-extrabold`}
+								className={`w-full ${(!cartQuantity || clearCartLoading || refreshCartLoading/* || removingItemId !== null || updatingItemId !== null*/) ? `bg-gray-400 text-black` : `bg-yellow-500 text-white hover:bg-orange-600 hover:-translate-y-1 transition-all duration-200`} col-span-2 py-2 rounded-full mt-3 text-[18px] font-extrabold`}
 								
 								// onClick=
 								// {
@@ -513,7 +513,7 @@ export default function CartDrawer({ onClose })
 								// 	}
 								// }
 					
-								disabled={/*checkoutLoading || */clearCartLoading || !cartQuantity || removingItemId !== null || updatingItemId !== null}
+								disabled={/*checkoutLoading || */clearCartLoading || refreshCartLoading || !cartQuantity || removingItemId !== null || updatingItemId !== null}
 							>
 								
 								{/* {checkoutLoading ? 
@@ -540,7 +540,7 @@ export default function CartDrawer({ onClose })
 									
 							<button 
 						
-								className={`${(!cartQuantity/* || checkoutLoading || removingItemId !== null || updatingItemId !== null*/) ? `bg-gray-400 text-black` : `bg-red-600 text-white hover:-translate-y-1 transition-all duration-200`} rounded-full mt-3 py-2 font-extrabold`}
+								className={`${(!cartQuantity || refreshCartLoading/* || checkoutLoading || removingItemId !== null || updatingItemId !== null*/) ? `bg-gray-400 text-black` : `bg-red-600 text-white hover:-translate-y-1 transition-all duration-200`} rounded-full mt-3 py-2 font-extrabold`}
 								
 								onClick=
 								{
@@ -554,7 +554,7 @@ export default function CartDrawer({ onClose })
 									}
 								}
 					
-								disabled={clearCartLoading || !cartQuantity || removingItemId !== null || updatingItemId !== null/* || checkoutLoading*/}
+								disabled={clearCartLoading || refreshCartLoading || !cartQuantity || removingItemId !== null || updatingItemId !== null/* || checkoutLoading*/}
 							>
 										
 								{clearCartLoading ? 
