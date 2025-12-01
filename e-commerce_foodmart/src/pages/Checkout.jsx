@@ -268,12 +268,12 @@ export default function Checkout()
 
 
                     
-                    <div className="lg:grid lg:grid-cols-5 2xl:grid-cols-7">
+                    <div className="flex flex-col-reverse lg:grid lg:grid-cols-5 xl:grid-cols-7">
                         
                         
                         {/* CART ITEMS LIST */}
                     
-                        <div className="lg:col-span-2 xl:col-span-3 2xl:col-span-4 space-y-6 mb-12 lg:mb-20 max-lg:pl-27 pr-13 lg:pr-5">
+                        <div className="max-lg:mt-10 lg:col-span-2 xl:col-span-4 2xl:col-span-4 space-y-6 mb-12 lg:mb-20 lg:pr-5">
                             
                             
                             {localCart.map((item) => 
@@ -297,7 +297,7 @@ export default function Checkout()
                                         
                                             {formatDiscount(product.discount_tag) && (
                                                 
-                                                <div className={`absolute ${(product.discount_tag.length > 3) ? `md:left-35 md:top-33.5 lg:left-74 xl:left-59 lg:top-42` : `md:left-36.5 md:top-33.5 lg:left-75.5 xl:left-60.5 lg:top-41.75`} px-2 py-2 bg-green-700 hover:-translate-y-1 transition-all duration-200 text-white text-sm lg:text-md font-extrabold rounded-full`}>
+                                                <div className={`absolute ${(product.discount_tag.length > 3) ? `left-65 top-33.5 lg:left-74 xl:left-59 lg:top-42` : `left-66.5 top-33.5 lg:left-75.5 xl:left-60.5 lg:top-41.75`} px-2 py-2 bg-green-700 hover:-translate-y-1 transition-all duration-200 text-white text-sm lg:text-md font-extrabold rounded-full`}>
                                                 
                                                     {product.discount_tag}
                                                     
@@ -311,7 +311,7 @@ export default function Checkout()
                                         
                                             <div
                                                 
-                                                className="absolute top-6 left-6 bg-white rounded-full p-1.5 lg:p-2.5 cursor-pointer hover:-translate-y-0.5 transition-all duration-200"
+                                                className="absolute top-6 left-6 bg-white rounded-full p-2.5 cursor-pointer hover:-translate-y-0.5 transition-all duration-200"
                                                 
                                                 onClick={() => handleFavouriteClick(product.$id)}
                                             >
@@ -320,7 +320,7 @@ export default function Checkout()
                                                     
                                                     src={isProductFavourite(product.$id) ? "/icons/heart.png" : "/icons/heart.svg"}
                                                     
-                                                    className="lg:w-8.5 w-6"
+                                                    className="w-8.5"
                                                 />
                                             
                                             </div>
@@ -335,7 +335,7 @@ export default function Checkout()
                                                 
                                                 alt={product.name}
                                                 
-                                                className="lg:w-90 xl:w-70 lg:h-50 h-40 w-45 rounded-lg object-contain cursor-pointer bg-gray-100 hover:bg-gray-200 transtition-all duration-200"
+                                                className="lg:w-90 xl:w-70 lg:h-50 xl:h-55 max-lg:h-40 max-lg:w-75 rounded-lg object-contain cursor-pointer bg-gray-100 hover:bg-gray-200 transtition-all duration-200"
                                                 
                                                 onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleProductClick(product)}}
                                             />
@@ -354,7 +354,7 @@ export default function Checkout()
                                                 
                                                         <p
                                                         
-                                                            className="font-mono lg:text-xl font-bold cursor-pointer text-gray-700 hover:text-black"
+                                                            className="font-mono text-xl font-bold cursor-pointer text-gray-700 hover:text-black"
                                                             
                                                             onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleProductClick(product)}}
                                                         >
@@ -366,7 +366,7 @@ export default function Checkout()
                                             
                                                     {/* quantity badge */}
                                                         
-                                                        <span className={`lg:max-xl:absolute lg:top-5.75 lg:right-5.75 cursor-default text-white text-2xl lg:text-3xl lg:py-2 hover:-translate-y-1 bg-yellow-500 transition-all duration-200 hover:bg-orange-600 ${item.quantity > 9 ? "px-1.5 lg:px-3" : `${((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ? `px-2 lg:px-4` : `px-3 lg:px-5`}`} rounded-full font-extrabold`}>
+                                                        <span className={`lg:max-xl:absolute lg:top-5.75 lg:right-5.75 cursor-default text-white text-3xl lg:py-2 hover:-translate-y-1 bg-yellow-500 transition-all duration-200 hover:bg-orange-600 ${item.quantity > 9 ? "px-1.5 lg:px-3" : `${((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ? `px-2 lg:px-4` : `px-3 lg:px-5`}`} rounded-full font-extrabold`}>
                                                             
                                                             {
                                                                 ((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ?
@@ -432,7 +432,7 @@ export default function Checkout()
                                         
                                                         {/* buttons */}
                                                         
-                                                            <div className="flex gap-5 md:mt-4 lg:mt-6 lg:justify-end items-center">
+                                                            <div className="flex gap-5 md:mt-4 lg:mt-6 justify-end items-center">
                                                                 
                                                                 
                                                                 <button
@@ -591,12 +591,12 @@ export default function Checkout()
                 
                         {/* CHECKOUT SUMMARY CARD + BUTTONS */}
                         
-                            <div className="lg:sticky lg:top-27 xl:top-33 lg:self-start sm:col-span-3 sm:flex sm:flex-col lg:items-stretch xl:col-span-2 2xl:col-span-3 grid grid-cols-5 sm:grid-cols-1 sm:pr-0 sm:pl-0 pl-27 pr-13 max-lg:border-t-4 pt-10 lg:pt-0">
+                            <div className="lg:sticky lg:top-27 xl:top-33 lg:self-start sm:col-span-3 sm:flex sm:flex-col lg:items-stretch xl:col-span-3 2xl:col-span-3 grid grid-cols-5 sm:grid-cols-1 max-lg:border-b-4 pt-10 lg:pt-0">
                                 
                             
                                 {/* CHECKOUT SUMMARY CARD */}
                             
-                                <div className="col-span-4 md:mb-5 hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200">
+                                <div className="col-span-4 mb-5 hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200">
 
                             
                                     <div className="border-4 bg-gray-50 border-yellow-500 rounded-2xl">
@@ -795,7 +795,7 @@ export default function Checkout()
                                         
                                             <div className="flex justify-between lg:items-center font-bold mb-4 px-10">
                                             
-                                                <span className="text-gray-700 text-xl md:max-lg:mr-17 xl:mr-15">Address:</span>
+                                                <span className="text-gray-700 text-xl md:max-lg:mr-17 lg:mr-15">Address:</span>
                                             
                                                 <span className="text-orange-600">{profile.address}</span>
                                                 
@@ -913,7 +913,7 @@ export default function Checkout()
                                 
                                     {cartQuantity > 0 && (
                                         
-                                            <div className="max-lg:pl-2">
+                                            <div className="max-lg:pl-2 max-lg:mb-10">
 
                                         
                                                 {/* Buttons */}
