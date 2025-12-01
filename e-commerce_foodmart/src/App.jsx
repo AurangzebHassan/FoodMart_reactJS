@@ -10,6 +10,8 @@
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
+import { useCart } from "./context/CartContext";
+
 import Login from "./pages/Login";
 
 import Signup from "./pages/Signup";
@@ -23,6 +25,10 @@ import ProductPage from "./pages/ProductPage";
 import CategoryPage from "./pages/CategoryPage";
 
 import Wishlist from "./pages/Wishlist";
+
+// import Profile from "./pages/Profile";
+
+import Checkout from "./pages/Checkout";
 
 import Loader from "./components/Loader";
 
@@ -46,16 +52,7 @@ import Loader from "./components/Loader";
 
 
 
-
-
-
-// ⭐⭐⭐ START CHANGE 1 — import global auth provider + hook
-
-	import { AuthProvider, useAuth } from "./context/AuthContext";
-
-// ⭐⭐⭐ END CHANGE 1
-
-
+import { AuthProvider, useAuth } from "./context/AuthContext";
 
 import { CartProvider } from "./context/CartContext";
 
@@ -152,48 +149,65 @@ import { CartProvider } from "./context/CartContext";
 
 ------------------------------------------------------------------------- */
 
-	// ⭐⭐⭐ START CHANGE 2 — replace old ProtectedRoute with context version
-
-		const ProtectedRoute = ({ children }) =>
-		{
-			const { user, loading } = useAuth();
+	const ProtectedRoute = ({ children }) =>
+	{
+		const { user, loading } = useAuth();
 
 
-			if (loading)
-			
-				return (
-			
-					<div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
+		if (loading)
+		
+			return (
+		
+				<div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
 
-						<span className="text-4xl font-extrabold text-white text-center"> Checking authentication </span>
+					<span className="text-4xl font-extrabold text-white text-center"> Checking authentication </span>
 
-						
-						<Loader size="xl" color="border-white border-9" />
-
-						<Loader size="large" color="border-white border-7" />
-
-						<Loader size="medium" color="border-white border-6" />
-
-					</div>
 					
-				);
+					<Loader size="xl" color="border-white border-9" />
 
-			
-			if (!user) return <Navigate to="/login" replace />;
+					<Loader size="large" color="border-white border-7" />
+
+					<Loader size="medium" color="border-white border-6" />
+
+				</div>
+				
+			);
+
+		
+		if (!user) return <Navigate to="/login" replace />;
 
 
-			// const isOAuthUser = user?.identities && user.identities.length > 0;
+		// const isOAuthUser = user?.identities && user.identities.length > 0;
 
-			if (!user.emailVerification)
-			
-				return <Navigate to="/verify-email" replace />;
+		if (!user.emailVerification)
+		
+			return <Navigate to="/verify-email" replace />;
 
-			
-			return children;
-			
-		};
+		
+		return children;
+		
+	};
 
-	// ⭐⭐⭐ END CHANGE 2
+
+
+	const CheckoutGuard = ({ children }) =>
+	{
+		const { cartItems } = useCart();
+
+
+		// Only allow access if cart has items
+
+			if (!cartItems.length)
+			{
+				// alert('No Items in Cart! Redirecting...');
+
+				return <Navigate to="/" replace />; // redirect to Home or Cart
+			}
+
+
+		return children;
+	}
+
 
 
 
@@ -201,56 +215,6 @@ import { CartProvider } from "./context/CartContext";
 
 function App()
 {  
-	// Appwrite session is fully handled by AuthContext now.
-	
-	// No session polling needed here.
-
-		// useEffect(() =>
-		// {
-		// 	const init = async () =>
-		// 	{
-		// 		try
-		// 		{
-		// 			// let appwrite settle
-
-		// 				await new Promise(res => setTimeout(res, 1000));
-
-					
-		// 			const user = await getCurrentUser();
-					
-					
-		// 			if (user)
-		// 			{
-		// 				console.log("🌐 Session detected:", user.email);
-					
-
-		// 				// optional: you can call ensureUserProfile() but AuthProvider already does this
-
-		// 					// await ensureUserProfile();
-		// 			}
-					
-		// 			else
-		// 			{
-		// 				console.log("❌ No active session found.");
-		// 			}
-		// 		}
-			
-		// 		catch (err)
-		// 		{
-		// 			console.warn("⚠️ App init failed:", err.message);
-		// 		}
-		// 	};
-
-
-		// 	init();
-
-		// }, []); // 🟩 runs only once at app load
-
-
-
-
-
-
   return (
     
 	  <>
@@ -273,6 +237,7 @@ function App()
 				
 							<Route path="/verify-email" element={<VerifyEmail />} />
 
+						  
 							<Route path="/" element=      
 							
 								{
@@ -286,7 +251,8 @@ function App()
 								}
 				
 							/>
-							
+
+						  
 							<Route path="/product/:slug" element=
 							
 								{
@@ -298,7 +264,8 @@ function App()
 								}
 						  
 						  	/>
-							
+
+						  
 							<Route path="/category/:slug" element=
 							
 								{
@@ -311,6 +278,7 @@ function App()
 						  
 						  	/>
 							
+						  
 							<Route path="/wishlist" element=
 							
 								{
@@ -322,6 +290,36 @@ function App()
 								}
 						  
 						  	/>
+							
+						  
+							<Route path="/checkout" element=
+							
+								{
+									<ProtectedRoute>
+
+										<CheckoutGuard>
+										
+											<Checkout />
+											
+									  	</CheckoutGuard>
+								  
+									</ProtectedRoute>	
+								}
+						  
+						  	/>
+						  
+
+							{/* <Route path="/profile" element=
+							
+								{
+									<ProtectedRoute>
+
+										<Profile />
+								  
+									</ProtectedRoute>	
+								}
+						  
+						  	/> */}
 
 						  
 						</Routes>			  

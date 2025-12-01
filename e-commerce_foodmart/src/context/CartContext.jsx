@@ -71,6 +71,13 @@ import { formatPrice } from "../utils/formatPrice";
                      // store the favourites order for correct protrayal of wishlist
                     
                         const [favouritesOrder, setFavouritesOrder] = useState([]);
+                        
+                    // state to know if the cart is in checkout so the cart icon in navbar can be changed to checkout icon. Initialize from localStorage
+
+                        const [isCheckoutPage, setIsCheckoutPage] = useState(() =>
+                        {
+                            return localStorage.getItem("isCheckoutPage") === "true";
+                        });
 
                     // Final enriched cart items (used by UI)
                 
@@ -543,7 +550,32 @@ import { formatPrice } from "../utils/formatPrice";
                 {
                     console.error("Error clearing cart:", error);
                 }
-           };
+            };
+           
+        
+
+
+        
+        
+        // Helper to mark checkout started
+
+            const markCheckout = () =>
+            {
+                setIsCheckoutPage(true);
+        
+                localStorage.setItem("isCheckoutPage", "true");
+            };
+
+        
+        
+        // Helper to clear checkout state
+
+            const clearCheckoutFlag = () =>
+            {
+                setIsCheckoutPage(false);
+        
+                localStorage.removeItem("isCheckoutPage");
+            };
 
 
 
@@ -629,6 +661,14 @@ import { formatPrice } from "../utils/formatPrice";
                 isProductFavourite: (pid) => Boolean(favouritesMap[pid]),
     
                 toggleProductFavourite,
+
+                isCheckoutPage,
+
+                setIsCheckoutPage,
+
+                markCheckout,
+
+                clearCheckoutFlag,
             
                 cartQuantity, // for navbar badge
             

@@ -24,7 +24,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
 {
     const { user, profile, setUser, setProfile } = useAuth();
 
-    const { cartQuantity, cartTotal, wishlistQuantity } = useCart();
+    const { cartQuantity, cartTotal, wishlistQuantity, isCheckoutPage } = useCart();
 
 
 
@@ -688,7 +688,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
                                 <img
                                 
-                                    src="/icons/shopping-cart.png"
+                                    src={isCheckoutPage ? `/icons/checkout.png` : `/icons/shopping-cart.png`}
                         
                                     alt="Cart"
 

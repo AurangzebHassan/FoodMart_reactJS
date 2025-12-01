@@ -319,6 +319,7 @@ import { Permission, Role } from "appwrite";
                     user_id: user.$id,
                     name: user.name || user.email.split("@")[0],
                     email: user.email,
+                    address: user.address,
                     profile_pic: getStoredProfilePic(user.email) || "/icons/user.svg",
                     bio: null,
                     role: "user"
