@@ -18,7 +18,7 @@ import FilteredProductsGrid from "../components/product/FilteredProductsGrid";
 
 
 
-export default function Home( /*{ loggedInUser }*/ )
+export default function Home()
 {
   return (
 

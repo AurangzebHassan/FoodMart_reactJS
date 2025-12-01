@@ -216,7 +216,7 @@ export default function Checkout()
 
                                 <button
                                     
-                                    className="flex items-center justify-center w-25 px-4 py-1 text-black font-extrabold bg-yellow-500 hover:bg-orange-600 rounded-lg"
+                                    className="flex items-center justify-center w-30 lg:w-25 px-4 py-1 text-black font-extrabold bg-yellow-500 hover:bg-orange-600 rounded-lg"
                                     
                                     onClick={() => navigate(-1)}
                                 >
@@ -259,7 +259,7 @@ export default function Checkout()
                                         disabled={refreshCartLoading || clearCartLoading || updatingItemId !== null || removingItemId !== null}
                                     >
     
-                                        <img src="/icons/refresh.png" alt="refresh" className="w-12" />
+                                        <img src="/icons/refresh.png" alt="refresh" className="w-11" />
                                         
                                 </button>
 
@@ -596,10 +596,10 @@ export default function Checkout()
                             
                                 {/* CHECKOUT SUMMARY CARD */}
                             
-                                <div className="col-span-4 md:mb-5">
+                                <div className="col-span-4 md:mb-5 hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200">
 
                             
-                                    <div className="border-4 border-yellow-500 rounded-2xl">
+                                    <div className="border-4 bg-gray-50 border-yellow-500 rounded-2xl">
 
                                 
                                         {/* Title */}
@@ -618,7 +618,29 @@ export default function Checkout()
                                             
                                                 <span className="text-gray-700">Items:</span>
                                             
-                                                <span className="text-orange-600">{cartQuantity}</span>
+                                                <span className="text-orange-600">
+                                                    
+
+                                                    {
+                                                        (updatingItemId || removingItemId || clearCartLoading || refreshCartLoading) ?
+                                                        
+                                                        (
+                                                            <div className={`flex items-center justify-center`}>
+                                    
+                                                                <Loader size="medium" color="border-orange-600 border-4" />
+                                    
+                                                            </div>
+                                                        ) 
+                                                    
+                                                        : 
+                                                        
+                                                        (
+                                                            cartQuantity
+                                                        )
+                                                    }
+                                                    
+                                                    
+                                                </span>
                                                 
                                             </div>
 
@@ -627,7 +649,29 @@ export default function Checkout()
                                     
                                                 <span className="text-gray-700">Subtotal:</span>
                                                 
-                                                <span className="text-orange-600">{formatPrice(cartTotal, "USD")}</span>
+                                                <span className="text-orange-600">
+
+                                        
+                                                    {
+                                                        (updatingItemId || removingItemId || clearCartLoading || refreshCartLoading) ?
+                                                        
+                                                        (
+                                                            <div className={`flex items-center justify-center`}>
+                                    
+                                                                <Loader size="medium" color="border-orange-600 border-4" />
+                                    
+                                                            </div>
+                                                        ) 
+                                                    
+                                                        : 
+                                                        
+                                                        (
+                                                            formatPrice(cartTotal, "USD")
+                                                        )
+                                                    }
+
+                                        
+                                                </span>
                                                 
                                             </div>
 
@@ -790,8 +834,26 @@ export default function Checkout()
                                                             
                                                             <span className="text-orange-600">
                                                             
-                                                                {formatPrice(tax, "USD")}
+                                                                
+                                                                {
+                                                                    (updatingItemId || removingItemId || clearCartLoading || refreshCartLoading) ?
+                                                                    
+                                                                    (
+                                                                        <div className={`flex items-center justify-center`}>
+                                                
+                                                                            <Loader size="medium" color="border-orange-600 border-4" />
+                                                
+                                                                        </div>
+                                                                    ) 
+                                                                
+                                                                    : 
+                                                                    
+                                                                    (
+                                                                        formatPrice(tax, "USD")
+                                                                    )
+                                                                }
 
+                                                                
                                                             </span>
 
 
@@ -806,8 +868,27 @@ export default function Checkout()
                                                             
                                                             <span className="text-black font-extrabold">
                                                             
-                                                                {formatPrice(finalTotal, "USD")}
+                                                                
+                                                                {
+                                                                    (updatingItemId || removingItemId || clearCartLoading || refreshCartLoading) ?
+                                                                    
+                                                                    (
+                                                                        <div className={`flex items-center justify-center`}>
+                                                
+                                                                            <Loader size="large" color="border-black border-6" />
+                                                
+                                                                        </div>
+                                                                    ) 
+                                                                
+                                                                    : 
+                                                                    
+                                                                    (
+                                                                        formatPrice(finalTotal, "USD")
+                                                                    )
+                                                                }
+                                                                {}
 
+                                                                
                                                             </span>
 
 
@@ -844,9 +925,11 @@ export default function Checkout()
                                             
                                                             <button
                                                                 
-                                                                className="col-span-3 bg-yellow-500 text-white hover:bg-orange-600 hover:-translate-y-1 transition-all duration-200 rounded-full py-2 font-extrabold"
+                                                                className={`col-span-3 ${clearCartLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null ? `bg-gray-400 text-black` : `bg-yellow-500 text-white hover:bg-orange-600 hover:-translate-y-1`} transition-all duration-200 rounded-full py-2 font-extrabold`}
                                                                 
                                                                 onClick={() => alert("Order flow next")}
+                                                                
+                                                                disabled={ clearCartLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null }
                                                             >
                                                                 
                                                                 Place Order
