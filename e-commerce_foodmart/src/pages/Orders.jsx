@@ -37,7 +37,7 @@ export default function Orders()
     
         useEffect(() =>
         {
-            const t = setTimeout(() => setDelayDone(true), 2000);
+            const t = setTimeout(() => setDelayDone(true), 3000);
         
             return () => clearTimeout(t);
             
@@ -127,7 +127,7 @@ export default function Orders()
                 
                 {/* ORDER LIST */}
                 
-                    <div className="space-y-8 pl-27 pr-13">
+                    <div className={`max-xl:space-y-8 max-xl:pl-27 max-xl:pr-13 xl:grid xl:grid-cols-2 2xl:grid-cols-3 xl:gap-4 2xl:gap-2`}>
 
                     
                         {orders.map((order) => (
@@ -136,7 +136,7 @@ export default function Orders()
                                 
                                 key={order.$id}
                                 
-                                className="border-4 bg-gray-50 border-yellow-500 rounded-2xl hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200 p-6"
+                                className="h-fit border-4 bg-gray-50 border-yellow-500 rounded-2xl hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200 p-6"
                             >
                                 {/* Top Section: Order ID + Status */}
                                 
@@ -153,7 +153,7 @@ export default function Orders()
                                             </p>
                                                 
                                                 
-                                            <p title="Order Creation At" className="text-sm font-light italic text-gray-700">
+                                            <p title="Order Creation At" className="text-sm font-light italic text-gray-700 2xl:pr-10">
                                         
                                                 {formatDateTime(order.$createdAt, {withTime: true})}
                                         
@@ -163,7 +163,7 @@ export default function Orders()
                                         </div>
                                         
                                     
-                                        <div className="flex items-center gap-3">
+                                        <div className="flex shrink-0 items-center gap-3">
                                             
                                             
                                             <button
@@ -246,7 +246,7 @@ export default function Orders()
                                             >
                                                 
 
-                                                <p className="text-sm font-semibold text-gray-700">
+                                                <p className={`text-sm font-semibold text-gray-700`}>
                                                 
                                                     {item.product_name_snapshot} × {item.quantity}
                                                 
@@ -254,9 +254,9 @@ export default function Orders()
 
 
                                                 <p className="font-mono font-bold text-orange-600">
-                                                
+                                                     
                                                     {formatPrice(item.unit_price_snapshot, item.currency)} × {item.quantity} = {formatPrice(item.subtotal, item.currency)}
-                                                
+                                         
                                                 </p>
 
 
@@ -279,7 +279,7 @@ export default function Orders()
                                             <div className="flex justify-between font-bold">
                                             
 
-                                                <span className="text-gray-700">Shipping Address: </span>
+                                                <span className="text-gray-700 2xl:mr-16">Shipping Address: </span>
                                             
 
                                                 <span className="text-orange-600">

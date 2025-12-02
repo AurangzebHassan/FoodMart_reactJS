@@ -943,8 +943,6 @@ export default function Checkout()
                                                                             clearCheckoutFlag();
                                                                             
                                                                             setPlacingOrderLoading(false);
-
-                                                                            navigate("/orders");
                                                                         }
                                                                     }
                                                                 }

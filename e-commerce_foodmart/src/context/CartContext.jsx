@@ -955,6 +955,8 @@ import { DATABASE_ID, database,ORDERS_TABLE_ID, ORDER_ITEMS_TABLE_ID, Query } fr
 
                 orders,
 
+                ordersQuantity: orders.length,
+
                 fetchUserOrders,
 
                 placeOrder,

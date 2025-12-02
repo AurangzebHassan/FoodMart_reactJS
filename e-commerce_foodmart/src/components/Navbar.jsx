@@ -26,7 +26,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
 {
     const { user, profile, setUser, setProfile } = useAuth();
 
-    const { cartQuantity, cartTotal, wishlistQuantity, isCheckoutPage } = useCart();
+    const { cartQuantity, cartTotal, wishlistQuantity, isCheckoutPage, ordersQuantity } = useCart();
 
 
 
@@ -611,13 +611,17 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
                         <Link 
                         
-                            to="/orders" 
+                            to="/orders"
+                            
+                            // to="/profile"
                             
                         //   className={`bg-gray-100 hover:bg-gray-200 rounded-full ${(profile?.profile_pic !== "/icons/user.svg" || getStoredProfilePic(user?.email) !== "/icons/user.svg") ? `` : `p-2`}`}
                         
-                            className="bg-gray-100 hover:bg-gray-200 rounded-full p-2"
+                            className="relative bg-gray-100 hover:bg-gray-200 rounded-full p-2"
                             
                             onClick={(e) => { e.preventDefault(); navigate("/orders"); }}
+                            
+                            // onClick={(e) => { e.preventDefault(); navigate("/profile"); }}
                         
                         >
                             
@@ -625,12 +629,16 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
                                 // src={(profile || user) ? (getStoredProfilePic(user?.email) || profile.profile_pic) : "/icons/user.svg"}
                                 
-                                src="/icons/user.svg"
+                                // src="/icons/user.svg"
+                                
+                                src="/icons/order-delivery.png"
+
+                                title="orders"
                     
                                 
-                                alt={(profile || user) ? "User" : "Guest"}
+                                // alt={(profile || user) ? "User" : "Guest"}
                                 
-                                title={(profile || user) ? (profile?.name || user?.name) : "Guest"}
+                                // title={(profile || user) ? (profile?.name || user?.name) : "Guest"}
                     
                                 
                                 // className={(profile?.profile_pic !== "/icons/user.svg" || getStoredProfilePic(user?.email) !== "/icons/user.svg") ? "h-10 cursor-pointer rounded-full" : "h-7 cursor-pointer"}
@@ -638,6 +646,13 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                 className="h-7 cursor-pointer"
                                 
                             />
+                            
+                            
+                            <span className={`absolute ${ordersQuantity > 9 ? `-top-3.75 -right-3.75 xl:-top-4 xl:-right-3 2xl:-top-4 2xl:-right-3.5` : `-top-3.25 -right-2 xl:-top-4 xl:-right-1.25 2xl:-top-4 2xl:-right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full px-2`}>
+                        
+                                    {ordersQuantity}
+                    
+                            </span>
 
                         </Link>
                 
@@ -651,6 +666,8 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                 alt="Wishlist"
                     
                                 className="h-7 cursor-pointer"
+                                
+                                title="wishlist"
                     
                             />
                             
@@ -673,7 +690,8 @@ export default function Navbar( /*{ loggedInUser }*/ )
                             className="xl:mx-7 2xl:mx-14 relative cursor-pointer flex flex-row justify-between"
                             
                             tabIndex={0}
-                
+                            
+                            title="cart"
                         >
                             
                         
@@ -744,7 +762,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                 onClick={handleLogout}
                             >
                                 
-                                <img src="/icons/logout.png" alt="logout" className="w-9 hover:w-10 rounded-full transition-all duration-75" />
+                                <img src="/icons/logout.png" title="logout" alt="logout" className="w-9 hover:w-10 rounded-full transition-all duration-75" />
 
                             </button>
 
