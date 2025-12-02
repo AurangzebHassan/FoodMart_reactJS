@@ -4,9 +4,11 @@ import { useAuth } from "./AuthContext"; // you already have this
 
 import { getAllProducts, getCartItems, addOrUpdateCartItem, removeCartItem, clearUserCart, decreaseProductStock, increaseProductStock } from "../appwrite/db";
 
-import { getUserFavourites, addFavourite, removeFavourite } from "../appwrite/db";
+import { getUserFavourites, addFavourite, removeFavourite, getDiscountValue } from "../appwrite/db";
 
-import { formatPrice } from "../utils/formatPrice";
+import { createOrder, createOrderItem } from "../appwrite/db";
+
+import { DATABASE_ID, database,ORDERS_TABLE_ID, ORDER_ITEMS_TABLE_ID, Query } from "../appwrite/appwrite";
 
 
 
@@ -78,6 +80,10 @@ import { formatPrice } from "../utils/formatPrice";
                         {
                             return localStorage.getItem("isCheckoutPage") === "true";
                         });
+        
+                    // state to hold user orders
+                    
+                        const [orders, setOrders] = useState([]); // new state for user orders
 
                     // Final enriched cart items (used by UI)
                 
@@ -139,6 +145,52 @@ import { formatPrice } from "../utils/formatPrice";
                 setCartDocs(docs);
 
             }, [user]);
+            
+        
+        // -----------------------------------------------------------
+            // 3. Fetch orders and order_tems docs for this user
+        // -----------------------------------------------------------
+
+        const fetchUserOrders = useCallback(async () =>
+        {
+            if (!user)
+            {
+                setOrders([]);
+                
+                return;
+            }
+
+          
+            try
+            {
+                const res = await database.listDocuments(
+              DATABASE_ID,
+              ORDERS_TABLE_ID,
+              [Query.equal("user_id", user.$id), Query.orderDesc("$createdAt")]
+            );
+
+            const ordersWithItems = await Promise.all(
+              res.documents.map(async (order) => {
+                const itemsRes = await database.listDocuments(
+                  DATABASE_ID,
+                  ORDER_ITEMS_TABLE_ID,
+                  [Query.equal("order_id", order.$id)]
+                );
+
+                return {
+                  ...order,
+                  items: itemsRes.documents,
+                };
+              })
+            );
+
+            setOrders(ordersWithItems);
+          } catch (err) {
+            console.error("Error fetching user orders:", err);
+            setOrders([]);
+          }
+        }, [user]);
+
 
         
         // -----------------------------------------------------------
@@ -169,14 +221,16 @@ import { formatPrice } from "../utils/formatPrice";
                         if (!product) return null;
 
 
-                        // Compute discounted price dynamically
-                    
-                            const discountedPrice = parseFloat(formatPrice(product.price, product.currency, product.discount_tag).replace(/[^\d.]/g, ''));
+                        const discount_value = getDiscountValue(product.discount_tag);
 
-                        
-                        const subtotal = +(discountedPrice * item.quantity).toFixed(2);
+                        const basePrice = product.price;
 
-                        return { ...item, product, subtotal,};
+                        const unitPrice = discount_value > 0 ? +(basePrice * (1 - discount_value / 100)).toFixed(2) : basePrice;
+
+                        const subtotal = +(unitPrice * item.quantity).toFixed(2);
+
+
+                        return { ...item, product, unitPrice, subtotal, discount_value, };
                     }
 
                 ).filter(Boolean);
@@ -551,6 +605,232 @@ import { formatPrice } from "../utils/formatPrice";
                     console.error("Error clearing cart:", error);
                 }
             };
+        
+        
+        
+        // -----------------------------------------------------
+        
+            // clearCartWithoutRestoringStock()
+            
+                // Purpose:
+            
+                    //   - Used only AFTER a successful order.
+                    //   - Deletes cart docs but DOES NOT restore stock.
+            
+        // -----------------------------------------------------
+
+        const clearCartWithoutRestoringStock = async () =>
+        {
+            try
+            {
+                if (!user) return;
+
+        
+                // remove docs directly
+        
+                    await clearUserCart(user.$id);
+
+        
+                // refresh cart + products
+        
+                    await refreshCartDocsAndProducts();
+            } 
+    
+            catch (error)
+            {
+                console.error("Error clearing cart without restoring stock:", error);
+            }
+        };
+
+
+
+
+
+
+        const placeOrder = async (shippingAddress, shippingMethod = "standard") =>
+        {
+            try
+            {
+                if (!user) return null;
+            
+                if (!cartItems.length) return null;
+
+            
+                // ------------------------------------------
+                    // 1. Compute expected delivery date
+                // ------------------------------------------
+            
+                    const now = new Date();
+                
+                    const deliveryRanges =
+                    {
+                        standard: [4, 6],
+                        fast: [2, 3],
+                        express: [1, 1],
+                    };
+
+                
+                    const [minDays, maxDays] = deliveryRanges[shippingMethod] || [4, 6];
+                
+                    const randomDays = Math.floor(Math.random() * (maxDays - minDays + 1)) + minDays;
+
+                
+                    const expectedDate = new Date();
+                
+                    expectedDate.setDate(now.getDate() + randomDays);
+
+
+
+                // 2. Subtotal
+        
+                    const subtotal = cartItems.reduce((sum, item) => sum + item.subtotal, 0);
+
+                
+        
+                // 3. Shipping cost
+        
+                    const shippingCost = shippingMethod === "express"
+                    
+                        ? 19.99
+                    
+                        : shippingMethod === "fast"
+                    
+                            ? 9.99
+                    
+                            : 4.99;
+
+        
+                
+                // 4. Tax
+            
+                    const tax = subtotal * 0.1;
+
+        
+        
+                // 5. Final total
+        
+                    const finalTotal = subtotal + shippingCost + tax;
+
+
+
+                // ------------------------------------------
+                    // 3. Create order document
+                // ------------------------------------------
+            
+                    const order = await createOrder(
+                    {
+                        user_id: user.$id,
+                        shipping_address: shippingAddress,
+                        shipping_method: shippingMethod,
+                        total_amount: finalTotal,
+                        shipping_cost: shippingCost,
+                        tax_amount: tax,
+                        payment_method: "Cash on Delivery (COD)",
+                        shipping_status: "processing",
+                        expected_delivery_date: expectedDate.toISOString(),
+                    });
+
+                
+                    if (!order?.$id) throw new Error("Order creation failed");
+
+
+                
+                // ------------------------------------------
+                    // 4. Create each order item
+                // ------------------------------------------
+            
+                    for (const item of cartItems)
+                    {
+                        await createOrderItem(
+                        {
+                            order_id: order.$id,
+                            product_id: item.product_id,
+                            product_name_snapshot: item.product.name,
+                            product_slug_snapshot: item.product.slug,
+                            product_image_snapshot: item.product.image_url,
+                            original_price_snapshot: item.product.price,
+                            unit_price_snapshot: item.unitPrice,
+                            product_discount_snapshot: item.product.discount_tag || null,
+                            quantity: item.quantity,
+                            subtotal: item.subtotal,
+                        });
+                    }
+
+
+
+                // ------------------------------------------
+                    // 5. Clear the cart completely
+                // ------------------------------------------
+            
+                    await clearCartWithoutRestoringStock();
+                    
+                    
+                    
+                // refresh orders immediately
+
+                    await fetchUserOrders();
+
+
+                            
+                // ------------------------------------------
+                    // 6. Return order id
+                // ------------------------------------------
+            
+                    return order.$id;
+            } 
+          
+            catch (err)
+            {
+                console.error("Error placing order:", err);
+            
+                return null;
+            }
+        };
+
+
+
+        const cancelOrder = async (orderId) => {
+          try {
+            const orderToCancel = orders.find((o) => o.$id === orderId);
+            if (!orderToCancel) return;
+
+            // 1. Increase stock for each product
+            await Promise.all(
+              orderToCancel.items.map((item) =>
+                increaseProductStock(item.product_id, item.quantity)
+              )
+            );
+
+            // 2. Delete order items
+            await Promise.all(
+              orderToCancel.items.map((item) =>
+                database.deleteDocument(
+                  DATABASE_ID,
+                  ORDER_ITEMS_TABLE_ID,
+                  item.$id
+                )
+              )
+            );
+
+            // 3. Delete the order itself
+            await database.deleteDocument(
+              DATABASE_ID,
+              ORDERS_TABLE_ID,
+              orderId
+            );
+
+            // 4. Update local orders state to remove cancelled order
+            setOrders((prev) => prev.filter((order) => order.$id !== orderId));
+
+            // 5. Refresh productsMap to reflect updated stock
+            await fetchProducts();
+          } catch (err) {
+            console.error("Error cancelling order:", err);
+            alert("Failed to cancel order. Please try again.");
+          }
+        };
+
+
            
         
 
@@ -620,12 +900,15 @@ import { formatPrice } from "../utils/formatPrice";
                            
                             setFavouritesOrder(favOrder);
                         }
+                    
+                    
+                    await fetchUserOrders();
                 
                     setLoading(false);
 
                 })();
             
-            }, [user, fetchProducts, fetchCartDocs]);
+            }, [user, fetchProducts, fetchCartDocs, fetchUserOrders]);
 
         
         // -----------------------------------------------------------
@@ -669,6 +952,14 @@ import { formatPrice } from "../utils/formatPrice";
                 markCheckout,
 
                 clearCheckoutFlag,
+
+                orders,
+
+                fetchUserOrders,
+
+                placeOrder,
+
+                cancelOrder,
             
                 cartQuantity, // for navbar badge
             
@@ -685,6 +976,8 @@ import { formatPrice } from "../utils/formatPrice";
                 removeItem,
             
                 clearCart,
+
+                clearCartWithoutRestoringStock
             };
 
         

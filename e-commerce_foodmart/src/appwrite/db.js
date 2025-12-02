@@ -1,6 +1,16 @@
-import { account, database, DATABASE_ID, PRODUCTS_TABLE_ID, CATEGORIES_TABLE_ID, USERS_TABLE_ID, CART_TABLE_ID, FAVOURITES_TABLE_ID, Query } from "./appwrite.js";
+import { account, database, DATABASE_ID, PRODUCTS_TABLE_ID, CATEGORIES_TABLE_ID, USERS_TABLE_ID, CART_TABLE_ID, FAVOURITES_TABLE_ID, ORDERS_TABLE_ID, ORDER_ITEMS_TABLE_ID, Query } from "./appwrite.js";
 
 import { Permission, Role } from "appwrite";
+
+
+
+export function getDiscountValue(tag) {
+  if (!tag) return 0;
+
+  const match = String(tag).match(/\d+(\.\d+)?/);
+
+  return match ? parseFloat(match[0]) : 0;
+}
 
 
 
@@ -680,3 +690,87 @@ import { Permission, Role } from "appwrite";
             return null;
         }
     }
+
+
+
+
+
+
+// ------------------- Orders helpers -------------------
+
+export async function createOrder(orderData)
+{
+    return database.createDocument(DATABASE_ID, ORDERS_TABLE_ID, "unique()", orderData);
+}
+
+
+
+export async function createOrderItem(itemData)
+{
+    return database.createDocument(DATABASE_ID, ORDER_ITEMS_TABLE_ID, "unique()", itemData);
+}
+
+
+
+export async function getOrderItems(orderId)
+{
+    const res = await database.listDocuments(DATABASE_ID, ORDER_ITEMS_TABLE_ID,
+        
+        [
+            Query.equal("order_id", orderId),
+        ]
+    );
+  
+  
+    return res.documents;
+}
+
+
+
+// export async function getUserOrders(userId) {
+//     const res = await database.listDocuments(
+//         DATABASE_ID,
+//         ORDERS_TABLE_ID,
+//         [Query.equal("user_id", userId), Query.orderDesc("$createdAt")]
+//     );
+
+//     // Normalize items so component never crashes
+//     return res.documents.map(order => ({
+//         ...order,
+//         items: Array.isArray(order.items) ? order.items : []
+//     }));
+// }
+
+
+export async function getUserOrders(userId) {
+  try {
+    // 1️⃣ Get all orders of this user
+    const res = await database.listDocuments(DATABASE_ID, ORDERS_TABLE_ID, [
+      Query.equal("user_id", userId),
+      Query.orderDesc("$createdAt"),
+    ]);
+
+    const orders = res.documents;
+
+    // 2️⃣ For each order, fetch its items
+    const ordersWithItems = await Promise.all(
+      orders.map(async (order) => {
+        const itemsRes = await database.listDocuments(
+          DATABASE_ID,
+          ORDER_ITEMS_TABLE_ID,
+          [Query.equal("order_id", order.$id)]
+        );
+
+        return {
+          ...order,
+          items: itemsRes.documents, // attach real order items
+        };
+      })
+    );
+
+    return ordersWithItems;
+  } catch (err) {
+    console.error("Error fetching user orders:", err);
+    return [];
+  }
+}

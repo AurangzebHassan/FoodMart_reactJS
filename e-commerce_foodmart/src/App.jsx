@@ -30,6 +30,8 @@ import Wishlist from "./pages/Wishlist";
 
 import Checkout from "./pages/Checkout";
 
+import Orders from "./pages/Orders";
+
 import Loader from "./components/Loader";
 
 
@@ -302,6 +304,20 @@ function App()
 											<Checkout />
 											
 									  	</CheckoutGuard>
+								  
+									</ProtectedRoute>	
+								}
+						  
+						  	/>
+							
+							
+							
+							<Route path="/orders" element=
+							
+								{
+									<ProtectedRoute>
+										
+											<Orders />
 								  
 									</ProtectedRoute>	
 								}

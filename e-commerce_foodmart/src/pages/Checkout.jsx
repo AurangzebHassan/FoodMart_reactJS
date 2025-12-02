@@ -8,8 +8,6 @@ import { useNavigate } from "react-router-dom";
 
 import { formatPrice } from "../utils/formatPrice";
 
-import { formatDiscount } from "../utils/formatDiscount";
-
 import { formatRating } from "../utils/formatRating.js";
 
 import Navbar from "../components/Navbar.jsx";
@@ -49,7 +47,9 @@ export default function Checkout()
     
         toggleProductFavourite,
 
-        loading
+        loading,
+
+        placeOrder
     
     } = useCart();
 
@@ -67,6 +67,8 @@ export default function Checkout()
     const [clearCartLoading, setClearCartLoading] = useState(false);
     
     const [refreshCartLoading, setRefreshCartLoading] = useState(false);
+
+    const [placingOrderLoading, setPlacingOrderLoading] = useState(false);
 
     const [selectedShipping, setSelectedShipping] = useState("standard");
 
@@ -273,320 +275,320 @@ export default function Checkout()
                         
                         {/* CART ITEMS LIST */}
                     
-                        <div className="max-lg:mt-10 lg:col-span-2 xl:col-span-4 2xl:col-span-4 space-y-6 mb-12 lg:mb-20 lg:pr-5">
-                            
-                            
-                            {localCart.map((item) => 
-                            {
-                                const product = item.product;
-                            
+                            <div className="max-lg:mt-10 lg:col-span-2 xl:col-span-4 2xl:col-span-4 space-y-6 mb-12 lg:mb-20 lg:pr-5">
+                                
+                                
+                                {localCart.map((item) => 
+                                {
+                                    const product = item.product;
+                                
 
-                                if (!product) return null;
+                                    if (!product) return null;
 
 
-                                return (
-                                    
-                                    <div
+                                    return (
                                         
-                                        key={item.$id}
-                                        
-                                        className="relative border border-gray-50 bg-white rounded-lg drop-shadow-lg hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-300 p-4 flex lg:max-xl:flex-col gap-4"
-                                    >
-                                        
-                                        {/* discount */}
-                                        
-                                            {formatDiscount(product.discount_tag) && (
-                                                
-                                                <div className={`absolute ${(product.discount_tag.length > 3) ? `left-65 top-33.5 lg:left-74 xl:left-59 lg:top-42` : `left-66.5 top-33.5 lg:left-75.5 xl:left-60.5 lg:top-41.75`} px-2 py-2 bg-green-700 hover:-translate-y-1 transition-all duration-200 text-white text-sm lg:text-md font-extrabold rounded-full`}>
-                                                
-                                                    {product.discount_tag}
+                                        <div
+                                            
+                                            key={item.$id}
+                                            
+                                            className="relative border border-gray-50 bg-white rounded-lg drop-shadow-lg hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-300 p-4 flex lg:max-xl:flex-col gap-4"
+                                        >
+                                            
+                                            {/* discount */}
+                                            
+                                                {item.discount_value > 0 && (
                                                     
+                                                    <div className={`absolute ${(item.discount_value > 9.99) ? `left-65 top-33.5 lg:left-74 xl:left-59 xl:top-46 lg:top-42` : `left-66.5 top-33.5 lg:left-75.5 xl:left-60.5 xl:top-45.5 lg:top-41.75`} px-2 py-2 bg-green-700 hover:-translate-y-1 transition-all duration-200 text-white text-sm lg:text-md font-extrabold rounded-full`}>
+                                                    
+                                                        {product.discount_tag}
+                                                        
+                                                    </div>
+                                                    
+                                                )}
+
+                                            
+
+                                            {/* favourite heart */}
+                                            
+                                                <div
+                                                    
+                                                    className="absolute top-6 left-6 bg-white rounded-full p-2.5 cursor-pointer hover:-translate-y-0.5 transition-all duration-200"
+                                                    
+                                                    onClick={() => handleFavouriteClick(product.$id)}
+                                                >
+                                                    
+                                                    <img
+                                                        
+                                                        src={isProductFavourite(product.$id) ? "/icons/heart.png" : "/icons/heart.svg"}
+                                                        
+                                                        className="w-8.5"
+                                                    />
+                                                
                                                 </div>
-                                                
-                                            )}
 
-                                        
 
-                                        {/* favourite heart */}
-                                        
-                                            <div
-                                                
-                                                className="absolute top-6 left-6 bg-white rounded-full p-2.5 cursor-pointer hover:-translate-y-0.5 transition-all duration-200"
-                                                
-                                                onClick={() => handleFavouriteClick(product.$id)}
-                                            >
-                                                
+                                            
+                                            {/* IMAGE */}
+                                            
                                                 <img
+                                            
+                                                    src={product.image_url}
                                                     
-                                                    src={isProductFavourite(product.$id) ? "/icons/heart.png" : "/icons/heart.svg"}
+                                                    alt={product.name}
                                                     
-                                                    className="w-8.5"
+                                                    className="lg:w-90 xl:w-70 lg:h-50 xl:h-55 max-lg:h-41 max-lg:w-75 rounded-lg object-contain cursor-pointer bg-gray-100 hover:bg-gray-200 transtition-all duration-200"
+                                                    
+                                                    onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleProductClick(product)}}
                                                 />
+
                                             
-                                            </div>
 
-
-                                        
-                                        {/* IMAGE */}
-                                        
-                                            <img
-                                        
-                                                src={product.image_url}
-                                                
-                                                alt={product.name}
-                                                
-                                                className="lg:w-90 xl:w-70 lg:h-50 xl:h-55 max-lg:h-40 max-lg:w-75 rounded-lg object-contain cursor-pointer bg-gray-100 hover:bg-gray-200 transtition-all duration-200"
-                                                
-                                                onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleProductClick(product)}}
-                                            />
-
-                                        
-
-                                        {/* INFO */}
-                                        
-                                            <div className="flex-1 py-1">
-                                                
-                                                
-                                                <div className="flex items-center justify-between">
+                                            {/* INFO */}
+                                            
+                                                <div className="flex-1 py-1">
                                                     
-                                                
-                                                    {/* PRODUCT NAME */}
-                                                
-                                                        <p
-                                                        
-                                                            className="font-mono text-xl font-bold cursor-pointer text-gray-700 hover:text-black"
-                                                            
-                                                            onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleProductClick(product)}}
-                                                        >
-                                                        
-                                                            {product.name}
-
-                                                        </p>
                                                     
-                                            
-                                                    {/* quantity badge */}
+                                                    <div className="flex items-center justify-between">
                                                         
-                                                        <span className={`lg:max-xl:absolute lg:top-5.75 lg:right-5.75 cursor-default text-white text-3xl lg:py-2 hover:-translate-y-1 bg-yellow-500 transition-all duration-200 hover:bg-orange-600 ${item.quantity > 9 ? "px-1.5 lg:px-3" : `${((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ? `px-2 lg:px-4` : `px-3 lg:px-5`}`} rounded-full font-extrabold`}>
+                                                    
+                                                        {/* PRODUCT NAME */}
+                                                    
+                                                            <p
                                                             
-                                                            {
-                                                                ((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ?
+                                                                className="font-mono text-xl font-bold cursor-pointer text-gray-700 hover:text-black"
                                                                 
-                                                                (
-                                                                    <div className={`flex items-center justify-center py-1.75 ${item.quantity > 9 ? `lg:px-1.25` : ``}`}>
-                                            
-                                                                        <Loader size="medium" color="border-white border-6" />
-                                            
-                                                                    </div>
-                                                                ) 
+                                                                onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleProductClick(product)}}
+                                                            >
                                                             
-                                                                : 
-                                                                
-                                                                (
-                                                                    item.quantity
-                                                                )
-                                                            }
-                                                            
-                                                        </span>
+                                                                {product.name}
 
-
-                                                </div>
-                                                
-                                            
-                                                {/* Stock + Rating + Quantity control buttons */}
-                                                                                
-                                                    <div className="flex-col pl-6 md:max-lg:mt-2 lg:mt-2">
+                                                            </p>
                                                         
                                                 
-                                                        <p className={`font-light text-sm`}>
-                                                                            
-                                                            {" "}
-                                                    
-                                                            {product.stock ? product.stock : ''} 
-                                                                
-                                                            {product.stock ? (product.stock === 1) ? " UNIT" : " UNIT(S)" : ''}                                
-                                                                
-                                                            {product.stock ? 'ㅤ•ㅤ' : ''}
+                                                        {/* quantity badge */}
                                                             
+                                                            <span className={`lg:max-xl:absolute lg:top-5.75 lg:right-5.75 cursor-default text-white text-3xl lg:py-2 hover:-translate-y-1 bg-yellow-500 transition-all duration-200 hover:bg-orange-600 ${item.quantity > 9 ? "px-1.5 lg:px-3" : `${((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ? `px-2 lg:px-4` : `px-3 lg:px-5`}`} rounded-full font-extrabold`}>
                                                                 
-                                                            ⭐
+                                                                {
+                                                                    ((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ?
+                                                                    
+                                                                    (
+                                                                        <div className={`flex items-center justify-center py-1.75 ${item.quantity > 9 ? `lg:px-1.25` : ``}`}>
+                                                
+                                                                            <Loader size="medium" color="border-white border-6" />
+                                                
+                                                                        </div>
+                                                                    ) 
                                                                 
-                                                            {" "}
-                                                    
-                                                        
-                                                            <span className="font-semibold">
-                                                    
-                                                                {" "}
-                                                    
-                                                                {formatRating(product.rating)}{" "}
-                                                    
+                                                                    : 
+                                                                    
+                                                                    (
+                                                                        item.quantity
+                                                                    )
+                                                                }
+                                                                
                                                             </span>
+
+
+                                                    </div>
+                                                    
+                                                
+                                                    {/* Stock + Rating + Quantity control buttons */}
+                                                                                    
+                                                        <div className="flex-col pl-6 md:max-lg:mt-2 lg:mt-2">
                                                             
+                                                    
+                                                            <p className={`font-light text-sm`}>
+                                                                                
+                                                                {" "}
                                                         
-                                                            {" "}
+                                                                {product.stock ? product.stock : ''} 
+                                                                    
+                                                                {product.stock ? (product.stock === 1) ? " UNIT" : " UNIT(S)" : ''}                                
+                                                                    
+                                                                {product.stock ? 'ㅤ•ㅤ' : ''}
+                                                                
+                                                                    
+                                                                ⭐
+                                                                    
+                                                                {" "}
                                                         
-                                                        </p>
+                                                            
+                                                                <span className="font-semibold">
                                                         
+                                                                    {" "}
                                                         
+                                                                    {formatRating(product.rating)}{" "}
                                                         
-                                                        {/* quantity controls */}
-                                        
-                                                        {/* buttons */}
-                                                        
-                                                            <div className="flex gap-5 md:mt-4 lg:mt-6 justify-end items-center">
+                                                                </span>
                                                                 
-                                                                
-                                                                <button
+                                                            
+                                                                {" "}
+                                                            
+                                                            </p>
+                                                            
+                                                            
+                                                            
+                                                            {/* quantity controls */}
+                                            
+                                                            {/* buttons */}
+                                                            
+                                                                <div className="flex gap-5 lg:mt-6 justify-end items-center">
                                                                     
-                                                                    className={`px-3 text-2xl lg:text-3xl cursor-pointer rounded-full font-semibold ${product.stock === 0 || clearCartLoading || refreshCartLoading ? "bg-gray-300" : "bg-yellow-300 hover:bg-orange-600" }`}
                                                                     
-                                                                    onClick=
-                                                                    {
-                                                                        async () => 
-                                                                        {
-                                                                            setUpdatingItemId(item.$id);
-                                                                        
-                                                                            await updateItem(item.$id, product.$id, 1);
-                                                                        
-                                                                            setUpdatingItemId(null);
-                                                                        }
-                                                                    }
-                                                                    
-                                                                    disabled={ product.stock === 0 || updatingItemId !== null || removingItemId !== null || clearCartLoading || refreshCartLoading }
-                                                                >
-                                                                
-                                                                    +
-                                                                    
-                                                                </button>
-
-                                                                
-                                                                <button
-                                                                    
-                                                                    className={`px-3 text-2xl lg:text-3xl rounded-full cursor-pointer font-bold ${ item.quantity === 1 || clearCartLoading || refreshCartLoading ? "bg-gray-300" : "bg-yellow-300 hover:bg-orange-600" }`}
-                                                                    
-                                                                    onClick=
-                                                                    {
-                                                                        async () =>
-                                                                        {
-                                                                            setUpdatingItemId(item.$id);
-                                                                        
-                                                                            await updateItem(item.$id, product.$id, -1);
-                                                                        
-                                                                            setUpdatingItemId(null);
-                                                                        }
-                                                                    }
-                                                                    
-                                                                    disabled={ item.quantity === 1 || updatingItemId !== null || removingItemId !== null || clearCartLoading || refreshCartLoading }
-                                                                >
-                                                                    
-                                                                    −
-                                                                    
-                                                                </button>
-
-                                                                
-
-                                                                {/* delete */}
-                                                                
                                                                     <button
                                                                         
-                                                                        className={`py-0.75 px-1.25 cursor-pointer rounded-full ${ clearCartLoading || refreshCartLoading ? "bg-gray-300" : "bg-red-400 hover:bg-red-500" }`}
+                                                                        className={`px-3 text-2xl lg:text-3xl cursor-pointer rounded-full font-semibold ${product.stock === 0 || clearCartLoading || placingOrderLoading || refreshCartLoading ? "bg-gray-300" : "bg-yellow-300 hover:bg-orange-600" }`}
+                                                                        
+                                                                        onClick=
+                                                                        {
+                                                                            async () => 
+                                                                            {
+                                                                                setUpdatingItemId(item.$id);
+                                                                            
+                                                                                await updateItem(item.$id, product.$id, 1);
+                                                                            
+                                                                                setUpdatingItemId(null);
+                                                                            }
+                                                                        }
+                                                                        
+                                                                        disabled={ product.stock === 0 || updatingItemId !== null || removingItemId !== null || clearCartLoading || refreshCartLoading || placingOrderLoading }
+                                                                    >
+                                                                    
+                                                                        +
+                                                                        
+                                                                    </button>
+
+                                                                    
+                                                                    <button
+                                                                        
+                                                                        className={`px-3 text-2xl lg:text-3xl rounded-full cursor-pointer font-bold ${ item.quantity === 1 || clearCartLoading || placingOrderLoading || refreshCartLoading ? "bg-gray-300" : "bg-yellow-300 hover:bg-orange-600" }`}
                                                                         
                                                                         onClick=
                                                                         {
                                                                             async () =>
                                                                             {
-                                                                                setRemovingItemId(item.$id);
+                                                                                setUpdatingItemId(item.$id);
                                                                             
-                                                                                await removeItem(item.$id, product.$id);
+                                                                                await updateItem(item.$id, product.$id, -1);
                                                                             
-                                                                                setRemovingItemId(null);
-                                                                        
+                                                                                setUpdatingItemId(null);
                                                                             }
                                                                         }
                                                                         
-                                                                        disabled={ removingItemId !== null || updatingItemId !== null || clearCartLoading || refreshCartLoading }
+                                                                        disabled={ item.quantity === 1 || updatingItemId !== null || removingItemId !== null || clearCartLoading || refreshCartLoading || placingOrderLoading }
                                                                     >
                                                                         
-                                                                        <img
+                                                                        −
                                                                         
-                                                                            src="/icons/delete.png"
-                                                                            
-                                                                            className="lg:w-8 w-6 mx-auto"
-                                                                        />
-                                                                    
                                                                     </button>
+
+                                                                    
+
+                                                                    {/* delete */}
+                                                                    
+                                                                        <button
+                                                                            
+                                                                            className={`py-0.75 px-1.25 cursor-pointer rounded-full ${ clearCartLoading || placingOrderLoading || refreshCartLoading ? "bg-gray-300" : "bg-red-400 hover:bg-red-500" }`}
+                                                                            
+                                                                            onClick=
+                                                                            {
+                                                                                async () =>
+                                                                                {
+                                                                                    setRemovingItemId(item.$id);
+                                                                                
+                                                                                    await removeItem(item.$id, product.$id);
+                                                                                
+                                                                                    setRemovingItemId(null);
+                                                                            
+                                                                                }
+                                                                            }
+                                                                            
+                                                                            disabled={ removingItemId !== null || updatingItemId !== null || clearCartLoading || placingOrderLoading || refreshCartLoading }
+                                                                        >
+                                                                            
+                                                                            <img
+                                                                            
+                                                                                src="/icons/delete.png"
+                                                                                
+                                                                                className="lg:w-8 w-6 mx-auto"
+                                                                            />
+                                                                        
+                                                                        </button>
+                                                                
+                                                                
+                                                                </div>
                                                             
-                                                            
-                                                            </div>
                                                         
-                                                     
-                                                    </div>
-                                                
-                        
-                                            
-                                                {/* price row */}
-                                                
-                                                    <div className="flex justify-between lg:mt-6 md:mt-4">
-                                                        
-                                                
-                                                        <div className="flex gap-3">
-                                                        
+                                                        </div>
                                                     
-                                                            {formatDiscount(product.discount_tag) && (
+                            
+                                                
+                                                    {/* price row */}
+                                                    
+                                                        <div className="flex justify-between lg:mt-6 md:mt-7">
+                                                            
+                                                    
+                                                            <div className="flex gap-3">
+                                                            
                                                         
-                                                                <p className="text-gray-600 lg:text-[22px] font-mono">
-                                                                
+                                                                {item.discount_value > 0 && (
+                                                            
+                                                                    <p className="text-gray-600 lg:text-[22px] font-mono">
+                                                                    
+                                                                        {formatPrice(
+                                                                    
+                                                                            product.price,
+                                                                            
+                                                                            product.currency,
+                                                                            
+                                                                            item.discount_value
+                                                                        )}
+                                                                        
+                                                                    </p>
+                                                                    
+                                                                )}
+
+                                                        
+                                                                <p
+                                                        
+                                                                    className={`font-mono ${ item.discount_value ? "mt-1.5 line-through text-gray-400 text-md " : "text-gray-600 lg:text-[22px]" }`}
+                                                                >
+                                                                    
                                                                     {formatPrice(
-                                                                
+                                                                    
                                                                         product.price,
                                                                         
-                                                                        product.currency,
-                                                                        
-                                                                        product.discount_tag
+                                                                        product.currency
                                                                     )}
                                                                     
                                                                 </p>
                                                                 
-                                                            )}
+                                                        
+                                                            </div>
 
                                                     
-                                                            <p
+                                                            <p className="text-[18px] lg:text-[23px] text-gray-800 font-mono font-bold">
                                                     
-                                                                className={`font-mono ${ formatDiscount(product.discount_tag) ? "mt-1.5 line-through text-gray-400 text-md " : "text-gray-600 lg:text-[22px]" }`}
-                                                            >
-                                                                
-                                                                {formatPrice(
-                                                                
-                                                                    product.price,
-                                                                    
-                                                                    product.currency
-                                                                )}
+                                                                {formatPrice(item.subtotal, product.currency)}
                                                                 
                                                             </p>
                                                             
                                                     
                                                         </div>
 
-                                                
-                                                        <p className="text-[18px] lg:text-[23px] text-gray-800 font-mono font-bold">
-                                                
-                                                            {formatPrice(item.subtotal, product.currency)}
-                                                            
-                                                        </p>
-                                                        
-                                                
-                                                    </div>
-
-                                                
-                                            </div>
+                                                    
+                                                </div>
 
 
-                                    </div>
+                                        </div>
 
-                                );
-                            })}
-                            
-                    
-                        </div>
+                                    );
+                                })}
+                                
+                        
+                            </div>
                         
                 
                         {/* CHECKOUT SUMMARY CARD + BUTTONS */}
@@ -927,12 +929,45 @@ export default function Checkout()
                                                                 
                                                                 className={`col-span-3 ${clearCartLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null ? `bg-gray-400 text-black` : `bg-yellow-500 text-white hover:bg-orange-600 hover:-translate-y-1`} transition-all duration-200 rounded-full py-2 font-extrabold`}
                                                                 
-                                                                onClick={() => alert("Order flow next")}
+                                                                onClick=
+                                                                {
+                                                                    async () => 
+                                                                    {
+                                                                        setPlacingOrderLoading(true);
+
+                                                                        const orderId = await placeOrder(profile.address, selectedShipping);
+
+
+                                                                        if (orderId)
+                                                                        {
+                                                                            clearCheckoutFlag();
+                                                                            
+                                                                            setPlacingOrderLoading(false);
+
+                                                                            navigate("/orders");
+                                                                        }
+                                                                    }
+                                                                }
                                                                 
-                                                                disabled={ clearCartLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null }
+                                                                disabled={ clearCartLoading || placingOrderLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null }
                                                             >
                                                                 
-                                                                Place Order
+                                                                {placingOrderLoading ? 
+                                                                
+                                                                    (
+                                                                        <div className="flex justify-center">
+                                                                    
+                                                                            <Loader size="medium" color="border-white" />
+                                                                            
+                                                                        </div>
+                                                                    ) 
+                                                                    
+                                                                    : 
+                                                                    
+                                                                    (
+                                                                        "Place Order"
+                                                                    )
+                                                                }
                                                                 
                                                             </button>
 
@@ -942,7 +977,7 @@ export default function Checkout()
                                                         
                                                             <button
                                                                 
-                                                                className={`${ clearCartLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null ? "bg-gray-400 text-black" : "bg-red-600 text-white hover:-translate-y-1" } transition-all duration-200 rounded-full py-2 font-extrabold col-span-2`}
+                                                                className={`${ clearCartLoading || placingOrderLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null ? "bg-gray-400 text-black" : "bg-red-600 text-white hover:-translate-y-1" } transition-all duration-200 rounded-full py-2 font-extrabold col-span-2`}
                                                                 
                                                                 onClick=
                                                                 {
@@ -958,7 +993,7 @@ export default function Checkout()
                                                                     }
                                                                 }
                                                                 
-                                                                disabled={ clearCartLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null }
+                                                                disabled={ clearCartLoading || placingOrderLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null }
                                                             >
                                                                 
                                                                 {clearCartLoading ? 
@@ -986,11 +1021,11 @@ export default function Checkout()
                                             
                                                             <button
                                                                 
-                                                                className={`${ clearCartLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null ? "bg-gray-400 text-black" : "bg-red-600 text-white hover:-translate-y-1" } col-span-2 transition-all duration-200 rounded-full py-2 font-extrabold`}
+                                                                className={`${ clearCartLoading || placingOrderLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null ? "bg-gray-400 text-black" : "bg-red-600 text-white hover:-translate-y-1" } col-span-2 transition-all duration-200 rounded-full py-2 font-extrabold`}
                                                                 
                                                                 onClick={() => {clearCheckoutFlag(); navigate(-1);}}
                                                                 
-                                                                disabled={ clearCartLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null }
+                                                                disabled={ clearCartLoading || placingOrderLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null }
                                                             >
                                                                 
                                                                 Cancel

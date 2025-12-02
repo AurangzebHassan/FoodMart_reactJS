@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
 
 import { useCart } from "../context/CartContext";
 
+import { Link } from "react-router-dom";
+
 
 
 export default function Navbar( /*{ loggedInUser }*/ )
@@ -386,11 +388,11 @@ export default function Navbar( /*{ loggedInUser }*/ )
         
                     <div className="flex max-w-[25%] md:max-w-none shrink-0 grow-0 items-center gap-2 transition-all duration-200">
                     
-                        <a href="/" tabIndex={-1}>
+                        <Link to="/" tabIndex={-1}>
                         
                             <img src="/images/logo.png" alt="FoodMart" />
 
-                        </a>
+                        </Link>
             
                     </div>
                     
@@ -607,15 +609,15 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         </div>
                         
 
-                        <a 
+                        <Link 
                         
-                            href="/profile" 
+                            to="/orders" 
                             
                         //   className={`bg-gray-100 hover:bg-gray-200 rounded-full ${(profile?.profile_pic !== "/icons/user.svg" || getStoredProfilePic(user?.email) !== "/icons/user.svg") ? `` : `p-2`}`}
                         
                             className="bg-gray-100 hover:bg-gray-200 rounded-full p-2"
                             
-                            onClick={(e) => { e.preventDefault(); navigate("/profile"); }}
+                            onClick={(e) => { e.preventDefault(); navigate("/orders"); }}
                         
                         >
                             
@@ -637,10 +639,10 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                 
                             />
 
-                        </a>
+                        </Link>
                 
                         
-                        <a href="/wishlist" className="relative bg-gray-100 hover:bg-gray-200 rounded-full p-2" onClick={(e) => { e.preventDefault(); navigate("/wishlist"); }}>
+                        <Link to="/wishlist" className="relative bg-gray-100 hover:bg-gray-200 rounded-full p-2" onClick={(e) => { e.preventDefault(); navigate("/wishlist"); }}>
 
                             <img
                 
@@ -659,7 +661,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                     
                             </span>
                             
-                        </a>
+                        </Link>
                 
                         
                         <div
@@ -828,13 +830,13 @@ export default function Navbar( /*{ loggedInUser }*/ )
                             
                             <ul className="hidden lg:flex lg:flex-row  items-center gap-6">
 
-                                <a href="/women" onClick={(e) => { e.preventDefault(); navigate("/women"); }}> <li className="cursor-pointer hover:text-gray-900">Women</li> </a>
+                                <Link to="/women" onClick={(e) => { e.preventDefault(); navigate("/women"); }}> <li className="cursor-pointer hover:text-gray-900">Women</li> </Link>
 
-                                <a href="/men" onClick={(e) => { e.preventDefault(); navigate("/men"); }}> <li className="cursor-pointer hover:text-gray-900" value="men" onClick={handlePageChange}>Men</li> </a>
+                                <Link to="/men" onClick={(e) => { e.preventDefault(); navigate("/men"); }}> <li className="cursor-pointer hover:text-gray-900" value="men" onClick={handlePageChange}>Men</li> </Link>
 
-                                <a href="/kids" onClick={(e) => { e.preventDefault(); navigate("/kids"); }}> <li className="cursor-pointer hover:text-gray-900" value="kids" onClick={handlePageChange}>Kids</li> </a>
+                                <Link to="/kids" onClick={(e) => { e.preventDefault(); navigate("/kids"); }}> <li className="cursor-pointer hover:text-gray-900" value="kids" onClick={handlePageChange}>Kids</li> </Link>
 
-                                <a href="/accessories" onClick={(e) => { e.preventDefault(); navigate("/accessories"); }}> <li className="cursor-pointer hover:text-gray-900" value="accessories" onClick={handlePageChange}>Accessories</li> </a>
+                                <Link to="/accessories" onClick={(e) => { e.preventDefault(); navigate("/accessories"); }}> <li className="cursor-pointer hover:text-gray-900" value="accessories" onClick={handlePageChange}>Accessories</li> </Link>
                                 
                                     
                                 <li className="cursor-pointer hover:text-gray-900 relative flex items-center">
@@ -886,11 +888,11 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                 </li>
 
                                     
-                                <a href="/brand" tabIndex={0} onClick={(e) => { e.preventDefault(); navigate("/brand"); }}> <li className="cursor-pointer hover:text-gray-900" value="brand" onClick={handlePageChange}>Brand</li> </a>
+                                <Link to="/brand" tabIndex={0} onClick={(e) => { e.preventDefault(); navigate("/brand"); }}> <li className="cursor-pointer hover:text-gray-900" value="brand" onClick={handlePageChange}>Brand</li> </Link>
 
-                                <a href="/sale" tabIndex={0} onClick={(e) => { e.preventDefault(); navigate("/sale"); }}> <li className="cursor-pointer hover:text-gray-900" value="sale" onClick={handlePageChange}>Sale</li> </a>
+                                <Link to="/sale" tabIndex={0} onClick={(e) => { e.preventDefault(); navigate("/sale"); }}> <li className="cursor-pointer hover:text-gray-900" value="sale" onClick={handlePageChange}>Sale</li> </Link>
 
-                                <a href="/blog" tabIndex={0} onClick={(e) => { e.preventDefault(); navigate("/blog"); }}> <li className="cursor-pointer hover:text-gray-900" value="blog" onClick={handlePageChange}>Blog</li> </a>
+                                <Link to="/blog" tabIndex={0} onClick={(e) => { e.preventDefault(); navigate("/blog"); }}> <li className="cursor-pointer hover:text-gray-900" value="blog" onClick={handlePageChange}>Blog</li> </Link>
 
                             </ul>
 

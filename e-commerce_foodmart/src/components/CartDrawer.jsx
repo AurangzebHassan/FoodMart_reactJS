@@ -8,8 +8,6 @@ import { useNavigate } from "react-router-dom";
 
 import { formatPrice } from "../utils/formatPrice";
 
-import { formatDiscount } from "../utils/formatDiscount.js";
-
 import { useLocation } from "react-router-dom";
 
 import Loader from "./Loader.jsx"
@@ -323,7 +321,7 @@ export default function CartDrawer({ onClose })
 									
 										{/* Discount badge */}
 										
-											{formatDiscount(product.discount_tag) && (
+											{item.discount_value > 0 && (
 												<div
 												className={`absolute left-2 top-31.75 ${
 													product.price > 9.99
@@ -375,13 +373,13 @@ export default function CartDrawer({ onClose })
 													{/* PRODUCT NAME */}
 													
 														<p
-															className="font-mono text-lg text-gray-700 cursor-pointer hover:text-gray-900 font-semibold mt-1"
+															className="font-mono text-md text-gray-700 cursor-pointer hover:text-gray-900 font-semibold mt-1"
 															onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleClick(product);}}
 														>
 															{product.name}
 														</p>
 												
-												<div className="flex items-center gap-2 ml-11 mt-1">
+												<div className="flex items-center gap-2 ml-3 mt-1">
 													
 													{/* PRODUCT UPDATION BUTTONS */}
 													
@@ -476,14 +474,14 @@ export default function CartDrawer({ onClose })
 											
 													<div className="flex justify-between mt-10">
 													<div className="flex gap-2">
-														{formatDiscount(product.discount_tag) && (
+														{item.discount_value > 0 && (
 														<p className="text-gray-500 text-md font-mono">
-															{formatPrice(product.price, product.currency, product.discount_tag)}
+															{formatPrice(product.price, product.currency, item.discount_value)}
 														</p>
 														)}
 														<p
 														className={`text-gray-500 text-md font-mono ${
-															formatDiscount(product.discount_tag)
+															item.discount_value
 															? "line-through text-sm"
 															: ""
 														}`}
