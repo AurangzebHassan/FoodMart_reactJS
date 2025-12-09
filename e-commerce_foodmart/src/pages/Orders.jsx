@@ -136,7 +136,7 @@ export default function Orders()
                                 
                                 key={order.$id}
                                 
-                                className="h-fit border-4 bg-gray-50 border-yellow-500 rounded-2xl hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200 p-6"
+                                className={`h-fit border-4 bg-gray-50 ${(order.shipping_status === "delivered") ? `border-green-500` : (order.shipping_status === "shipped") ? `border-blue-500` : `border-yellow-500`} rounded-2xl hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200 p-6`}
                             >
                                 {/* Top Section: Order ID + Status */}
                                 
@@ -153,7 +153,7 @@ export default function Orders()
                                             </p>
                                                 
                                                 
-                                            <p title="Order Creation At" className="text-sm font-light italic text-gray-700 2xl:pr-10">
+                                            <p title="Order Creation At" className="text-sm font-light italic text-gray-700">
                                         
                                                 {formatDateTime(order.$createdAt, {withTime: true})}
                                         
@@ -168,7 +168,7 @@ export default function Orders()
                                             
                                             <button
                                                     
-                                                className="hover:-translate-y-1 transition-all duration-200"
+                                                className={(order.shipping_status === "shipped" || order.shipping_status === "delivered") ? `hidden` : `hover:-translate-y-1 transition-all duration-200`}
                                                 
                                                 onClick=
                                                 {
@@ -238,7 +238,7 @@ export default function Orders()
                                             
                                                 key={item.product_id}
                                                 
-                                                className="relative cursor-default flex justify-between items-center border rounded-lg p-3 bg-gray-50 hover:bg-gray-200 hover:-translate-y-1 hover:shadow-lg transition-all duration-200"
+                                                className={`relative cursor-default flex justify-between items-center border rounded-lg p-3 bg-gray-50 hover:bg-gray-100 /*${(order.shipping_status === "delivered") ? `bg-green-50 hover:bg-green-100` : (order.shipping_status === "shipped") ? `bg-blue-50 hover:bg-blue-100` : `bg-gray-50 hover:bg-gray-100`}*/ hover:-translate-y-1 hover:shadow-lg transition-all duration-200`}
 
                                                 onClick={() => !cancelOrderLoading && navigate(`/product/${item.product_slug_snapshot}`)}
 

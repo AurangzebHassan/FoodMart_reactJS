@@ -81,6 +81,10 @@ import { DATABASE_ID, database,ORDERS_TABLE_ID, ORDER_ITEMS_TABLE_ID, Query } fr
                             return localStorage.getItem("isCheckoutPage") === "true";
                         });
         
+                    // state to use in checkoutguard so it dosen't redirect users to '/' if they placed order. Users trying to visit '/checkout' are blocked tho.
+                        
+                        const [justPlacedOrder, setJustPlacedOrder] = useState(false);
+        
                     // state to hold user orders
                     
                         const [orders, setOrders] = useState([]); // new state for user orders
@@ -151,45 +155,157 @@ import { DATABASE_ID, database,ORDERS_TABLE_ID, ORDER_ITEMS_TABLE_ID, Query } fr
             // 3. Fetch orders and order_tems docs for this user
         // -----------------------------------------------------------
 
-        const fetchUserOrders = useCallback(async () =>
-        {
-            if (!user)
+            const fetchUserOrders = useCallback(async () =>
             {
-                setOrders([]);
+                if (!user)
+                {
+                    setOrders([]);
+                    
+                    return;
+                }
+
+            
+                try
+                {
+                    const res = await database.listDocuments(
                 
-                return;
-            }
+                        DATABASE_ID,
+                
+                        ORDERS_TABLE_ID,
+                
+                        [Query.equal("user_id", user.$id), Query.orderDesc("$createdAt")]
+                    );
 
-          
-            try
+                
+                    const ordersWithItems = await Promise.all(
+                
+                        res.documents.map(async (order) => {
+                
+                            const itemsRes = await database.listDocuments(
+                
+                                DATABASE_ID,
+                
+                                ORDER_ITEMS_TABLE_ID,
+                
+                                [Query.equal("order_id", order.$id)]
+                            );
+
+
+                            return {
+                            
+                                ...order,
+                            
+                                items: itemsRes.documents,
+                            };
+                        })
+                    );
+
+                
+                    setOrders(ordersWithItems);
+                }
+                
+                catch (err)
+                {
+                    console.error("Error fetching user orders:", err);
+                
+                    setOrders([]);
+                }
+
+            }, [user]);
+            
+
+        
+        // -----------------------------------------------------------
+            // Auto-update shipping status based on shipping method & expected_delivery_date
+        // -----------------------------------------------------------
+        
+            const autoUpdateOrderStatuses = useCallback(async () => 
             {
-                const res = await database.listDocuments(
-              DATABASE_ID,
-              ORDERS_TABLE_ID,
-              [Query.equal("user_id", user.$id), Query.orderDesc("$createdAt")]
-            );
+                if (!orders.length) return;
 
-            const ordersWithItems = await Promise.all(
-              res.documents.map(async (order) => {
-                const itemsRes = await database.listDocuments(
-                  DATABASE_ID,
-                  ORDER_ITEMS_TABLE_ID,
-                  [Query.equal("order_id", order.$id)]
-                );
+        
+                const updatedOrders = [];
 
-                return {
-                  ...order,
-                  items: itemsRes.documents,
-                };
-              })
-            );
+        
+                const now = new Date();
 
-            setOrders(ordersWithItems);
-          } catch (err) {
-            console.error("Error fetching user orders:", err);
-            setOrders([]);
-          }
-        }, [user]);
+        
+                for (const order of orders)
+                {
+                    let newStatus = order.shipping_status;
+
+            
+                    // 1️⃣ Determine shipped threshold based on shipping method
+            
+                        let shippedThreshold = new Date(order.$createdAt);
+
+            
+                        switch (order.shipping_method)
+                        {
+                            case "express":
+                        
+                                shippedThreshold.setHours(shippedThreshold.getHours() + 2); // 2 hours
+                        
+                                break;
+                    
+                    
+                            case "fast":
+                    
+                                shippedThreshold.setDate(shippedThreshold.getDate() + 1); // 1 day
+                    
+                                break;
+                    
+                    
+                            case "standard":
+                    
+                                shippedThreshold.setDate(shippedThreshold.getDate() + 2); // 2 days
+                    
+                                break;
+                        }
+
+            
+                    // RULE 1: processing → shipped
+            
+                        if (newStatus === "processing" && now >= shippedThreshold)
+                        {
+                            newStatus = "shipped";
+                        }
+
+            
+                    // RULE 2: shipped → delivered when expected delivery date passes
+
+                        const expectedDelivery = new Date(order.expected_delivery_date);
+
+                        if (newStatus === "shipped" && now >= expectedDelivery)
+                        {
+                            newStatus = "delivered";
+                        }
+
+            
+                    // Update DB only if status changed
+            
+                        if (newStatus !== order.shipping_status)
+                        {
+                            await database.updateDocument(
+                        
+                                DATABASE_ID,
+                        
+                                ORDERS_TABLE_ID,
+                        
+                                order.$id,
+                        
+                                { shipping_status: newStatus }
+                            );
+                        }
+
+            
+                    updatedOrders.push({ ...order, shipping_status: newStatus });
+                }
+
+        
+                setOrders(updatedOrders);
+
+            }, [orders]);
 
 
         
@@ -764,6 +880,10 @@ import { DATABASE_ID, database,ORDERS_TABLE_ID, ORDER_ITEMS_TABLE_ID, Query } fr
             
                     await clearCartWithoutRestoringStock();
                     
+                
+                // Set the flag to allow CheckoutGuard to pass
+                
+                    setJustPlacedOrder(true);    
                     
                     
                 // refresh orders immediately
@@ -789,45 +909,73 @@ import { DATABASE_ID, database,ORDERS_TABLE_ID, ORDER_ITEMS_TABLE_ID, Query } fr
 
 
 
-        const cancelOrder = async (orderId) => {
-          try {
-            const orderToCancel = orders.find((o) => o.$id === orderId);
-            if (!orderToCancel) return;
+        const cancelOrder = async (orderId) =>
+        {
+            try
+            {
+                const orderToCancel = orders.find((o) => o.$id === orderId);
+            
+            
+                if (!orderToCancel) return;
 
-            // 1. Increase stock for each product
-            await Promise.all(
-              orderToCancel.items.map((item) =>
-                increaseProductStock(item.product_id, item.quantity)
-              )
-            );
+            
+                // 1. Increase stock for each product
+            
+                    await Promise.all(
+                
+                        orderToCancel.items.map((item) =>
+                    
+                            increaseProductStock(item.product_id, item.quantity)
+                        )
+                    );
 
-            // 2. Delete order items
-            await Promise.all(
-              orderToCancel.items.map((item) =>
-                database.deleteDocument(
-                  DATABASE_ID,
-                  ORDER_ITEMS_TABLE_ID,
-                  item.$id
-                )
-              )
-            );
+            
+                // 2. Delete order items
+            
+                    await Promise.all(
+                
+                        orderToCancel.items.map((item) =>
+                
+                            database.deleteDocument(
+                
+                                DATABASE_ID,
+                
+                                ORDER_ITEMS_TABLE_ID,
+                
+                                item.$id
+                            )
+                        )
+                    );
 
-            // 3. Delete the order itself
-            await database.deleteDocument(
-              DATABASE_ID,
-              ORDERS_TABLE_ID,
-              orderId
-            );
+            
+                // 3. Delete the order itself
+            
+                    await database.deleteDocument(
+                
+                        DATABASE_ID,
+                
+                        ORDERS_TABLE_ID,
+                
+                        orderId
+                    );
 
-            // 4. Update local orders state to remove cancelled order
-            setOrders((prev) => prev.filter((order) => order.$id !== orderId));
+            
+                // 4. Update local orders state to remove cancelled order
+            
+                    setOrders((prev) => prev.filter((order) => order.$id !== orderId));
 
-            // 5. Refresh productsMap to reflect updated stock
-            await fetchProducts();
-          } catch (err) {
-            console.error("Error cancelling order:", err);
-            alert("Failed to cancel order. Please try again.");
-          }
+            
+                // 5. Refresh productsMap to reflect updated stock
+            
+                    await fetchProducts();
+            }
+            
+            catch (err)
+            {
+                console.error("Error cancelling order:", err);
+            
+                alert("Failed to cancel order. Please try again.");
+            }
         };
 
 
@@ -860,7 +1008,7 @@ import { DATABASE_ID, database,ORDERS_TABLE_ID, ORDER_ITEMS_TABLE_ID, Query } fr
 
 
         // -----------------------------------------------------------
-            // INITIAL LOAD: products + cart
+            // INITIAL LOAD: products + cart + favourites + orders
         // -----------------------------------------------------------
     
             useEffect(() => 
@@ -872,6 +1020,8 @@ import { DATABASE_ID, database,ORDERS_TABLE_ID, ORDER_ITEMS_TABLE_ID, Query } fr
                     await fetchProducts();
                 
                     await fetchCartDocs();
+
+                    await fetchUserOrders();
 
 
                     // Load user favourites
@@ -901,8 +1051,6 @@ import { DATABASE_ID, database,ORDERS_TABLE_ID, ORDER_ITEMS_TABLE_ID, Query } fr
                             setFavouritesOrder(favOrder);
                         }
                     
-                    
-                    await fetchUserOrders();
                 
                     setLoading(false);
 
@@ -920,6 +1068,134 @@ import { DATABASE_ID, database,ORDERS_TABLE_ID, ORDER_ITEMS_TABLE_ID, Query } fr
                 hydrateCart();
             
             }, [cartDocs, productsMap, hydrateCart]);
+        
+        
+        
+        // -----------------------------------------------------------
+            // On login/user change → update statuses + fetch orders
+        // -----------------------------------------------------------
+        
+            useEffect(() =>
+            {
+                if (!user) return;
+                
+                autoUpdateOrderStatuses();
+                
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            }, [user]);
+
+
+        // -----------------------------------------------------------
+            // Run status updater on WAKE (tab focus / visibility change)
+        // -----------------------------------------------------------
+        
+            useEffect(() =>
+            {
+                const onWake = () =>
+                {
+                    autoUpdateOrderStatuses();
+                
+                    fetchUserOrders();
+                };
+
+            
+                window.addEventListener("focus", onWake);
+            
+                window.addEventListener("visibilitychange", onWake);
+
+            
+                return () =>
+                {
+                    window.removeEventListener("focus", onWake);
+        
+                    window.removeEventListener("visibilitychange", onWake);
+                };
+            
+            }, [autoUpdateOrderStatuses, fetchUserOrders]);
+
+
+
+        // -----------------------------------------------------------
+            // SAFE auto-update when orders change (NO INFINITE LOOP)
+        // -----------------------------------------------------------
+
+            useEffect(() =>
+            {
+                if (!user) return;
+        
+                if (!orders.length) return;
+
+        
+                const now = new Date();
+
+        
+                const needsUpdate = orders.some(order =>
+                {
+                    const expected = new Date(order.expected_delivery_date);
+
+            
+                    // compute shipped threshold
+            
+                        let shippedThreshold = new Date(order.$createdAt);
+
+            
+                        switch (order.shipping_method)
+                        {
+                            case "express":
+                                shippedThreshold.setHours(shippedThreshold.getHours() + 2);
+                                break;
+                            case "fast":
+                                shippedThreshold.setDate(shippedThreshold.getDate() + 1);
+                                break;
+                            case "standard":
+                            default:
+                                shippedThreshold.setDate(shippedThreshold.getDate() + 2);
+                                break;
+                        }
+
+                    
+                    if (order.shipping_status === "processing" && now >= shippedThreshold)
+                        return true;
+
+                    if (order.shipping_status === "shipped" && now >= expected)
+                        return true;
+
+            
+                    return false;
+                });
+
+        
+                if (needsUpdate)
+                {
+                    autoUpdateOrderStatuses();
+                }
+
+
+            }, [orders, user, autoUpdateOrderStatuses]);
+
+
+
+        // -----------------------------------------------------------
+            // Background interval every 5 minutes
+        // -----------------------------------------------------------
+        
+            useEffect(() =>
+            {
+                if (!user) return;
+
+                const interval = setInterval(() =>
+                {
+                    autoUpdateOrderStatuses();
+                
+                    fetchUserOrders(); // refresh items too
+
+                }, 5 * 60 * 1000); // 5 minutes
+
+                
+                return () => clearInterval(interval);
+
+            }, [user, autoUpdateOrderStatuses, fetchUserOrders]);
+
 
         
         // -----------------------------------------------------------
@@ -948,6 +1224,10 @@ import { DATABASE_ID, database,ORDERS_TABLE_ID, ORDER_ITEMS_TABLE_ID, Query } fr
                 isCheckoutPage,
 
                 setIsCheckoutPage,
+
+                justPlacedOrder,
+
+                setJustPlacedOrder,
 
                 markCheckout,
 

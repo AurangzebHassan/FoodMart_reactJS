@@ -24,7 +24,7 @@ import { Link } from "react-router-dom";
 
 export default function Navbar( /*{ loggedInUser }*/ )
 {
-    const { user, profile, setUser, setProfile } = useAuth();
+    const { user,/* profile, */setUser, setProfile } = useAuth();
 
     const { cartQuantity, cartTotal, wishlistQuantity, isCheckoutPage, ordersQuantity } = useCart();
 
@@ -631,7 +631,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                 
                                 // src="/icons/user.svg"
                                 
-                                src="/icons/order-delivery.png"
+                                src={ordersQuantity > 0 ? `/icons/order-delivery.png` : `/icons/shopping-bag.png`}
 
                                 title="orders"
                     

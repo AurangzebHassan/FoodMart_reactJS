@@ -10,6 +10,8 @@
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
+import { useState, useEffect } from "react";
+
 import { useCart } from "./context/CartContext";
 
 import Login from "./pages/Login";
@@ -156,7 +158,29 @@ import { CartProvider } from "./context/CartContext";
 		const { user, loading } = useAuth();
 
 
-		if (loading)
+
+		// local delay state
+	
+			const [delayDone, setDelayDone] = useState(false);
+	
+		
+		// ⬅️ Wait 300–500ms so spinner shows briefly
+		
+			useEffect(() =>
+			{
+				const t = setTimeout(() => setDelayDone(true), 5000);
+			
+				return () => clearTimeout(t);
+				
+			}, []);
+		
+		
+		
+		const isLoading = loading || !delayDone;
+
+
+
+		if (isLoading)
 		
 			return (
 		
@@ -194,12 +218,12 @@ import { CartProvider } from "./context/CartContext";
 
 	const CheckoutGuard = ({ children }) =>
 	{
-		const { cartItems } = useCart();
+		const { cartItems, justPlacedOrder } = useCart();
 
 
 		// Only allow access if cart has items
 
-			if (!cartItems.length)
+			if (!cartItems.length && !justPlacedOrder)
 			{
 				// alert('No Items in Cart! Redirecting...');
 

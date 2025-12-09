@@ -256,7 +256,7 @@ export default function CartDrawer({ onClose })
 								
 								title="Refresh Cart" 
 								
-								className={`mr-2 ${(!cartQuantity || clearCartLoading || removingItemId || updatingItemId) ? `opacity-30` : `hover:-translate-y-1 transition-all duration-200`}`}
+								className={`mr-2 ${(!cartQuantity || clearCartLoading || removingItemId || updatingItemId) ? `invisible` : `hover:-translate-y-1 transition-all duration-200`}`}
 								
 								disabled={!cartQuantity || clearCartLoading || removingItemId || updatingItemId}
 							>

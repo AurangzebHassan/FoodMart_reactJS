@@ -49,7 +49,9 @@ export default function Checkout()
 
         loading,
 
-        placeOrder
+        placeOrder,
+
+        setJustPlacedOrder
     
     } = useCart();
 
@@ -245,7 +247,7 @@ export default function Checkout()
                                             
                                 <button
                                     
-                                    className={`${refreshCartLoading || clearCartLoading || updatingItemId !== null || removingItemId !== null ? "opacity-10" : "hover:-translate-y-1"} transition-all duration-200 rounded-full`}
+                                    className={`${refreshCartLoading || clearCartLoading || updatingItemId !== null || removingItemId !== null ? "invisible" : "hover:-translate-y-1"} transition-all duration-200 rounded-full`}
                                     
                                     onClick=
                                     {
@@ -940,10 +942,20 @@ export default function Checkout()
 
                                                                         if (orderId)
                                                                         {
-                                                                            clearCheckoutFlag();
+                                                                            navigate('/orders');
                                                                             
-                                                                            setPlacingOrderLoading(false);
+                                                                            // reset checkout state / justPlacedOrder after short delay
+                                                                                
+                                                                                setTimeout(() =>
+                                                                                {
+                                                                                    clearCheckoutFlag();
+                                                                                
+                                                                                    setJustPlacedOrder(false);
+                                                                                    
+                                                                                }, 200);
                                                                         }
+
+                                                                        setPlacingOrderLoading(false);
                                                                     }
                                                                 }
                                                                 
