@@ -308,15 +308,15 @@ const Login = () =>
 
 
 	return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="flex items-center justify-center min-h-[90vh] sm:min-h-screen bg-gray-50">
       {/* Centered container with light background */}
 
       <form
         onSubmit={handleLogin}
-        className="bg-white shadow-xl rounded-xl p-8 w-full max-w-md"
+        className="bg-white shadow-xl rounded-xl p-4.5 sm:p-8 w-[43.5vh] sm:w-full sm:max-w-md"
         /* White card with padding, shadow, rounded corners, and responsive width */
       >
-        <h2 className="text-2xl font-extrabold /*text-[#7c5cff]*/ text-yellow-500 text-center mb-6">
+        <h2 className="text-2xl font-extrabold /*text-[#7c5cff]*/ text-yellow-500 text-center mb-4 sm:mb-6">
           Login
         </h2>
         {/* Heading with theme color and spacing */}
@@ -328,7 +328,7 @@ const Login = () =>
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full px-4 py-3 mb-4 font-mono border border-gray-300 rounded-lg focus:outline-none focus:ring-2 /*focus:ring-[#7c5cff]*/ focus:ring-yellow-600 focus:border-transparent"
+          className="max-sm:text-[12px] w-full px-2.25 py-1.25 sm:px-4 sm:py-3 mb-4 font-mono border border-gray-300 rounded-lg focus:outline-none focus:ring-2 /*focus:ring-[#7c5cff]*/ focus:ring-yellow-600 focus:border-transparent"
           /* Full width, padding, rounded, focus ring matches theme */
         />
 
@@ -339,7 +339,7 @@ const Login = () =>
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-3 border font-mono border-gray-300 rounded-lg focus:outline-none focus:ring-2 /*focus:ring-[#7c5cff]*/ focus:ring-yellow-600 focus:border-transparent pr-12"
+            className="max-sm:text-[12px] w-full px-2.25 py-1.25 sm:px-4 sm:py-3 border font-mono border-gray-300 rounded-lg focus:outline-none focus:ring-2 /*focus:ring-[#7c5cff]*/ focus:ring-yellow-600 focus:border-transparent pr-12"
           />
           {/* pr-12 ensures space for eye icon */}
 
@@ -362,7 +362,7 @@ const Login = () =>
           <button
             type="button"
             onClick={handleSendVerification}
-            className="w-full bg-yellow-500 /*text-[#7c5cff]*/ text-white py-3 rounded-lg font-bold mb-4 /*hover:bg-gray-200*/ hover:bg-yellow-600 focus focus:bg-yellow-600 transition"
+            className="w-full bg-yellow-500 /*text-[#7c5cff]*/ text-white py-1.5 max-sm:text-sm sm:py-3 rounded-lg font-bold mb-3 sm:mb-4 /*hover:bg-gray-200*/ hover:bg-yellow-600 focus focus:bg-yellow-600 transition"
           >
             Resend Verification Email
           </button>
@@ -371,7 +371,7 @@ const Login = () =>
         {/* Login Button */}
         <button
           type="submit"
-          className="w-full /*bg-[#7c5cff]*/ bg-yellow-500 text-white py-3 rounded-lg font-bold /*hover:bg-[#5a3ecc]/* hover:bg-yellow-600 focus focus:bg-yellow-600 transition mb-4"
+          className="w-full /*bg-[#7c5cff]*/ bg-yellow-500 text-white py-1.5 max-sm:text-sm sm:py-3 rounded-lg font-bold /*hover:bg-[#5a3ecc]/* hover:bg-yellow-600 focus focus:bg-yellow-600 transition mb-3 sm:mb-4"
         >
           Login
         </button>
@@ -381,7 +381,7 @@ const Login = () =>
           type="button"
           onClick={handleGoogleClick}
           disabled={showResend}
-          className={`w-full flex items-center justify-center gap-2 py-3 rounded-lg border border-gray-300 bg-gray-100 font-medium hover:bg-gray-300 focus:bg-gray-300 transition ${
+          className={`w-full flex items-center justify-center gap-2 py-1.5 max-sm:text-sm sm:py-3 rounded-lg border border-gray-300 bg-gray-100 font-medium hover:bg-gray-300 focus:bg-gray-300 transition ${
             showResend ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
@@ -412,7 +412,7 @@ const Login = () =>
         </button>
 
         {/* Signup Link */}
-        <p className="text-center text-gray-600 text-sm mt-6">
+        <p className="text-center text-gray-600 text-[12px] sm:text-sm mt-4 sm:mt-6">
           Don't have an account?{" "}
           <a
             href="/signup"

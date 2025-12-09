@@ -57,75 +57,75 @@ const Signup = () =>
 
   
   return (
-  <div className="flex items-center justify-center min-h-screen bg-gray-50">
-    {/* Centered page container with light background */}
+    <div className="flex items-center justify-center min-h-[90vh] sm:min-h-screen bg-gray-50">
+      {/* Centered page container with light background */}
 
-    <form
-      onSubmit={handleSignup}
-      className="bg-white shadow-xl rounded-xl p-8 w-full max-w-md"
-      /* White card with shadow, rounded corners, padding, and responsive width */
-    >
-      <h2 className="text-2xl font-extrabold text-yellow-500 text-center mb-6">
-        Signup
-      </h2>
-      {/* Heading with theme color, center aligned, spaced from inputs */}
-
-      {/* Full Name Input */}
-      <input
-        type="text"
-        placeholder="Full name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-        className="w-full font-mono px-4 py-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent"
-      />
-      {/* Full width, padding, rounded, focus ring yellow */}
-
-      {/* Email Input */}
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-        className="w-full font-mono px-4 py-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent"
-      />
-
-      {/* Password Input with toggle */}
-      <div className="relative w-full mb-4">
-        <input
-          type={showPassword ? "text" : "password"}
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="w-full font-mono px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent pr-12"
-          /* pr-12 leaves space for the eye icon */
-        />
-        <span
-          onClick={() => setShowPassword((prev) => !prev)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-yellow-500"
-          title={showPassword ? "Hide password" : "Show password"}
-        >
-          {showPassword ? "🙈" : "👁️"}
-        </span>
-      </div>
-
-      {/* Error Message */}
-      {error && (
-        <p className="text-red-500 text-sm mb-3 text-center">{error}</p>
-      )}
-
-      {/* Signup Button */}
-      <button
-        type="submit"
-        className="w-full bg-yellow-500 text-white py-3 rounded-lg font-bold hover:bg-yellow-600 transition mb-4"
+      <form
+        onSubmit={handleSignup}
+        className="bg-white shadow-xl rounded-xl p-4.5 sm:p-8 w-[43.5vh] sm:w-full sm:max-w-md"
+        /* White card with shadow, rounded corners, padding, and responsive width */
       >
-        Sign up
-      </button>
+        <h2 className="text-2xl font-extrabold text-yellow-500 text-center mb-4 sm:mb-6">
+          Signup
+        </h2>
+        {/* Heading with theme color, center aligned, spaced from inputs */}
 
-      {/* Google Sign-in Button */}
-      {/* <button
+        {/* Full Name Input */}
+        <input
+          type="text"
+          placeholder="Full name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          className="max-sm:text-[12px] w-full font-mono px-2.25 py-1.25 sm:px-4 sm:py-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent"
+        />
+        {/* Full width, padding, rounded, focus ring yellow */}
+
+        {/* Email Input */}
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="max-sm:text-[12px] w-full font-mono px-2.25 py-1.25 sm:px-4 sm:py-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent"
+        />
+
+        {/* Password Input with toggle */}
+        <div className="relative w-full mb-4">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="max-sm:text-[12px] w-full font-mono px-2.25 py-1.25 sm:px-4 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent pr-12"
+            /* pr-12 leaves space for the eye icon */
+          />
+          <span
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-yellow-500"
+            title={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? "🙈" : "👁️"}
+          </span>
+        </div>
+
+        {/* Error Message */}
+        {error && (
+          <p className="text-red-500 text-sm mb-3 text-center">{error}</p>
+        )}
+
+        {/* Signup Button */}
+        <button
+          type="submit"
+          className="w-full bg-yellow-500 text-white py-1.5 max-sm:text-sm sm:py-3 rounded-lg font-bold hover:bg-yellow-600 transition mb-4"
+        >
+          Sign up
+        </button>
+
+        {/* Google Sign-in Button */}
+        {/* <button
         type="button"
         onClick={handleGoogleClick}
         className="w-full flex items-center justify-center gap-2 py-3 rounded-lg border border-gray-300 font-medium hover:bg-gray-100 transition mb-4"
@@ -139,13 +139,19 @@ const Signup = () =>
         Continue with Google
       </button> */}
 
-      {/* Login Link */}
-      <p className="text-center text-gray-600 text-sm mt-4">
-        Already have an account? <a href="/login" className="text-yellow-600 hover:text-yellow-800 hover:underline">Login</a>
-      </p>
-    </form>
-  </div>
-);
+        {/* Login Link */}
+        <p className="text-center text-gray-600 text-[12px] sm:text-sm sm:mt-4">
+          Already have an account?{" "}
+          <a
+            href="/login"
+            className="text-yellow-600 hover:text-yellow-800 hover:underline"
+          >
+            Login
+          </a>
+        </p>
+      </form>
+    </div>
+  );
 };
 
 
