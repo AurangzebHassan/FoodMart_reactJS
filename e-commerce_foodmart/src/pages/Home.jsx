@@ -29,7 +29,7 @@ export default function Home()
             <HeroSection />
 
 
-            <div className="mt-10 mb-20">
+            <div className="md:mt-10 mb-20">
             
                 <CategoryCarousel />
                 

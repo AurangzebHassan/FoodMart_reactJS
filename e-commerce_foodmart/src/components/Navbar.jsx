@@ -941,12 +941,12 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
                             {/* Modal */}
                             
-                                <div className="lg:hidden fixed top-14.5 md:top-25.5 left-1/2 -translate-x-1/2 max-md:w-full md:w-[70%] bg-white md:rounded-xl shadow-xl p-4 z-50">
+                                <div className="lg:hidden fixed top-14.5 md:top-25.5 left-1/2 -translate-x-1/2 max-md:w-full md:w-[70%] bg-white md:rounded-b-xl shadow-xl p-3 z-50">
 
                                         
                                     {/* Search Input */}
                                     
-                                        <div className="flex bg-gray-100 rounded-lg md:rounded-full p-2 mb-2 items-center">
+                                        <div className="flex bg-gray-100 rounded-lg md:rounded-full p-2 mb-1 md:mb-2 items-center">
                                             <input
                                                 type="text"
                                                 placeholder="Search"

@@ -98,7 +98,7 @@ export default function HeroSection()
               </div>
 
 
-              <div className="bg-[url('/images/hero/bread_border.png')] bg-top-right bg-cover bg-no-repeat hover:bg-center hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4 md:p-6 w-full max-sm:h-fit h-92 transition-all duration-200">
+              <div className="bg-[url('/images/hero/bread_border.png')] bg-top-right bg-cover bg-no-repeat hover:bg-center hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-6 w-full max-sm:h-fit h-92 transition-all duration-200">
 
                     <div className="ml-2 md:ml-8">
 

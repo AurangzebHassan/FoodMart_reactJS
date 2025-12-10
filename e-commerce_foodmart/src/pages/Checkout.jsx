@@ -656,7 +656,7 @@ export default function Checkout()
                                 
                                         {/* Title */}
                                         
-                                            <h2 className="text-lg md:text-3xl p-3 md:p-6 font-extrabold text-yellow-600 rounded-xl border-b-3 md:border-b-4 border-yellow-500 bg-yellow-200 mb-2 md:mb-6 text-center">
+                                            <h2 className="text-lg md:text-3xl p-3 md:p-6 font-extrabold text-yellow-600 rounded-xl border-b-3 md:border-b-4 border-yellow-500 bg-yellow-100 md:bg-yellow-200 mb-2 md:mb-6 text-center">
                                         
                                                 Order Summary
                                                 
@@ -893,7 +893,7 @@ export default function Checkout()
                                                                     
                                                 return (
                                                     
-                                                    <div className="bg-yellow-200 rounded-xl text-yellow-500 p-2 md:p-4 mt-2 md:mt-6 px-5 md:px-10 border-t-3 md:border-t-4">
+                                                    <div className="bg-yellow-100 md:bg-yellow-200 rounded-xl text-yellow-500 p-2 md:p-4 mt-2 md:mt-6 px-5 md:px-10 border-t-3 md:border-t-4">
                                                         
                                                         
                                                         <div className="flex justify-between md:text-lg font-semibold mb-2 md:mb-4 mt-1 md:mt-2">
