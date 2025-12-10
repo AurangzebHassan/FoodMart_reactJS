@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
 
 import { useCart } from "../context/CartContext";
 
@@ -20,11 +20,16 @@ export default function Orders()
 {
     const { orders, cancelOrder } = useCart();
 
-    const { profile } = useAuth();
+    // const { profile } = useAuth();
 
 
 
     const [cancelOrderLoading, setCancelOrderLoading] = useState(false);
+
+
+    // State to track which filter is active (all, processing, shipped, or delivered)
+    
+        const [filterStatus, setFilterStatus] = useState("all");
 
 
 
@@ -150,6 +155,89 @@ export default function Orders()
                         
                 
                     </div>
+                    
+                
+
+                {/* FILTER BUTTONS - Allows user to filter orders by status */}
+                
+                    <div className="flex pl-12 md:pl-20 gap-2 md:gap-6 mb-6 md:mb-10 justify-center flex-wrap">
+                        
+                        {/* ALL button - shows all orders regardless of status */}
+                        
+                            <button
+                                
+                                onClick={() => setFilterStatus("all")}
+                                
+                                className={`px-2 py-1 md:px-4 md:py-2 max-md:text-[10px] text-sm rounded-lg font-bold transition-all duration-200 ${
+                                    
+                                    filterStatus === "all" 
+                                    
+                                    ? "bg-yellow-500 text-white"  // Active state - yellow background
+                                    
+                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"  // Inactive state - gray background
+                                }`}
+                            >
+                                All
+                            </button>
+
+                    
+                        {/* PROCESSING button - shows only pending/processing orders */}
+                        
+                            <button
+                                
+                                onClick={() => setFilterStatus("pending")}
+                                
+                                className={`px-2 py-1 md:px-4 md:py-2 max-md:text-[10px] text-sm rounded-lg font-bold transition-all duration-200 ${
+                                
+                                    filterStatus === "pending" 
+                                
+                                    ? "bg-gray-500 text-white"  // Active state
+                                
+                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"  // Inactive state
+                                }`}
+                            >
+                                Processing
+                            </button>
+
+                    
+                        {/* SHIPPED button - shows only shipped orders */}
+                    
+                            <button
+                                
+                                onClick={() => setFilterStatus("shipped")}
+                                
+                                className={`px-2 py-1 md:px-4 md:py-2 max-md:text-[10px] text-sm rounded-lg font-bold transition-all duration-200 ${
+                                
+                                    filterStatus === "shipped" 
+                                
+                                    ? "bg-blue-500 text-white"  // Active state - blue to match shipped badge
+                                
+                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"  // Inactive state
+                                }`}
+                            >
+                                Shipped
+                            </button>
+
+                    
+                        {/* DELIVERED button - shows only delivered orders */}
+                    
+                            <button
+                                
+                                onClick={() => setFilterStatus("delivered")}
+                                
+                                className={`px-2 py-1 md:px-4 md:py-2 max-md:text-[10px] text-sm rounded-lg font-bold transition-all duration-200 ${
+                                
+                                    filterStatus === "delivered" 
+                                
+                                    ? "bg-green-600 text-white"  // Active state - green to match delivered badge
+                                
+                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"  // Inactive state
+                                }`}
+                            >
+                                Delivered
+                            </button>
+
+                    </div>
 
                 
 
@@ -157,13 +245,27 @@ export default function Orders()
                 
                     {orders.length === 0 && (
                     
-                        <div className="text-center md:text-2xl font-bold text-gray-400 md:mt-20 pl-20 md:pl-27">
+                        <div className="text-center max-md:text-[14px] md:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-10 md:pl-23">
                         
                             You have no orders yet.
                         
                         </div>
                         
                     )}
+                    
+                {/* NO ORDERS FOR FILTER - when filter returns no results */}
+
+                    {orders.length > 0 && orders.filter(order => 
+                        
+                        filterStatus === "all" || order.shipping_status === filterStatus).length === 0 &&
+                        (
+                            <div className="text-center max-md:text-[14px] md:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-10 md:pl-23">
+                        
+                                No {filterStatus === 'pending' ? "processing" : filterStatus} orders found.
+                            
+                            </div>
+                        )
+                    }
 
 
                 
@@ -172,7 +274,11 @@ export default function Orders()
                     <div className={`space-y-2 md:space-y-4 md:max-xl:space-y-8 md:max-xl:pl-27 md:max-xl:pr-13 xl:grid xl:grid-cols-2 2xl:grid-cols-3 xl:gap-4 2xl:gap-2`}>
 
                     
-                        {orders.map((order) => (
+                        {orders
+                        
+                        .filter(order => filterStatus === "all" || order.shipping_status === filterStatus)
+                        
+                        .map((order) => (
                         
                             <div 
                                 
@@ -325,9 +431,9 @@ export default function Orders()
 
                                                 <span className="text-orange-600">
                                                 
-                                                    {profile.address}
+                                                    {/* {profile.address} */}
                                                     
-                                                    {/* || order.shipping_address */}
+                                                    {order.shipping_address}
                                                 
                                                 </span>
                                             
@@ -427,7 +533,7 @@ export default function Orders()
                                                         <span className="text-gray-700">Subtotal:</span>
                                                 
                                                 
-                                                        <span className="text-gray-600">
+                                                        <span className="text-red-600">
                                                 
                                                             {formatPrice((order.tax_amount * 10), "USD")}
                                                 
@@ -445,7 +551,7 @@ export default function Orders()
                                                         <span className="text-gray-700">Tax (10%):</span>
                                                 
                                                 
-                                                        <span className="text-gray-600">
+                                                        <span className="text-red-600">
                                                 
                                                             {formatPrice((order.tax_amount), "USD")}
                                                 
