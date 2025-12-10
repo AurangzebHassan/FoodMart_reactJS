@@ -143,9 +143,9 @@ export default function NewArrivalsCarousel()
       
         <div className="py-10 flex w-full gap-2 items-center justify-center">
         
-          <span className="text-yellow-500 text-2xl font-extrabold"> Loading New Arrivals </span>
+          <span className="text-yellow-500 md:text-2xl font-extrabold"> Loading New Arrivals </span>
 
-          <Loader size="xl" color="border-yellow-500" />
+          <Loader size="small md:xl" color="border-yellow-500" />
         
         </div>
       
