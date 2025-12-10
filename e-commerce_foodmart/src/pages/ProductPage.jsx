@@ -172,22 +172,59 @@ export default function ProductPage()
    
          if (!liveProduct || !category?.image_url)
         {
-            return (
+            // return (
             
-                <div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
+            //     <div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
                 
-                    <p className="text-4xl font-extrabold text-white text-center"> Loading Product </p>
+            //         <p className="text-4xl font-extrabold text-white text-center"> Loading Product </p>
 
 
-                    <Loader size="xl" color="border-white border-9" />
+            //         <Loader size="xl" color="border-white border-9" />
 
-                    <Loader size="large" color="border-white border-7" />
+            //         <Loader size="large" color="border-white border-7" />
 
-                    <Loader size="medium" color="border-white border-6" />
+            //         <Loader size="medium" color="border-white border-6" />
                 
-                </div>
+            //     </div>
         
-            );
+            // );
+        
+            
+             return (
+
+				<>
+		
+					<div className="hidden md:flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
+
+						<span className="text-4xl font-extrabold text-white text-center"> Loading Product </span>
+
+						
+						<Loader size="xl" color="border-white border-9" />
+
+						<Loader size="large" color="border-white border-7" />
+
+						<Loader size="medium" color="border-white border-6" />
+
+					</div>
+
+
+					
+					<div className="flex md:hidden w-full h-screen fixed inset-0 items-center justify-center bg-yellow-500 gap-2">
+
+						<span className="text-xl font-extrabold text-white text-center"> Loading Product </span>
+
+						
+						<Loader size="large" color="border-white border-7" />
+
+						<Loader size="medium" color="border-white border-6" />
+
+						<Loader size="small" color="border-white border-5" />
+
+					</div>
+					
+				</>
+				
+			);
         }
 
     
@@ -203,13 +240,13 @@ export default function ProductPage()
         <>
             <Navbar />
 
-            <div className="container mx-auto mt-15 px-5">
+            <div className="container mx-auto mt-4 md:mt-15 px-5">
             
                 {/* Back Button */}
                 
                     <button
                         
-                        className="mb-15 flex items-center justify-center w-25 px-4 py-1 text-black font-extrabold bg-yellow-500 hover:bg-orange-600 rounded-lg"
+                        className="mb-5 md:mb-15 flex items-center justify-center w-16 max-md:h-7 md:w-25 md:px-4 md:py-1 text-black max-md:text-[14px] font-extrabold bg-yellow-500 hover:bg-orange-600 rounded-lg"
                         
                         onClick={() => navigate(-1)}
                     >
@@ -219,11 +256,11 @@ export default function ProductPage()
 
                     
 
-                <div className="flex flex-col md:flex-row gap-10 xl:gap-0 lg:pl-22 lg:pr-10 xl:pr-20 2xl:pr-45">
+                <div className="flex flex-row gap-2 md:gap-10 xl:gap-0 lg:pl-22 lg:pr-10 xl:pr-20 2xl:pr-45">
                     
                     {/* LEFT SIDE — BIG IMAGE */}
                         
-                        <div className="relative flex justify-center md:w-1/2">
+                        <div className="relative flex justify-center w-1/2">
                         
                             <img
                         
@@ -239,7 +276,7 @@ export default function ProductPage()
     
                                 <div
 
-                                    className={`absolute top-2.5 right-3.5 xl:right-13.5 2xl:right-23.5 bg-white hover:-translate-y-0.5 p-3 rounded-full transition-all duration-200`}
+                                    className={`absolute top-1.5 right-2.25 md:top-2.5 md:right-3.5 xl:right-13.5 2xl:right-23.5 bg-white hover:-translate-y-0.5 p-1.5 md:p-3 rounded-full transition-all duration-200`}
 
                                     onClick={() => {handleFavouriteClick()}}
                                 >
@@ -250,7 +287,7 @@ export default function ProductPage()
                                 
                                         alt="wishlist"
                                         
-                                        className="w-8"
+                                        className="w-5 md:w-8"
                                     />
                                 
                                 </div>
@@ -262,7 +299,7 @@ export default function ProductPage()
                                 
                                     (
                             
-                                        <div className="absolute top-4 left-4.5 xl:left-14.5 2xl:left-24.5 bg-green-700 text-white hover:-translate-y-1 cursor-pointer transition-all duration-200 text-2xl font-extrabold px-3 py-1 rounded-xl">
+                                        <div className="absolute top-2.5 left-2.25 md:top-4 md:left-4.5 xl:left-14.5 2xl:left-24.5 bg-green-700 text-white hover:-translate-y-1 cursor-pointer transition-all duration-200 max-md:text-[10px] md:text-2xl font-extrabold max-md:p-1 md:px-3 md:py-1 rounded-xl">
                                         
                                             {liveProduct.discount_tag}
                                         
@@ -276,11 +313,11 @@ export default function ProductPage()
                         
                     {/* RIGHT SIDE — PRODUCT INFO */}
                     
-                        <div className="md:w-1/2 flex flex-col mr-3">
+                        <div className="w-1/2 flex flex-col md:mr-3">
                     
                             {/* Product Name */}
                     
-                                <h1 className="md:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-gray-800">
+                                <h1 className="max-md:text-[13px] md:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-gray-800">
                         
                                     {liveProduct.name}
                     
@@ -295,7 +332,7 @@ export default function ProductPage()
                                     
                                         <div
                                     
-                                            className="flex md:text-md lg:text-lg xl:text-xl 2xl:text-2xl mt-2 lg:mt-4 gap-2 text-yellow-600 font-semibold cursor-pointer hover:underline"
+                                            className="flex max-md:text-[11px] md:text-md lg:text-lg xl:text-xl 2xl:text-2xl mt-1 md:mt-2 lg:mt-4 gap-0.5 md:gap-2 text-yellow-600 font-semibold cursor-pointer hover:underline"
                                     
                                             onClick={() => navigate(`/category/${category.slug}`)}
                                         >
@@ -306,7 +343,7 @@ export default function ProductPage()
                                             
                                                 alt={category.name}
                                             
-                                                className="lg:w-7 md:w-5"
+                                                className="max-md:w-4 lg:w-7 md:w-5"
                                             />
                                         
                                             {category.name}
@@ -319,7 +356,7 @@ export default function ProductPage()
                                 
                             {/* Stock + Rating */}
                                 
-                                <p className={`font-extralight text-sm text-left w-full mt-6 xl:mt-8`}>
+                                <p className={`font-extralight max-md:text-[9px] md:text-sm text-left w-full mt-2 md:mt-6 xl:mt-8`}>
                                                     
                                     {" "}
                             
@@ -351,7 +388,7 @@ export default function ProductPage()
                                 
                             {/* Description */}
                 
-                                <p className={`text-yellow-600 ${!liveProduct.stock ? `md:text-sm md:leading-7 lg:text-[16px] lg:leading-9 xl:text-lg xl:leading-11` : `md:text-sm xl:text-lg lg:leading-7 xl:leading-9 2xl:leading-11`} mt-6 text-justify`}>
+                                <p className={`text-yellow-600 ${!liveProduct.stock ? `max-md:text-[10px] md:text-sm md:leading-7 lg:text-[16px] lg:leading-9 xl:text-lg xl:leading-11` : `max-md:text-[10px] md:text-sm xl:text-lg lg:leading-7 xl:leading-9 2xl:leading-11`} mt-2 md:mt-6 text-justify`}>
                                     
                                     {liveProduct.description || "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia possimus quae earum, accusantium vitae saepe provident itaque dolorum optio et."}
                                     
@@ -364,9 +401,9 @@ export default function ProductPage()
                                     (!!liveProduct.stock) && 
                                     
                                     (
-                                        <div className={`flex gap-2 items-center`}>
+                                        <div className={`flex gap-1 md:gap-2 items-center max-md:mt-3`}>
                             
-                                            <p className={`font-bold font-mono text-3xl lg:text-4xl xl:text-5xl mt-8`}>
+                                            <p className={`font-bold font-mono text-lg md:text-3xl lg:text-4xl xl:text-5xl md:mt-8`}>
                                     
                                                 {" "}
                                     
@@ -381,7 +418,7 @@ export default function ProductPage()
                                     
                                             {formatDiscount(liveProduct.discount_tag) && (
                                     
-                                                <p className="text-gray-500 mt-9 text-left font-bold text-xl xl:text-2xl line-through font-mono">
+                                                <p className="text-gray-500 mt-1 md:mt-9 text-left font-bold max-md:text-[11px] md:text-xl xl:text-2xl line-through font-mono">
                                         
                                                     {formatPrice(liveProduct.price, "USD")}
                                     
@@ -399,7 +436,7 @@ export default function ProductPage()
                                 !liveProduct.stock && 
                                 
                                 (
-                                    <p className="mt-12 xl:mt-16 2xl:mt-20 text-center text-3xl lg:text-4xl xl:text-5xl italic"> 𝑂𝑢𝑡 𝑜𝑓 𝑆𝑡𝑜𝑐𝑘 </p>
+                                    <p className="mt-3 md:mt-12 xl:mt-16 2xl:mt-20 text-center text-lg md:text-3xl lg:text-4xl xl:text-5xl italic"> 𝑂𝑢𝑡 𝑜𝑓 𝑆𝑡𝑜𝑐𝑘 </p>
                                 )
                             }
 
@@ -410,15 +447,15 @@ export default function ProductPage()
                                     (!!liveProduct.stock) && 
                                     
                                     (
-                                        <div className="flex justify-between mt-6 lg:mt-8">
+                                        <div className="flex justify-between mt-3 md:mt-6 lg:mt-8">
 
                                             {/* counter */}
 
-                                                <div className="flex items-center gap-6 lg:gap-8 xl:gap-10">
+                                                <div className="flex items-center gap-2 md:gap-6 lg:gap-8 xl:gap-10">
 
                                                     <button
 
-                                                        className={`flex cursor-pointer justify-center items-center bg-gray-200 ${((quantity === liveProduct.stock) || addToCartLoading) ? `` : `hover:bg-gray-300`} w-8 lg:w-11 xl:w-14 2xl:h-11 font-extrabold rounded-md text-md`}
+                                                        className={`flex cursor-pointer justify-center items-center bg-gray-200 ${((quantity === liveProduct.stock) || addToCartLoading) ? `` : `hover:bg-gray-300`} w-6 max-md:h-5 md:w-8 lg:w-11 xl:w-14 2xl:h-11 font-extrabold rounded-md text-md`}
 
                                                         disabled={(quantity === liveProduct.stock) || addToCartLoading}
                                                 
@@ -440,12 +477,12 @@ export default function ProductPage()
                                                     </button>
 
                                             
-                                                    <span className="font-mono text-xl lg:text-2xl cursor-default">{quantity}</span>
+                                                    <span className="font-mono md:text-xl lg:text-2xl cursor-default">{quantity}</span>
 
                                             
                                                     <button
                                                 
-                                                        className={`flex cursor-pointer justify-center items-center bg-gray-200 ${((quantity === 0) || addToCartLoading) ? `` : `hover:bg-gray-300`} w-8 lg:w-11 xl:w-14 2xl:h-11 font-extrabold rounded-md text-md`}
+                                                        className={`flex cursor-pointer justify-center items-center bg-gray-200 ${((quantity === 0) || addToCartLoading) ? `` : `hover:bg-gray-300`} w-6 max-md:h-5 md:w-8 lg:w-11 xl:w-14 2xl:h-11 font-extrabold rounded-md text-md`}
 
                                                         disabled={(quantity === 0) || addToCartLoading}
                                                 
@@ -473,7 +510,7 @@ export default function ProductPage()
 
                                                 <button
                                     
-                                                    className={`font-semibold text-xl lg:text-2xl xl:text-3xl ${quantity ? "text-gray-500 hover:text-gray-600 cursor-pointer" : "text-gray-400"}`}
+                                                    className={`font-semibold max-md:text-[13px] md:text-xl lg:text-2xl xl:text-3xl ${quantity ? "text-gray-500 hover:text-gray-600 cursor-pointer" : "text-gray-400"}`}
                                             
                                                     disabled={quantity === 0 || addToCartLoading}
                                             

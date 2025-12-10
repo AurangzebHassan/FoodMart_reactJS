@@ -40,7 +40,7 @@ export default function TrendingCarousel()
 
       const [isEnd, setIsEnd] = useState(false);
 
-      const [isLocked, setIsLocked] = useState(false);
+      // const [isLocked, setIsLocked] = useState(false);
 
   
   
@@ -166,26 +166,26 @@ export default function TrendingCarousel()
     <section className="container mx-auto px-5 py-6 overflow-hidden">
       {/* 🟩 HEADER ROW */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800">Trending Products</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Trending Products</h2>
 
         {/* 🟩 RIGHT SIDE: 'View All' + arrows */}
         <div className="flex items-center gap-3">
           
-          {
+          {/* {
             !isLocked && 
            
               (<a
                 href="/products/trending-products"
-                className="text-gray-600 hover:text-gray-900 font-semibold flex items-center gap-1 mr-2"
+                className="max-md:text-[12px] text-gray-600 hover:text-gray-900 font-semibold flex items-center gap-1"
               >
                 View All →
               </a>)
-          }
+          } */}
             
           <button
             ref={prevRef}
             disabled={isBeginning}
-            className={`text-3xl rounded-md w-12 h-9 flex items-center justify-center shadow-sm transition-all duration-200 
+            className={`text-3xl rounded-md w-8 md:w-12 md:h-9 flex items-center justify-center shadow-sm transition-all duration-200 
               ${
                 isBeginning
                   ? "bg-gray-200 text-gray-400"
@@ -198,7 +198,7 @@ export default function TrendingCarousel()
           <button
             ref={nextRef}
             disabled={isEnd}
-            className={`text-3xl rounded-md w-12 h-9 flex items-center justify-center shadow-sm transition-all duration-200 
+            className={`text-3xl rounded-md w-8 md:w-12 md:h-9 flex items-center justify-center shadow-sm transition-all duration-200 
               ${
                 isEnd
                   ? "bg-gray-200 text-gray-400"
@@ -217,7 +217,8 @@ export default function TrendingCarousel()
         slidesPerView={3}
         style={{ overflow: "visible" }}
         breakpoints={{
-          320: { slidesPerView: 1, spaceBetween: 20 },
+          0: { slidesPerView: 2, spaceBetween: 20 },
+          // 320: { slidesPerView: 1, spaceBetween: 20 },
           640: { slidesPerView: 2, spaceBetween: 20 },
           1024: { slidesPerView: 3, spaceBetween: 30 },
           1280: { slidesPerView: 4, spaceBetween: 30 },
@@ -232,16 +233,16 @@ export default function TrendingCarousel()
           // update arrow states on slide change
           setIsBeginning(swiper.isBeginning);
           setIsEnd(swiper.isEnd);
-          setIsLocked(swiper.isLocked);
+          // setIsLocked(swiper.isLocked);
 
           swiper.on("slideChange", () => {
             setIsBeginning(swiper.isBeginning);
             setIsEnd(swiper.isEnd);
-            setIsLocked(swiper.isLocked)
+            // setIsLocked(swiper.isLocked)
           });
 
           swiper.on("resize", () => {
-            setIsLocked(swiper.isLocked);
+            // setIsLocked(swiper.isLocked);
           });
         }}
       >

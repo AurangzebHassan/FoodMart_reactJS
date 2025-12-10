@@ -126,18 +126,18 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
       {/* same transform/transition classes as CartDrawer */}
 
       <nav
-        className={`relative bg-white w-120 max-w-full h-full transform transition-transform duration-300 ${
+        className={`relative bg-white w-[70%] md:w-120 max-w-full h-full transform transition-transform duration-300 ${
           isVisible ? "translate-x-0" : "translate-x-full"
-        } shadow-xl p-6 flex flex-col overflow-y-auto`}
+        } shadow-xl md:p-6 flex flex-col overflow-y-auto`}
         aria-label="Mobile menu"
       >
         {/* ✅ CHANGED: centered close button for symmetry with CartDrawer */}
 
-        <div className="flex justify-center">
+        <div className="flex max-md:px-4 max-md:pt-4 md:justify-center">
           <button
             onClick={handleClose}
             aria-label="Close menu"
-            className="text-gray-600 hover:text-gray-900 text-6xl"
+            className="text-gray-600 hover:text-gray-900 text-4xl md:text-6xl"
           >
             &times;
           </button>
@@ -151,10 +151,10 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
 
         {/* Departments select (vertical) */}
 
-        <div className="mb-6 px-6 pt-6">
+        <div className="mb-4 px-4 pt-4 md:mb-6 md:px-6 md:pt-6">
           <select
             id="mobile-departments"
-            className="w-full p-3 rounded-lg bg-gray-100 hover:bg-gray-200 text-xl"
+            className="md:w-full p-3 rounded-lg bg-gray-100 hover:bg-gray-200  md:text-xl"
             onChange={(e) => {
               const v = e.target.value;
               if (!v) return;
@@ -171,7 +171,7 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
 
         {/* Vertical menu links */}
 
-        <ul className="space-y-4 px-6 text-xl text-gray-900">
+        <ul className="md:space-y-4 px-4 md:px-6 md:text-xl text-gray-900">
           {["Women", "Men", "Kids", "Accessories"].map((item) => (
             <li key={item}>
               <button
@@ -186,39 +186,12 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
 
         {/* Pages select */}
 
-        <div id="hamburger_pages_container" className="mb-6 px-6 pt-6">
+        <div id="hamburger_pages_container" className="mb-4 px-4 pt-4 md:mb-6 md:px-6 md:pt-6">
           
           <select
             id="mobile-pages"
-            className="w-full p-3 rounded-lg bg-gray-100 hover:bg-gray-200 text-xl"
+            className="md:w-full p-3 rounded-lg bg-gray-100 hover:bg-gray-200 md:text-xl"
             defaultValue=""
-            
-            // onClick={() => {
-            //     const container = document.getElementById("hamburger_pages_container");
-            //     if (!container) return;
-
-            //     // toggle margin every time dropdown is clicked
-            //     if (container.classList.contains("mb-[350px]")) {
-            //         container.classList.remove("mb-[350px]");
-            //     } else {
-            //         container.classList.add("mb-[350px]");
-            //     }
-            //     }}
-            
-            // onFocus={() => 
-            //     {
-            //         const container = document.getElementById('hamburger_pages_container');
-            //         container.classList.add('mb-[350px]');
-            //     }
-            // }
-            
-            // onBlur={() => 
-            //     {
-            //         const container = document.getElementById('hamburger_pages_container');
-            //         container.classList.remove('mb-[350px]');
-            //     }
-            // }
-                      
             onChange={(e) => {
               const v = e.target.value;
               if (!v) return;
@@ -243,7 +216,7 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
 
         {/* quick links at bottom */}
 
-        <ul className="space-y-4 px-6 text-xl text-gray-900">
+        <ul className="md:space-y-4 px-4 md:px-6 md:text-xl text-gray-900">
           {["Brand", "Sale", "Blog"].map((item) => (
             <li key={item}>
               <button

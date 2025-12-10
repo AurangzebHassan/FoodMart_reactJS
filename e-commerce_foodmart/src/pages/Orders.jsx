@@ -51,14 +51,52 @@ export default function Orders()
 
 
     if (isLoading) {
+        // return (
+        //     <div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
+        //         <p className="text-4xl font-extrabold text-white text-center">Loading Orders</p>
+        //         <Loader size="xl" color="border-white border-9" />
+        //         <Loader size="large" color="border-white border-7" />
+        //         <Loader size="medium" color="border-white border-6" />
+        //     </div>
+        // );
+        
+
+
         return (
-            <div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
-                <p className="text-4xl font-extrabold text-white text-center">Loading Orders</p>
-                <Loader size="xl" color="border-white border-9" />
-                <Loader size="large" color="border-white border-7" />
-                <Loader size="medium" color="border-white border-6" />
-            </div>
-        );
+
+				<>
+		
+					<div className="hidden md:flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
+
+						<span className="text-4xl font-extrabold text-white text-center"> Loading Orders </span>
+
+						
+						<Loader size="xl" color="border-white border-9" />
+
+						<Loader size="large" color="border-white border-7" />
+
+						<Loader size="medium" color="border-white border-6" />
+
+					</div>
+
+
+					
+					<div className="flex md:hidden w-full h-screen fixed inset-0 items-center justify-center bg-yellow-500 gap-2">
+
+						<span className="text-xl font-extrabold text-white text-center"> Loading Orders </span>
+
+						
+						<Loader size="large" color="border-white border-7" />
+
+						<Loader size="medium" color="border-white border-6" />
+
+						<Loader size="small" color="border-white border-5" />
+
+					</div>
+					
+				</>
+				
+			);
     }
 
 
@@ -72,19 +110,19 @@ export default function Orders()
 
 
             
-            <div className="container mx-auto mt-10 mb-20 py-6 px-5">
+            <div className="container mx-auto md:mt-10 md:mb-20 py-6 px-5">
                 
 
                 {/* PAGE HEADING */}
                         
-                    <div className="flex mb-10 lg:mb-15">
+                    <div className="flex items-center mb-5 md:mb-10 lg:mb-15">
                 
 
                         {/* BACK BUTTON */}
 
                             <button
                                 
-                                className="flex items-center justify-center w-30 lg:w-25 px-4 py-1 text-black font-extrabold bg-yellow-500 hover:bg-orange-600 rounded-lg"
+                                className="flex items-center justify-center w-22 max-md:h-7 md:w-25 md:px-4 md:py-1 text-black max-md:text-[14px] font-extrabold bg-yellow-500 hover:bg-orange-600 rounded-lg"
                                 
                                 onClick={() => navigate(-1)}
                             >
@@ -98,7 +136,7 @@ export default function Orders()
                             
                             <div className="w-full flex items-center justify-center">
                                 
-                                <h1 className="text-4xl text-yellow-500 font-extrabold">
+                                <h1 className="text-3xl md:text-4xl text-yellow-500 font-extrabold">
                                     
                                     Orders
                                     
@@ -115,7 +153,7 @@ export default function Orders()
                 
                     {orders.length === 0 && (
                     
-                        <div className="text-center text-2xl font-bold text-gray-400 mt-20 pl-27">
+                        <div className="text-center md:text-2xl font-bold text-gray-400 md:mt-20 pl-20 md:pl-27">
                         
                             You have no orders yet.
                         
@@ -127,7 +165,7 @@ export default function Orders()
                 
                 {/* ORDER LIST */}
                 
-                    <div className={`max-xl:space-y-8 max-xl:pl-27 max-xl:pr-13 xl:grid xl:grid-cols-2 2xl:grid-cols-3 xl:gap-4 2xl:gap-2`}>
+                    <div className={`space-y-4 md:max-xl:space-y-8 md:max-xl:pl-27 md:max-xl:pr-13 xl:grid xl:grid-cols-2 2xl:grid-cols-3 xl:gap-4 2xl:gap-2`}>
 
                     
                         {orders.map((order) => (
@@ -136,24 +174,24 @@ export default function Orders()
                                 
                                 key={order.$id}
                                 
-                                className={`h-fit border-4 bg-gray-50 ${(order.shipping_status === "delivered") ? `border-green-500` : (order.shipping_status === "shipped") ? `border-blue-500` : `border-yellow-500`} rounded-2xl hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200 p-6`}
+                                className={`h-fit border-4 bg-gray-50 ${(order.shipping_status === "delivered") ? `border-green-500` : (order.shipping_status === "shipped") ? `border-blue-500` : `border-yellow-500`} rounded-2xl hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200 p-3 md:p-6`}
                             >
                                 {/* Top Section: Order ID + Status */}
                                 
-                                    <div className="flex justify-between mb-6">
+                                    <div className="flex justify-between mb-3 md:mb-6">
                                         
                                     
                                         <div className="flex-col">
                                             
 
-                                            <p className="text-lg font-extrabold text-gray-700 mb-1">
+                                            <p className="md:text-lg font-extrabold text-gray-700 md:mb-1">
                                     
-                                                Order <span title={order.$id.toUpperCase()} className="hover:text-gray-600 italic font-mono text-gray-500 text-xl"> #{order.$id.slice(-6).toUpperCase()} </span>
+                                                Order <span title={order.$id.toUpperCase()} className="hover:text-gray-600 italic font-mono text-gray-500 text-lg md:text-xl"> #{order.$id.slice(-6).toUpperCase()} </span>
                                     
                                             </p>
                                                 
                                                 
-                                            <p title="Order Creation At" className="text-sm font-light italic text-gray-700">
+                                            <p title="Order Creation At" className="text-[12px] md:text-sm font-light italic text-gray-700">
                                         
                                                 {formatDateTime(order.$createdAt, {withTime: true})}
                                         
@@ -163,7 +201,7 @@ export default function Orders()
                                         </div>
                                         
                                     
-                                        <div className="flex shrink-0 items-center gap-3">
+                                        <div className="flex shrink-0 items-center gap-1 md:gap-3">
                                             
                                             
                                             <button

@@ -171,26 +171,64 @@ export default function Checkout()
 
     if (isLoading)
     {
-        return (
+        // return (
     
-            <div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
+        //     <div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
       
-                <p className="text-4xl font-extrabold text-white text-center">
+        //         <p className="text-4xl font-extrabold text-white text-center">
         
-                    Loading Checkout
+        //             Loading Checkout
       
-                </p>
+        //         </p>
       
                 
-                <Loader size="xl" color="border-white border-9" />
+        //         <Loader size="xl" color="border-white border-9" />
 
-                <Loader size="large" color="border-white border-7" />
+        //         <Loader size="large" color="border-white border-7" />
 
-                <Loader size="medium" color="border-white border-6" />
+        //         <Loader size="medium" color="border-white border-6" />
     
-            </div>
+        //     </div>
   
-        );
+        // );
+
+
+
+        return (
+
+				<>
+		
+					<div className="hidden md:flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
+
+						<span className="text-4xl font-extrabold text-white text-center"> Loading Checkout </span>
+
+						
+						<Loader size="xl" color="border-white border-9" />
+
+						<Loader size="large" color="border-white border-7" />
+
+						<Loader size="medium" color="border-white border-6" />
+
+					</div>
+
+
+					
+					<div className="flex md:hidden w-full h-screen fixed inset-0 items-center justify-center bg-yellow-500 gap-2">
+
+						<span className="text-xl font-extrabold text-white text-center"> Loading Checkout </span>
+
+						
+						<Loader size="large" color="border-white border-7" />
+
+						<Loader size="medium" color="border-white border-6" />
+
+						<Loader size="small" color="border-white border-5" />
+
+					</div>
+					
+				</>
+				
+			);
     }
 
 

@@ -152,13 +152,13 @@ export default function ProductCard({ Product }) {
     
     return (
       
-        <div className="relative mb-10 p-5 flex-col items-center bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 w-70 h-90 mx-auto cursor-pointer">
+        <div className="relative p-3 md:p-5 flex-col items-center bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 w-40 h-fit md:w-70 mx-auto cursor-pointer">
     
             {/* wishlist heart */}
     
                 <div
             
-                    className={`absolute top-7 right-7 bg-white hover:-translate-y-0.5 p-3 rounded-full transition-all duration-200`}
+                    className={`absolute top-4 right-4 md:top-7 md:right-7 bg-white hover:-translate-y-0.5 p-1.5 md:p-3 rounded-full transition-all duration-200`}
             
                     onClick={() => {handleFavouriteClick()}}
                 >
@@ -169,7 +169,7 @@ export default function ProductCard({ Product }) {
                 
                         alt="wishlist"
                         
-                        className="w-8"
+                        className="w-5 md:w-8"
                     />
                 
                 </div>
@@ -179,7 +179,7 @@ export default function ProductCard({ Product }) {
     
                 {formatDiscount(liveProduct.discount_tag) && (
             
-                    <div className="absolute top-8 left-7 bg-green-700 text-white font-bold hover:-translate-y-1 p-1 rounded-xl transition-all duration-300">
+                    <div className="max-md:text-[10px] absolute top-5.25 left-5 md:top-8 md:left-7 bg-green-700 text-white font-bold hover:-translate-y-1 p-1 rounded-xl transition-all duration-300">
                 
                         {liveProduct.discount_tag}
             
@@ -192,7 +192,7 @@ export default function ProductCard({ Product }) {
     
                 <div
             
-                    className="flex justify-center items-center bg-gray-200 w-full h-[60%] rounded-2xl p-3"
+                    className="flex justify-center items-center bg-gray-200 w-full h-[35%] rounded-2xl p-3"
             
                     onClick={!addToCartLoading && handleClick}
                 >
@@ -203,7 +203,7 @@ export default function ProductCard({ Product }) {
                 
                         alt={liveProduct.name}
                 
-                        className="w-30 h-35"
+                        className={`${(liveProduct.slug === "fruita-vitals-orange-juice") ? 'w-25' : ``} md:w-30 h-25 md:h-37`}
                     />
             
                 </div>
@@ -215,7 +215,7 @@ export default function ProductCard({ Product }) {
     
                     {/* Product name */}
     
-                        <p className="mt-3 text-lg font-bold text-gray-700 hover:text-gray-900 transition"
+                        <p className={`mt-1 md:mt-3  ${(liveProduct.name.length > 20) ? `max-md:text-[11px]` : `max-md:text-[13px]`} md:text-lg font-bold text-gray-700 hover:text-gray-900 transition`}
                     
                             onClick={!addToCartLoading && handleClick}
                         >
@@ -227,7 +227,7 @@ export default function ProductCard({ Product }) {
     
                     {/* stock + rating */}
     
-                        <p className={`font-extralight text-sm text-left w-full mt-2`}>
+                        <p className={`font-extralight ${(liveProduct.name.length > 20) ? `max-md:text-[9px]` : `max-md:text-[10px]`} md:text-sm text-left w-full mt-0.5 md:mt-2`}>
                     
                             {" "}
                     
@@ -265,7 +265,7 @@ export default function ProductCard({ Product }) {
                             (
                                 <div className={`flex gap-2 items-center`}>
                     
-                                    <p className={`font-bold font-mono text-2xl mt-2`}>
+                                    <p className={`font-bold font-mono text-md md:text-2xl mt-0.5 md:mt-2`}>
                             
                                         {" "}
                             
@@ -279,7 +279,7 @@ export default function ProductCard({ Product }) {
                             
                                     {formatDiscount(liveProduct.discount_tag) && (
                             
-                                        <p className="text-gray-500 mt-3 text-left font-bold text-lg line-through font-mono">
+                                        <p className="text-gray-500 mt-1.25 md:mt-3 text-left font-bold text-[10px] md:text-lg line-through font-mono">
                                 
                                             {formatPrice(liveProduct.price, "USD")}
                             
@@ -297,7 +297,7 @@ export default function ProductCard({ Product }) {
                             !existingStock && 
                             
                             (
-                                <p className="mt-4 text-center text-2xl italic"> 𝑂𝑢𝑡 𝑜𝑓 𝑆𝑡𝑜𝑐𝑘 </p>
+                                <p className="mt-1 md:mt-4 text-center text-lg md:text-2xl italic"> 𝑂𝑢𝑡 𝑜𝑓 𝑆𝑡𝑜𝑐𝑘 </p>
                             )
                         }
 
@@ -312,11 +312,11 @@ export default function ProductCard({ Product }) {
 
                                     {/* counter */}
 
-                                        <div className="flex gap-2 mt-1.5">
+                                        <div className="flex items-center gap-2 mt-0.75 md:mt-1.5">
 
                                             <button
 
-                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === liveProduct.stock) || addToCartLoading) ? `` : `hover:bg-gray-200`} w-7 font-bold rounded-md text-md`}
+                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === liveProduct.stock) || addToCartLoading) ? `` : `hover:bg-gray-200`} max-md:h-4 w-5 md:w-7 font-bold rounded-md max-md:text-[12px] md:text-md`}
 
                                                 disabled={(quantity === existingStock) || addToCartLoading}
                                         
@@ -338,12 +338,12 @@ export default function ProductCard({ Product }) {
                                             </button>
 
                                     
-                                            <span className="font-mono cursor-default">{quantity}</span>
+                                            <span className="font-mono max-md:text-[12px] cursor-default">{quantity}</span>
 
                                     
                                             <button
                                         
-                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === 0) || addToCartLoading) ? `` : `hover:bg-gray-200`} w-6 font-bold rounded-md text-md`}
+                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === 0) || addToCartLoading) ? `` : `hover:bg-gray-200`} max-md:h-4 w-5 md:w-7 font-bold rounded-md max-md:text-[12px] md:text-md`}
 
                                                 disabled={(quantity === 0) || addToCartLoading}
                                         
@@ -371,7 +371,7 @@ export default function ProductCard({ Product }) {
 
                                         <button
                             
-                                            className={`font-semibold ${quantity ? "text-gray-500 hover:text-gray-600 cursor-pointer" : "text-gray-400"}`}
+                                            className={`max-md:mt-0.75 max-md:text-[11px] font-semibold ${quantity ? "text-gray-500 hover:text-gray-600 cursor-pointer" : "text-gray-400"}`}
                                     
                                             disabled={quantity === 0 || addToCartLoading}
                                     

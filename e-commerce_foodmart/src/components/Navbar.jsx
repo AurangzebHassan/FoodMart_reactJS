@@ -379,14 +379,14 @@ export default function Navbar( /*{ loggedInUser }*/ )
             <header className="bg-white sticky top-0 z-50 drop-shadow-sm">
         
                 
-            <div className="container mx-auto flex items-center justify-between py-6 px-5">
+            <div className="container mx-auto flex items-center justify-between py-4 sm:py-6 px-3 sm:px-5 overflow-hidden">
         
                 
                 {/* Logo */}
                 
                 {/* Left section of the navbar */}
         
-                    <div className="flex max-w-[25%] md:max-w-none shrink-0 grow-0 items-center gap-2 transition-all duration-200">
+                    <div className="flex max-w-[30%] md:max-w-none shrink-0 grow-0 items-center transition-all duration-200">
                     
                         <Link to="/" tabIndex={-1}>
                         
@@ -599,12 +599,12 @@ export default function Navbar( /*{ loggedInUser }*/ )
                     
                 {/* Right side icons. Right side of the navbar */}
 
-                    <div className={`flex shrink-0 justify-end items-center ${user?.name.length > 9 ? `` : `xl:-ml-2`} gap-3 transition-all duration-200`}>
+                    <div className={`flex shrink-0 justify-end items-center ${user?.name.length > 9 ? `max-md:gap-2 md:gap-3.5` : `xl:-ml-2 max-md:gap-3 md:gap-5`} transition-all duration-200`}>
                         
                         
                         <div className="lg:hidden" onClick={() => { setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50);}}>
                         
-                            <img src="/icons/search.png" alt="FoodMart" className="h-11 p-2 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer" />
+                            <img src="/icons/search.png" alt="FoodMart" className="h-6.5 p-1.25 md:h-11 md:p-2 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer" />
             
                         </div>
                         
@@ -617,7 +617,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                             
                         //   className={`bg-gray-100 hover:bg-gray-200 rounded-full ${(profile?.profile_pic !== "/icons/user.svg" || getStoredProfilePic(user?.email) !== "/icons/user.svg") ? `` : `p-2`}`}
                         
-                            className="relative bg-gray-100 hover:bg-gray-200 rounded-full p-2"
+                            className="relative bg-gray-100 hover:bg-gray-200 rounded-full p-1.25 sm:p-2"
                             
                             onClick={(e) => { e.preventDefault(); navigate("/orders"); }}
                             
@@ -643,12 +643,12 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                 
                                 // className={(profile?.profile_pic !== "/icons/user.svg" || getStoredProfilePic(user?.email) !== "/icons/user.svg") ? "h-10 cursor-pointer rounded-full" : "h-7 cursor-pointer"}
                                 
-                                className="h-7 cursor-pointer"
+                                className="h-4 sm:h-7 cursor-pointer"
                                 
                             />
                             
                             
-                            <span className={`absolute ${ordersQuantity > 9 ? `-top-3.75 -right-3.75 xl:-top-4 xl:-right-3 2xl:-top-4 2xl:-right-3.5` : `-top-3.25 -right-2 xl:-top-4 xl:-right-1.25 2xl:-top-4 2xl:-right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full px-2`}>
+                            <span className={`absolute ${ordersQuantity > 9 ? `-top-3 -right-1.5 sm:-top-3.75 sm:-right-3.75 xl:-top-4 xl:-right-3 2xl:-top-4 2xl:-right-3.5` : `-top-2.5 -right-1 sm:-top-3.25 sm:-right-2 xl:-top-4 xl:-right-1.25 2xl:-top-4 2xl:-right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full max-sm:text-[10px] px-1.25 sm:px-2`}>
                         
                                     {ordersQuantity}
                     
@@ -657,7 +657,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         </Link>
                 
                         
-                        <Link to="/wishlist" className="relative bg-gray-100 hover:bg-gray-200 rounded-full p-2" onClick={(e) => { e.preventDefault(); navigate("/wishlist"); }}>
+                        <Link to="/wishlist" className="relative bg-gray-100 hover:bg-gray-200 rounded-full p-1.25 sm:p-2" onClick={(e) => { e.preventDefault(); navigate("/wishlist"); }}>
 
                             <img
                 
@@ -665,14 +665,14 @@ export default function Navbar( /*{ loggedInUser }*/ )
                     
                                 alt="Wishlist"
                     
-                                className="h-7 cursor-pointer"
+                                className="h-4 sm:h-7 cursor-pointer"
                                 
                                 title="wishlist"
                     
                             />
                             
                                 
-                            <span className={`absolute ${wishlistQuantity > 9 ? `-top-3.75 -right-3.75 xl:-top-4 xl:-right-3 2xl:-top-4 2xl:-right-3.5` : `-top-3.25 -right-2 xl:-top-4 xl:-right-1.25 2xl:-top-4 2xl:-right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full px-2`}>
+                            <span className={`absolute ${wishlistQuantity > 9 ? `-top-3 -right-1.5 sm:-top-3.75 sm:-right-3.75 xl:-top-4 xl:-right-3 2xl:-top-4 2xl:-right-3.5` : `-top-2.5 -right-1 sm:-top-3.25 sm:-right-2 xl:-top-4 xl:-right-1.25 2xl:-top-4 2xl:-right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full max-sm:text-[10px] px-1.25 sm:px-2`}>
                         
                                     {wishlistQuantity}
                     
@@ -695,7 +695,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         >
                             
                         
-                            <div className="flex flex-row bg-gray-100 hover:bg-gray-200 rounded-full p-2 2xl:w-50">
+                            <div className="flex flex-row bg-gray-100 hover:bg-gray-200 rounded-full p-1.25 sm:p-2 2xl:w-50">
                                 
                                 <div className="hidden xl:flex xl:flex-col xl:items-center xl:mx-1 2xl:mr-0.5 cursor-pointer px-3 2xl:px-4">
                                     
@@ -712,12 +712,12 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         
                                     alt="Cart"
 
-                                    className="xl:mt-3 xl:mr-2 2xl:mt-3.5 h-7 cursor-pointer"
+                                    className="xl:mt-3 xl:mr-2 2xl:mt-3.5 h-4 sm:h-7 cursor-pointer"
 
                                 />
                                 
                     
-                                <span className={`absolute ${cartQuantity > 9 ? `-top-3.5 -right-4 xl:top-px xl:-right-2.5 2xl:top-px 2xl:-right-0.5` : `-top-3 -right-2 xl:-top-0.5 xl:right-1 2xl:top-px 2xl:right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full px-2`}>
+                                <span className={`absolute ${cartQuantity > 9 ? `-top-3 -right-1.5 sm:-top-3.5 sm:-right-4 xl:top-px xl:-right-2.5 2xl:top-px 2xl:-right-0.5` : `-top-2.5 -right-1 sm:-top-3 sm:-right-2 xl:-top-0.5 xl:right-1 2xl:top-px 2xl:right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full max-sm:text-[10px] px-1.25 sm:px-2`}>
                         
                                     {cartQuantity}
                     
@@ -729,23 +729,24 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         </div>
 
                         
-                        <div className={`flex items-center gap-2 mt-1 ${user?.name.length > 9 ? `sm:ml-5 md:ml-10 lg:ml-7 xl:ml-0 2xl:ml-3` : `sm:ml-5 md:ml-20 lg:ml-7 xl:ml-0 2xl:ml-3`}`}>
+                      
+                        <div className={`flex items-center gap-1 sm:gap-2 mt-1 ${user?.name.length > 9 ? `ml-1 md:ml-10 lg:ml-7 xl:ml-0 2xl:ml-3` : `ml-3.5 md:ml-20 lg:ml-7 xl:ml-0 2xl:ml-3`}`}>
                             
-                            <span className="lg:hidden text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
+                            <span className="flex lg:hidden text-[9px] sm:text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
                             
                                 {(user && user?.name.length > 9) ? user?.name.slice(0, 8) + "..." : user?.name}
                                 {/* Guest */}
 
                             </span>
                             
-                            <span className="hidden lg:max-xl:flex text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
+                            <span className="hidden lg:max-xl:flex text-[9px] sm:text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
                             
                                 {(user && user?.name.length > 11) ? user?.name.slice(0, 10) + "..." : user?.name}
                                 {/* Guest */}
 
                             </span>
                             
-                            <span className="hidden xl:flex text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
+                            <span className="hidden xl:flex text-[9px] sm:text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
                             
                                 {(user && user?.name.length > 13) ? user?.name.slice(0, 12) : user?.name}
                                 {/* Guest */}
@@ -762,7 +763,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                 onClick={handleLogout}
                             >
                                 
-                                <img src="/icons/logout.png" title="logout" alt="logout" className="w-9 hover:w-10 rounded-full transition-all duration-75" />
+                                <img src="/icons/logout.png" title="logout" alt="logout" className="w-5 sm:w-9 sm:hover:w-10 rounded-full transition-all duration-75" />
 
                             </button>
 
@@ -801,7 +802,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
         {/* Menu & dropdown placeholders */}
 
-            <section className="container mx-auto flex items-center justify-start pt-12 px-5 transition-all duration-200">
+            <section className="container mx-auto flex items-center justify-start pt-3 sm:pt-12 px-3 sm:px-5 transition-all duration-200">
 
                 {/* Hamburger menu for menu and dropdowns */}
                 
@@ -811,7 +812,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                     
                         <img src="/icons/hamburger_menu.png" alt="hamburger_menu_icon" 
                             
-                        className="h-13 p-2 cursor-pointer border border-gray-400 hover:bg-gray-100 rounded-lg"
+                        className="h-7 p-1 sm:h-13 sm:p-2 cursor-pointer border border-gray-400 hover:bg-gray-100 rounded-lg"
                     
                         />
 
@@ -940,12 +941,12 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
                             {/* Modal */}
                             
-                                <div className="lg:hidden fixed top-25.5 left-1/2 -translate-x-1/2 w-[70%] bg-white rounded-xl shadow-xl p-4 z-50">
+                                <div className="lg:hidden fixed top-14.5 md:top-25.5 left-1/2 -translate-x-1/2 max-md:w-full md:w-[70%] bg-white md:rounded-xl shadow-xl p-4 z-50">
 
                                         
                                     {/* Search Input */}
                                     
-                                        <div className="flex bg-gray-100 rounded-full p-2 mb-2 items-center">
+                                        <div className="flex bg-gray-100 rounded-lg md:rounded-full p-2 mb-2 items-center">
                                             <input
                                                 type="text"
                                                 placeholder="Search"
@@ -989,12 +990,12 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                                         setShowSearchModal(false);
                                                     }
                                                 }}
-                                                className="w-full bg-transparent outline-none p-2 text-yellow-600 font-extrabold placeholder:text-xl"
+                                                className="w-full bg-transparent outline-none max-md:p-0.75 md:p-2 text-yellow-600 font-extrabold placeholder:text-md md:placeholder:text-xl"
                                             />
 
                                             <img
                                                 src="/icons/search.png"
-                                                className="h-10 p-2 cursor-pointer"
+                                                className="h-8 md:h-10 p-2 cursor-pointer"
                                                 onClick={handleSearchSubmit}
                                             />
                                         </div>
@@ -1020,19 +1021,19 @@ export default function Navbar( /*{ loggedInUser }*/ )
                                                             setShowSearchModal(false);
                                                             setSearchInput("");
                                                         }}
-                                                        className={`p-3 border-b border-gray-200 cursor-pointer flex justify-between items-center gap-3
+                                                        className={`p-2 md:p-3 border-b border-gray-200 cursor-pointer flex justify-between items-center gap-3
                                                             ${highlightedIndex === index ? "bg-gray-200" : "hover:bg-gray-100"}
                                                         `}
                                                     >
-                                                        <span className={`text-yellow-500 font-extrabold text-lg`}>
+                                                        <span className={`text-yellow-500 font-extrabold max-md:text-[12px] md:text-lg`}>
                                                             {res.type === "category" ? "Category: " : "Product: "}
                                                         </span>
 
-                                                        <span className="flex items-center gap-4 font-mono">
+                                                        <span className="flex items-center gap-1 md:gap-4 max-md:text-[10px] font-mono">
                                                             {highlightMatch(res.item.name, searchInput)}
                                                             <img
                                                                 src={res.item.image_url}
-                                                                className={res.type === "product" ? "w-14" : "w-10 mr-2.75"}
+                                                                className={res.type === "product" ? "max-md:w-12 max-md:ml-0.5 md:w-14" : "max-md:w-7.5 md:w-10 max-md:ml-2 mr-2.75"}
                                                             />
                                                         </span>
                                                     </div>

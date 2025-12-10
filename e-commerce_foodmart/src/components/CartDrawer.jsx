@@ -220,7 +220,7 @@ export default function CartDrawer({ onClose })
 				onClick={handleOverlayClick}
 			>
 				<div
-				className={`bg-white w-120 h-full shadow-xl p-6 flex flex-col transform transition-transform duration-300 ${
+				className={`bg-white w-full md:w-120 h-full shadow-xl p-3 md:p-6 flex flex-col transform transition-transform duration-300 ${
 					isVisible ? "translate-x-0" : "translate-x-full"
 				}`}
 				>
@@ -232,7 +232,7 @@ export default function CartDrawer({ onClose })
 						
 								onClick={handleClose}
 						
-								className="text-gray-600 hover:text-gray-900 text-6xl mr-33"
+								className="text-gray-600 hover:text-gray-900 text-4xl md:text-6xl mr-29 md:mr-33"
 							>
 						
 								&times;
@@ -256,12 +256,12 @@ export default function CartDrawer({ onClose })
 								
 								title="Refresh Cart" 
 								
-								className={`mr-2 ${(!cartQuantity || clearCartLoading || removingItemId || updatingItemId) ? `invisible` : `hover:-translate-y-1 transition-all duration-200`}`}
+								className={`mr-2.5 md:mr-2 ${(!cartQuantity || clearCartLoading || removingItemId || updatingItemId) ? `invisible` : `hover:-translate-y-1 transition-all duration-200`}`}
 								
 								disabled={!cartQuantity || clearCartLoading || removingItemId || updatingItemId}
 							>
 							
-								<img src="/icons/refresh.png" alt="refresh" className="w-9" />
+								<img src="/icons/refresh.png" alt="refresh" className="w-6 md:w-9" />
 							
 							</button>
 						
@@ -270,12 +270,12 @@ export default function CartDrawer({ onClose })
 
 				{/* Header */}
 				
-					<div className="flex justify-between items-center mb-10 mt-6">
+					<div className="flex justify-between items-center mb-5 md:mb-10 mt-3 md:mt-6">
 
-						<h1 className="text-3xl font-extrabold text-yellow-500">Your Cart</h1>
+						<h1 className="text-2xl md:text-3xl font-extrabold text-yellow-500">Your Cart</h1>
 						
 						<span
-						className={`text-white text-[25px] hover:-translate-y-1 bg-yellow-500 hover:bg-orange-600 ${
+						className={`text-white text-[20px] md:text-[25px] hover:-translate-y-1 bg-yellow-500 hover:bg-orange-600 ${
 							cartQuantity > 9 ? "px-3" : "px-4.5"
 						} rounded-full font-bold transition-all duration-200`}
 						>
@@ -303,7 +303,7 @@ export default function CartDrawer({ onClose })
 						
 				{/* Cart Items */}
 				
-					<div className="flex-1 [&::-webkit-scrollbar]:hidden overflow-y-scroll space-y-2">
+					<div className="flex-1 [&::-webkit-scrollbar]:hidden overflow-y-scroll md:space-y-2">
 						
 
 						{
@@ -323,11 +323,11 @@ export default function CartDrawer({ onClose })
 										
 											{item.discount_value > 0 && (
 												<div
-												className={`absolute left-2 top-31.75 ${
+												className={`absolute md:left-2 top-25 md:top-31.75 ${
 													product.price > 9.99
 													? "px-0.75"
 													: "px-1.5"
-												} bg-green-700 text-white font-extrabold text-sm cursor-pointer hover:-translate-y-1 p-0.5 rounded-full transition-all duration-200`}
+												} bg-green-700 text-white font-extrabold text-[10px] md:text-sm cursor-pointer hover:-translate-y-1 p-0.5 rounded-full transition-all duration-200`}
 												>
 												{product.discount_tag}
 												</div>
@@ -338,7 +338,7 @@ export default function CartDrawer({ onClose })
 					
 											<div
 										
-												className={`absolute top-30 left-12 hover:-translate-y-0.5 p-2 rounded-full transition-all duration-200`}
+												className={`absolute left-11 top-23 md:top-30 md:left-12 hover:-translate-y-0.5 p-2 rounded-full transition-all duration-200`}
 										
 												onClick={() => {handleFavouriteClick(item.product.$id)}}
 											>
@@ -349,7 +349,7 @@ export default function CartDrawer({ onClose })
 											
 													alt="wishlist"
 													
-													className="w-6"
+													className="w-5 md:w-6"
 												/>
 											
 											</div>
@@ -360,7 +360,7 @@ export default function CartDrawer({ onClose })
 											<img
 												src={product.image_url}
 												alt={product.name}
-												className="cursor-pointer w-20 h-25 rounded-lg object-cover"
+												className="cursor-pointer w-18 h-20 md:w-20 md:h-25 rounded-lg object-cover"
 												onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleClick(product);}}
 											/>
 
@@ -368,12 +368,12 @@ export default function CartDrawer({ onClose })
 										{/* Product details */}
 										
 											<div className="flex-1">
-												<div className="flex justify-between items-center">
+												<div className="flex justify-between">
 												
 													{/* PRODUCT NAME */}
 													
 														<p
-															className="font-mono text-md text-gray-700 cursor-pointer hover:text-gray-900 font-semibold mt-1"
+															className="font-mono max-sm:text-[12px] md:text-md  text-black md:text-gray-700 cursor-pointer md:hover:text-gray-900 font-bold md:font-semibold mt-2.25 md:mt-1"
 															onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleClick(product);}}
 														>
 															{product.name}
@@ -381,9 +381,9 @@ export default function CartDrawer({ onClose })
 												
 												<div className="flex items-center gap-2 ml-3 mt-1">
 													
-													{/* PRODUCT UPDATION BUTTONS */}
+													{/* PRODUCT UPDATION BUTTONS FOR MD AND ABOVE ONLY */}
 													
-														<div className="flex-col mt-0.5">
+														<div className="hidden md:flex md:flex-col mt-0.5">
 														
 															<button
 																className={`flex mb-1 ${
@@ -442,7 +442,7 @@ export default function CartDrawer({ onClose })
 													{/* PRODUCT QUANTITY */}
 														
 														<span
-														className={`text-white text-[25px] hover:-translate-y-1 bg-yellow-500 hover:bg-orange-600 ${
+														className={`text-white text-[20px] md:text-[25px] hover:-translate-y-1 bg-yellow-500 hover:bg-orange-600 ${
 															item.quantity > 9 ? "px-3" : "px-4.5"
 														} rounded-full font-bold transition-all duration-200`}
 														>
@@ -466,30 +466,89 @@ export default function CartDrawer({ onClose })
 														</span>
 													
 												</div>
+
+											</div>
+
+
+												{/* PRODUCT UPDATION BUTTON FOR MOBILE VIEW ONLY */}
 												
-												
-												</div>
+													<div className="flex md:hidden mt-3 gap-5">
+															
+														<button
+															className={`flex mb-1 ${
+															((product.stock === 0) || clearCartLoading || refreshCartLoading)
+																? "bg-gray-300"
+																: "bg-yellow-300 hover:bg-orange-600"
+															} cursor-pointer justify-center items-center w-5 h-5 font-bold rounded-md text-sm`}
+															onClick=
+															{
+																async () =>
+																{
+																	setUpdatingItemId(item.$id);
+
+																	await updateItem(item.$id, product.$id, 1)
+
+																	setUpdatingItemId(null);
+																}
+															}
+															disabled={(product.stock === 0) || (updatingItemId !== null) || clearCartLoading || refreshCartLoading || removingItemId !== null}
+														>
+															+
+														</button>
+														
+														<button
+															className={`flex mb-1 ${
+															((item.quantity === 1) || clearCartLoading || refreshCartLoading)
+																? "bg-gray-300"
+																: "bg-yellow-300 hover:bg-orange-600"
+															} cursor-pointer justify-center items-center w-5 h-5 font-bold rounded-md text-sm`}
+															onClick=
+															{
+																async () =>
+																{
+																	setUpdatingItemId(item.$id);
+
+																	await updateItem(item.$id, product.$id, -1)
+
+																	setUpdatingItemId(null);
+																}
+															}
+															disabled={(item.quantity === 1) || updatingItemId !== null || clearCartLoading || refreshCartLoading || removingItemId !== null}
+														>
+															−
+														</button>
+														
+														<button
+															className={`flex justify-center items-center rounded-md w-5 h-5 cursor-pointer ${(clearCartLoading || refreshCartLoading) ? `bg-gray-300` : `bg-red-400 hover:bg-red-500`}`}
+															onClick={async() => {setRemovingItemId(item.$id); await removeItem(item.$id, product.$id); setRemovingItemId(null);}}
+															disabled={removingItemId !== null || clearCartLoading || refreshCartLoading || updatingItemId !== null}
+														>
+															<img src="/icons/delete.png" alt="delete" />
+														</button>
+															
+													</div>
+
 
 												{/* Price + Subtotal */}
 											
-													<div className="flex justify-between mt-10">
+													<div className="flex justify-between mt-3.5 md:mt-10">
 													<div className="flex gap-2">
 														{item.discount_value > 0 && (
-														<p className="text-gray-500 text-md font-mono">
+														<p className="text-gray-500 text-[14px] md:text-md font-mono">
 															{formatPrice(product.price, product.currency, item.discount_value)}
 														</p>
 														)}
 														<p
-														className={`text-gray-500 text-md font-mono ${
+														className={`text-gray-500 md:text-md font-mono ${
 															item.discount_value
-															? "line-through text-sm"
-															: ""
+															? "line-through text-[11px] md:text-sm"
+															: "text-[14px]"
 														}`}
 														>
 														{formatPrice(product.price, product.currency)}
 														</p>
 													</div>
-													<p className="text-gray-700 font-mono">
+													<p className="text-gray-700 max-sm:text-[14px] font-mono">
 														{formatPrice(item.subtotal, product.currency)}
 													</p>
 													</div>
@@ -508,11 +567,11 @@ export default function CartDrawer({ onClose })
 						
 				{/* Footer / Checkout */}
 				
-					<div className="mt-3 border-t-3 pt-5">
+					<div className="mt-2 md:mt-3 border-t-3 pt-2 md:pt-5">
 						
-						<p className="flex justify-between font-extrabold text-orange-500">
+						<p className="flex justify-between items-center font-extrabold text-orange-500">
 						
-							<span className="text-black text-[19px]">Total (USD):</span>
+							<span className="text-black text-[20px]">Total (USD):</span>
 							
 							<span className="text-[25px]">{formatPrice(cartTotal, "USD")}</span>
 						
@@ -523,7 +582,7 @@ export default function CartDrawer({ onClose })
 
 							<button
 						
-								className={`w-full ${(!cartQuantity || isOnCheckoutPage || clearCartLoading || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `${isCheckoutPage ? `bg-orange-600` : `bg-yellow-500 hover:bg-orange-600`} text-white hover:-translate-y-1 transition-all duration-200`} col-span-2 py-2 rounded-full mt-3 text-[18px] font-extrabold`}
+								className={`w-full ${(!cartQuantity || isOnCheckoutPage || clearCartLoading || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `${isCheckoutPage ? `bg-orange-600` : `bg-yellow-500 hover:bg-orange-600`} text-white hover:-translate-y-1 transition-all duration-200`} col-span-2 py-2 rounded-full mt-2 md:mt-3 md:text-[18px] font-extrabold`}
 								
 								onClick={() => navigate("/checkout")}
 					
@@ -537,7 +596,7 @@ export default function CartDrawer({ onClose })
 									
 							<button 
 						
-								className={`${(!cartQuantity || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `bg-red-600 text-white hover:-translate-y-1 transition-all duration-200`} rounded-full mt-3 py-2 font-extrabold`}
+								className={`${(!cartQuantity || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `bg-red-600 text-white hover:-translate-y-1 transition-all duration-200`} rounded-full mt-2 md:mt-3 py-2 font-extrabold`}
 								
 								onClick=
 								{

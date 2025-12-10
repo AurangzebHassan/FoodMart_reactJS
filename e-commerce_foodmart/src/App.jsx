@@ -183,19 +183,38 @@ import { CartProvider } from "./context/CartContext";
 		if (isLoading)
 		
 			return (
-		
-				<div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
 
-					<span className="text-4xl font-extrabold text-white text-center"> Checking authentication </span>
+				<>
+		
+					<div className="hidden md:flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
+
+						<span className="text-4xl font-extrabold text-white text-center"> Checking authentication </span>
+
+						
+						<Loader size="xl" color="border-white border-9" />
+
+						<Loader size="large" color="border-white border-7" />
+
+						<Loader size="medium" color="border-white border-6" />
+
+					</div>
+
 
 					
-					<Loader size="xl" color="border-white border-9" />
+					<div className="flex md:hidden w-full h-screen fixed inset-0 items-center justify-center bg-yellow-500 gap-2">
 
-					<Loader size="large" color="border-white border-7" />
+						<span className="text-xl font-extrabold text-white text-center"> Checking authentication </span>
 
-					<Loader size="medium" color="border-white border-6" />
+						
+						<Loader size="large" color="border-white border-7" />
 
-				</div>
+						<Loader size="medium" color="border-white border-6" />
+
+						<Loader size="small" color="border-white border-5" />
+
+					</div>
+					
+				</>
 				
 			);
 
