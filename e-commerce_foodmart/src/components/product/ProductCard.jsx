@@ -392,11 +392,19 @@ export default function ProductCard({ Product }) {
                                                 addToCartLoading ? 
                                                 
                                                 (
-                                                    <div className="flex items-center justify-center">
-                            
-                                                        <Loader size="medium" color="border-yellow-500 border-5" />
-                            
-                                                    </div>
+                                                    <>
+                                                        <div className="hidden md:flex items-center justify-center">
+                                
+                                                            <Loader size="medium" color="border-yellow-500 border-5" />
+                                
+                                                        </div>
+                                                        
+                                                        <div className="flex md:hidden items-center justify-center">
+                                
+                                                            <Loader size="small" color="border-yellow-500 border-1" />
+                                
+                                                        </div>
+                                                    </>
                                                 )         
                                         
                                                 :

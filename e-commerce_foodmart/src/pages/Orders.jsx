@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { useAuth } from "../context/AuthContext";
+
 import { useCart } from "../context/CartContext";
 
 import Navbar from "../components/Navbar";
@@ -17,6 +19,8 @@ import { useNavigate } from "react-router-dom";
 export default function Orders()
 {
     const { orders, cancelOrder } = useCart();
+
+    const { profile } = useAuth();
 
 
 
@@ -165,7 +169,7 @@ export default function Orders()
                 
                 {/* ORDER LIST */}
                 
-                    <div className={`space-y-4 md:max-xl:space-y-8 md:max-xl:pl-27 md:max-xl:pr-13 xl:grid xl:grid-cols-2 2xl:grid-cols-3 xl:gap-4 2xl:gap-2`}>
+                    <div className={`space-y-2 md:space-y-4 md:max-xl:space-y-8 md:max-xl:pl-27 md:max-xl:pr-13 xl:grid xl:grid-cols-2 2xl:grid-cols-3 xl:gap-4 2xl:gap-2`}>
 
                     
                         {orders.map((order) => (
@@ -174,7 +178,7 @@ export default function Orders()
                                 
                                 key={order.$id}
                                 
-                                className={`h-fit border-4 bg-gray-50 ${(order.shipping_status === "delivered") ? `border-green-500` : (order.shipping_status === "shipped") ? `border-blue-500` : `border-yellow-500`} rounded-2xl hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200 p-3 md:p-6`}
+                                className={`h-fit border-3 md:border-4 bg-gray-50 ${(order.shipping_status === "delivered") ? `border-green-500` : (order.shipping_status === "shipped") ? `border-blue-500` : `border-yellow-500`} rounded-2xl hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200 p-3 md:p-6`}
                             >
                                 {/* Top Section: Order ID + Status */}
                                 
@@ -184,14 +188,14 @@ export default function Orders()
                                         <div className="flex-col">
                                             
 
-                                            <p className="md:text-lg font-extrabold text-gray-700 md:mb-1">
+                                            <p className="max-md:text-[13px] md:text-lg font-extrabold text-gray-700 md:mb-1">
                                     
-                                                Order <span title={order.$id.toUpperCase()} className="hover:text-gray-600 italic font-mono text-gray-500 text-lg md:text-xl"> #{order.$id.slice(-6).toUpperCase()} </span>
+                                                Order <span title={order.$id.toUpperCase()} className="hover:text-gray-600 italic font-mono text-gray-500 max-md:text-[15px] md:text-xl"> #{order.$id.slice(-6).toUpperCase()} </span>
                                     
                                             </p>
                                                 
                                                 
-                                            <p title="Order Creation At" className="text-[12px] md:text-sm font-light italic text-gray-700">
+                                        <p title="Order Creation At" className={`${(order.shipping_status === "processing") ? `max-md:text-[9px]` : `max-md:text-[10px]`} md:text-sm font-light italic text-gray-700`}>
                                         
                                                 {formatDateTime(order.$createdAt, {withTime: true})}
                                         
@@ -201,12 +205,12 @@ export default function Orders()
                                         </div>
                                         
                                     
-                                        <div className="flex shrink-0 items-center gap-1 md:gap-3">
+                                        <div className="flex shrink-0 items-center gap-2 md:gap-3">
                                             
                                             
                                             <button
                                                     
-                                                className={(order.shipping_status === "shipped" || order.shipping_status === "delivered") ? `hidden` : `hover:-translate-y-1 transition-all duration-200`}
+                                                className={(order.shipping_status === "shipped" || order.shipping_status === "delivered" || cancelOrderLoading) ? `hidden` : `hover:-translate-y-1 transition-all duration-200`}
                                                 
                                                 onClick=
                                                 {
@@ -223,12 +227,12 @@ export default function Orders()
                                                 title="Cancel"
                                             >
                                                 
-                                                <img src="/icons/cancel.png" alt="cancel" className="w-7" />
+                                                <img src="/icons/cancel.png" alt="cancel" className="w-5.5 md:w-7" />
                                                 
                                             </button>
 
                                     
-                                            <span className={`hover:-translate-y-1 transition-all duration-200 px-4 py-1 text-white font-bold rounded-full
+                                            <span className={`hover:-translate-y-1 transition-all duration-200 max-md:text-[10px] max-md:p-1.5 md:px-4 md:py-1 text-white font-bold rounded-full
                                                 ${order.shipping_status === "pending" ? "bg-yellow-500" :
                                                 order.shipping_status === "shipped" ? "bg-blue-500" :
                                                 order.shipping_status === "delivered" ? "bg-green-600" :
@@ -240,8 +244,7 @@ export default function Orders()
                                                     cancelOrderLoading ? 
                                                     
                                                     (
-                                                        <div className={`flex items-center justify-center ${order.shipping_status.toLowerCase() === "processing" ? `px-9.25` : ``}`}>
-                                    
+                                                        <div className={`flex items-center justify-center`}>
                                                             <Loader size="medium" color="border-white border-4" />
                                 
                                                         </div>
@@ -267,7 +270,7 @@ export default function Orders()
 
                                 {/* ITEMS */}
                                 
-                                    <div className="space-y-4 mb-6 border-t pt-6">
+                                    <div className="space-y-1.5 md:space-y-4 mb-2 md:mb-6 border-t pt-2 md:pt-6">
 
                                     
                                         {order.items.map((item) => (
@@ -276,7 +279,7 @@ export default function Orders()
                                             
                                                 key={item.product_id}
                                                 
-                                                className={`relative cursor-default flex justify-between items-center border rounded-lg p-3 bg-gray-50 hover:bg-gray-100 /*${(order.shipping_status === "delivered") ? `bg-green-50 hover:bg-green-100` : (order.shipping_status === "shipped") ? `bg-blue-50 hover:bg-blue-100` : `bg-gray-50 hover:bg-gray-100`}*/ hover:-translate-y-1 hover:shadow-lg transition-all duration-200`}
+                                                className={`max-md:text-[9.5px] relative cursor-default flex justify-between items-center border rounded-lg max-md:px-2 max-md:py-1 md:p-3 bg-gray-50 hover:bg-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all duration-200`}
 
                                                 onClick={() => !cancelOrderLoading && navigate(`/product/${item.product_slug_snapshot}`)}
 
@@ -284,7 +287,7 @@ export default function Orders()
                                             >
                                                 
 
-                                                <p className={`text-sm font-semibold text-gray-700`}>
+                                                <p className={`max-md:text-[9.5px] md:text-sm font-semibold text-gray-700`}>
                                                 
                                                     {item.product_name_snapshot} × {item.quantity}
                                                 
@@ -309,7 +312,7 @@ export default function Orders()
 
                                 {/* Shipping + PAYMENT + TAX + TOTAL */}
                                 
-                                    <div className="border-t pt-6">
+                                    <div className="border-t pt-2 md:pt-6 max-md:text-[9.5px]">
                                         
 
                                         {/* SHIPPING ADDRESS */}
@@ -317,12 +320,14 @@ export default function Orders()
                                             <div className="flex justify-between font-bold">
                                             
 
-                                                <span className="text-gray-700 2xl:mr-16">Shipping Address: </span>
+                                                <span className="text-gray-700">Shipping Address: </span>
                                             
 
                                                 <span className="text-orange-600">
                                                 
-                                                    {order.shipping_address}
+                                                    {profile.address}
+                                                    
+                                                    {/* || order.shipping_address */}
                                                 
                                                 </span>
                                             
@@ -332,7 +337,7 @@ export default function Orders()
                                     
                                         {/* SHIPPING METHOD + COST */}
                                         
-                                            <div className="flex justify-between font-bold mt-2">
+                                            <div className="flex justify-between font-bold mt-1 md:mt-2">
                                             
 
                                                 <span className="text-gray-700">Shipping: </span>
@@ -375,7 +380,7 @@ export default function Orders()
                                     
                                         {/* EXPECTED DELIVERY DATE */}
                                         
-                                            <div className="flex justify-between font-bold mt-2">
+                                            <div className="flex justify-between font-bold mt-1 md:mt-2">
                                             
 
                                                 <span className="text-gray-700">Expected Delivery: </span>
@@ -393,7 +398,7 @@ export default function Orders()
                                     
                                         {/* PAYMENT METHOD */}
                                         
-                                            <div className="flex justify-between font-bold mt-2 mb-6">
+                                            <div className="flex justify-between font-bold mt-1 md:mt-2 mb-2 md:mb-6">
                                             
 
                                                 <span className="text-gray-700">Payment Method: </span>
@@ -411,12 +416,12 @@ export default function Orders()
                                     
                                         {/* TAX + SUBTOTAL + TOTAL AMOUNT */}
                                         
-                                            <div className=" border-t pt-6">
+                                            <div className=" border-t pt-2 md:pt-6">
 
                                         
                                                 {/* SUBTOTAL */}
                                                 
-                                                    <div className="flex justify-between text-lg font-bold">
+                                                    <div className="flex justify-between max-md:text-[12px] md:text-lg font-bold">
                                             
                                                 
                                                         <span className="text-gray-700">Subtotal:</span>
@@ -434,7 +439,7 @@ export default function Orders()
                                                     
                                                 {/* TAX AMOUNT */}
                                                 
-                                                    <div className="flex justify-between text-lg font-bold mt-2 mb-6">
+                                                    <div className="flex justify-between max-md:text-[12px] md:text-lg font-bold mt-1 md:mt-2 mb-2 md:mb-6">
                                             
                                                 
                                                         <span className="text-gray-700">Tax (10%):</span>
@@ -452,7 +457,7 @@ export default function Orders()
 
                                                 {/* TOTAL AMOUNT */}
                                                 
-                                                    <div className="flex justify-between text-2xl font-extrabold border-t pt-6">
+                                                    <div className="flex justify-between max-md:text-[14px] md:text-2xl font-extrabold border-t pt-2 md:pt-6">
                                             
                                                 
                                                         <span className="text-yellow-600">Total:</span>

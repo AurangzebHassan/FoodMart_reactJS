@@ -246,19 +246,19 @@ export default function Checkout()
 
             {/* CONTAINER */}
             
-                <div className="container mx-auto mt-10 mb-20 py-6 px-5 flex-col">
+                <div className="container mx-auto md:mt-10 md:mb-20 py-6 px-5 flex-col">
 
                 
                     {/* BACK + TITLE + REFRESH */}
                     
-                        <div className="flex mb-10 lg:mb-15">
+                        <div className="flex max-md:items-center md:mb-10 lg:mb-15">
                     
 
                             {/* BACL BUTTON */}
 
                                 <button
                                     
-                                    className="flex items-center justify-center w-30 lg:w-25 px-4 py-1 text-black font-extrabold bg-yellow-500 hover:bg-orange-600 rounded-lg"
+                                    className="flex items-center justify-center w-22 max-md:h-7 md:w-30 md:px-4 md:py-1 text-black max-md:text-[14px] font-extrabold bg-yellow-500 hover:bg-orange-600 rounded-lg"
                                     
                                     onClick={() => navigate(-1)}
                                 >
@@ -272,7 +272,7 @@ export default function Checkout()
                              
                                 <div className="w-full flex items-center justify-center">
                                     
-                                    <h1 className="text-4xl text-yellow-500 font-extrabold">
+                                    <h1 className="text-3xl md:text-4xl text-yellow-500 font-extrabold">
                                         
                                         Checkout
                                         
@@ -301,7 +301,7 @@ export default function Checkout()
                                         disabled={refreshCartLoading || clearCartLoading || updatingItemId !== null || removingItemId !== null}
                                     >
     
-                                        <img src="/icons/refresh.png" alt="refresh" className="w-11" />
+                                        <img src="/icons/refresh.png" alt="refresh" className="w-8 md:w-11" />
                                         
                                 </button>
 
@@ -315,7 +315,7 @@ export default function Checkout()
                         
                         {/* CART ITEMS LIST */}
                     
-                            <div className="max-lg:mt-10 lg:col-span-2 xl:col-span-4 2xl:col-span-4 space-y-6 mb-12 lg:mb-20 lg:pr-5">
+                            <div className="max-lg:mt-5 lg:col-span-2 xl:col-span-4 2xl:col-span-4 space-y-2 md:space-y-6 lg:mb-20 lg:pr-5">
                                 
                                 
                                 {localCart.map((item) => 
@@ -332,14 +332,14 @@ export default function Checkout()
                                             
                                             key={item.$id}
                                             
-                                            className="relative border border-gray-50 bg-white rounded-lg drop-shadow-lg hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-300 p-4 flex lg:max-xl:flex-col gap-4"
+                                            className="relative border border-gray-50 bg-white rounded-lg drop-shadow-lg hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-300 p-2 md:p-4 flex lg:max-xl:flex-col gap-2 md:gap-4"
                                         >
                                             
                                             {/* discount */}
                                             
                                                 {item.discount_value > 0 && (
                                                     
-                                                    <div className={`absolute ${(item.discount_value > 9.99) ? `left-65 top-33.5 lg:left-74 xl:left-59 xl:top-46 lg:top-42` : `left-66.5 top-33.5 lg:left-75.5 xl:left-60.5 xl:top-45.5 lg:top-41.75`} px-2 py-2 bg-green-700 hover:-translate-y-1 transition-all duration-200 text-white text-sm lg:text-md font-extrabold rounded-full`}>
+                                                    <div className={`absolute ${(item.discount_value > 9.99) ? `max-md:bottom-3.25 left-3 md:left-65 md:top-33.5 lg:left-74 xl:left-59 xl:top-46 lg:top-42` : `max-md:bottom-3.25 left-3 md:left-66.5 md:top-33.5 lg:left-75.5 xl:left-60.5 xl:top-45.5 lg:top-41.75`} p-1 md:p-2 bg-green-700 hover:-translate-y-1 transition-all duration-200 text-white max-md:text-[10px] md:text-sm lg:text-md font-extrabold rounded-full`}>
                                                     
                                                         {product.discount_tag}
                                                         
@@ -353,7 +353,7 @@ export default function Checkout()
                                             
                                                 <div
                                                     
-                                                    className="absolute top-6 left-6 bg-white rounded-full p-2.5 cursor-pointer hover:-translate-y-0.5 transition-all duration-200"
+                                                    className={`absolute top-2.75 ${(product.slug === 'fruita-vitals-orange-juice') ? `left-17.5`: `left-19.25`} md:top-6 md:left-6 bg-white rounded-full p-1 md:p-2.5 cursor-pointer hover:-translate-y-0.5 transition-all duration-200`}
                                                     
                                                     onClick={() => handleFavouriteClick(product.$id)}
                                                 >
@@ -362,7 +362,7 @@ export default function Checkout()
                                                         
                                                         src={isProductFavourite(product.$id) ? "/icons/heart.png" : "/icons/heart.svg"}
                                                         
-                                                        className="w-8.5"
+                                                        className="w-4.5 md:w-8.5"
                                                     />
                                                 
                                                 </div>
@@ -377,7 +377,7 @@ export default function Checkout()
                                                     
                                                     alt={product.name}
                                                     
-                                                    className="lg:w-90 xl:w-70 lg:h-50 xl:h-55 max-lg:h-41 max-lg:w-75 rounded-lg object-contain cursor-pointer bg-gray-100 hover:bg-gray-200 transtition-all duration-200"
+                                                    className="max-md:w-25 max-md:h-25 lg:w-90 xl:w-70 lg:h-50 xl:h-55 md:h-41 md:w-75 rounded-lg object-contain cursor-pointer bg-gray-100 hover:bg-gray-200 transtition-all duration-200"
                                                     
                                                     onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleProductClick(product)}}
                                                 />
@@ -396,7 +396,7 @@ export default function Checkout()
                                                     
                                                             <p
                                                             
-                                                                className="font-mono text-xl font-bold cursor-pointer text-gray-700 hover:text-black"
+                                                                className="font-mono max-md:text-[10.5px] md:text-xl font-bold cursor-pointer text-gray-700 hover:text-black"
                                                                 
                                                                 onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleProductClick(product)}}
                                                             >
@@ -408,17 +408,27 @@ export default function Checkout()
                                                 
                                                         {/* quantity badge */}
                                                             
-                                                            <span className={`lg:max-xl:absolute lg:top-5.75 lg:right-5.75 cursor-default text-white text-3xl lg:py-2 hover:-translate-y-1 bg-yellow-500 transition-all duration-200 hover:bg-orange-600 ${item.quantity > 9 ? "px-1.5 lg:px-3" : `${((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ? `px-2 lg:px-4` : `px-3 lg:px-5`}`} rounded-full font-extrabold`}>
+                                                            <span className={`lg:max-xl:absolute lg:top-5.75 lg:right-5.75 cursor-default text-white max-md:text-[12px] md:text-3xl lg:py-2 hover:-translate-y-1 bg-yellow-500 transition-all duration-200 hover:bg-orange-600 ${item.quantity > 9 ? "px-1.5 lg:px-3" : `${((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ? `px-1.5 md:px-2 lg:px-4` : `px-2 md:px-3 lg:px-5`}`} rounded-full font-extrabold`}>
                                                                 
                                                                 {
                                                                     ((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ?
                                                                     
                                                                     (
-                                                                        <div className={`flex items-center justify-center py-1.75 ${item.quantity > 9 ? `lg:px-1.25` : ``}`}>
-                                                
-                                                                            <Loader size="medium" color="border-white border-6" />
-                                                
-                                                                        </div>
+                                                                        <>
+                                                                        
+                                                                            <div className={`hidden md:flex items-center justify-center py-1.75 ${item.quantity > 9 ? `lg:px-1.25` : ``}`}>
+                                                    
+                                                                                <Loader size="medium" color="border-white border-6" />
+                                                    
+                                                                            </div>
+                                                                            
+                                                                            <div className={`md:hidden flex items-center justify-center ${item.quantity > 9 ? `max-md:py-px` : ``}`}>
+                                                    
+                                                                                <Loader size="small" color="border-white border-1" />
+                                                    
+                                                                            </div>
+                                                                    
+                                                                        </>
                                                                     ) 
                                                                 
                                                                     : 
@@ -436,10 +446,10 @@ export default function Checkout()
                                                 
                                                     {/* Stock + Rating + Quantity control buttons */}
                                                                                     
-                                                        <div className="flex-col pl-6 md:max-lg:mt-2 lg:mt-2">
+                                                        <div className="flex-col pl-3 md:pl-6 mt-1 md:mt-2">
                                                             
                                                     
-                                                            <p className={`font-light text-sm`}>
+                                                            <p className={`font-light max-md:text-[9px] md:text-sm`}>
                                                                                 
                                                                 {" "}
                                                         
@@ -474,12 +484,12 @@ export default function Checkout()
                                             
                                                             {/* buttons */}
                                                             
-                                                                <div className="flex gap-5 lg:mt-6 justify-end items-center">
+                                                                <div className="flex gap-3 md:gap-5 max-md:mt-2 lg:mt-6 justify-end items-center">
                                                                     
                                                                     
                                                                     <button
                                                                         
-                                                                        className={`px-3 text-2xl lg:text-3xl cursor-pointer rounded-full font-semibold ${product.stock === 0 || clearCartLoading || placingOrderLoading || refreshCartLoading ? "bg-gray-300" : "bg-yellow-300 hover:bg-orange-600" }`}
+                                                                        className={`px-1.75 md:px-3 max-md:text-[14px] md:text-2xl lg:text-3xl cursor-pointer rounded-full font-semibold ${product.stock === 0 || clearCartLoading || placingOrderLoading || refreshCartLoading ? "bg-gray-300" : "bg-yellow-300 hover:bg-orange-600" }`}
                                                                         
                                                                         onClick=
                                                                         {
@@ -503,7 +513,7 @@ export default function Checkout()
                                                                     
                                                                     <button
                                                                         
-                                                                        className={`px-3 text-2xl lg:text-3xl rounded-full cursor-pointer font-bold ${ item.quantity === 1 || clearCartLoading || placingOrderLoading || refreshCartLoading ? "bg-gray-300" : "bg-yellow-300 hover:bg-orange-600" }`}
+                                                                        className={`px-1.75 md:px-3 max-md:text-[14px] md:text-2xl lg:text-3xl rounded-full cursor-pointer font-bold ${ item.quantity === 1 || clearCartLoading || placingOrderLoading || refreshCartLoading ? "bg-gray-300" : "bg-yellow-300 hover:bg-orange-600" }`}
                                                                         
                                                                         onClick=
                                                                         {
@@ -552,7 +562,7 @@ export default function Checkout()
                                                                             
                                                                                 src="/icons/delete.png"
                                                                                 
-                                                                                className="lg:w-8 w-6 mx-auto"
+                                                                                className="w-3.25 lg:w-8 md:w-6 mx-auto"
                                                                             />
                                                                         
                                                                         </button>
@@ -567,15 +577,15 @@ export default function Checkout()
                                                 
                                                     {/* price row */}
                                                     
-                                                        <div className="flex justify-between lg:mt-6 md:mt-7">
+                                                        <div className="flex justify-between mt-2 lg:mt-6 md:mt-7">
                                                             
                                                     
-                                                            <div className="flex gap-3">
+                                                            <div className="flex gap-1 md:gap-3">
                                                             
                                                         
                                                                 {item.discount_value > 0 && (
                                                             
-                                                                    <p className="text-gray-600 lg:text-[22px] font-mono">
+                                                                    <p className="text-gray-600 max-md:text-[11px] lg:text-[22px] font-mono">
                                                                     
                                                                         {formatPrice(
                                                                     
@@ -593,7 +603,7 @@ export default function Checkout()
                                                         
                                                                 <p
                                                         
-                                                                    className={`font-mono ${ item.discount_value ? "mt-1.5 line-through text-gray-400 text-md " : "text-gray-600 lg:text-[22px]" }`}
+                                                                    className={`font-mono ${ item.discount_value ? "mt-1 md:mt-1.5 line-through text-gray-400 max-md:text-[9px] md:text-md " : "text-gray-600 max-md:text-[11px] lg:text-[22px]" }`}
                                                                 >
                                                                     
                                                                     {formatPrice(
@@ -609,7 +619,7 @@ export default function Checkout()
                                                             </div>
 
                                                     
-                                                            <p className="text-[18px] lg:text-[23px] text-gray-800 font-mono font-bold">
+                                                            <p className="max-md:text-[12px] md:text-[18px] lg:text-[23px] text-gray-800 font-mono font-bold">
                                                     
                                                                 {formatPrice(item.subtotal, product.currency)}
                                                                 
@@ -633,7 +643,7 @@ export default function Checkout()
                 
                         {/* CHECKOUT SUMMARY CARD + BUTTONS */}
                         
-                            <div className="lg:sticky lg:top-27 xl:top-33 lg:self-start sm:col-span-3 sm:flex sm:flex-col lg:items-stretch xl:col-span-3 2xl:col-span-3 grid grid-cols-5 sm:grid-cols-1 max-lg:border-b-4 pt-10 lg:pt-0">
+                            <div className="lg:sticky lg:top-27 xl:top-33 lg:self-start col-span-3 flex-col lg:items-stretch xl:col-span-3 2xl:col-span-3 grid grid-cols-1 max-lg:border-b-4 max-md:pt-5 lg:pt-0">
                                 
                             
                                 {/* CHECKOUT SUMMARY CARD */}
@@ -641,12 +651,12 @@ export default function Checkout()
                                 <div className="col-span-4 mb-5 hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200">
 
                             
-                                    <div className="border-4 bg-gray-50 border-yellow-500 rounded-2xl">
+                                    <div className="border-3 md:border-4 bg-gray-50 border-yellow-500 rounded-2xl">
 
                                 
                                         {/* Title */}
                                         
-                                            <h2 className="text-3xl p-6 font-extrabold text-yellow-600 rounded-xl border-b-4 border-yellow-500 bg-yellow-200 mb-6 text-center">
+                                            <h2 className="text-lg md:text-3xl p-3 md:p-6 font-extrabold text-yellow-600 rounded-xl border-b-3 md:border-b-4 border-yellow-500 bg-yellow-200 mb-2 md:mb-6 text-center">
                                         
                                                 Order Summary
                                                 
@@ -656,22 +666,31 @@ export default function Checkout()
 
                                         {/* Total Items + Subtotal */}
                                         
-                                            <div className="flex justify-between text-xl font-bold mb-4 px-10">
+                                            <div className="flex items-center justify-between md:text-xl font-bold mb-1 md:mb-4 px-5 md:px-10">
                                             
-                                                <span className="text-gray-700">Items:</span>
+                                                <span className="text-gray-700 max-md:text-[14px]">Items:</span>
                                             
-                                                <span className="text-orange-600">
+                                                <span className="text-orange-600 max-md:text-[11px]">
                                                     
 
                                                     {
                                                         (updatingItemId || removingItemId || clearCartLoading || refreshCartLoading) ?
                                                         
                                                         (
-                                                            <div className={`flex items-center justify-center`}>
+                                                            <>
+                                                                <div className={`hidden md:flex items-center justify-center`}>
+                                        
+                                                                    <Loader size="medium" color="border-orange-600 border-4" />
+                                        
+                                                                </div>
+                                                        
+                                                                
+                                                                <div className={`flex md:hidden items-center justify-center`}>
                                     
-                                                                <Loader size="medium" color="border-orange-600 border-4" />
+                                                                    <Loader size="small" color="border-orange-600 border-1" />
                                     
-                                                            </div>
+                                                                </div>
+                                                            </>
                                                         ) 
                                                     
                                                         : 
@@ -687,22 +706,31 @@ export default function Checkout()
                                             </div>
 
                                     
-                                            <div className="flex justify-between text-xl font-bold mb-6 px-10">
+                                            <div className="flex items-center justify-between md:text-xl font-bold mb-2 md:mb-6 px-5 md:px-10">
                                     
-                                                <span className="text-gray-700">Subtotal:</span>
+                                                <span className="text-gray-700 max-md:text-[14px]">Subtotal:</span>
                                                 
-                                                <span className="text-orange-600">
+                                                <span className="text-orange-600 max-md:text-[11px]">
 
                                         
                                                     {
                                                         (updatingItemId || removingItemId || clearCartLoading || refreshCartLoading) ?
                                                         
                                                         (
-                                                            <div className={`flex items-center justify-center`}>
+                                                             <>
+                                                                <div className={`hidden md:flex items-center justify-center`}>
+                                        
+                                                                    <Loader size="medium" color="border-orange-600 border-4" />
+                                        
+                                                                </div>
+                                                        
+                                                                
+                                                                <div className={`flex md:hidden items-center justify-center`}>
                                     
-                                                                <Loader size="medium" color="border-orange-600 border-4" />
+                                                                    <Loader size="small" color="border-orange-600 border-1" />
                                     
-                                                            </div>
+                                                                </div>
+                                                            </>
                                                         ) 
                                                     
                                                         : 
@@ -721,13 +749,13 @@ export default function Checkout()
 
                                         {/* SHIPPING OPTIONS */}
                                         
-                                            <div className="mb-6 px-10">
+                                            <div className="mb-2 md:mb-6 px-5 md:px-10">
                                         
                                         
-                                                <p className="text-2xl font-extrabold text-yellow-600 mb-3">Shipping</p>
+                                                <p className="max-md:text-lg md:text-2xl font-extrabold text-yellow-600 mb-1 md:mb-3">Shipping</p>
 
                                         
-                                                <div className="space-y-3 text-lg text-gray-700 font-semibold pl-5">
+                                                <div className="md:space-y-3 max-md:text-[11px] md:text-lg text-gray-700 font-semibold pl-5">
 
                                             
 
@@ -744,7 +772,7 @@ export default function Checkout()
                                                                     value="standard"
                                                                     checked={selectedShipping === "standard"}
                                                                     onChange={() => setSelectedShipping("standard")}
-                                                                    className="mr-3"
+                                                                    className="mr-3 w-2.5 accent-orange-600"
                                                                 />
                                                             
                                                                 Standard (4–6 days)
@@ -776,7 +804,7 @@ export default function Checkout()
                                                                     value="fast"
                                                                     checked={selectedShipping === "fast"}
                                                                     onChange={() => setSelectedShipping("fast")}
-                                                                    className="mr-3"
+                                                                    className="mr-3 w-2.5 accent-orange-600"
                                                                 />
                                                             
                                                                 Fast (2–3 days)
@@ -808,7 +836,7 @@ export default function Checkout()
                                                                     value="express"
                                                                     checked={selectedShipping === "express"}
                                                                     onChange={() => setSelectedShipping("express")}
-                                                                    className="mr-3"
+                                                                    className="mr-3 w-2.5 accent-orange-600"
                                                                 />
                                                             
                                                                     Express (1 day)
@@ -835,11 +863,11 @@ export default function Checkout()
                                     
                                         {/* ADDRESS */}
                                         
-                                            <div className="flex justify-between lg:items-center font-bold mb-4 px-10">
+                                            <div className="flex items-center justify-between lg:items-center font-bold mb-2 md:mb-4 px-5 md:px-10">
                                             
-                                                <span className="text-gray-700 text-xl md:max-lg:mr-17 lg:mr-15">Address:</span>
+                                                <span className="text-gray-700 max-md:text-[14px] md:text-xl md:max-lg:mr-17 lg:mr-15">Address:</span>
                                             
-                                                <span className="text-orange-600">{profile.address}</span>
+                                                <span className="text-orange-600 max-md:text-[11px]">{profile.address}</span>
                                                 
                                             </div>
 
@@ -865,27 +893,36 @@ export default function Checkout()
                                                                     
                                                 return (
                                                     
-                                                    <div className="bg-yellow-200 rounded-xl text-yellow-500 p-4 mt-6 px-10 border-t-4">
+                                                    <div className="bg-yellow-200 rounded-xl text-yellow-500 p-2 md:p-4 mt-2 md:mt-6 px-5 md:px-10 border-t-3 md:border-t-4">
                                                         
                                                         
-                                                        <div className="flex justify-between text-lg font-semibold mb-4 mt-2">
+                                                        <div className="flex justify-between md:text-lg font-semibold mb-2 md:mb-4 mt-1 md:mt-2">
                                                             
 
-                                                            <span className="text-gray-800 font-semibold">Tax (10%):</span>
+                                                            <span className="text-gray-800 font-semibold max-md:text-[14px]">Tax (10%):</span>
                                                             
                                                             
-                                                            <span className="text-orange-600">
+                                                            <span className="text-orange-600 max-md:text-[11px]">
                                                             
                                                                 
                                                                 {
                                                                     (updatingItemId || removingItemId || clearCartLoading || refreshCartLoading) ?
                                                                     
                                                                     (
-                                                                        <div className={`flex items-center justify-center`}>
+                                                                         <>
+                                                                            <div className={`hidden md:flex items-center justify-center`}>
+                                                    
+                                                                                <Loader size="medium" color="border-orange-600 border-4" />
+                                                    
+                                                                            </div>
+                                                                    
+                                                                            
+                                                                            <div className={`flex md:hidden items-center justify-center`}>
                                                 
-                                                                            <Loader size="medium" color="border-orange-600 border-4" />
+                                                                                <Loader size="small" color="border-orange-600 border-1" />
                                                 
-                                                                        </div>
+                                                                            </div>
+                                                                        </>
                                                                     ) 
                                                                 
                                                                     : 
@@ -902,10 +939,10 @@ export default function Checkout()
                                                         </div>
 
                                                         
-                                                        <div className="flex justify-between text-2xl font-extrabold">
+                                                        <div className="flex justify-between md:text-2xl font-extrabold">
                                                             
 
-                                                            <span className="text-yellow-600">Total:</span>
+                                                            <span className="text-yellow-600 text-lg">Total:</span>
                                                             
                                                             
                                                             <span className="text-black font-extrabold">
@@ -915,11 +952,20 @@ export default function Checkout()
                                                                     (updatingItemId || removingItemId || clearCartLoading || refreshCartLoading) ?
                                                                     
                                                                     (
-                                                                        <div className={`flex items-center justify-center`}>
+                                                                         <>
+                                                                            <div className={`hidden md:flex items-center justify-center`}>
+                                                    
+                                                                                <Loader size="large" color="border-black border-6" />
+                                                    
+                                                                            </div>
+                                                                    
+                                                                            
+                                                                            <div className={`flex md:hidden items-center justify-center`}>
                                                 
-                                                                            <Loader size="large" color="border-black border-6" />
+                                                                                <Loader size="medium" color="border-black border-6" />
                                                 
-                                                                        </div>
+                                                                            </div>
+                                                                        </>
                                                                     ) 
                                                                 
                                                                     : 
@@ -955,19 +1001,19 @@ export default function Checkout()
                                 
                                     {cartQuantity > 0 && (
                                         
-                                            <div className="max-lg:pl-2 max-lg:mb-10">
+                                            <div className="mb-5 md:max-lg:mb-10">
 
                                         
                                                 {/* Buttons */}
                                                 
-                                                    <div className="grid gap-6 sm:grid-cols-7 sm:gap-2">
+                                                    <div className="grid md:gap-3 grid-cols-7 max-md:gap-2 max-md:text-[12px]">
 
                                                         
                                                         {/* PLACE ORDER (placeholder — logic later) */}
                                             
                                                             <button
                                                                 
-                                                                className={`col-span-3 ${clearCartLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null ? `bg-gray-400 text-black` : `bg-yellow-500 text-white hover:bg-orange-600 hover:-translate-y-1`} transition-all duration-200 rounded-full py-2 font-extrabold`}
+                                                                className={`col-span-3 ${clearCartLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null ? `bg-gray-400 text-black` : `bg-yellow-500 text-white hover:bg-orange-600 hover:-translate-y-1`} transition-all duration-200 rounded-full md:py-2 font-extrabold`}
                                                                 
                                                                 onClick=
                                                                 {
