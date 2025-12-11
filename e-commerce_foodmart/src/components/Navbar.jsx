@@ -732,7 +732,7 @@ export default function Navbar()
                             
                                         alt="Cart"
 
-                                        className="xl:mt-3 xl:mr-2 2xl:mt-3.5 h-4 md:h-7 cursor-pointer"
+                                        className="xl:mt-3 xl:mr-2 2xl:mt-3.5 h-4.25 md:h-7 cursor-pointer"
 
                                     />
                                     
@@ -768,7 +768,7 @@ export default function Navbar()
 
                                     // src={(profile || user) ? (profile.profile_pic) : "/icons/user.svg"}
 
-                                    className={`cursor-pointer h-4`}                                    
+                                    className={`cursor-pointer h-4.25`}                                    
                                 />
                             
                             </Link>

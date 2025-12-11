@@ -256,7 +256,7 @@ export default function CartDrawer({ onClose })
 								
 								title="Refresh Cart" 
 								
-								className={`mr-2.5 md:mr-2 ${(!cartQuantity || clearCartLoading || removingItemId || updatingItemId) ? `invisible` : `hover:-translate-y-1 transition-all duration-200`}`}
+								className={`mr-2.5 md:mr-2 ${(!cartQuantity || clearCartLoading || removingItemId || updatingItemId) ? `invisible` : `active:-translate-y-1 hover:-translate-y-1 transition-all duration-200`}`}
 								
 								disabled={!cartQuantity || clearCartLoading || removingItemId || updatingItemId}
 							>
@@ -275,7 +275,7 @@ export default function CartDrawer({ onClose })
 						<h1 className="text-2xl md:text-3xl font-extrabold text-yellow-500">Your Cart</h1>
 						
 						<span
-						className={`text-white text-[20px] md:text-[25px] hover:-translate-y-1 bg-yellow-500 hover:bg-orange-600 ${
+						className={`text-white text-[20px] md:text-[25px] active:-translate-y-1 hover:-translate-y-1 bg-yellow-500 active:bg-orange-600 hover:bg-orange-600 ${
 							cartQuantity > 9 ? "px-3" : "px-4.5"
 						} rounded-full font-bold transition-all duration-200`}
 						>
@@ -327,7 +327,7 @@ export default function CartDrawer({ onClose })
 													product.price > 9.99
 													? "px-0.75"
 													: "px-1.5"
-												} bg-green-700 text-white font-extrabold text-[10px] md:text-sm cursor-pointer hover:-translate-y-1 p-0.5 rounded-full transition-all duration-200`}
+												} bg-green-700 text-white font-extrabold text-[10px] md:text-sm cursor-pointer active:-translate-y-1  hover:-translate-y-1 p-0.5 rounded-full transition-all duration-200`}
 												>
 												{product.discount_tag}
 												</div>
@@ -338,7 +338,7 @@ export default function CartDrawer({ onClose })
 					
 											<div
 										
-												className={`absolute left-11 top-23 md:top-30 md:left-12 hover:-translate-y-0.5 p-2 rounded-full transition-all duration-200`}
+												className={`absolute left-11 top-23 md:top-30 md:left-12 active:-translate-y-0.5 hover:-translate-y-0.5 p-2 rounded-full transition-all duration-200`}
 										
 												onClick={() => {handleFavouriteClick(item.product.$id)}}
 											>
@@ -442,7 +442,7 @@ export default function CartDrawer({ onClose })
 													{/* PRODUCT QUANTITY */}
 														
 														<span
-														className={`text-white text-[20px] md:text-[25px] hover:-translate-y-1 bg-yellow-500 hover:bg-orange-600 ${
+														className={`text-white text-[20px] md:text-[25px] active:-translate-y-1 hover:-translate-y-1 bg-yellow-500 active:bg-orange-600 hover:bg-orange-600 ${
 															item.quantity > 9 ? "px-3" : "px-4.5"
 														} rounded-full font-bold transition-all duration-200`}
 														>

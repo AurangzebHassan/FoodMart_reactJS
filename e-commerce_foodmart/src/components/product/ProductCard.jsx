@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { useAuth } from "../../context/AuthContext";
 
@@ -50,6 +50,77 @@ export default function ProductCard({ Product }) {
 
     
     let [existingStock, setExistingStock] = useState(liveProduct.stock);
+
+
+
+    const incrementIntervalRef = useRef(null);
+    
+    const decrementIntervalRef = useRef(null);
+
+    // For click vs hold logic
+
+        const incrementTimeoutRef = useRef(null);
+        const decrementTimeoutRef = useRef(null);
+
+        const holdThreshold = 500; // ms before hold starts
+        const holdInterval = 200;  // ms for repeated increments/decrements
+
+
+
+    // Increment
+        const handleIncrementHoldStart = () => {
+        incrementTimeoutRef.current = setTimeout(() => {
+            incrementIntervalRef.current = setInterval(() => {
+            setQuantity(q => Math.min(q + 1, existingStock));
+            }, holdInterval);
+        }, holdThreshold);
+        };
+
+    // Decrement
+        const handleDecrementHoldStart = () => {
+        decrementTimeoutRef.current = setTimeout(() => {
+            decrementIntervalRef.current = setInterval(() => {
+            setQuantity(q => Math.max(q - 1, 0));
+            }, holdInterval);
+        }, holdThreshold);
+        };
+  
+
+
+    // Stop both intervals
+
+       const handleIncrementMouseUp = () => {
+         if (incrementTimeoutRef.current) {
+           clearTimeout(incrementTimeoutRef.current);
+           incrementTimeoutRef.current = null;
+
+           if (!incrementIntervalRef.current) {
+             setQuantity((q) => Math.min(q + 1, existingStock));
+           }
+         }
+
+         if (incrementIntervalRef.current) {
+           clearInterval(incrementIntervalRef.current);
+           incrementIntervalRef.current = null;
+         }
+       };
+
+       const handleDecrementMouseUp = () => {
+         if (decrementTimeoutRef.current) {
+           clearTimeout(decrementTimeoutRef.current);
+           decrementTimeoutRef.current = null;
+
+           if (!decrementIntervalRef.current) {
+             setQuantity((q) => Math.max(q - 1, 0));
+           }
+         }
+
+         if (decrementIntervalRef.current) {
+           clearInterval(decrementIntervalRef.current);
+           decrementIntervalRef.current = null;
+         }
+       };
+
 
 
 
@@ -152,13 +223,13 @@ export default function ProductCard({ Product }) {
     
     return (
       
-        <div className="relative p-3 md:p-5 flex-col items-center bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 w-40 h-fit md:w-70 mx-auto cursor-pointer">
+        <div className="relative p-3 md:p-5 flex-col items-center bg-white rounded-2xl shadow-lg max-md:active:shadow-2xl hover:shadow-2xl transition-all duration-300 w-40 h-fit md:w-70 mx-auto cursor-pointer">
     
             {/* wishlist heart */}
     
                 <div
             
-                    className={`absolute top-4 right-4 md:top-7 md:right-7 bg-white hover:-translate-y-0.5 p-1.5 md:p-3 rounded-full transition-all duration-200`}
+                    className={`absolute top-4 right-4 md:top-7 md:right-7 bg-white active:-translate-y-0.5 hover:-translate-y-0.5 p-1.5 md:p-3 rounded-full transition-all duration-200`}
             
                     onClick={() => {handleFavouriteClick()}}
                 >
@@ -179,7 +250,7 @@ export default function ProductCard({ Product }) {
     
                 {formatDiscount(liveProduct.discount_tag) && (
             
-                    <div className="max-md:text-[10px] absolute top-5.25 left-5 md:top-8 md:left-7 bg-green-700 text-white font-bold hover:-translate-y-1 p-1 rounded-xl transition-all duration-300">
+                    <div className="max-md:text-[10px] absolute top-5.25 left-5 md:top-8 md:left-7 bg-green-700 text-white font-bold active:-translate-y-1 hover:-translate-y-1 p-1 rounded-xl transition-all duration-300">
                 
                         {liveProduct.discount_tag}
             
@@ -316,17 +387,21 @@ export default function ProductCard({ Product }) {
 
                                             <button
 
-                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === liveProduct.stock) || addToCartLoading) ? `` : `hover:bg-gray-200`} max-md:h-4 w-5 md:w-7 font-bold rounded-md max-md:text-[12px] md:text-md`}
+                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === liveProduct.stock) || addToCartLoading) ? `` : `hover:bg-gray-200 active:bg-gray-200`} max-md:h-4 w-5 md:w-7 font-bold rounded-md max-md:text-[12px] md:text-md`}
 
                                                 disabled={(quantity === existingStock) || addToCartLoading}
+                                                
+                                                onTouchStart={handleIncrementHoldStart}
+                                                onTouchEnd={handleIncrementMouseUp}
+                                                onTouchCancel={handleIncrementMouseUp}
                                         
-                                                onClick={() =>
-                                                {
-                                                    if (quantity < existingStock)
-                                                    {
-                                                        setQuantity(quantity + 1);
-                                                    }
-                                                }}
+                                                // onClick={() =>
+                                                // {
+                                                //     if (quantity < existingStock)
+                                                //     {
+                                                //         setQuantity(quantity + 1);
+                                                //     }
+                                                // }}
                                             >
                                         
                                                 {" "}
@@ -343,17 +418,21 @@ export default function ProductCard({ Product }) {
                                     
                                             <button
                                         
-                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === 0) || addToCartLoading) ? `` : `hover:bg-gray-200`} max-md:h-4 w-5 md:w-7 font-bold rounded-md max-md:text-[12px] md:text-md`}
+                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === 0) || addToCartLoading) ? `` : `hover:bg-gray-200 active:bg-gray-200`} max-md:h-4 w-5 md:w-7 font-bold rounded-md max-md:text-[12px] md:text-md`}
 
                                                 disabled={(quantity === 0) || addToCartLoading}
+                                                
+                                                onTouchStart={handleDecrementHoldStart}
+                                                onTouchEnd={handleDecrementMouseUp}
+                                                onTouchCancel={handleDecrementMouseUp}
                                         
-                                                onClick={() => 
-                                                {
-                                                    if (quantity > 0)
-                                                    {
-                                                        setQuantity(quantity - 1);                                    
-                                                    }
-                                                }}
+                                                // onClick={() => 
+                                                // {
+                                                //     if (quantity > 0)
+                                                //     {
+                                                //         setQuantity(quantity - 1);                                    
+                                                //     }
+                                                // }}
                                             >
                                         
                                                 {" "}

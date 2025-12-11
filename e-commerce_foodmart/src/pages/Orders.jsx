@@ -284,7 +284,7 @@ export default function Orders()
                                 
                                 key={order.$id}
                                 
-                                className={`h-fit border-3 md:border-4 bg-gray-50 ${(order.shipping_status === "delivered") ? `border-green-500` : (order.shipping_status === "shipped") ? `border-blue-500` : `border-yellow-500`} rounded-2xl hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200 p-3 md:p-6`}
+                                className={`h-fit border-3 md:border-4 bg-gray-50 ${(order.shipping_status === "delivered") ? `border-green-500` : (order.shipping_status === "shipped") ? `border-blue-500` : `border-gray-500 /*border-yellow-500*/`} rounded-2xl active:drop-shadow-2xl active:-translate-y-1 hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200 p-3 md:p-6`}
                             >
                                 {/* Top Section: Order ID + Status */}
                                 
@@ -338,10 +338,10 @@ export default function Orders()
                                             </button>
 
                                     
-                                            <span className={`hover:-translate-y-1 transition-all duration-200 max-md:text-[10px] max-md:p-1.5 md:px-4 md:py-1 text-white font-bold rounded-full
+                                            <span className={`active:-translate-y-1 hover:-translate-y-1 transition-all duration-200 max-md:text-[10px] max-md:p-1.5 md:px-4 md:py-1 text-white font-bold rounded-full
                                                 ${order.shipping_status === "pending" ? "bg-yellow-500" :
                                                 order.shipping_status === "shipped" ? "bg-blue-500" :
-                                                order.shipping_status === "delivered" ? "bg-green-600" :
+                                                order.shipping_status === "delivered" ? "bg-green-500" :
                                                 "bg-gray-500"
                                                 }`}
                                             >
