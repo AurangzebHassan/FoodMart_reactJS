@@ -22,9 +22,9 @@ import { Link } from "react-router-dom";
 
 
 
-export default function Navbar( /*{ loggedInUser }*/ )
+export default function Navbar()
 {
-    const { user,/* profile, */setUser, setProfile } = useAuth();
+    const { user, profile, setUser, setProfile } = useAuth();
 
     const { cartQuantity, cartTotal, wishlistQuantity, isCheckoutPage, ordersQuantity } = useCart();
 
@@ -43,6 +43,11 @@ export default function Navbar( /*{ loggedInUser }*/ )
     // opening of the mobile menu drawer is dependent on this state
 
         const [openMobileMenu, setOpenMobileMenu] = useState(false);
+        
+    
+    // state to handle the opening of the mobile profile dropdown:
+    
+        const [showMobileProfileDropdown, setShowMobileProfileDropdown] = useState(false);
         
     
     // use a ref object to manipulate the DOM node using ref
@@ -100,6 +105,21 @@ export default function Navbar( /*{ loggedInUser }*/ )
             if (e.target.value !== "shopbydepartments")
             {
                 navigate(`/${e.target.value.toLowerCase()}`);
+            }
+    };
+
+
+
+    const handleCategoryChange = (e) =>
+    {
+        setSelectedDepartment(e.target.value);
+
+
+        // Navigate if not the default option
+    
+            if (e.target.value !== "shopbydepartments")
+            {
+                navigate(`/category/${e.target.value.toLowerCase()}`);
             }
     };
 
@@ -388,9 +408,16 @@ export default function Navbar( /*{ loggedInUser }*/ )
         
                     <div className="flex max-w-[30%] md:max-w-none shrink-0 grow-0 items-center transition-all duration-200">
                     
-                        <Link to="/" tabIndex={-1}>
+                        <Link to="/" tabIndex={-1} className="hidden md:flex">
                         
                             <img src="/images/logo.png" alt="FoodMart" />
+
+                        </Link>
+                        
+                        
+                        <Link to="/" tabIndex={-1} className="flex md:hidden">
+                        
+                            <img src="/images/mobile_logo.png" alt="FoodMart" className="w-8" />
 
                         </Link>
             
@@ -404,25 +431,31 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
                     <div 
                     
-                        className="hidden lg:flex lg:shrink lg:max-2xl:ml-3 2xl:w-3xl items-center justify-center transition-all duration-200"
+                        className="lg:flex lg:shrink lg:max-2xl:ml-3 2xl:w-3xl items-center justify-center transition-all duration-200"
                         
                         ref={wrapperRef}    
                     >
                             
                         {/* departments dropdown */}
                         
-                        <div className="text-lg text-yellow-600 font-semibold rounded-l-full focus:border-0 bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 cursor-pointer">
+                        <div className="md:max-lg:-mr-4 md:max-lg:hidden text-[12px] lg:text-lg text-yellow-600 font-semibold rounded-l-full focus:border-0 bg-gray-100 lg:hover:bg-gray-200 focus:bg-gray-200 cursor-pointer">
                                 
-                            <select name="departments" id="departments" value={selectedDepartment} onChange={handleDepartmentChange} className="focus:border-none p-3 text-center">
+                            <select name="departments" id="departments" value={selectedDepartment} onChange={handleCategoryChange} className="focus:border-none p-1.25 lg:p-3 text-center">
 
                                 <option value="shopbydepartments"> Categories </option>
                                 
-                                <option value="Groceries"> Groceries </option>
+                                <option value="fruits-veggies"> Fruits </option>
                                 
-                                <option value="Drinks"> Drinks </option>
+                                <option value="bread-sweets"> Sweets </option>
 
-                                <option value="Chocolates"> Chocolates </option>
+                                <option value="drinks-juices"> Drinks </option>
                                 
+                                <option value="herbs-condiments"> Condiments </option>
+                                
+                                <option value="meat-poultry"> Meat </option>
+
+                                <option value="wine"> Wine </option>
+
                             </select>
 
                         </div>
@@ -430,7 +463,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         
                         {/* search input box + icon */}
                         
-                        <div className="flex bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 rounded-r-full">
+                        <div className="hidden lg:flex bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 rounded-r-full">
                             
                             <input 
                             
@@ -599,175 +632,188 @@ export default function Navbar( /*{ loggedInUser }*/ )
                     
                 {/* Right side icons. Right side of the navbar */}
 
-                    <div className={`flex shrink-0 justify-end items-center ${user?.name.length > 9 ? `max-md:gap-2 md:gap-3.5` : `xl:-ml-2 max-md:gap-3 md:gap-5`} transition-all duration-200`}>
+                    <div className={`flex shrink-0 justify-end items-center ${user?.name.length > 9 ? `max-md:gap-6 md:gap-3.5` : `xl:-ml-2 max-md:gap-3 md:gap-5`} transition-all duration-200`}>
                         
+                        {/* Search modal search icon. Only for mobile and tablet view */}
                         
-                        <div className="lg:hidden" onClick={() => { setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50);}}>
-                        
-                            <img src="/icons/search.png" alt="FoodMart" className="h-6.5 p-1.25 md:h-11 md:p-2 rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer" />
-            
-                        </div>
-                        
-
-                        <Link 
-                        
-                            to="/orders"
-                            
-                            // to="/profile"
-                            
-                        //   className={`bg-gray-100 hover:bg-gray-200 rounded-full ${(profile?.profile_pic !== "/icons/user.svg" || getStoredProfilePic(user?.email) !== "/icons/user.svg") ? `` : `p-2`}`}
-                        
-                            className="relative bg-gray-100 hover:bg-gray-200 rounded-full p-1.25 sm:p-2"
-                            
-                            onClick={(e) => { e.preventDefault(); navigate("/orders"); }}
-                            
-                            // onClick={(e) => { e.preventDefault(); navigate("/profile"); }}
-                        
-                        >
-                            
-                            <img
-
-                                // src={(profile || user) ? (getStoredProfilePic(user?.email) || profile.profile_pic) : "/icons/user.svg"}
-                                
-                                // src="/icons/user.svg"
-                                
-                                src={ordersQuantity > 0 ? `/icons/order-delivery.png` : `/icons/shopping-bag.png`}
-
-                                title="orders"
-                    
-                                
-                                // alt={(profile || user) ? "User" : "Guest"}
-                                
-                                // title={(profile || user) ? (profile?.name || user?.name) : "Guest"}
-                    
-                                
-                                // className={(profile?.profile_pic !== "/icons/user.svg" || getStoredProfilePic(user?.email) !== "/icons/user.svg") ? "h-10 cursor-pointer rounded-full" : "h-7 cursor-pointer"}
-                                
-                                className="h-4 sm:h-7 cursor-pointer"
-                                
-                            />
-                            
-                            
-                            <span className={`absolute ${ordersQuantity > 9 ? `-top-3 -right-1.5 sm:-top-3.75 sm:-right-3.75 xl:-top-4 xl:-right-3 2xl:-top-4 2xl:-right-3.5` : `-top-2.5 -right-1 sm:-top-3.25 sm:-right-2 xl:-top-4 xl:-right-1.25 2xl:-top-4 2xl:-right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full max-sm:text-[10px] px-1.25 sm:px-2`}>
-                        
-                                    {ordersQuantity}
-                    
-                            </span>
-
-                        </Link>
+                            <div className="max-md:-ml-8 lg:hidden" onClick={() => { setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50); }}>
+                          
+                                <img src="/icons/search.png" alt="FoodMart" className="h-6.5 max-md:px-2 p-1.25 md:h-11 md:p-2 rounded-r-full md:rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer" />
                 
-                        
-                        <Link to="/wishlist" className="relative bg-gray-100 hover:bg-gray-200 rounded-full p-1.25 sm:p-2" onClick={(e) => { e.preventDefault(); navigate("/wishlist"); }}>
-
-                            <img
-                
-                                src="/icons/heart.svg"
-                    
-                                alt="Wishlist"
-                    
-                                className="h-4 sm:h-7 cursor-pointer"
-                                
-                                title="wishlist"
-                    
-                            />
-                            
-                                
-                            <span className={`absolute ${wishlistQuantity > 9 ? `-top-3 -right-1.5 sm:-top-3.75 sm:-right-3.75 xl:-top-4 xl:-right-3 2xl:-top-4 2xl:-right-3.5` : `-top-2.5 -right-1 sm:-top-3.25 sm:-right-2 xl:-top-4 xl:-right-1.25 2xl:-top-4 2xl:-right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full max-sm:text-[10px] px-1.25 sm:px-2`}>
-                        
-                                    {wishlistQuantity}
-                    
-                            </span>
-                            
-                        </Link>
-                
-                        
-                        <div
-                
-                            // setting openCart to true measn that the cart drawer should be opened now.
-                            
-                                onClick={() => setOpenCart(true)}
-                            
-                            className="xl:mx-7 2xl:mx-14 relative cursor-pointer flex flex-row justify-between"
-                            
-                            tabIndex={0}
-                            
-                            title="cart"
-                        >
-                            
-                        
-                            <div className="flex flex-row bg-gray-100 hover:bg-gray-200 rounded-full p-1.25 sm:p-2 2xl:w-50">
-                                
-                                <div className="hidden xl:flex xl:flex-col xl:items-center xl:mx-1 2xl:mr-0.5 cursor-pointer px-3 2xl:px-4">
-                                    
-                                    <span className="text-2xl font-bold"> Your Cart </span>
-
-                                    <span className="text-xl font-bold text-yellow-600 hover:text-orange-600"> {cartTotal ? `$${cartTotal}` : "$0.00"} </span>    
-                                
-                                </div>                
-                
-
-                                <img
-                                
-                                    src={isCheckoutPage ? `/icons/checkout.png` : `/icons/shopping-cart.png`}
-                        
-                                    alt="Cart"
-
-                                    className="xl:mt-3 xl:mr-2 2xl:mt-3.5 h-4 sm:h-7 cursor-pointer"
-
-                                />
-                                
-                    
-                                <span className={`absolute ${cartQuantity > 9 ? `-top-3 -right-1.5 sm:-top-3.5 sm:-right-4 xl:top-px xl:-right-2.5 2xl:top-px 2xl:-right-0.5` : `-top-2.5 -right-1 sm:-top-3 sm:-right-2 xl:-top-0.5 xl:right-1 2xl:top-px 2xl:right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full max-sm:text-[10px] px-1.25 sm:px-2`}>
-                        
-                                    {cartQuantity}
-                    
-                                </span>
-
                             </div>
-                            
-                
-                        </div>
-
                         
                       
-                        <div className={`flex items-center gap-1 sm:gap-2 mt-1 ${user?.name.length > 9 ? `ml-1 md:ml-10 lg:ml-7 xl:ml-0 2xl:ml-3` : `ml-3.5 md:ml-20 lg:ml-7 xl:ml-0 2xl:ml-3`}`}>
-                            
-                            <span className="flex lg:hidden text-[9px] sm:text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
-                            
-                                {(user && user?.name.length > 9) ? user?.name.slice(0, 8) + "..." : user?.name}
-                                {/* Guest */}
-
-                            </span>
-                            
-                            <span className="hidden lg:max-xl:flex text-[9px] sm:text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
-                            
-                                {(user && user?.name.length > 11) ? user?.name.slice(0, 10) + "..." : user?.name}
-                                {/* Guest */}
-
-                            </span>
-                            
-                            <span className="hidden xl:flex text-[9px] sm:text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
-                            
-                                {(user && user?.name.length > 13) ? user?.name.slice(0, 12) : user?.name}
-                                {/* Guest */}
-
-                            </span>
-                            
-
-                            <button 
-                            
-                                // className="mt-1 px-2 py-0.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg"
-                                
-                                // className="mt-1 md:ml-5 lg:ml-10 xl:ml-5 transition-all duration-200 rounded-full"
+                        {/* Orders button only for tablets and desktop. */}
                         
-                                onClick={handleLogout}
+                            <Link 
+                            
+                                to="/orders"
+                            
+                                className="hidden md:flex relative bg-gray-100 hover:bg-gray-200 rounded-full p-1.25 sm:p-2"
+                                
+                                onClick={(e) => { e.preventDefault(); navigate("/orders"); }}
                             >
                                 
-                                <img src="/icons/logout.png" title="logout" alt="logout" className="w-5 sm:w-9 sm:hover:w-10 rounded-full transition-all duration-75" />
+                                <img
 
-                            </button>
+                                    src={ordersQuantity > 0 ? `/icons/order-delivery.png` : `/icons/shopping-bag.png`}
 
-                        </div>
+                                    title="orders"
+                                    
+                                    className="h-4 sm:h-7 cursor-pointer"
+                                />
+                                
+                                
+                                <span className={`absolute ${ordersQuantity > 9 ? `-top-3 -right-1.5 sm:-top-3.75 sm:-right-3.75 xl:-top-4 xl:-right-3 2xl:-top-4 2xl:-right-3.5` : `-top-2.5 -right-1 sm:-top-3.25 sm:-right-2 xl:-top-4 xl:-right-1.25 2xl:-top-4 2xl:-right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full max-sm:text-[10px] px-1.25 sm:px-2`}>
+                            
+                                        {ordersQuantity}
+                        
+                                </span>
+
+                            </Link>
+                
+                      
+                        {/* Wishlist button only for tablets and desktop */}
+                        
+                            <Link to="/wishlist" className="hidden md:flex relative bg-gray-100 hover:bg-gray-200 rounded-full p-1.25 sm:p-2" onClick={(e) => { e.preventDefault(); navigate("/wishlist"); }}>
+
+                                <img
+                    
+                                    src="/icons/heart.svg"
+                        
+                                    alt="Wishlist"
+                        
+                                    className="h-4 sm:h-7 cursor-pointer"
+                                    
+                                    title="wishlist"
+                        
+                                />
+                                
+                                    
+                                <span className={`absolute ${wishlistQuantity > 9 ? `-top-3 -right-1.5 sm:-top-3.75 sm:-right-3.75 xl:-top-4 xl:-right-3 2xl:-top-4 2xl:-right-3.5` : `-top-2.5 -right-1 sm:-top-3.25 sm:-right-2 xl:-top-4 xl:-right-1.25 2xl:-top-4 2xl:-right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full max-sm:text-[10px] px-1.25 sm:px-2`}>
+                            
+                                        {wishlistQuantity}
+                        
+                                </span>
+                                
+                            </Link>
+                
+                      
+                        {/* Cart drawer button. Full version only for mobile and desktop view. Not for tablets i.e md */}
+                        
+                            <div
+                    
+                                // setting openCart to true measn that the cart drawer should be opened now.
+                                
+                                    onClick={() => setOpenCart(true)}
+                                
+                                className="xl:mx-7 2xl:mx-14 relative cursor-pointer flex flex-row justify-between"
+                                
+                                tabIndex={0}
+                                
+                                title="cart"
+                            >
+                                
+                            
+                                <div className="flex flex-row bg-gray-100 hover:bg-gray-200 rounded-full p-1.25 max-md:px-2 md:p-2 2xl:w-50">
+                                    
+                                    <div className="md:max-xl:hidden flex flex-col items-center xl:mx-1 2xl:mr-0.5 cursor-pointer px-1 xl:px-3 2xl:px-4">
+                                        
+                                        <span className="hidden xl:flex text-2xl font-bold"> Your Cart </span>
+
+                                        <span className="text-[12px] xl:text-xl font-bold text-yellow-600 hover:text-orange-600"> {cartTotal ? `$${cartTotal}` : "$0.00"} </span>    
+                                    
+                                    </div>                
+                    
+
+                                    <img
+                                    
+                                        src={isCheckoutPage ? `/icons/checkout.png` : `/icons/shopping-cart.png`}
+                            
+                                        alt="Cart"
+
+                                        className="xl:mt-3 xl:mr-2 2xl:mt-3.5 h-4 md:h-7 cursor-pointer"
+
+                                    />
+                                    
+                        
+                                    <span className={`absolute ${cartQuantity > 9 ? `-top-2 -right-2.5 md:-top-3.5 md:-right-4 xl:top-px xl:-right-2.5 2xl:top-px 2xl:-right-0.5` : `-top-2 -right-1 md:-top-3 md:-right-2 xl:-top-0.5 xl:right-1 2xl:top-px 2xl:right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full max-sm:text-[10px] px-1.25 sm:px-2`}>
+                            
+                                        {cartQuantity}
+                        
+                                    </span>
+
+                                </div>
+                                
+                    
+                            </div>
+                        
+                      
+                        {/* Mobile Profile button */}
+                        
+                            <Link 
+                            
+                                // className="flex md:hidden bg-gray-100 hover:bg-gray-200 rounded-full p-1.25"
+                                
+                                onClick={() => setShowMobileProfileDropdown(!showMobileProfileDropdown)}
+                                
+                                
+                                className={`flex md:hidden bg-gray-100 hover:bg-gray-200 rounded-full p-1.25`}
+
+                            >
+                                
+                                <img
+                                    
+                                    // src="/icons/user.svg"
+
+                                    src={(profile || user) ? (profile.profile_pic) : "/icons/user.svg"}
+
+                                    className={`cursor-pointer h-4`}                                    
+                                />
+                            
+                            </Link>
+
+                        
+                        {/* Username + logout button for md and above breakpoints i.e not for mobile view */}
+                        
+                            <div className={`hidden md:flex items-center gap-1 sm:gap-2 mt-1 ${user?.name.length > 9 ? `ml-1 md:ml-10 lg:ml-7 xl:ml-0 2xl:ml-3` : `ml-3.5 md:ml-20 lg:ml-7 xl:ml-0 2xl:ml-3`}`}>
+                                
+                                <span className="flex lg:hidden text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
+                                
+                                    {(user && user?.name.length > 9) ? user?.name.slice(0, 8) + "..." : user?.name}
+                                    {/* Guest */}
+
+                                </span>
+                                
+                                <span className="hidden lg:max-xl:flex text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
+                                
+                                    {(user && user?.name.length > 11) ? user?.name.slice(0, 10) + "..." : user?.name}
+                                    {/* Guest */}
+
+                                </span>
+                                
+                                <span className="hidden xl:flex text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
+                                
+                                    {(user && user?.name.length > 13) ? user?.name.slice(0, 12) : user?.name}
+                                    {/* Guest */}
+
+                                </span>
+                                
+
+                                <button 
+                                
+                                    // className="mt-1 px-2 py-0.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg"
+                                    
+                                    // className="mt-1 md:ml-5 lg:ml-10 xl:ml-5 transition-all duration-200 rounded-full"
+                            
+                                    onClick={handleLogout}
+                                >
+                                    
+                                    <img src="/icons/logout.png" title="logout" alt="logout" className="w-9 hover:w-10 rounded-full transition-all duration-75" />
+
+                                </button>
+
+                            </div>
                         
                     
                     </div>
@@ -802,7 +848,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
         {/* Menu & dropdown placeholders */}
 
-            <section className="container mx-auto flex items-center justify-start pt-3 sm:pt-12 px-3 sm:px-5 transition-all duration-200">
+            <section className="container mx-auto flex items-center justify-start pt-3 lg:pt-12 px-3 sm:px-5 transition-all duration-200">
 
                 {/* Hamburger menu for menu and dropdowns */}
                 
@@ -812,7 +858,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
                     
                         <img src="/icons/hamburger_menu.png" alt="hamburger_menu_icon" 
                             
-                        className="h-7 p-1 sm:h-13 sm:p-2 cursor-pointer border border-gray-400 hover:bg-gray-100 rounded-lg"
+                        className="h-7 p-1 md:h-10 md:p-1.5 cursor-pointer border border-gray-400 hover:bg-gray-100 rounded-lg"
                     
                         />
 
@@ -929,16 +975,7 @@ export default function Navbar( /*{ loggedInUser }*/ )
 
                     {showSearchModal && (
                         <>
-                            {/* Backdrop
-                                <div
-                                    className="lg:hidden fixed inset-0 bg-black/5 backdrop-blur-sm z-40"
-                                    onClick={() => {
-                                        setShowSearchModal(false);
-                                        setSearchInput("");
-                                        setHighlightedIndex(-1);
-                                    }}
-                                /> */}
-
+                            
                             {/* Modal */}
                             
                                 <div className="lg:hidden fixed top-14.5 md:top-25.5 left-1/2 -translate-x-1/2 max-md:w-full md:w-[70%] bg-white md:rounded-b-xl shadow-xl p-3 z-50">
@@ -1046,6 +1083,153 @@ export default function Navbar( /*{ loggedInUser }*/ )
                         </>
                     )}
                     
+          
+
+
+        {/* Mobile Profile Dropdown */}
+        
+          
+            {/* Mobile Profile Dropdown */}
+
+                {showMobileProfileDropdown && (
+        
+                    <>
+                
+                        {/* Backdrop */}
+                
+                            <div
+                    
+                                className="md:hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+                                
+                                onClick={() => setShowMobileProfileDropdown(false)}
+                            />
+                
+                
+                        {/* Dropdown Menu */}
+                
+                            <div className="md:hidden p-2 fixed top-16 right-4 bg-white rounded-b-lg shadow-2xl border border-gray-200 z-50 /*w-56*/">
+
+                      
+                                {/* User Info */}
+                                
+                                    <div className="/*border-b border-gray-200*/">
+                                        
+                                        <div className="flex px-2">
+                                            
+                                            <div>
+                                            
+                                                <p className="text-[14px] font-bold text-yellow-500 truncate">
+                                                    {user?.name || "Guest"}
+                                                </p>
+                                                
+                                                <p className="text-[10px] text-gray-500 truncate">
+                                                    {user?.email || "guest@example.com"}
+                                                </p>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                        
+                          
+                                        {/* Divider */}
+                                
+                                        <div className="border-t border-gray-200 mt-2"></div>
+                                        
+                                    </div>
+                                
+                      
+                                {/* Menu Items */}
+                                
+                                    <div>
+                                        
+                                        {/* Orders */}
+                                        
+                                            <button
+                                                
+                                                onClick={() => {navigate("/orders"); setShowMobileProfileDropdown(false);}}
+                                                
+                                                className="w-full flex items-center justify-between p-2 rounded-lg"
+                                            >
+                                                <div className="flex items-center gap-1.5">
+                                                
+                                                    <img
+                                                        src={ordersQuantity > 0 ? `/icons/order-delivery.png` : `/icons/shopping-bag.png`}
+                                                        alt="Orders"
+                                                        className="w-4.25"
+                                                    />
+                                                
+                                                    <span className="text-[11px] font-mono font-medium text-gray-700">Orders</span>
+                                                    
+                                                </div>
+                                                
+                                                
+                                                <span className="bg-yellow-500 text-white text-[10px] font-extrabold rounded-full px-2 py-0.75">
+                                                    {ordersQuantity}
+                                                </span>
+                                                
+                                            </button>
+                                        
+                                    
+                                        {/* Wishlist */}
+                                    
+                                            <button
+                                                onClick={() => {navigate("/wishlist"); setShowMobileProfileDropdown(false);}}
+                                                
+                                                className="w-full flex items-center justify-between p-2 rounded-lg"
+                                            >
+                                                <div className="flex items-center gap-1.75">
+                                                
+                                                    <img
+                                                        src="/icons/heart.svg"
+                                                        alt="Wishlist"
+                                                        className="w-4"
+                                                    />
+                                                    
+                                                    <span className="text-[11px] font-mono font-medium text-gray-700">Wishlist</span>
+                                                    
+                                                </div>
+                                                
+                                                
+                                                <span className="bg-yellow-500 text-white text-[10px] font-extrabold rounded-full px-2 py-0.75">
+                                                    {wishlistQuantity}
+                                                </span>
+                                                
+                                            </button>
+
+                                    
+                                        {/* Divider */}
+                                    
+                                            <div className="border-t border-gray-200"></div>
+                                        
+                                        
+                                        {/* Logout */}
+                                
+                                            <button
+                                                
+                                                onClick={() => {handleLogout(); setShowMobileProfileDropdown(false);}}
+                                                
+                                                className="w-full flex items-center gap-1.5 p-2 rounded-lg text-red-600 text-[13px] font-bold font-mono"
+                                            >
+                                                <img
+                                                    src="/icons/logout.png"
+                                                    alt="Logout"
+                                                    className="w-4"
+                                                />
+                                                
+                                                Logout
+                                                
+                                            </button>
+                                        
+                                    </div>
+                        
+
+                            </div>
+                            
+                    </>
+                
+                )
+            }
+    
     </>
     
   );

@@ -310,15 +310,15 @@ export function getDiscountValue(tag) {
 
     /* ------------------- 🟩 7. Create user profile (if missing) ------------------- */
 
-        export function getStoredProfilePic(email) {
-            const username = email.split("@")[0];
-            const possibleExtensions = [".jpeg", ".jpg", ".png", ".svg"];
-            for (let ext of possibleExtensions) {
-                const path = `/images/user_profile_pics/${username}_pfp${ext}`;
-                return path;
-            }
-            return "/icons/user.svg";
-        }
+        // export function getStoredProfilePic(email) {
+        //     const username = email.split("@")[0];
+        //     const possibleExtensions = [".jpeg", ".jpg", ".png", ".svg"];
+        //     for (let ext of possibleExtensions) {
+        //         const path = `/images/user_profile_pics/${username}_pfp${ext}`;
+        //         return path;
+        //     }
+        //     return "/icons/user.svg";
+        // }
 
         export async function createUserProfile(user) {
             console.log("\t\tcreateUserprofile() called");
@@ -330,7 +330,7 @@ export function getDiscountValue(tag) {
                     name: user.name || user.email.split("@")[0],
                     email: user.email,
                     address: user.address,
-                    profile_pic: getStoredProfilePic(user.email) || "/icons/user.svg",
+                    profile_pic: /*getStoredProfilePic(user.email) || */"/icons/user.svg",
                     bio: null,
                     role: "user"
                 }, [
@@ -378,10 +378,10 @@ export function getDiscountValue(tag) {
                 }
             }
             const updates = {};
-            const storedPic = getStoredProfilePic(user.email);
+            // const storedPic = getStoredProfilePic(user.email);
             if(profile.name!==user.name && user.name) updates.name=user.name;
             if(profile.email!==user.email) updates.email=user.email;
-            if(profile.profile_pic!==storedPic) updates.profile_pic=storedPic;
+            // if(profile.profile_pic!==storedPic) updates.profile_pic=storedPic;
             if(Object.keys(updates).length>0){
                 await database.updateDocument(DATABASE_ID, USERS_TABLE_ID, profile.$id, updates);
                 profile = await getUserProfile(user.$id);

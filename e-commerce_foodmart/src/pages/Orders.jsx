@@ -185,11 +185,11 @@ export default function Orders()
                         
                             <button
                                 
-                                onClick={() => setFilterStatus("pending")}
+                                onClick={() => setFilterStatus("processing")}
                                 
                                 className={`px-2 py-1 md:px-4 md:py-2 max-md:text-[10px] text-sm rounded-lg font-bold transition-all duration-200 ${
                                 
-                                    filterStatus === "pending" 
+                                    filterStatus === "processing" 
                                 
                                     ? "bg-gray-500 text-white"  // Active state
                                 
@@ -261,7 +261,7 @@ export default function Orders()
                         (
                             <div className="text-center max-md:text-[14px] md:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-10 md:pl-23">
                         
-                                No {filterStatus === 'pending' ? "processing" : filterStatus} orders found.
+                                No {filterStatus} orders found.
                             
                             </div>
                         )
