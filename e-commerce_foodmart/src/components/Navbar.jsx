@@ -24,7 +24,7 @@ import { Link } from "react-router-dom";
 
 export default function Navbar()
 {
-    const { user, profile, setUser, setProfile } = useAuth();
+    const { user,/* profile, */setUser, setProfile } = useAuth();
 
     const { cartQuantity, cartTotal, wishlistQuantity, isCheckoutPage, ordersQuantity } = useCart();
 
@@ -632,11 +632,11 @@ export default function Navbar()
                     
                 {/* Right side icons. Right side of the navbar */}
 
-                    <div className={`flex shrink-0 justify-end items-center ${user?.name.length > 9 ? `max-md:gap-6 md:gap-3.5` : `xl:-ml-2 max-md:gap-3 md:gap-5`} transition-all duration-200`}>
+                    <div className={`flex shrink-0 justify-end items-center ${cartTotal <= 9.99 ? `max-md:gap-6` : (cartTotal <= 99.99) ? `max-md:gap-5` : `max-md:gap-4.5` } ${user?.name.length > 9 ? `md:gap-3.5` : `xl:-ml-2 max-md:gap-3 md:gap-5`} transition-all duration-200`}>
                         
                         {/* Search modal search icon. Only for mobile and tablet view */}
                         
-                            <div className="max-md:-ml-8 lg:hidden" onClick={() => { setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50); }}>
+                            <div className={`${(cartTotal <= 9.99) ? `max-md:-ml-8` : (cartTotal <= 99.99) ? `max-md:-ml-8.25` : `max-md:-ml-8.5`} lg:hidden`} onClick={() => { setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50); }}>
                           
                                 <img src="/icons/search.png" alt="FoodMart" className="h-6.5 max-md:px-2 p-1.25 md:h-11 md:p-2 rounded-r-full md:rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer" />
                 
@@ -764,9 +764,9 @@ export default function Navbar()
                                 
                                 <img
                                     
-                                    // src="/icons/user.svg"
+                                    src="/icons/user.svg"
 
-                                    src={(profile || user) ? (profile.profile_pic) : "/icons/user.svg"}
+                                    // src={(profile || user) ? (profile.profile_pic) : "/icons/user.svg"}
 
                                     className={`cursor-pointer h-4`}                                    
                                 />
