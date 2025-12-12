@@ -53,74 +53,165 @@ export default function ProductCard({ Product }) {
 
 
 
-    const incrementIntervalRef = useRef(null);
-    
-    const decrementIntervalRef = useRef(null);
-
     // For click vs hold logic
+
+        const incrementIntervalRef = useRef(null);
+        const decrementIntervalRef = useRef(null);
 
         const incrementTimeoutRef = useRef(null);
         const decrementTimeoutRef = useRef(null);
 
         const holdThreshold = 500; // ms before hold starts
-        const holdInterval = 200;  // ms for repeated increments/decrements
+        const holdInterval = 100;  // ms for repeated increments/decrements
+        
+        const isTouchingRef = useRef(false);
 
 
 
-    // Increment
-        const handleIncrementHoldStart = () => {
-        incrementTimeoutRef.current = setTimeout(() => {
-            incrementIntervalRef.current = setInterval(() => {
-            setQuantity(q => Math.min(q + 1, existingStock));
-            }, holdInterval);
-        }, holdThreshold);
-        };
-
-    // Decrement
-        const handleDecrementHoldStart = () => {
-        decrementTimeoutRef.current = setTimeout(() => {
-            decrementIntervalRef.current = setInterval(() => {
-            setQuantity(q => Math.max(q - 1, 0));
-            }, holdInterval);
-        }, holdThreshold);
-        };
+    // ---- Hold-to-repeat helpers ----
   
+        const handleIncrementHoldStart = (e) =>
+        {
+            // console.log(isTouchingRef.current);
+
+            if (e.type === "touchstart") isTouchingRef.current = true;
+        
+            if (e.type === "mousedown" && isTouchingRef.current) return;
+
+        
+            incrementTimeoutRef.current = setTimeout(() =>
+            {
+                incrementIntervalRef.current = setInterval(() =>
+                {
+                    setQuantity(q => Math.min(q + 1, existingStock));
+                
+                }, holdInterval);
+        
+            }, holdThreshold);
+        };
+
+  
+        const handleIncrementMouseUp = (e) =>
+        {
+            // console.log(isTouchingRef.current);
+
+            if (e.type === "mouseup" && isTouchingRef.current) return;
+            
+            // REJECTED:
+            
+                // Making isTouchingRef false here, didn't stop/disable the mousedown and the mouseup events, due to it being false.
+            
+                    // if (e.type === "touchend") isTouchingRef.current = false;
+
+            
+            // SOLUTION:
+            
+                // Now, we set the touching ref to be false after a delay.
+                
+                // You might say, that 0 is the delay but infact, it only runs after the false mouse events have passed.
+                
+                // Thus, it now blocks the mousedown and mouseup events, preventing double updation.
+            
+                // Why a setTimeout(0)?
+
+                //     It allows the synthetic mousedown + mouseup events to pass
+
+                //     While isTouchingRef is still true → so they get ignored
+
+                //     After they finish, we reset the flag
+
+                    if (e.type === "touchend")
+                    {
+                        setTimeout(() =>
+                        {
+                            isTouchingRef.current = false;
+                    
+                        }, 0);
+                    }
+
+        
+            if (incrementTimeoutRef.current)
+            {
+                clearTimeout(incrementTimeoutRef.current);
+        
+                incrementTimeoutRef.current = null;
+        
+                if (!incrementIntervalRef.current) setQuantity(q => Math.min(q + 1, existingStock));
+            }
+
+        
+            if (incrementIntervalRef.current)
+            {
+                clearInterval(incrementIntervalRef.current);
+        
+                incrementIntervalRef.current = null;
+            }
+        };
+
+    
+    
+  
+        const handleDecrementHoldStart = (e) =>
+        {
+            if (e.type === "touchstart") isTouchingRef.current = true;
+        
+            if (e.type === "mousedown" && isTouchingRef.current) return;
+
+        
+            decrementTimeoutRef.current = setTimeout(() =>
+            {
+                decrementIntervalRef.current = setInterval(() =>
+                {
+                    setQuantity(q => Math.max(q - 1, 0));
+        
+                }, holdInterval);
+        
+            }, holdThreshold);
+        };
+
+  
+        const handleDecrementMouseUp = (e) =>
+        {
+            if (e.type === "mouseup" && isTouchingRef.current) return;
+        
+            // if (e.type === "touchend") isTouchingRef.current = false;
 
 
-    // Stop both intervals
+            // Why a setTimeout(0)?
 
-       const handleIncrementMouseUp = () => {
-         if (incrementTimeoutRef.current) {
-           clearTimeout(incrementTimeoutRef.current);
-           incrementTimeoutRef.current = null;
+            //     It allows the synthetic mousedown + mouseup events to pass
 
-           if (!incrementIntervalRef.current) {
-             setQuantity((q) => Math.min(q + 1, existingStock));
-           }
-         }
+            //     While isTouchingRef is still true → so they get ignored
 
-         if (incrementIntervalRef.current) {
-           clearInterval(incrementIntervalRef.current);
-           incrementIntervalRef.current = null;
-         }
-       };
+            //     After they finish, we reset the flag
 
-       const handleDecrementMouseUp = () => {
-         if (decrementTimeoutRef.current) {
-           clearTimeout(decrementTimeoutRef.current);
-           decrementTimeoutRef.current = null;
+                if (e.type === "touchend")
+                {
+                    setTimeout(() =>
+                    {
+                        isTouchingRef.current = false;
+                
+                    }, 0);
+                }
 
-           if (!decrementIntervalRef.current) {
-             setQuantity((q) => Math.max(q - 1, 0));
-           }
-         }
+        
+            if (decrementTimeoutRef.current)
+            {
+                clearTimeout(decrementTimeoutRef.current);
+        
+                decrementTimeoutRef.current = null;
+        
+                if (!decrementIntervalRef.current) setQuantity(q => Math.max(q - 1, 0));
+            }
 
-         if (decrementIntervalRef.current) {
-           clearInterval(decrementIntervalRef.current);
-           decrementIntervalRef.current = null;
-         }
-       };
-
+        
+            if (decrementIntervalRef.current)
+            {
+                clearInterval(decrementIntervalRef.current);
+        
+                decrementIntervalRef.current = null;
+            }
+        };
 
 
 
@@ -132,17 +223,6 @@ export default function ProductCard({ Product }) {
     
     useEffect(() =>
     {
-        // this would have worked if I wasn't updating the product stock in the CartContext i.e when products are added to cart.
-            
-        // existingStock just need to read the product stock and d nothing else.
-            
-            // const cartItem = cartItems.find((c) => c.product_id === product.$id);
-            
-            // if (cartItem) setExistingStock(product.stock - cartItem.quantity);
-
-            // else setExistingStock(product.stock);
-            
-        
         setExistingStock(liveProduct.stock);
         
     }, [liveProduct.stock]);
@@ -263,7 +343,7 @@ export default function ProductCard({ Product }) {
     
                 <div
             
-                    className="flex justify-center items-center bg-gray-200 w-full h-[35%] rounded-2xl p-3"
+                    className="flex justify-center items-center bg-gray-200 hover:bg-gray-300 w-full h-[35%] rounded-2xl p-3"
             
                     onClick={!addToCartLoading && handleClick}
                 >
@@ -286,7 +366,7 @@ export default function ProductCard({ Product }) {
     
                     {/* Product name */}
     
-                        <p className={`mt-1 md:mt-3  ${(liveProduct.name.length > 20) ? `max-md:text-[11px]` : `max-md:text-[13px]`} md:text-lg font-bold text-gray-700 hover:text-gray-900 transition`}
+                        <p className={`mt-1 md:mt-3  max-md:text-[11px] /*${(liveProduct.name.length > 20) ? `max-md:text-[11px]` : `max-md:text-[13px]`}*/ md:text-lg font-bold text-gray-700 hover:text-gray-900 transition`}
                     
                             onClick={!addToCartLoading && handleClick}
                         >
@@ -298,7 +378,7 @@ export default function ProductCard({ Product }) {
     
                     {/* stock + rating */}
     
-                        <p className={`font-extralight ${(liveProduct.name.length > 20) ? `max-md:text-[9px]` : `max-md:text-[10px]`} md:text-sm text-left w-full mt-0.5 md:mt-2`}>
+                        <p className={`font-extralight max-md:text-[8px] /*${(liveProduct.name.length > 20) ? `max-md:text-[9px]` : `max-md:text-[10px]`}*/ md:text-sm text-left w-full mt-0.5 md:mt-2`}>
                     
                             {" "}
                     
@@ -334,9 +414,9 @@ export default function ProductCard({ Product }) {
                             (!!existingStock) && 
                             
                             (
-                                <div className={`flex gap-2 items-center`}>
+                                <div className={`flex gap-1 md:gap-2 items-center`}>
                     
-                                    <p className={`font-bold font-mono text-md md:text-2xl mt-0.5 md:mt-2`}>
+                                    <p className={`font-bold font-mono text-sm md:text-2xl mt-0.5 md:mt-2`}>
                             
                                         {" "}
                             
@@ -350,7 +430,7 @@ export default function ProductCard({ Product }) {
                             
                                     {formatDiscount(liveProduct.discount_tag) && (
                             
-                                        <p className="text-gray-500 mt-1.25 md:mt-3 text-left font-bold text-[10px] md:text-lg line-through font-mono">
+                                        <p className="text-gray-500 mt-1.25 md:mt-3 text-left font-bold text-[9px] md:text-lg line-through font-mono">
                                 
                                             {formatPrice(liveProduct.price, "USD")}
                             
@@ -368,7 +448,7 @@ export default function ProductCard({ Product }) {
                             !existingStock && 
                             
                             (
-                                <p className="mt-1 md:mt-4 text-center text-lg md:text-2xl italic"> 𝑂𝑢𝑡 𝑜𝑓 𝑆𝑡𝑜𝑐𝑘 </p>
+                                <p className="max-md:-mt-0.5 md:mt-1 text-center text-sm md:text-2xl italic"> 𝑂𝑢𝑡 𝑜𝑓 𝑆𝑡𝑜𝑐𝑘 </p>
                             )
                         }
 
@@ -383,17 +463,20 @@ export default function ProductCard({ Product }) {
 
                                     {/* counter */}
 
-                                        <div className="flex items-center gap-2 mt-0.75 md:mt-1.5">
+                                        <div className="flex items-center gap-2 md:gap-4 mt-0.75 md:mt-1.5">
 
                                             <button
 
-                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === liveProduct.stock) || addToCartLoading) ? `` : `hover:bg-gray-200 active:bg-gray-200`} max-md:h-4 w-5 md:w-7 font-bold rounded-md max-md:text-[12px] md:text-md`}
+                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === liveProduct.stock) || addToCartLoading) ? `` : `hover:bg-gray-200 active:bg-gray-200`} max-md:h-4 w-5.5 md:w-8 font-bold rounded-md max-md:text-[12px] md:text-md`}
 
                                                 disabled={(quantity === existingStock) || addToCartLoading}
                                                 
-                                                onTouchStart={handleIncrementHoldStart}
-                                                onTouchEnd={handleIncrementMouseUp}
-                                                onTouchCancel={handleIncrementMouseUp}
+                                                onMouseDown={(e) => handleIncrementHoldStart(e)}
+                                                onMouseUp={(e) => handleIncrementMouseUp(e)}
+                                                onMouseLeave={(e) => handleIncrementMouseUp(e)}
+                                                onTouchStart={(e) => handleIncrementHoldStart(e)}
+                                                onTouchEnd={(e) => handleIncrementMouseUp(e)}
+                                                onTouchCancel={(e) => handleIncrementMouseUp(e)}
                                         
                                                 // onClick={() =>
                                                 // {
@@ -418,13 +501,16 @@ export default function ProductCard({ Product }) {
                                     
                                             <button
                                         
-                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === 0) || addToCartLoading) ? `` : `hover:bg-gray-200 active:bg-gray-200`} max-md:h-4 w-5 md:w-7 font-bold rounded-md max-md:text-[12px] md:text-md`}
+                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === 0) || addToCartLoading) ? `` : `hover:bg-gray-200 active:bg-gray-200`} max-md:h-4 w-5.5 md:w-8 font-bold rounded-md max-md:text-[12px] md:text-md`}
 
                                                 disabled={(quantity === 0) || addToCartLoading}
-                                                
-                                                onTouchStart={handleDecrementHoldStart}
-                                                onTouchEnd={handleDecrementMouseUp}
-                                                onTouchCancel={handleDecrementMouseUp}
+
+                                                onMouseDown={(e) => handleDecrementHoldStart(e)}
+                                                onMouseUp={(e) => handleDecrementMouseUp(e)}
+                                                onMouseLeave={(e) => handleDecrementMouseUp(e)}
+                                                onTouchStart={(e) => handleDecrementHoldStart(e)}
+                                                onTouchEnd={(e) => handleDecrementMouseUp(e)}
+                                                onTouchCancel={(e) => handleDecrementMouseUp(e)}
                                         
                                                 // onClick={() => 
                                                 // {
@@ -450,7 +536,7 @@ export default function ProductCard({ Product }) {
 
                                         <button
                             
-                                            className={`max-md:mt-0.75 max-md:text-[11px] font-semibold ${quantity ? "text-gray-500 hover:text-gray-600 cursor-pointer" : "text-gray-400"}`}
+                                            className={`max-md:mt-0.75 md:mt-1.5 max-md:text-[10px] font-semibold ${quantity ? "text-gray-500 hover:text-gray-600 cursor-pointer" : "text-gray-400"}`}
                                     
                                             disabled={quantity === 0 || addToCartLoading}
                                     

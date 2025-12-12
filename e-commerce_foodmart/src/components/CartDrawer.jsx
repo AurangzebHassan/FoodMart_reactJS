@@ -270,7 +270,7 @@ export default function CartDrawer({ onClose })
 
 				{/* Header */}
 				
-					<div className="flex justify-between items-center mb-5 md:mb-10 mt-3 md:mt-6">
+					<div className="flex justify-between items-center mb-3 md:mb-10 mt-1 md:mt-6">
 
 						<h1 className="text-2xl md:text-3xl font-extrabold text-yellow-500">Your Cart</h1>
 						
@@ -283,7 +283,7 @@ export default function CartDrawer({ onClose })
 							((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) ?
 							
 							(
-								<div className={`flex items-center justify-center py-3 ${cartQuantity > 9 ? `px-1.25`: ``}`}>
+								<div className={`flex items-center justify-center py-1.75 ${cartQuantity > 9 ? `px-1.25`: ``}`}>
 
 									<Loader size="small" color="border-white" />
 
@@ -317,7 +317,7 @@ export default function CartDrawer({ onClose })
 
 								return (
 									
-									<div key={item.$id} className="relative flex gap-3 border-b py-4">
+									<div key={item.$id} className="relative flex gap-3 border-b py-3">
 									
 										{/* Discount badge */}
 										
@@ -450,7 +450,7 @@ export default function CartDrawer({ onClose })
 															((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ?
 															
 															(
-																<div className={`flex items-center justify-center py-3 ${item.quantity > 9 ? `px-1.5` : ``}`}>
+																<div className={`flex items-center justify-center py-1.75 ${item.quantity > 9 ? `px-1.5` : ``}`}>
 										
 																	<Loader size="small" color="border-white" />
 										
@@ -531,7 +531,7 @@ export default function CartDrawer({ onClose })
 
 												{/* Price + Subtotal */}
 											
-													<div className="flex justify-between mt-3.5 md:mt-10">
+													<div className="flex justify-between mt-4.5 md:mt-11.5">
 													<div className="flex gap-2">
 														{item.discount_value > 0 && (
 														<p className="text-gray-500 text-[14px] md:text-md font-mono">
@@ -567,13 +567,13 @@ export default function CartDrawer({ onClose })
 						
 				{/* Footer / Checkout */}
 				
-					<div className="mt-2 md:mt-3 border-t-3 pt-2 md:pt-5">
+					<div className="border-t-3 pt-1 md:pt-5">
 						
 						<p className="flex justify-between items-center font-extrabold text-orange-500">
 						
-							<span className="text-black text-[20px]">Total (USD):</span>
+							<span className="md:ml-1.5 text-black text-[18px] md:text-[20px]">Total (USD):</span>
 							
-							<span className="text-[25px]">{formatPrice(cartTotal, "USD")}</span>
+							<span className="md:mr-1.5 text-[23px] md:text-[25px]">{formatPrice(cartTotal, "USD")}</span>
 						
 						</p>
 						
@@ -582,7 +582,7 @@ export default function CartDrawer({ onClose })
 
 							<button
 						
-								className={`w-full ${(!cartQuantity || isOnCheckoutPage || clearCartLoading || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `${isCheckoutPage ? `bg-orange-600` : `bg-yellow-500 hover:bg-orange-600`} text-white hover:-translate-y-1 transition-all duration-200`} col-span-2 py-2 rounded-full mt-2 md:mt-3 md:text-[18px] font-extrabold`}
+								className={`w-full ${(!cartQuantity || isOnCheckoutPage || clearCartLoading || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `${isCheckoutPage ? `bg-orange-600` : `bg-yellow-500 hover:bg-orange-600`} text-white hover:-translate-y-1 transition-all duration-200`} col-span-2 py-1.5 md:py-2 rounded-full mt-1 md:mt-3 md:text-[18px] font-bold md:font-extrabold`}
 								
 								onClick={() => navigate("/checkout")}
 					
@@ -596,7 +596,7 @@ export default function CartDrawer({ onClose })
 									
 							<button 
 						
-								className={`${(!cartQuantity || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `bg-red-600 text-white hover:-translate-y-1 transition-all duration-200`} rounded-full mt-2 md:mt-3 py-2 font-extrabold`}
+								className={`${(!cartQuantity || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `bg-red-600 text-white hover:-translate-y-1 transition-all duration-200`} rounded-full mt-1 md:mt-3 py-1.5 md:py-2 font-bold md:font-extrabold`}
 								
 								onClick=
 								{

@@ -119,7 +119,7 @@ export default function Orders()
 
 
             
-            <div className="container mx-auto md:mt-10 md:mb-20 py-6 px-5">
+            <div className="container mx-auto lg:mt-3 py-6 px-5">
                 
 
                 {/* PAGE HEADING */}

@@ -180,7 +180,7 @@ export default function CategoryPage()
                 {(products.length > 0) ? 
             
                     (
-                        < div className="mb-10 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:pl-20 md:pr-8 gap-y-3 max-md:gap-x-5 gap-y-2 md:gap-y-5">
+                        < div className="grid grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 md:pl-20 md:pr-8 max-md:gap-x-5 gap-y-2 md:gap-y-5">
                         
                             {products.map(p =>
                             (
@@ -193,7 +193,7 @@ export default function CategoryPage()
                     :
 
                     (
-                        <div className="flex w-full h-100 items-center justify-center pl-20 text-gray-400 font-bold text-2xl">
+                        <div className="flex w-full md:h-100 items-center justify-center pl-20 text-gray-400 font-bold max-md:mt-10 md:text-2xl">
 
                             No Products in Category
 

@@ -133,7 +133,7 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
       >
         {/* ✅ CHANGED: centered close button for symmetry with CartDrawer */}
 
-        <div className="flex max-md:px-4 max-md:pt-4 md:justify-center">
+        <div className="flex max-md:px-4 max-md:pt-4 justify-center">
           <button
             onClick={handleClose}
             aria-label="Close menu"

@@ -82,20 +82,20 @@ export default function FilteredProductsGrid()
 
   return (
     
-    <div className="container mx-auto px-3 py-10">
+    <div className="container mx-auto px-3 pt-10">
     
         {/* Category Filters */}
     
-        <div className="flex justify-between gap-15 md:gap-30 mb-6">
+        <div className="flex justify-between gap-12 md:gap-30 mb-6">
         
-            <h2 className="text-3xl font-bold text-gray-800">Products</h2>
+            <h2 className="text-xl md:text-3xl font-bold text-gray-800">Products</h2>
               
 
-            <div className="flex gap-3 lg:gap-6 xl:gap-10 2xl:gap-17 border-b border-gray-100 pr-5 mt-2 overflow-x-auto lg:overflow-x-visible">
+            <div className="flex gap-3 lg:gap-6 xl:gap-7 2xl:gap-12 border-b border-gray-100 pr-5 mt-2 overflow-x-auto lg:overflow-x-visible">
 
                 <button
             
-                    className={`text-gray-400 text-nowrap text-[10px] md:text-sm lg:text-md xl:text-lg font-semibold border-b-3 border-gray-100 hover:border-yellow-500 pb-2 transition-all duration-200 ease-in-out ${selectedCategory === "all" ? "text-gray-800 font-bold border-yellow-500" : ""}`}
+                    className={`text-gray-400 text-nowrap text-[10px] md:text-sm lg:text-md xl:text-lg font-semibold border-b-3 border-gray-100 hover:border-yellow-500 hover:border-b-5 pb-2 transition-all duration-200 ease-in-out ${selectedCategory === "all" ? "text-gray-800 font-bold border-yellow-500 md:border-b-5" : ""}`}
             
                     onClick={() => setSelectedCategory("all")}
                 >
@@ -111,7 +111,7 @@ export default function FilteredProductsGrid()
                 
                         key={cat.$id}
                 
-                        className={`text-gray-400 text-nowrap text-[10px] md:text-sm lg:text-md xl:text-lg pb-2 font-semibold border-b-3 border-gray-100 hover:border-yellow-500 transition-all duration-200 ease-in-out ${selectedCategory === cat.$id ? "text-gray-800 font-bold border-yellow-500" : ""}`}
+                        className={`text-gray-400 text-nowrap text-[10px] md:text-sm lg:text-md xl:text-lg pb-2 font-semibold border-b-3 border-gray-100 hover:border-yellow-500 hover:border-b-5 transition-all duration-200 ease-in-out ${selectedCategory === cat.$id ? "text-gray-800 font-bold border-yellow-500 md:border-b-5" : ""}`}
                 
                         onClick={() => setSelectedCategory(cat.$id)}
                     >
@@ -146,7 +146,7 @@ export default function FilteredProductsGrid()
                 :
                 
                 (
-                    <div className="flex w-full h-100 mt-10 md:mt-25 justify-center text-yellow-500 font-bold md:text-xl">
+                    <div className="flex w-full md:h-100 mt-10 md:mt-25 justify-center text-gray-400 font-bold max-md:text-[12px] md:text-xl">
 
                         No Products in Category
 

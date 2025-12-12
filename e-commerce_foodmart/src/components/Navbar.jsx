@@ -438,7 +438,7 @@ export default function Navbar()
                             
                         {/* departments dropdown */}
                         
-                        <div className="md:max-lg:-mr-4 md:max-lg:hidden text-[12px] lg:text-lg text-yellow-600 font-semibold rounded-l-full focus:border-0 bg-gray-100 lg:hover:bg-gray-200 focus:bg-gray-200 cursor-pointer">
+                        <div className="md:max-lg:-mr-4 md:max-lg:hidden text-[12px] lg:text-lg text-yellow-600 font-semibold rounded-l-full bg-gray-100 lg:hover:bg-gray-200 focus:bg-gray-200 cursor-pointer">
                                 
                             <select name="departments" id="departments" value={selectedDepartment} onChange={handleCategoryChange} className="focus:border-none p-1.25 lg:p-3 text-center">
 
@@ -1107,7 +1107,7 @@ export default function Navbar()
                 
                         {/* Dropdown Menu */}
                 
-                            <div className="md:hidden p-2 fixed top-16 right-4 bg-white rounded-b-lg shadow-2xl border border-gray-200 z-50 /*w-56*/">
+                            <div className="md:hidden p-2 fixed top-16 right-3.25 bg-white rounded-b-lg shadow-2xl border border-gray-200 z-50">
 
                       
                                 {/* User Info */}

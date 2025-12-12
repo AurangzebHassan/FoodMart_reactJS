@@ -6,30 +6,37 @@
 } */
 
 
-/* Custom scrollbar for webkit browsers (Chrome, Safari, Edge) */
-.overflow-x-auto::-webkit-scrollbar {
-    height: 1px;
+
+.overflow-x-auto::-webkit-scrollbar 
+{
+    height: 0.5px;
     /* thin scrollbar */
 }
 
-.overflow-x-auto::-webkit-scrollbar-track {
+.overflow-x-auto::-webkit-scrollbar-track 
+{
     background: white;
     /* light gray track */
 }
 
-.overflow-x-auto::-webkit-scrollbar-thumb {
+.overflow-x-auto::-webkit-scrollbar-thumb
+{
     background: #dee0e3;
     /* gray thumb */
     border-radius: 10px;
 }
 
-.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+.overflow-x-auto::-webkit-scrollbar-thumb:hover 
+{
     background: #9ca3af;
     /* darker on hover */
 }
 
-/* For Firefox */
-.overflow-x-auto {
-    scrollbar-width: thin;
-    scrollbar-color: #d1d5db #f3f4f6;
+@media (min-width: 768px) 
+{
+    .overflow-x-auto 
+    {
+        scrollbar-width: thin;
+        scrollbar-color: #d1d5db #f3f4f6;
+    }
 }
