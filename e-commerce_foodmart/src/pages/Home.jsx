@@ -22,19 +22,12 @@ import FilteredProductsGrid from "../components/product/FilteredProductsGrid";
 
 
 
-
-
-
-
-
-
-
 export default function Home()
 {
     const { user } = useAuth();
 
 
-    
+
     useEffect(() =>
     {
         if (!user) return; // Only disable when logged in

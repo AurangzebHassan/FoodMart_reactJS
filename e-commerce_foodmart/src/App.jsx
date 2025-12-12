@@ -166,7 +166,7 @@ import { CartProvider } from "./context/CartContext";
 		
 			useEffect(() =>
 			{
-				const t = setTimeout(() => setDelayDone(true), 5000);
+				const t = setTimeout(() => setDelayDone(true), 6000);
 			
 				return () => clearTimeout(t);
 				
@@ -186,7 +186,7 @@ import { CartProvider } from "./context/CartContext";
 		
 					<div className="hidden md:flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
 
-						<span className="text-4xl font-extrabold text-white text-center"> {/*Checking authentication*/} Fresh Groceries Coming Right Up </span>
+						<span className="text-4xl font-extrabold text-white text-center"> Fresh Groceries Coming Right Up </span>
 
 						
 						<Loader size="xl" color="border-white border-9" />
@@ -201,7 +201,7 @@ import { CartProvider } from "./context/CartContext";
 					
 					<div className="flex md:hidden w-full h-screen fixed inset-0 items-center justify-center bg-yellow-500 gap-2">
 
-						<span className="text-xl font-extrabold text-white text-center"> {/*Checking authentication*/} Welcome to FoodMart </span>
+						<span className="text-xl font-extrabold text-white text-center"> Welcome to FoodMart </span>
 
 						
 						<Loader size="large" color="border-white border-7" />
@@ -366,19 +366,6 @@ function App()
 						  	/>
 						  
 
-							{/* <Route path="/profile" element=
-							
-								{
-									<ProtectedRoute>
-
-										<Profile />
-								  
-									</ProtectedRoute>	
-								}
-						  
-						  	/> */}
-
-						  
 						</Routes>			  
 
 					</Router>
