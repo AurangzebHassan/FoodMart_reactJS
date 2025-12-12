@@ -283,7 +283,7 @@ export default function CartDrawer({ onClose })
 							((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) ?
 							
 							(
-								<div className={`flex items-center justify-center py-1.75 ${cartQuantity > 9 ? `px-1.25`: ``}`}>
+								<div className={`flex items-center justify-center py-1.75 md:py-2.75 ${cartQuantity > 9 ? `px-0.75 md:px-1.25`: ``}`}>
 
 									<Loader size="small" color="border-white" />
 
@@ -450,7 +450,7 @@ export default function CartDrawer({ onClose })
 															((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ?
 															
 															(
-																<div className={`flex items-center justify-center py-1.75 ${item.quantity > 9 ? `px-1.5` : ``}`}>
+																<div className={`flex items-center justify-center py-1.75 md:py-2.75 ${item.quantity > 9 ? `px-0.75 md:px-1.5` : ``}`}>
 										
 																	<Loader size="small" color="border-white" />
 										

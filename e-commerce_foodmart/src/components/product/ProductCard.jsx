@@ -31,7 +31,7 @@ import Loader from "../Loader";
 export default function ProductCard({ Product }) {
     const { user } = useAuth();
 
-    const { addItem, productsMap, isProductFavourite, toggleProductFavourite } = useCart();
+    const { addItem, productsMap, isProductFavourite, toggleProductFavourite, cartItems } = useCart();
 
 
 
@@ -42,6 +42,11 @@ export default function ProductCard({ Product }) {
      // always use freshest product data from CartContext
   
         const liveProduct = productsMap[Product.$id] ? productsMap[Product.$id] : Product;
+        
+        
+    // we'll use this to set custom add to cart buttons to indicate if product is already in cart or not
+        
+        const isInCart = cartItems.some(item => item.product_id === liveProduct.$id);
     
 
     // state to hold the counter quantity
@@ -536,7 +541,7 @@ export default function ProductCard({ Product }) {
 
                                         <button
                             
-                                            className={`max-md:mt-0.75 md:mt-1.5 max-md:text-[10px] font-semibold ${quantity ? "text-gray-500 hover:text-gray-600 cursor-pointer" : "text-gray-400"}`}
+                                            className={`/*max-md:mt-0.75 md:mt-1.5 max-md:text-[10px] font-semibold ${quantity ? "text-gray-500 hover:text-gray-600 cursor-pointer" : "text-gray-400"}*/`}
                                     
                                             disabled={quantity === 0 || addToCartLoading}
                                     
@@ -574,7 +579,10 @@ export default function ProductCard({ Product }) {
                                         
                                                 :
                                         
-                                                "Add to Cart"
+                                                // "Add to Cart"
+                                                (
+                                                    <img src={isInCart ? `/icons/again-add-to-cart.png` : `/icons/add-to-cart.png`} title={isInCart ? `Again add to cart` : `Add to cart`} alt="Add to Cart" className="w-4 md:w-6 hover:-translate-y-1 active:-translate-y-1 cursor-pointer transition-all duration-200" />   
+                                                )
                                             }
                                     
                                         </button>

@@ -28,8 +28,6 @@ import CategoryPage from "./pages/CategoryPage";
 
 import Wishlist from "./pages/Wishlist";
 
-// import Profile from "./pages/Profile";
-
 import Checkout from "./pages/Checkout";
 
 import Orders from "./pages/Orders";
