@@ -1,3 +1,7 @@
+import { useEffect } from "react";
+
+import { useAuth } from "../context/AuthContext";
+
 import Navbar from "../components/Navbar";
 
 import HeroSection from "../components/HeroSection";
@@ -18,9 +22,46 @@ import FilteredProductsGrid from "../components/product/FilteredProductsGrid";
 
 
 
+
+
+
+
+
+
+
 export default function Home()
 {
-  return (
+    const { user } = useAuth();
+
+
+    
+    useEffect(() =>
+    {
+        if (!user) return; // Only disable when logged in
+
+  
+        // Prevent the user from going back
+  
+            history.pushState(null, "", window.location.href);
+
+            const handleBack = () =>
+            {
+                history.pushState(null, "", window.location.href);
+            };
+
+            window.addEventListener("popstate", handleBack);
+
+  
+        return () => window.removeEventListener("popstate", handleBack);
+    
+    }, [user]);
+
+
+
+
+
+    
+    return (
 
         <>
         
