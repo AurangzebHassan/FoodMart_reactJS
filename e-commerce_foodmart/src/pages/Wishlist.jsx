@@ -170,7 +170,7 @@ export default function Wishlist()
                     :
 
                     (
-                        <div className="flex w-full h-100 items-center justify-center pl-20 text-gray-400 font-bold text-2xl">
+                        <div className="flex w-full h-100 items-center justify-center pl-20 text-gray-400 font-bold text-sm md:text-2xl">
 
                             No Products in Wishlist
 

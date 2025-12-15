@@ -247,7 +247,7 @@ export default function Orders()
                 
                     {orders.length === 0 && (
                     
-                        <div className="text-center max-md:text-[14px] md:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-10 md:pl-23">
+                        <div className="text-center max-md:text-sm md:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-10 md:pl-23">
                         
                             You have no orders yet.
                         
@@ -261,7 +261,7 @@ export default function Orders()
                         
                         filterStatus === "all" || order.shipping_status === filterStatus).length === 0 &&
                         (
-                            <div className="text-center max-md:text-[14px] md:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-10 md:pl-23">
+                            <div className="text-center max-md:text-sm md:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-10 md:pl-23">
                         
                                 No {filterStatus} orders found.
                             
