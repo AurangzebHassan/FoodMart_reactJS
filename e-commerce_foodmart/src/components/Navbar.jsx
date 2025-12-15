@@ -1107,7 +1107,7 @@ export default function Navbar()
                 
                         {/* Dropdown Menu */}
                 
-                            <div className="md:hidden p-2 fixed top-16 right-0 /*right-3.25*/ bg-white rounded-bl-lg /*rounded-b-lg*/ shadow-2xl border border-gray-200 z-50">
+                            <div className="md:hidden p-2 fixed top-16 right-0 bg-white rounded-bl-lg shadow-2xl border border-gray-200 z-40">
 
                       
                                 {/* User Info */}
