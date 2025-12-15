@@ -231,17 +231,19 @@ export default function ProductPage()
         <>
             <Navbar />
 
-            <div className="container mx-auto mt-4 md:mt-15 px-5">
+            <div className="container mx-auto mt-4 lg:mt-10 px-5">
             
                 {/* Back Button */}
                 
                     <button
                         
-                        className="mb-5 md:mb-15 flex items-center justify-center w-16 max-md:h-7 md:w-25 md:px-4 md:py-1 text-black max-md:text-[14px] font-extrabold bg-yellow-500 hover:bg-orange-600 rounded-lg"
+                        // className="mb-5 md:mb-15 flex items-center justify-center w-16 max-md:h-7 md:w-25 md:px-4 md:py-1 text-black max-md:text-[14px] font-extrabold bg-yellow-500 hover:bg-orange-600 rounded-lg"
                         
                         onClick={() => navigate(-1)}
                     >
-                        ← Back
+                        {/* ← Back */}
+
+                        <img src="/icons/back.png" alt="back" className="mb-2 md:mb-5 w-8 md:w-12 hover:-translate-y-1 active:-translate-y-1 transition-all duration-150" title="Back" />
 
                     </button>
 

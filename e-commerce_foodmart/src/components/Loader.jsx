@@ -35,7 +35,7 @@ const Loader = ({ size = "medium", color = "border-blue-500" }) =>
 			
 			rounded-full          /* Circular shape */
 			
-			border-4              /* Thickness of the spinner border */
+			border-4              /* Thickness of the spinner */
 			
 			${color}              /* Main border color */
 			

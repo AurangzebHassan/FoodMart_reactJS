@@ -246,7 +246,7 @@ export default function Checkout()
 
             {/* CONTAINER */}
             
-                <div className="container mx-auto lg:mt-3 py-2 md:py-6 px-5 flex-col">
+                <div className="container mx-auto lg:mt-3 py-3.5 md:py-6 px-5 flex-col">
 
                 
                     {/* BACK + TITLE + REFRESH */}
@@ -258,12 +258,14 @@ export default function Checkout()
 
                                 <button
                                     
-                                    className="flex items-center justify-center w-22 max-md:h-5 md:w-30 md:px-4 md:py-1 text-black max-md:text-[12px] font-bold md:font-extrabold bg-yellow-500 hover:bg-orange-600 rounded-lg"
+                                    // className="flex items-center justify-center w-22 max-md:h-5 md:w-30 md:px-4 md:py-1 text-black max-md:text-[12px] font-bold md:font-extrabold bg-yellow-500 hover:bg-orange-600 rounded-lg"
                                     
                                     onClick={() => navigate(-1)}
                                 >
                                     
-                                    ← Back
+                                    {/* ← Back */}
+                                    
+                                    <img src="/icons/back.png" alt="back" className="w-8 md:w-12 hover:-translate-y-1 active:-translate-y-1 transition-all duration-150" title="Back" />
                                     
                                 </button>
 

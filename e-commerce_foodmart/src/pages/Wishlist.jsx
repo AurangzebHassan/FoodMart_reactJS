@@ -127,23 +127,25 @@ export default function Wishlist()
             <Navbar />
 
             
-            <div className="container mx-auto lg:mt-3 py-6 px-5 flex-col">
+            <div className="container mx-auto lg:mt-3 py-4 md:py-6 px-5 flex-col">
 
                 <div className="flex mb-5 md:mb-10 items-center">
 
                     <button
 
-                        className="flex items-center justify-center w-22 max-md:h-7 md:w-25 md:px-4 md:py-1 text-black max-md:text-[14px] font-extrabold bg-yellow-500 hover:bg-orange-600 rounded-lg"
+                        // className="flex items-center justify-center w-22 max-md:h-7 md:w-25 md:px-4 md:py-1 text-black max-md:text-[14px] font-extrabold bg-yellow-500 hover:bg-orange-600 rounded-lg"
                         
                         onClick={() => navigate(-1)}
                     >
                     
-                        ← Back
+                        {/* ← Back */}
+
+                        <img src="/icons/back.png" alt="back" className="w-8 md:w-12 hover:-translate-y-1 active:-translate-y-1 transition-all duration-150" title="Back" />
                     
                     </button>
 
                     
-                    <div className="w-full flex items-center justify-center text-3xl md:text-4xl text-yellow-500 font-extrabold">
+                    <div className="w-full flex items-center justify-center text-2xl md:text-4xl text-yellow-500 font-extrabold">
 
                         Wishlist
                     
