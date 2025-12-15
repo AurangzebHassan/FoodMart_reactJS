@@ -10,7 +10,7 @@ export default function HeroSection()
 
   return (
 
-      <section className="container mx-auto mt-3 lg:mt-12 grid grid-cols-1 lg:grid-cols-3 gap-2 md:gap-4 px-3 md:px-5">
+      <section className="container mx-auto mt-3 lg:mt-12 grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-4 px-3 md:px-5">
       
         {/* Left main banner */}
       
@@ -27,7 +27,7 @@ export default function HeroSection()
                     </h2>
             
                     
-                    <p className="text-gray-500 mt-1 md:mt-2 lg:mt-4 mr-[150px] md:mr-[340px] lg:mr-[100px] 2xl:mr-[300px] max-md:text-[9px] md:text-[13.75px] lg:text-[17px]">
+                    <p className="text-gray-500 mt-1 md:mt-2 lg:mt-4 mr-[150px] md:mr-[370px] lg:mr-[100px] 2xl:mr-[300px] max-md:text-[9px] md:text-[13.75px] lg:text-[17px]">
                 
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim
                 
@@ -38,7 +38,7 @@ export default function HeroSection()
                     
                     <button 
                     
-                        className="cursor-pointer mt-4 md:mt-4 lg:mt-8 2xl:mt-10 text-[10px] md:max-lg:text-[14px] lg:text-xl border border-gray-700 text-gray-700 lg:max-xl:px-6 px-3 lg:max-xl:py-3 lg:max-xl:mt-5 py-2 md:max-lg:mb-6 rounded hover:bg-gray-700 hover:text-white transition"
+                        className="cursor-pointer mt-4 md:mt-5 lg:mt-8 2xl:mt-10 text-[10px] md:max-lg:text-[16px] lg:text-xl border border-gray-700 text-gray-700 lg:max-xl:px-6 px-3 lg:max-xl:py-3 lg:max-xl:mt-5 py-2 md:max-lg:mb-6 rounded hover:bg-gray-700 hover:text-white transition"
                         
                         onClick={() => navigate(`/category/drinks-juices`)}    
                     >
@@ -56,7 +56,7 @@ export default function HeroSection()
             
                     alt="Smoothie"
 
-                    className="absolute max-md:active:-translate-3 md:hover:-translate-7 lg:hover:-translate-10 w-33 bottom-2 md:max-lg:-bottom-px max-md:left-46 md:right-8 md:max-lg:left-100 md:w-50 lg:-right-3 lg:bottom-45 lg:w-60 xl:right-2 xl:bottom-50 xl:w-70 2xl:-right-3 2xl:bottom-30 2xl:w-85 drop-shadow-lg transition-all duration-200"
+                    className="absolute max-md:active:-translate-3 md:hover:-translate-7 lg:hover:-translate-10 w-33 bottom-2 md:max-lg:-bottom-22 max-md:left-46 md:right-8 md:max-lg:left-77 md:w-115 lg:-right-3 lg:bottom-45 lg:w-60 xl:right-2 xl:bottom-50 xl:w-70 2xl:-right-3 2xl:bottom-30 2xl:w-85 drop-shadow-lg transition-all duration-200"
 
                 />
         
@@ -67,7 +67,7 @@ export default function HeroSection()
       
         {/* Right side small promos */}
       
-            <div className="lg:col-span-2 lg:ml-[200px] flex flex-col gap-2 md:gap-4 transition-all duration-200">
+            <div className="lg:col-span-2 lg:ml-[200px] flex flex-col gap-2 lg:gap-4 transition-all duration-200">
         
               <div className="bg-[url('/images/hero/veggie_border.png')] bg-cover hover:bg-center max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-43 md:h-65 lg:h-90 transition-all duration-200">
           

@@ -247,7 +247,7 @@ export default function Orders()
                 
                     {orders.length === 0 && (
                     
-                        <div className="text-center max-md:text-sm md:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-10 md:pl-23">
+                        <div className="text-center max-md:text-sm md:text-xl lg:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-10 md:pl-23">
                         
                             You have no orders yet.
                         
@@ -261,7 +261,7 @@ export default function Orders()
                         
                         filterStatus === "all" || order.shipping_status === filterStatus).length === 0 &&
                         (
-                            <div className="text-center max-md:text-sm md:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-10 md:pl-23">
+                            <div className="text-center max-md:text-sm md:text-xl lg:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-10 md:pl-23">
                         
                                 No {filterStatus} orders found.
                             
@@ -273,7 +273,7 @@ export default function Orders()
                 
                 {/* ORDER LIST */}
                 
-                    <div className={`space-y-2 md:space-y-4 md:max-xl:space-y-8 md:max-xl:pl-27 md:max-xl:pr-13 xl:grid xl:grid-cols-2 2xl:grid-cols-3 xl:gap-4 2xl:gap-2`}>
+                    <div className={`space-y-2 md:space-y-4 lg:max-xl:space-y-8 md:max-xl:pl-27 md:max-xl:pr-13 xl:grid xl:grid-cols-2 2xl:grid-cols-3 xl:gap-4 2xl:gap-2`}>
 
                     
                         {orders
@@ -286,19 +286,19 @@ export default function Orders()
                                 
                                 key={order.$id}
                                 
-                                className={`h-fit border-3 md:border-4 bg-gray-50 ${(order.shipping_status === "delivered") ? `border-green-500` : (order.shipping_status === "shipped") ? `border-blue-500` : `border-gray-500 /*border-yellow-500*/`} rounded-2xl active:drop-shadow-2xl active:-translate-y-1 hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200 p-3 md:p-6`}
+                                className={`h-fit border-3 md:border-4 bg-gray-50 ${(order.shipping_status === "delivered") ? `border-green-500` : (order.shipping_status === "shipped") ? `border-blue-500` : `border-gray-500`} rounded-2xl active:drop-shadow-2xl active:-translate-y-1 hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200 p-3 md:p-6`}
                             >
                                 {/* Top Section: Order ID + Status */}
                                 
-                                    <div className="flex justify-between mb-3 md:mb-6">
+                                    <div className="flex justify-between mb-3 md:mb-4 lg:mb-6">
                                         
                                     
                                         <div className="flex-col">
                                             
 
-                                            <p className="max-md:text-[13px] md:text-lg font-extrabold text-gray-700 md:mb-1">
+                                            <p className="max-md:text-[13px] md:text-lg font-extrabold text-gray-700 lg:mb-1">
                                     
-                                                Order <span title={order.$id.toUpperCase()} className="hover:text-gray-600 italic font-mono text-gray-500 max-md:text-[15px] md:text-xl"> #{order.$id.slice(-6).toUpperCase()} </span>
+                                                Order <span title={order.$id.toUpperCase()} className="hover:text-gray-600 italic font-mono text-gray-500 max-md:text-[15px] lg:text-xl"> #{order.$id.slice(-6).toUpperCase()} </span>
                                     
                                             </p>
                                                 
@@ -313,7 +313,7 @@ export default function Orders()
                                         </div>
                                         
                                     
-                                        <div className="flex shrink-0 items-center gap-2 md:gap-3">
+                                        <div className="flex shrink-0 items-center gap-2 lg:gap-3">
                                             
                                             
                                             <button
@@ -335,12 +335,12 @@ export default function Orders()
                                                 title="Cancel"
                                             >
                                                 
-                                                <img src="/icons/cancel.png" alt="cancel" className="w-5.5 md:w-7" />
+                                                <img src="/icons/cancel.png" alt="cancel" className="w-5.5 lg:w-7" />
                                                 
                                             </button>
 
                                     
-                                            <span className={`active:-translate-y-1 hover:-translate-y-1 transition-all duration-200 max-md:text-[10px] max-md:p-1.5 md:px-4 md:py-1 text-white font-bold rounded-full
+                                            <span className={`active:-translate-y-1 hover:-translate-y-1 transition-all duration-200 max-md:text-[10px] md:max-lg:text-sm max-md:p-1.5 md:max-lg:py-1 md:max-lg:px-3 lg:px-4 lg:py-1 text-white font-bold rounded-full
                                                 ${order.shipping_status === "pending" ? "bg-yellow-500" :
                                                 order.shipping_status === "shipped" ? "bg-blue-500" :
                                                 order.shipping_status === "delivered" ? "bg-green-500" :
@@ -378,7 +378,7 @@ export default function Orders()
 
                                 {/* ITEMS */}
                                 
-                                    <div className="space-y-1.5 md:space-y-4 mb-2 md:mb-6 border-t pt-2 md:pt-6">
+                                    <div className="space-y-1.5 lg:space-y-4 mb-2 md:mb-4 lg:mb-6 border-t pt-2 md:pt-4 lg:pt-6">
 
                                     
                                         {order.items.map((item) => (
@@ -387,7 +387,7 @@ export default function Orders()
                                             
                                                 key={item.product_id}
                                                 
-                                                className={`max-md:text-[9.5px] relative cursor-default flex justify-between items-center border rounded-lg max-md:px-2 max-md:py-1 md:p-3 bg-gray-50 hover:bg-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all duration-200`}
+                                                className={`max-md:text-[9.5px] md:text-sm relative cursor-default flex justify-between items-center border rounded-lg max-md:px-2 md:max-lg:px-3 md:max-lg:py-2 max-md:py-1 lg:p-3 bg-gray-50 hover:bg-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all duration-200`}
 
                                                 onClick={() => !cancelOrderLoading && navigate(`/product/${item.product_slug_snapshot}`)}
 
@@ -420,7 +420,7 @@ export default function Orders()
 
                                 {/* Shipping + PAYMENT + TAX + TOTAL */}
                                 
-                                    <div className="border-t pt-2 md:pt-6 max-md:text-[9.5px]">
+                                    <div className="border-t pt-2 md:pt-4 lg:pt-6 max-md:text-[9.5px] md:max-lg:text-sm">
                                         
 
                                         {/* SHIPPING ADDRESS */}
@@ -445,7 +445,7 @@ export default function Orders()
                                     
                                         {/* SHIPPING METHOD + COST */}
                                         
-                                            <div className="flex justify-between font-bold mt-1 md:mt-2">
+                                            <div className="flex justify-between font-bold mt-1 md:mt-1.5 lg:mt-2">
                                             
 
                                                 <span className="text-gray-700">Shipping: </span>
@@ -488,7 +488,7 @@ export default function Orders()
                                     
                                         {/* EXPECTED DELIVERY DATE */}
                                         
-                                            <div className="flex justify-between font-bold mt-1 md:mt-2">
+                                            <div className="flex justify-between font-bold mt-1 md:mt-1.5 lg:mt-2">
                                             
 
                                                 <span className="text-gray-700">Expected Delivery: </span>
@@ -506,7 +506,7 @@ export default function Orders()
                                     
                                         {/* PAYMENT METHOD */}
                                         
-                                            <div className="flex justify-between font-bold mt-1 md:mt-2 mb-2 md:mb-6">
+                                            <div className="flex justify-between font-bold mt-1 md:mt-1.5 lg:mt-2 mb-2 md:mb-4 lg:mb-6">
                                             
 
                                                 <span className="text-gray-700">Payment Method: </span>
@@ -524,12 +524,12 @@ export default function Orders()
                                     
                                         {/* TAX + SUBTOTAL + TOTAL AMOUNT */}
                                         
-                                            <div className=" border-t pt-2 md:pt-6">
+                                            <div className=" border-t pt-2 md:pt-4 lg:pt-6">
 
                                         
                                                 {/* SUBTOTAL */}
                                                 
-                                                    <div className="flex justify-between max-md:text-[12px] md:text-lg font-bold">
+                                                    <div className="flex justify-between max-md:text-[12px] md:text-[16px] lg:text-lg font-bold">
                                             
                                                 
                                                         <span className="text-gray-700">Subtotal:</span>
@@ -547,7 +547,7 @@ export default function Orders()
                                                     
                                                 {/* TAX AMOUNT */}
                                                 
-                                                    <div className="flex justify-between max-md:text-[12px] md:text-lg font-bold mt-1 md:mt-2 mb-2 md:mb-6">
+                                                    <div className="flex justify-between max-md:text-[12px] md:text-[16px] lg:text-lg font-bold mt-1 md:mt-1.5 lg:mt-2 mb-2 md:mb-4 lg:mb-6">
                                             
                                                 
                                                         <span className="text-gray-700">Tax (10%):</span>
@@ -565,7 +565,7 @@ export default function Orders()
 
                                                 {/* TOTAL AMOUNT */}
                                                 
-                                                    <div className="flex justify-between max-md:text-[14px] md:text-2xl font-extrabold border-t pt-2 md:pt-6">
+                                                    <div className="flex justify-between max-md:text-[14px] md:text-lg lg:text-2xl font-extrabold border-t pt-2 md:pt-4 lg:pt-6">
                                             
                                                 
                                                         <span className="text-yellow-600">Total:</span>
