@@ -6,6 +6,8 @@ import React from "react";
 
   const sizeMap =
   {
+    xs: "h-2 w-2",
+
     small: "h-4 w-4",
 
     medium: "h-6 w-6",

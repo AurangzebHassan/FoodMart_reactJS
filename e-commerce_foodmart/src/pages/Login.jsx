@@ -8,10 +8,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext.jsx";
 
+import useBlockBack from "../hooks/useBlockBack.js";
+
 
 
 const Login = () =>
 {
+	useBlockBack(true);
+
+
+
 	const { setUser, setProfile } = useAuth();
 
 

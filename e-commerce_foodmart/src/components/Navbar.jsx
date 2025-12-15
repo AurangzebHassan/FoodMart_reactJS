@@ -245,7 +245,7 @@ export default function Navbar()
             
                     {text.slice(0, index)}
             
-                    <span className="bg-yellow-500 font-bold">{text.slice(index, index + term.length)}</span>
+                    <span className="bg-yellow-500 font-mono font-bold">{text.slice(index, index + term.length)}</span>
             
                     {text.slice(index + term.length)}
         
@@ -978,12 +978,12 @@ export default function Navbar()
                             
                             {/* Modal */}
                             
-                                <div className="lg:hidden fixed top-14.5 md:top-25.5 left-1/2 -translate-x-1/2 max-md:w-full md:w-[70%] bg-white md:rounded-b-xl shadow-xl p-3 z-50">
+                                <div className="lg:hidden fixed top-14.5 md:top-25.5 left-1/2 -translate-x-1/2 max-md:w-full md:max-lg:w-[72%] lg:w-[70%] bg-white md:rounded-b-xl shadow-xl p-3 z-50">
 
                                         
                                     {/* Search Input */}
                                     
-                                        <div className="flex bg-gray-100 rounded-lg md:rounded-full p-2 mb-1 md:mb-2 items-center">
+                                        <div className="flex bg-gray-100 rounded-full max-md:py-1 max-md:px-1.75 md:p-2 mb-1 md:mb-2 items-center">
                                             <input
                                                 type="text"
                                                 placeholder="Search"
@@ -1027,7 +1027,7 @@ export default function Navbar()
                                                         setShowSearchModal(false);
                                                     }
                                                 }}
-                                                className="w-full bg-transparent outline-none max-md:p-0.75 md:p-2 text-yellow-600 font-extrabold placeholder:text-md md:placeholder:text-xl"
+                                                className="w-full bg-transparent outline-none max-md:p-0.75 md:p-2 text-yellow-600 font-bold md:font-extrabold max-md:text-[12px] text-lg placeholder:text-sm md:placeholder:text-xl"
                                             />
 
                                             <img
@@ -1062,15 +1062,15 @@ export default function Navbar()
                                                             ${highlightedIndex === index ? "bg-gray-200" : "hover:bg-gray-100"}
                                                         `}
                                                     >
-                                                        <span className={`text-yellow-500 font-extrabold max-md:text-[12px] md:text-lg`}>
+                                                        <span className={`text-yellow-500 font-extrabold max-md:text-[11px] md:text-lg`}>
                                                             {res.type === "category" ? "Category: " : "Product: "}
                                                         </span>
 
-                                                        <span className="flex items-center gap-1 md:gap-4 max-md:text-[10px] font-mono">
+                                                        <span className="flex items-center gap-1 md:gap-4 max-md:text-[9px] font-mono">
                                                             {highlightMatch(res.item.name, searchInput)}
                                                             <img
                                                                 src={res.item.image_url}
-                                                                className={res.type === "product" ? "max-md:w-12 max-md:ml-0.5 md:w-14" : "max-md:w-7.5 md:w-10 max-md:ml-2 mr-2.75"}
+                                                                className={res.type === "product" ? "max-md:w-10 max-md:ml-0.5 md:w-14" : "max-md:w-5.5 md:w-10 max-md:ml-2 mr-2.75"}
                                                             />
                                                         </span>
                                                     </div>
@@ -1107,7 +1107,7 @@ export default function Navbar()
                 
                         {/* Dropdown Menu */}
                 
-                            <div className="md:hidden p-2 fixed top-16 right-3.25 bg-white rounded-b-lg shadow-2xl border border-gray-200 z-50">
+                            <div className="md:hidden p-2 fixed top-16 right-0 /*right-3.25*/ bg-white rounded-bl-lg /*rounded-b-lg*/ shadow-2xl border border-gray-200 z-50">
 
                       
                                 {/* User Info */}

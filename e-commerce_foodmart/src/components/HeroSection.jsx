@@ -18,16 +18,16 @@ export default function HeroSection()
             
                 <div className="ml-2 md:ml-8">
             
-                    <p className="text-yellow-600 font-serif text-lg md:text-3xl lg:text-4xl mt-1 md:mt-6 lg:mt-12">100% Natural</p>
+                    <p className="text-yellow-600 font-serif text-md md:text-2xl lg:text-4xl mt-1 md:mt-6 lg:mt-12">100% Natural</p>
             
-                    <h2 className="text-2xl md:text-5xl lg:text-6xl font-semibold text-gray-800 mt-2 lg:mt-6 mr-[100px] md:mr-[350px] 2xl:mr-[250px] leading-snug">
+                    <h2 className="text-xl md:text-3xl lg:text-6xl font-semibold text-gray-800 mt-2 lg:mt-6 mr-[140px] md:mr-[300px] 2xl:mr-[250px] leading-snug">
                 
                         Fresh Smoothie &amp; Summer Juice
             
                     </h2>
             
                     
-                    <p className="text-gray-500 mt-1 md:mt-2 lg:mt-4 mr-[130px] md:mr-[314px] lg:mr-[100px] 2xl:mr-[300px] max-md:text-[10.5px] lg:text-[17px]">
+                    <p className="text-gray-500 mt-1 md:mt-2 lg:mt-4 mr-[150px] md:mr-[340px] lg:mr-[100px] 2xl:mr-[300px] max-md:text-[9px] md:text-[13.75px] lg:text-[17px]">
                 
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim
                 
@@ -38,7 +38,7 @@ export default function HeroSection()
                     
                     <button 
                     
-                        className="mt-4 lg:mt-8 2xl:mt-10 text-[12px] md:text-lg lg:text-xl border border-gray-700 text-gray-700 lg:max-xl:px-6 px-3 lg:max-xl:py-3 lg:max-xl:mt-5 py-2 md:max-lg:mb-6 rounded hover:bg-gray-700 hover:text-white transition"
+                        className="cursor-pointer mt-4 md:mt-4 lg:mt-8 2xl:mt-10 text-[10px] md:max-lg:text-[14px] lg:text-xl border border-gray-700 text-gray-700 lg:max-xl:px-6 px-3 lg:max-xl:py-3 lg:max-xl:mt-5 py-2 md:max-lg:mb-6 rounded hover:bg-gray-700 hover:text-white transition"
                         
                         onClick={() => navigate(`/category/drinks-juices`)}    
                     >
@@ -56,7 +56,7 @@ export default function HeroSection()
             
                     alt="Smoothie"
 
-                    className="absolute max-md:active:-translate-2 hover:-translate-10 w-35 bottom-3 max-md:left-48 md:right-8 md:max-lg:left-93 md:max-lg:top-1 md:w-76 lg:-right-3 lg:bottom-45 lg:w-60 xl:right-2 xl:bottom-50 xl:w-70 2xl:-right-3 2xl:bottom-30 2xl:w-85 drop-shadow-lg transition-all duration-200"
+                    className="absolute max-md:active:-translate-3 md:hover:-translate-7 lg:hover:-translate-10 w-33 bottom-2 md:max-lg:-bottom-px max-md:left-46 md:right-8 md:max-lg:left-100 md:w-50 lg:-right-3 lg:bottom-45 lg:w-60 xl:right-2 xl:bottom-50 xl:w-70 2xl:-right-3 2xl:bottom-30 2xl:w-85 drop-shadow-lg transition-all duration-200"
 
                 />
         
@@ -67,22 +67,22 @@ export default function HeroSection()
       
         {/* Right side small promos */}
       
-            <div className="lg:col-span-2 lg:ml-[200px] md:mr-0 flex flex-col gap-2 md:gap-4 transition-all duration-200">
+            <div className="lg:col-span-2 lg:ml-[200px] flex flex-col gap-2 md:gap-4 transition-all duration-200">
         
-              <div className="bg-[url('/images/hero/veggie_border.png')] bg-cover hover:bg-center max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-fit md:h-70 lg:h-90 transition-all duration-200">
+              <div className="bg-[url('/images/hero/veggie_border.png')] bg-cover hover:bg-center max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-43 md:h-65 lg:h-90 transition-all duration-200">
           
                 <div className="ml-2 md:ml-8">
             
-                    <p className="text-black text-lg md:text-4xl font-serif md:mb-2 mt-6 md:mt-4">20% Off</p>
+                    <p className="text-black text-md md:text-3xl lg:text-4xl font-serif md:mb-2 mt-6 md:mt-4">20% Off</p>
                     
-                    <div className="flex flex-row mb-1 md:mb-2 max-md:text-[14px]">一一一一一 <pre> 𝑺𝑨𝑳𝑬 </pre></div>
+                    <div className="flex flex-row md:mb-2 max-md:text-[11px] md:max-lg:text-[14px]">一一一一一 <pre> 𝑺𝑨𝑳𝑬 </pre></div>
                     
             
-                    <h3 className="text-xl md:text-4xl font-semibold mb-2 md:mb-6 md:mr-[150px]">Fruits &amp; Vegetables</h3>
+                    <h3 className="text-lg md:text-3xl lg:text-4xl font-semibold md:mb-3 lg:mb-6 md:mr-[150px]">Fruits &amp; Vegetables</h3>
             
                     <button 
                         
-                        className="text-orange-500 hover:text-orange-700 hover:underline max-md:text-[11px] md:text-md"
+                        className="cursor-pointer text-orange-500 hover:text-orange-700 hover:underline max-md:text-[9px] md:text-sm lg:text-md"
                         
                         onClick={() => navigate(`/category/fruits-veggies`)}    
                     >
@@ -98,20 +98,20 @@ export default function HeroSection()
               </div>
 
 
-              <div className="bg-[url('/images/hero/bread_border.png')] bg-top-right bg-cover bg-no-repeat max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:bg-center hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-fit md:h-70 lg:h-92 transition-all duration-200">
+              <div className="bg-[url('/images/hero/bread_border.png')] bg-top-right bg-cover bg-no-repeat max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:bg-center hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-43 md:h-65 lg:h-92 transition-all duration-200">
 
                     <div className="ml-2 md:ml-8">
 
-                        <p className="text-black text-lg md:text-4xl font-serif md:mb-2 mt-2 md:mt-4">15% Off</p>
+                        <p className="text-black text-md md:text-3xl lg:text-4xl font-serif md:mb-2 mt-2 md:mt-4">15% Off</p>
 
-                        <div className="flex flex-row mb-1 md:mb-2 max-md:text-[14px]">一一一一一 <pre> 𝑺𝑨𝑳𝑬 </pre></div>
+                        <div className="flex flex-row md:mb-2 max-md:text-[11px] md:max-lg:text-[14px]">一一一一一 <pre> 𝑺𝑨𝑳𝑬 </pre></div>
 
 
-                        <h3 className="text-xl md:text-4xl font-semibold mb-2 md:mb-6">Baked Products</h3>
+                        <h3 className="text-lg md:text-3xl lg:text-4xl font-semibold md:mb-3 lg:mb-6">Baked Products</h3>
 
                         <button 
                             
-                            className="text-orange-500 hover:text-orange-700 hover:underline max-md:text-[11px] md:text-md"
+                            className="cursor-pointer text-orange-500 hover:text-orange-700 hover:underline max-md:text-[9px] md:text-sm lg:text-md"
                             
                             onClick={() => navigate(`/category/bread-sweets`)}    
                         >

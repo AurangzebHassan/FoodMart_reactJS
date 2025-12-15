@@ -4,10 +4,16 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 
 import { account } from "../appwrite/appwrite";
 
+import useBlockBack from "../hooks/useBlockBack";
+
 
 
 const VerifyEmail = () =>
 {
+  useBlockBack(true);
+
+
+
     const [searchParams] = useSearchParams();
   
     const [message, setMessage] = useState("Verifying your email...");

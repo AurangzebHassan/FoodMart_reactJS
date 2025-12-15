@@ -4,10 +4,16 @@ import { signup } from "../appwrite/appwrite";
 
 import { useNavigate } from "react-router";
 
+import useBlockBack from "../hooks/useBlockBack";
+
 
 
 const Signup = () =>
 {
+  useBlockBack(true);
+
+
+
   const [email, setEmail] = useState("");
 
   const [password, setPassword] = useState("");

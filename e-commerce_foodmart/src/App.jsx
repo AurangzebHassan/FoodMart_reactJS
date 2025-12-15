@@ -257,30 +257,30 @@ import { CartProvider } from "./context/CartContext";
 
 
 function App()
-{  
-  return (
-    
-	  <>
-		  
+{
+	return (
+
+		<>
+			
 		{/* ⭐ Wrap the entire Router with AuthProvider so every child can use useAuth() */}
-	  
+		
 			<AuthProvider>
 		
 				<CartProvider>
 					
-				  
+					
 					<Router>
 				
 						<Routes>
 					
-						  
+							
 							<Route path="/login" element={<Login />} />
 
 							<Route path="/signup" element={<Signup />} />
 				
 							<Route path="/verify-email" element={<VerifyEmail />} />
 
-						  
+							
 							<Route path="/" element=      
 							
 								{
@@ -295,46 +295,46 @@ function App()
 				
 							/>
 
-						  
+							
 							<Route path="/product/:slug" element=
 							
 								{
 									<ProtectedRoute>
 
 										<ProductPage />
-								  
+									
 									</ProtectedRoute>	
 								}
-						  
-						  	/>
+							
+							/>
 
-						  
+							
 							<Route path="/category/:slug" element=
 							
 								{
 									<ProtectedRoute>
 
 										<CategoryPage />
-								  
+									
 									</ProtectedRoute>	
 								}
-						  
-						  	/>
 							
-						  
+							/>
+							
+							
 							<Route path="/wishlist" element=
 							
 								{
 									<ProtectedRoute>
 
 										<Wishlist />
-								  
+									
 									</ProtectedRoute>	
 								}
-						  
-						  	/>
 							
-						  
+							/>
+							
+							
 							<Route path="/checkout" element=
 							
 								{
@@ -344,12 +344,12 @@ function App()
 										
 											<Checkout />
 											
-									  	</CheckoutGuard>
-								  
+										</CheckoutGuard>
+									
 									</ProtectedRoute>	
 								}
-						  
-						  	/>
+							
+							/>
 							
 							
 							
@@ -359,25 +359,25 @@ function App()
 									<ProtectedRoute>
 										
 											<Orders />
-								  
+									
 									</ProtectedRoute>	
 								}
-						  
-						  	/>
-						  
+							
+							/>
+							
 
 						</Routes>			  
 
 					</Router>
 
-				  
+					
 				</CartProvider>
 			
 			</AuthProvider>
-    
-	  </>
-  
-  );
+
+		</>
+
+	);
 }
 
 

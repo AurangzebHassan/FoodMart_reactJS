@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-
 import { useAuth } from "../context/AuthContext";
+
+import useBlockBack from "../hooks/useBlockBack"
 
 import Navbar from "../components/Navbar";
 
@@ -24,30 +24,11 @@ import FilteredProductsGrid from "../components/product/FilteredProductsGrid";
 
 export default function Home()
 {
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
 
 
 
-    useEffect(() =>
-    {
-        if (!user) return; // Only disable when logged in
-
-  
-        // Prevent the user from going back
-  
-            history.pushState(null, "", window.location.href);
-
-            const handleBack = () =>
-            {
-                history.pushState(null, "", window.location.href);
-            };
-
-            window.addEventListener("popstate", handleBack);
-
-  
-        return () => window.removeEventListener("popstate", handleBack);
-    
-    }, [user]);
+    useBlockBack(!loading && !!user);
 
 
 
@@ -63,7 +44,7 @@ export default function Home()
             <HeroSection />
 
 
-            <div className="md:mt-10 mb-20">
+            <div className="md:mt-10 mb-5">
             
                 <CategoryCarousel />
                 

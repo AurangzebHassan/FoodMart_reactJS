@@ -348,7 +348,7 @@ export default function ProductCard({ Product }) {
     
                 <div
             
-                    className="flex justify-center items-center bg-gray-200 hover:bg-gray-300 w-full h-[35%] rounded-2xl p-3"
+                    className="flex justify-center items-center bg-gray-200 w-full h-[35%] rounded-2xl p-3"
             
                     onClick={!addToCartLoading && handleClick}
                 >
@@ -581,7 +581,7 @@ export default function ProductCard({ Product }) {
                                         
                                                 // "Add to Cart"
                                                 (
-                                                    <img src={isInCart ? `/icons/again-add-to-cart.png` : `/icons/add-to-cart.png`} title={isInCart ? `Again add to cart` : `Add to cart`} alt="Add to Cart" className="w-4 md:w-6 hover:-translate-y-1 active:-translate-y-1 cursor-pointer transition-all duration-200" />   
+                                                    <img src={isInCart ? `/icons/again-add-to-cart.png` : `/icons/add-to-cart.png`} title={isInCart ? `Again add to cart` : `Add to cart`} alt="Add to Cart" className="w-4 md:w-6 hover:-translate-y-1 cursor-pointer transition-all duration-200" />   
                                                 )
                                             }
                                     

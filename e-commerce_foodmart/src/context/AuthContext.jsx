@@ -91,6 +91,11 @@ export const AuthProvider = ( { children } ) =>
             
                         if (current)
                         {
+                            // OAuth-safe history rewrite
+                                
+                                history.replaceState(null, "", window.location.pathname + window.location.search);
+
+
                             setUser(current);               // Store the Appwrite user
 
 
