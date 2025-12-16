@@ -406,7 +406,7 @@ export default function Navbar()
                 
                 {/* Left section of the navbar */}
         
-                    <div className="flex max-w-[30%] md:max-w-none shrink-0 grow-0 items-center transition-all duration-200">
+                    <div className="flex max-md:max-w-[30%] md:max-w-[33%] lg:max-w-none shrink-0 grow-0 items-center transition-all duration-200">
                     
                         <Link to="/" tabIndex={-1} className="hidden md:flex">
                         
@@ -438,9 +438,9 @@ export default function Navbar()
                             
                         {/* departments dropdown */}
                         
-                        <div className="md:max-lg:-mr-4 md:max-lg:hidden text-[12px] lg:text-lg text-yellow-600 font-semibold rounded-l-full bg-gray-100 lg:hover:bg-gray-200 focus:bg-gray-200 cursor-pointer">
+                        <div className="text-[12px] md:text-[16px] lg:text-lg text-yellow-600 font-semibold rounded-l-full bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 cursor-pointer">
                                 
-                            <select name="departments" id="departments" value={selectedDepartment} onChange={handleCategoryChange} className="focus:border-none p-1.25 lg:p-3 text-center">
+                            <select name="departments" id="departments" value={selectedDepartment} onChange={handleCategoryChange} className="focus:border-none p-1.25 md:p-3 md:max-lg:px-6 text-center">
 
                                 <option value="shopbydepartments"> Categories </option>
                                 
@@ -632,13 +632,13 @@ export default function Navbar()
                     
                 {/* Right side icons. Right side of the navbar */}
 
-                    <div className={`flex shrink-0 justify-end items-center ${cartTotal <= 9.99 ? `max-md:gap-6` : (cartTotal <= 99.99) ? `max-md:gap-5` : `max-md:gap-4.5` } ${user?.name.length > 9 ? `md:gap-3.5` : `xl:-ml-2 max-md:gap-3 md:gap-5`} transition-all duration-200`}>
+                    <div className={`flex shrink-0 justify-end items-center ${cartTotal <= 9.99 ? `max-md:gap-6` : (cartTotal <= 99.99) ? `max-md:gap-5` : `max-md:gap-4.5` } ${user?.name.length > 9 ? `lg:gap-3.5` : `xl:-ml-2 max-md:gap-3 lg:gap-5`} md:max-lg:gap-5 transition-all duration-200`}>
                         
                         {/* Search modal search icon. Only for mobile and tablet view */}
                         
-                            <div className={`${(cartTotal <= 9.99) ? `max-md:-ml-8` : (cartTotal <= 99.99) ? `max-md:-ml-8.25` : `max-md:-ml-8.5`} lg:hidden`} onClick={() => { setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50); }}>
+                            <div className={`${(cartTotal <= 9.99) ? `max-md:-ml-8 md:max-lg:-ml-14.25` : (cartTotal <= 99.99) ? `max-md:-ml-8.25` : `max-md:-ml-8.5`} lg:hidden`} onClick={() => { setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50); }}>
                           
-                                <img src="/icons/search.png" alt="FoodMart" className="h-6.5 max-md:px-2 p-1.25 md:h-11 md:p-2 rounded-r-full md:rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer" />
+                                <img src="/icons/search.png" alt="FoodMart" className="h-6.5 max-md:px-2 p-1.25 md:h-11 md:p-2 rounded-r-full lg:rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer" />
                 
                             </div>
                         
@@ -649,7 +649,7 @@ export default function Navbar()
                             
                                 to="/orders"
                             
-                                className="hidden md:flex relative bg-gray-100 hover:bg-gray-200 rounded-full p-1.25 sm:p-2"
+                                className="hidden lg:flex relative bg-gray-100 hover:bg-gray-200 rounded-full p-1.25 md:p-2"
                                 
                                 onClick={(e) => { e.preventDefault(); navigate("/orders"); }}
                             >
@@ -660,11 +660,11 @@ export default function Navbar()
 
                                     title="orders"
                                     
-                                    className="h-4 sm:h-7 cursor-pointer"
+                                    className="h-4 md:h-7 cursor-pointer"
                                 />
                                 
                                 
-                                <span className={`absolute ${ordersQuantity > 9 ? `-top-3 -right-1.5 sm:-top-3.75 sm:-right-3.75 xl:-top-4 xl:-right-3 2xl:-top-4 2xl:-right-3.5` : `-top-2.5 -right-1 sm:-top-3.25 sm:-right-2 xl:-top-4 xl:-right-1.25 2xl:-top-4 2xl:-right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full max-sm:text-[10px] px-1.25 sm:px-2`}>
+                                <span className={`absolute ${ordersQuantity > 9 ? `-top-3 -right-1.5 md:-top-3.75 md:-right-3.75 xl:-top-4 xl:-right-3 2xl:-top-4 2xl:-right-3.5` : `-top-2.5 -right-1 md:-top-3.25 md:-right-2 xl:-top-4 xl:-right-1.25 2xl:-top-4 2xl:-right-1.5`} font-bold bg-yellow-500 hover:bg-orange-600 text-white text-md rounded-full max-md:text-[10px] px-1.25 md:px-2`}>
                             
                                         {ordersQuantity}
                         
@@ -675,7 +675,7 @@ export default function Navbar()
                       
                         {/* Wishlist button only for tablets and desktop */}
                         
-                            <Link to="/wishlist" className="hidden md:flex relative bg-gray-100 hover:bg-gray-200 rounded-full p-1.25 sm:p-2" onClick={(e) => { e.preventDefault(); navigate("/wishlist"); }}>
+                            <Link to="/wishlist" className="hidden lg:flex relative bg-gray-100 hover:bg-gray-200 rounded-full p-1.25 md:p-2" onClick={(e) => { e.preventDefault(); navigate("/wishlist"); }}>
 
                                 <img
                     
@@ -707,7 +707,7 @@ export default function Navbar()
                                 
                                     onClick={() => setOpenCart(true)}
                                 
-                                className="xl:mx-7 2xl:mx-14 relative cursor-pointer flex flex-row justify-between"
+                                className="xl:mr-13 xl:ml-11 2xl:mr-20 2xl:ml-18 relative cursor-pointer flex flex-row justify-between"
                                 
                                 tabIndex={0}
                                 
@@ -749,7 +749,7 @@ export default function Navbar()
                             </div>
                         
                       
-                        {/* Mobile Profile button */}
+                        {/* Mobile Profile button. Mobile only. */}
                         
                             <Link 
                             
@@ -776,42 +776,78 @@ export default function Navbar()
                         
                         {/* Username + logout button for md and above breakpoints i.e not for mobile view */}
                         
-                            <div className={`hidden md:flex items-center gap-1 sm:gap-2 mt-1 ${user?.name.length > 9 ? `ml-1 md:ml-10 lg:ml-7 xl:ml-0 2xl:ml-3` : `ml-3.5 md:ml-20 lg:ml-7 xl:ml-0 2xl:ml-3`}`}>
+                            <div className={`hidden md:flex items-center gap-1 md:max-xl:gap-5 xl:gap-5 md:max-lg:ml-11.5 lg:ml-13 ${user?.name.length > 9 ? `ml-1 /*md:ml-10*/ /*lg:ml-7*/ xl:ml-0 2xl:ml-3` : `ml-3.5 /*md:ml-20*/ /*lg:ml-7*/ xl:ml-0 2xl:ml-3`}`}>
                                 
-                                <span className="flex lg:hidden text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
+                                {/* USERNAME IN MD BREAKPOINT */}
                                 
-                                    {(user && user?.name.length > 9) ? user?.name.slice(0, 8) + "..." : user?.name}
-                                    {/* Guest */}
-
-                                </span>
-                                
-                                <span className="hidden lg:max-xl:flex text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
-                                
-                                    {(user && user?.name.length > 11) ? user?.name.slice(0, 10) + "..." : user?.name}
-                                    {/* Guest */}
-
-                                </span>
-                                
-                                <span className="hidden xl:flex text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}>
-                                
-                                    {(user && user?.name.length > 13) ? user?.name.slice(0, 12) : user?.name}
-                                    {/* Guest */}
-
-                                </span>
-                                
-
-                                <button 
-                                
-                                    // className="mt-1 px-2 py-0.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg"
+                                    {/* <span className="flex lg:hidden text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}> */}
                                     
-                                    // className="mt-1 md:ml-5 lg:ml-10 xl:ml-5 transition-all duration-200 rounded-full"
-                            
-                                    onClick={handleLogout}
-                                >
-                                    
-                                    <img src="/icons/logout.png" title="logout" alt="logout" className="w-9 hover:w-10 rounded-full transition-all duration-75" />
+                                        {/* {(user && user?.name.length > 9) ? user?.name.slice(0, 8) + "..." : user?.name} */}
+                                        {/* Guest */}
 
-                                </button>
+                                    {/* </span> */}
+                                
+                          
+                                {/* USERNAME IN LG BREAKPOINT */}
+                                
+                                    {/* <span className="hidden lg:max-xl:flex text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}> */}
+                                    
+                                        {/* {(user && user?.name.length > 11) ? user?.name.slice(0, 10) + "..." : user?.name} */}
+                                        {/* Guest */}
+
+                                    {/* </span> */}
+                                
+                          
+                                {/* USERNAME IN XL + @XL BREAKPOINTS */}
+                                
+                                    {/* <span className="hidden xl:flex text-lg font-extrabold font-mono text-red-600 " title={user?.name || "Guest"}> */}
+                                    
+                                        {/* {(user && user?.name.length > 13) ? user?.name.slice(0, 12) : user?.name} */}
+                                        {/* Guest */}
+
+                                    {/* </span> */}
+                                
+                          
+
+                                {/* Mobile Profile button */}
+                        
+                                    <Link 
+                                    
+                                        // className="flex md:hidden bg-gray-100 hover:bg-gray-200 rounded-full p-1.25"
+                                        
+                                        onClick={() => setShowMobileProfileDropdown(!showMobileProfileDropdown)}
+                                        
+                                        
+                                        className={`hidden md:flex bg-gray-100 hover:bg-gray-200 rounded-full p-2`}
+
+                                        title="Profile"
+                                    >
+                                        
+                                        <img
+                                            
+                                            src="/icons/user.svg"
+
+                                            // src={(profile || user) ? (profile.profile_pic) : "/icons/user.svg"}
+
+                                            className={`cursor-pointer h-7`}                                    
+                                        />
+                                    
+                                    </Link>
+                                
+                                {/* Logout button */}
+                                
+                                    <button 
+                                    
+                                        // className="mt-1 px-2 py-0.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg"
+                                        
+                                        // className="mt-1 md:ml-5 lg:ml-10 xl:ml-5 transition-all duration-200 rounded-full"
+                                
+                                        onClick={handleLogout}
+                                    >
+                                        
+                                        <img src="/icons/logout.png" title="logout" alt="logout" className="w-9 hover:w-10 rounded-full transition-all duration-75" />
+
+                                    </button>
 
                             </div>
                         
@@ -1099,7 +1135,7 @@ export default function Navbar()
                 
                             <div
                     
-                                className="md:hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+                                className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
                                 
                                 onClick={() => setShowMobileProfileDropdown(false)}
                             />
@@ -1107,22 +1143,22 @@ export default function Navbar()
                 
                         {/* Dropdown Menu */}
                 
-                            <div className="md:hidden p-2 fixed top-16 right-0 bg-white rounded-bl-lg shadow-2xl border border-gray-200 z-40">
+                            <div className="max-md:p-2 md:p-4 fixed max-md:top-16 md:top-25.25 xl:top-30.75 right-0 bg-white rounded-bl-lg shadow-2xl border border-gray-200 z-40">
 
                       
                                 {/* User Info */}
                                 
-                                    <div className="/*border-b border-gray-200*/">
+                                    <div>
                                         
-                                        <div className="flex px-2">
+                                        <div className="flex max-md:px-2 px-4">
                                             
                                             <div>
                                             
-                                                <p className="text-[14px] font-bold text-yellow-500 truncate">
+                                                <p className="max-md:text-[14px] text-2xl font-bold text-yellow-500 truncate">
                                                     {user?.name || "Guest"}
                                                 </p>
                                                 
-                                                <p className="text-[10px] text-gray-500 truncate">
+                                                <p className="max-md:text-[10px] text-md text-gray-500 truncate md:mt-1">
                                                     {user?.email || "guest@example.com"}
                                                 </p>
                                                 
@@ -1133,14 +1169,14 @@ export default function Navbar()
                           
                                         {/* Divider */}
                                 
-                                        <div className="border-t border-gray-200 mt-2"></div>
+                                        <div className="lg:hidden border-t border-gray-200 md:border-gray-300 max-md:mt-2 md:mt-4"></div>
                                         
                                     </div>
                                 
                       
                                 {/* Menu Items */}
                                 
-                                    <div>
+                                    <div className="lg:hidden">
                                         
                                         {/* Orders */}
                                         
@@ -1148,22 +1184,22 @@ export default function Navbar()
                                                 
                                                 onClick={() => {navigate("/orders"); setShowMobileProfileDropdown(false);}}
                                                 
-                                                className="w-full flex items-center justify-between p-2 rounded-lg"
+                                                className="md:max-lg:hover:bg-gray-100 w-full flex items-center justify-between max-md:p-2 p-4 rounded-lg cursor-pointer"
                                             >
-                                                <div className="flex items-center gap-1.5">
+                                                <div className="flex items-center max-md:gap-1.5 gap-3">
                                                 
                                                     <img
                                                         src={ordersQuantity > 0 ? `/icons/order-delivery.png` : `/icons/shopping-bag.png`}
                                                         alt="Orders"
-                                                        className="w-4.25"
+                                                        className="max-md:w-4.25 w-7 md:hover:-translate-y-1 md:duration-200"
                                                     />
                                                 
-                                                    <span className="text-[11px] font-mono font-medium text-gray-700">Orders</span>
+                                                    <span className="max-md:text-[11px] text-md font-mono font-medium text-gray-700">Orders</span>
                                                     
                                                 </div>
                                                 
                                                 
-                                                <span className="bg-yellow-500 text-white text-[10px] font-extrabold rounded-full px-2 py-0.75">
+                                                <span className={`bg-yellow-500 md:hover:bg-orange-600 md:hover:-translate-y-1 md:transition-all md:duration-200 text-white max-md:text-[10px] text-lg font-extrabold rounded-full max-md:px-2 py-0.75 ${(ordersQuantity > 9) ? `px-3` : `px-4.5`}`}>
                                                     {ordersQuantity}
                                                 </span>
                                                 
@@ -1175,22 +1211,22 @@ export default function Navbar()
                                             <button
                                                 onClick={() => {navigate("/wishlist"); setShowMobileProfileDropdown(false);}}
                                                 
-                                                className="w-full flex items-center justify-between p-2 rounded-lg"
+                                                className="md:max-lg:hover:bg-gray-100 w-full flex items-center justify-between max-md:p-2 p-4 rounded-lg cursor-pointer"
                                             >
-                                                <div className="flex items-center gap-1.75">
+                                                <div className="flex items-center max-md:gap-1.75 gap-3.25">
                                                 
                                                     <img
                                                         src="/icons/heart.svg"
                                                         alt="Wishlist"
-                                                        className="w-4"
+                                                        className="max-md:w-4 w-6.75 md:hover:-translate-y-1 md:duration-200"
                                                     />
                                                     
-                                                    <span className="text-[11px] font-mono font-medium text-gray-700">Wishlist</span>
+                                                    <span className="max-md:text-[11px] text-md font-mono font-medium text-gray-700">Wishlist</span>
                                                     
                                                 </div>
                                                 
                                                 
-                                                <span className="bg-yellow-500 text-white text-[10px] font-extrabold rounded-full px-2 py-0.75">
+                                                <span className={`bg-yellow-500 md:hover:bg-orange-600 md:hover:-translate-y-1 md:transition-all md:duration-200 text-white max-md:text-[10px] text-lg font-extrabold rounded-full max-md:px-2 py-0.75 ${(wishlistQuantity > 9) ? `px-3` : `px-4.5`}`}>
                                                     {wishlistQuantity}
                                                 </span>
                                                 
@@ -1199,7 +1235,7 @@ export default function Navbar()
                                     
                                         {/* Divider */}
                                     
-                                            <div className="border-t border-gray-200"></div>
+                                            <div className="md:hidden border-t border-gray-200 md:border-gray-300"></div>
                                         
                                         
                                         {/* Logout */}
@@ -1208,12 +1244,12 @@ export default function Navbar()
                                                 
                                                 onClick={() => {handleLogout(); setShowMobileProfileDropdown(false);}}
                                                 
-                                                className="w-full flex items-center gap-1.5 p-2 rounded-lg text-red-600 text-[13px] font-bold font-mono"
+                                                className="md:hidden cursor-pointer w-full flex items-center max-md:gap-1.5 gap-3 max-md:p-2 p-4 rounded-lg text-red-600 max-md:text-[13px] md:text-lg font-bold font-mono"
                                             >
                                                 <img
                                                     src="/icons/logout.png"
                                                     alt="Logout"
-                                                    className="w-4"
+                                                    className="max-md:w-4 w-7 md:hover:-translate-y-1 md:duration-200" 
                                                 />
                                                 
                                                 Logout
