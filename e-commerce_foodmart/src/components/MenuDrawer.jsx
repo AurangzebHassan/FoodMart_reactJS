@@ -126,7 +126,7 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
       {/* same transform/transition classes as CartDrawer */}
 
       <nav
-        className={`relative bg-white w-[70%] md:w-120 max-w-full h-full transform transition-transform duration-300 ${
+        className={`relative bg-white w-[65%] md:w-120 max-w-full h-full transform transition-transform duration-300 ${
           isVisible ? "translate-x-0" : "translate-x-full"
         } shadow-xl md:p-6 flex flex-col overflow-y-auto`}
         aria-label="Mobile menu"

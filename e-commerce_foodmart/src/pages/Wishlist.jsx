@@ -127,7 +127,7 @@ export default function Wishlist()
             <Navbar />
 
             
-            <div className="container mx-auto lg:mt-3 py-4 md:py-6 px-5 flex-col">
+            <div className="container mx-auto lg:mt-3 py-3 md:py-6 px-5 flex-col">
 
                 <div className="flex mb-5 md:mb-10 items-center">
 
@@ -145,7 +145,7 @@ export default function Wishlist()
                     </button>
 
                     
-                    <div className="w-full flex items-center justify-center text-2xl md:text-4xl text-yellow-500 font-extrabold">
+                    <div className="w-full flex items-center justify-center text-xl md:text-4xl text-yellow-500 font-extrabold">
 
                         Wishlist
                     

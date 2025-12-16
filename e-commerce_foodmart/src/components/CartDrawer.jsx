@@ -270,12 +270,12 @@ export default function CartDrawer({ onClose })
 
 				{/* Header */}
 				
-					<div className="flex justify-between items-center mb-3 md:mb-10 mt-1 md:mt-6">
+					<div className="flex justify-between items-center mb-2 md:mb-6 mt-1 md:mt-6">
 
 						<h1 className="text-2xl md:text-3xl font-extrabold text-yellow-500">Your Cart</h1>
 						
 						<span
-						className={`text-white text-[20px] md:text-[25px] active:-translate-y-1 hover:-translate-y-1 bg-yellow-500 active:bg-orange-600 hover:bg-orange-600 ${
+						className={`text-white text-[17px] md:text-[25px] active:-translate-y-1 hover:-translate-y-1 bg-yellow-500 active:bg-orange-600 hover:bg-orange-600 ${
 							cartQuantity > 9 ? "px-3" : "px-4.5"
 						} rounded-full font-bold transition-all duration-200`}
 						>
@@ -283,7 +283,7 @@ export default function CartDrawer({ onClose })
 							((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) ?
 							
 							(
-								<div className={`flex items-center justify-center py-1.75 md:py-2.75 ${cartQuantity > 9 ? `px-0.75 md:px-1.25`: ``}`}>
+								<div className={`flex items-center justify-center py-1.25 md:py-2.75 ${cartQuantity > 9 ? `px-0.5 md:px-1.25`: ``}`}>
 
 									<Loader size="small" color="border-white" />
 
@@ -323,11 +323,11 @@ export default function CartDrawer({ onClose })
 										
 											{item.discount_value > 0 && (
 												<div
-												className={`absolute md:left-2 top-25 md:top-31.75 ${
+												className={`absolute md:left-2 top-20 md:top-30 ${
 													product.price > 9.99
-													? "px-0.75"
-													: "px-1.5"
-												} bg-green-700 text-white font-extrabold text-[10px] md:text-sm cursor-pointer active:-translate-y-1  hover:-translate-y-1 p-0.5 rounded-full transition-all duration-200`}
+													? "px-0.75 md:px-1"
+													: "px-1.5 md:px-1.75"
+												} bg-green-700 text-white font-extrabold text-[8px] md:text-[11px] active:-translate-y-1  hover:-translate-y-1 p-0.5 md:p-0.75 rounded-full transition-all duration-200`}
 												>
 												{product.discount_tag}
 												</div>
@@ -338,7 +338,7 @@ export default function CartDrawer({ onClose })
 					
 											<div
 										
-												className={`absolute left-11 top-23 md:top-30 md:left-12 active:-translate-y-0.5 hover:-translate-y-0.5 p-2 rounded-full transition-all duration-200`}
+												className={`absolute cursor-pointer left-11 top-18 md:top-28 md:left-12 active:-translate-y-0.5 hover:-translate-y-0.5 p-2 rounded-full transition-all duration-200`}
 										
 												onClick={() => {handleFavouriteClick(item.product.$id)}}
 											>
@@ -349,7 +349,7 @@ export default function CartDrawer({ onClose })
 											
 													alt="wishlist"
 													
-													className="w-5 md:w-6"
+													className="w-4.25 md:w-6"
 												/>
 											
 											</div>
@@ -360,7 +360,7 @@ export default function CartDrawer({ onClose })
 											<img
 												src={product.image_url}
 												alt={product.name}
-												className="cursor-pointer w-18 h-20 md:w-20 md:h-25 rounded-lg object-cover"
+												className="cursor-pointer w-18 h-17 md:w-20 md:h-25 rounded-lg object-scale-down"
 												onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleClick(product);}}
 											/>
 
@@ -373,7 +373,7 @@ export default function CartDrawer({ onClose })
 													{/* PRODUCT NAME */}
 													
 														<p
-															className="font-mono max-sm:text-[12px] md:text-md  text-black md:text-gray-700 cursor-pointer md:hover:text-gray-900 font-bold md:font-semibold mt-2.25 md:mt-1"
+															className="font-mono max-md:text-[11px] md:text-[17px]  text-black md:text-gray-700 cursor-pointer md:hover:text-gray-900 font-bold md:font-semibold mt-2.25 md:mt-2.5"
 															onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleClick(product);}}
 														>
 															{product.name}
@@ -381,68 +381,10 @@ export default function CartDrawer({ onClose })
 												
 												<div className="flex items-center gap-2 ml-3 mt-1">
 													
-													{/* PRODUCT UPDATION BUTTONS FOR MD AND ABOVE ONLY */}
-													
-														<div className="hidden md:flex md:flex-col mt-0.5">
-														
-															<button
-																className={`flex mb-1 ${
-																((product.stock === 0) || clearCartLoading || refreshCartLoading)
-																	? "bg-gray-300"
-																	: "bg-yellow-300 hover:bg-orange-600"
-																} cursor-pointer justify-center items-center w-5 h-5 font-bold rounded-md text-sm`}
-																onClick=
-																{
-																	async () =>
-																	{
-																		setUpdatingItemId(item.$id);
-
-																		await updateItem(item.$id, product.$id, 1)
-
-																		setUpdatingItemId(null);
-																	}
-																}
-																disabled={(product.stock === 0) || (updatingItemId !== null) || clearCartLoading || refreshCartLoading || removingItemId !== null}
-															>
-																+
-															</button>
-															
-															<button
-																className={`flex mb-1 ${
-																((item.quantity === 1) || clearCartLoading || refreshCartLoading)
-																	? "bg-gray-300"
-																	: "bg-yellow-300 hover:bg-orange-600"
-																} cursor-pointer justify-center items-center w-5 h-5 font-bold rounded-md text-sm`}
-																onClick=
-																{
-																	async () =>
-																	{
-																		setUpdatingItemId(item.$id);
-
-																		await updateItem(item.$id, product.$id, -1)
-
-																		setUpdatingItemId(null);
-																	}
-																}
-																disabled={(item.quantity === 1) || updatingItemId !== null || clearCartLoading || refreshCartLoading || removingItemId !== null}
-															>
-																−
-															</button>
-															
-															<button
-																className={`flex justify-center items-center rounded-md w-5 h-5 cursor-pointer ${(clearCartLoading || refreshCartLoading) ? `bg-gray-300` : `bg-red-400 hover:bg-red-500`}`}
-																onClick={async() => {setRemovingItemId(item.$id); await removeItem(item.$id, product.$id); setRemovingItemId(null);}}
-																disabled={removingItemId !== null || clearCartLoading || refreshCartLoading || updatingItemId !== null}
-															>
-																<img src="/icons/delete.png" alt="delete" />
-															</button>
-														
-														</div>
-
 													{/* PRODUCT QUANTITY */}
 														
 														<span
-														className={`text-white text-[20px] md:text-[25px] active:-translate-y-1 hover:-translate-y-1 bg-yellow-500 active:bg-orange-600 hover:bg-orange-600 ${
+														className={`text-white text-[17px] md:text-[25px] active:-translate-y-1 hover:-translate-y-1 bg-yellow-500 active:bg-orange-600 hover:bg-orange-600 ${
 															item.quantity > 9 ? "px-3" : "px-4.5"
 														} rounded-full font-bold transition-all duration-200`}
 														>
@@ -450,7 +392,7 @@ export default function CartDrawer({ onClose })
 															((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ?
 															
 															(
-																<div className={`flex items-center justify-center py-1.75 md:py-2.75 ${item.quantity > 9 ? `px-0.75 md:px-1.5` : ``}`}>
+																<div className={`flex items-center justify-center py-1.25 md:py-2.75 ${item.quantity > 9 ? `px-0.5 md:px-1.5` : ``}`}>
 										
 																	<Loader size="small" color="border-white" />
 										
@@ -470,16 +412,16 @@ export default function CartDrawer({ onClose })
 											</div>
 
 
-												{/* PRODUCT UPDATION BUTTON FOR MOBILE VIEW ONLY */}
+												{/* PRODUCT UPDATION BUTTONS */}
 												
-													<div className="flex md:hidden mt-3 gap-5">
+													<div className="flex md: mt-2 md:mt-4 gap-5 md:gap-6">
 															
 														<button
 															className={`flex mb-1 ${
 															((product.stock === 0) || clearCartLoading || refreshCartLoading)
 																? "bg-gray-300"
 																: "bg-yellow-300 hover:bg-orange-600"
-															} cursor-pointer justify-center items-center w-5 h-5 font-bold rounded-md text-sm`}
+															} cursor-pointer justify-center items-center w-4.5 h-4.5 md:w-7 md:h-6 font-bold md:font-extrabold rounded-md max-md:text-[12px] md:text-md`}
 															onClick=
 															{
 																async () =>
@@ -501,7 +443,7 @@ export default function CartDrawer({ onClose })
 															((item.quantity === 1) || clearCartLoading || refreshCartLoading)
 																? "bg-gray-300"
 																: "bg-yellow-300 hover:bg-orange-600"
-															} cursor-pointer justify-center items-center w-5 h-5 font-bold rounded-md text-sm`}
+															} cursor-pointer justify-center items-center w-4.5 h-4.5 md:w-7 md:h-6 font-bold md:font-extrabold rounded-md text-sm max-md:text-[12px] md:text-md`}
 															onClick=
 															{
 																async () =>
@@ -519,7 +461,7 @@ export default function CartDrawer({ onClose })
 														</button>
 														
 														<button
-															className={`flex justify-center items-center rounded-md w-5 h-5 cursor-pointer ${(clearCartLoading || refreshCartLoading) ? `bg-gray-300` : `bg-red-400 hover:bg-red-500`}`}
+															className={`flex justify-center items-center rounded-md w-4.5 h-4.5 md:w-7 md:h-6 md:p-1 cursor-pointer ${(clearCartLoading || refreshCartLoading) ? `bg-gray-300` : `bg-red-400 hover:bg-red-500`}`}
 															onClick={async() => {setRemovingItemId(item.$id); await removeItem(item.$id, product.$id); setRemovingItemId(null);}}
 															disabled={removingItemId !== null || clearCartLoading || refreshCartLoading || updatingItemId !== null}
 														>
@@ -531,24 +473,24 @@ export default function CartDrawer({ onClose })
 
 												{/* Price + Subtotal */}
 											
-													<div className="flex justify-between mt-4.5 md:mt-11.5">
-													<div className="flex gap-2">
+													<div className="flex justify-between mt-2.75 md:mt-6">
+													<div className="flex gap-1 md:gap-2">
 														{item.discount_value > 0 && (
-														<p className="text-gray-500 text-[14px] md:text-md font-mono">
+														<p className="text-gray-500 max-md:text-[10px] md:text-md font-mono">
 															{formatPrice(product.price, product.currency, item.discount_value)}
 														</p>
 														)}
 														<p
 														className={`text-gray-500 md:text-md font-mono ${
 															item.discount_value
-															? "line-through text-[11px] md:text-sm"
-															: "text-[14px]"
+															? "line-through max-md:text-[8px] md:text-sm"
+															: "max-md:text-[10px]"
 														}`}
 														>
 														{formatPrice(product.price, product.currency)}
 														</p>
 													</div>
-													<p className="text-gray-700 max-sm:text-[14px] font-mono">
+													<p className={`text-gray-700 max-sm:text-[10px] font-mono */${(item.subtotal <= 9.99) ? `max-md:mr-2.5` :  (item.subtotal <= 99.99) ? `max-md:mr-1.75` : `max-md:mr-1.25`}*/`}>
 														{formatPrice(item.subtotal, product.currency)}
 													</p>
 													</div>

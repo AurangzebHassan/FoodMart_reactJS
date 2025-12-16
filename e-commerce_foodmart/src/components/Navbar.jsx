@@ -379,13 +379,13 @@ export default function Navbar()
                 
             {/* Background blur overlay */}
                     
-                {((showDropdown && searchResults.length > 0) || showSearchModal) && (
+                {((showDropdown && searchResults.length > 0) || showSearchModal || openMobileMenu) && (
                 
                     <div
                     
                         className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
                     
-                        onClick={() => {setShowDropdown(false); setShowSearchModal(false);}}
+                        onClick={() => {setShowDropdown(false); setShowSearchModal(false); setOpenMobileMenu(false);}}
                     >
                 
                     </div>
@@ -440,7 +440,7 @@ export default function Navbar()
                         
                         <div className="text-[12px] md:text-[16px] lg:text-lg text-yellow-600 font-semibold rounded-l-full bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 cursor-pointer">
                                 
-                            <select name="departments" id="departments" value={selectedDepartment} onChange={handleCategoryChange} className="focus:border-none p-1.25 md:p-3 md:max-lg:px-6 text-center">
+                            <select name="departments" id="departments" value={selectedDepartment} onChange={handleCategoryChange} className="focus:border-none p-1.25 md:p-3 md:max-lg:py-3.25 md:max-lg:px-6 text-center">
 
                                 <option value="shopbydepartments"> Categories </option>
                                 
@@ -636,7 +636,7 @@ export default function Navbar()
                         
                         {/* Search modal search icon. Only for mobile and tablet view */}
                         
-                            <div className={`${(cartTotal <= 9.99) ? `max-md:-ml-8 md:max-lg:-ml-14.25` : (cartTotal <= 99.99) ? `max-md:-ml-8.25` : `max-md:-ml-8.5`} lg:hidden`} onClick={() => { !showMobileProfileDropdown && setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50); }}>
+                            <div className={`${(cartTotal <= 9.99) ? `max-md:-ml-7.5` : (cartTotal <= 99.99) ? `max-md:-ml-7.75` : `max-md:-ml-7`} lg:hidden md:max-lg:-ml-16.25`} onClick={() => { !showMobileProfileDropdown && setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50); }}>
                           
                                 <img src="/icons/search.png" alt="FoodMart" className="h-6.5 max-md:px-2 p-1.25 md:h-11 md:p-2 rounded-r-full lg:rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer" />
                 
@@ -774,9 +774,9 @@ export default function Navbar()
                             </Link>
 
                         
-                        {/* Username + logout button for md and above breakpoints i.e not for mobile view */}
+                        {/* Profile dropdown + logout button */}
                         
-                            <div className={`hidden md:flex items-center gap-1 md:max-xl:gap-5 xl:gap-5 md:max-lg:ml-11.5 lg:ml-13 ${user?.name.length > 9 ? `ml-1 /*md:ml-10*/ /*lg:ml-7*/ xl:ml-0 2xl:ml-3` : `ml-3.5 /*md:ml-20*/ /*lg:ml-7*/ xl:ml-0 2xl:ml-3`}`}>
+                            <div className={`hidden md:flex items-center gap-1 md:gap-3 lg:max-xl:gap-5 xl:gap-5 md:max-lg:ml-11.5 lg:ml-13 ${user?.name.length > 9 ? `ml-1 /*md:ml-10*/ /*lg:ml-7*/ xl:ml-0 2xl:ml-3` : `ml-3.5 /*md:ml-20*/ /*lg:ml-7*/ xl:ml-0 2xl:ml-3`}`}>
                                 
                                 {/* USERNAME IN MD BREAKPOINT */}
                                 
@@ -1086,15 +1086,17 @@ export default function Navbar()
                                                         onMouseEnter={() => setHighlightedIndex(index)}
                                                         onClick={() => {
                                                             if (res.type === "category") {
+                                                                incrementCategorySearchCount(res.item.$id);
                                                                 navigate(`/category/${res.item.slug}`);
                                                             } else {
+                                                                incrementProductSearchCount(res.item.$id);
                                                                 navigate(`/product/${res.item.slug}`);
                                                             }
 
                                                             setShowSearchModal(false);
                                                             setSearchInput("");
                                                         }}
-                                                        className={`p-2 md:p-3 border-b border-gray-200 cursor-pointer flex justify-between items-center gap-3
+                                                        className={`p-2 ${(res.type === "category") ? `max-md:py-4 md:py-5` : ``} md:p-3 border-b border-gray-200 cursor-pointer flex justify-between items-center gap-3
                                                             ${highlightedIndex === index ? "bg-gray-200" : "hover:bg-gray-100"}
                                                         `}
                                                     >
@@ -1106,7 +1108,7 @@ export default function Navbar()
                                                             {highlightMatch(res.item.name, searchInput)}
                                                             <img
                                                                 src={res.item.image_url}
-                                                                className={res.type === "product" ? "max-md:w-10 max-md:ml-0.5 md:w-14" : "max-md:w-5.5 md:w-10 max-md:ml-2 mr-2.75"}
+                                                                className={`${res.type === "product" ? (res.item.slug === "fruita-vitals-orange-juice" || res.item.slug === "heinz-tomato-ketchup") ? `max-md:w-10 max-md:h-11 max-md:ml-0.5 md:w-14 md:h-16` : `max-md:w-10 max-md:ml-0.5 md:w-14` : "max-md:w-5.5 md:w-10 max-md:ml-2 mr-2.75"}`}
                                                             />
                                                         </span>
                                                     </div>

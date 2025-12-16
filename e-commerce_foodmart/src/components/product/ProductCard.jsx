@@ -83,6 +83,8 @@ export default function ProductCard({ Product }) {
         
             if (e.type === "mousedown" && isTouchingRef.current) return;
 
+            if (addToCartLoading) return;
+
         
             incrementTimeoutRef.current = setTimeout(() =>
             {
@@ -140,6 +142,8 @@ export default function ProductCard({ Product }) {
                 clearTimeout(incrementTimeoutRef.current);
         
                 incrementTimeoutRef.current = null;
+
+                if (addToCartLoading) return;
         
                 if (!incrementIntervalRef.current) setQuantity(q => Math.min(q + 1, existingStock));
             }
@@ -161,6 +165,8 @@ export default function ProductCard({ Product }) {
             if (e.type === "touchstart") isTouchingRef.current = true;
         
             if (e.type === "mousedown" && isTouchingRef.current) return;
+
+            if (addToCartLoading) return;
 
         
             decrementTimeoutRef.current = setTimeout(() =>
@@ -205,6 +211,8 @@ export default function ProductCard({ Product }) {
                 clearTimeout(decrementTimeoutRef.current);
         
                 decrementTimeoutRef.current = null;
+
+                if (addToCartLoading) return;
         
                 if (!decrementIntervalRef.current) setQuantity(q => Math.max(q - 1, 0));
             }
@@ -474,7 +482,7 @@ export default function ProductCard({ Product }) {
 
                                                 className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === liveProduct.stock) || addToCartLoading) ? `` : `hover:bg-gray-200 active:bg-gray-200`} max-md:h-4 w-5.5 md:w-8 font-bold rounded-md max-md:text-[12px] md:text-md`}
 
-                                                disabled={(quantity === existingStock) || addToCartLoading}
+                                                disabled={(quantity === existingStock) || !addToCartLoading}
                                                 
                                                 onMouseDown={(e) => handleIncrementHoldStart(e)}
                                                 onMouseUp={(e) => handleIncrementMouseUp(e)}
@@ -541,9 +549,9 @@ export default function ProductCard({ Product }) {
 
                                         <button
                             
-                                            className={`/*max-md:mt-0.75 md:mt-1.5 max-md:text-[10px] font-semibold ${quantity ? "text-gray-500 hover:text-gray-600 cursor-pointer" : "text-gray-400"}*/`}
+                                            className={`/*max-md:mt-0.75 md:mt-1.5 max-md:text-[10px] font-semibold max-md:active:-translate-y-1 max-md:duration-200 max-md:transition-all`}
                                     
-                                            disabled={quantity === 0 || addToCartLoading}
+                                            disabled={quantity === 0}
                                     
                                             onClick=
                                             {

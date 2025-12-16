@@ -119,7 +119,7 @@ export default function Orders()
 
 
             
-            <div className="container mx-auto lg:mt-3 py-6 px-5">
+            <div className="container mx-auto lg:mt-3 py-3 md:py-6 px-5">
                 
 
                 {/* PAGE HEADING */}
@@ -147,7 +147,7 @@ export default function Orders()
                             
                             <div className="w-full flex items-center justify-center">
                                 
-                                <h1 className="text-2xl md:text-4xl text-yellow-500 font-extrabold">
+                                <h1 className="text-xl md:text-4xl text-yellow-500 font-extrabold">
                                     
                                     Orders
                                     
@@ -162,7 +162,7 @@ export default function Orders()
 
                 {/* FILTER BUTTONS - Allows user to filter orders by status */}
                 
-                    <div className="flex pl-12 md:pl-20 gap-2 md:gap-6 mb-6 md:mb-10 justify-center flex-wrap">
+                    <div className="flex pl-8 md:pl-20 gap-2 md:gap-6 mb-6 md:mb-10 justify-center flex-wrap">
                         
                         {/* ALL button - shows all orders regardless of status */}
                         
@@ -170,7 +170,7 @@ export default function Orders()
                                 
                                 onClick={() => setFilterStatus("all")}
                                 
-                                className={`px-2 py-1 md:px-4 md:py-2 max-md:text-[10px] text-sm rounded-lg font-bold transition-all duration-200 ${
+                                className={`px-2 py-1 md:px-4 md:py-2 max-md:text-[8px] text-sm rounded-lg font-bold transition-all duration-200 ${
                                     
                                     filterStatus === "all" 
                                     
@@ -189,7 +189,7 @@ export default function Orders()
                                 
                                 onClick={() => setFilterStatus("processing")}
                                 
-                                className={`px-2 py-1 md:px-4 md:py-2 max-md:text-[10px] text-sm rounded-lg font-bold transition-all duration-200 ${
+                                className={`px-2 py-1 md:px-4 md:py-2 max-md:text-[8px] text-sm rounded-lg font-bold transition-all duration-200 ${
                                 
                                     filterStatus === "processing" 
                                 
@@ -208,7 +208,7 @@ export default function Orders()
                                 
                                 onClick={() => setFilterStatus("shipped")}
                                 
-                                className={`px-2 py-1 md:px-4 md:py-2 max-md:text-[10px] text-sm rounded-lg font-bold transition-all duration-200 ${
+                                className={`px-2 py-1 md:px-4 md:py-2 max-md:text-[8px] text-sm rounded-lg font-bold transition-all duration-200 ${
                                 
                                     filterStatus === "shipped" 
                                 
@@ -227,7 +227,7 @@ export default function Orders()
                                 
                                 onClick={() => setFilterStatus("delivered")}
                                 
-                                className={`px-2 py-1 md:px-4 md:py-2 max-md:text-[10px] text-sm rounded-lg font-bold transition-all duration-200 ${
+                                className={`px-2 py-1 md:px-4 md:py-2 max-md:text-[8px] text-sm rounded-lg font-bold transition-all duration-200 ${
                                 
                                     filterStatus === "delivered" 
                                 

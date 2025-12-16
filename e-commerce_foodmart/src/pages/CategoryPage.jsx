@@ -140,7 +140,7 @@ export default function CategoryPage()
             
             <div className="container mx-auto md:mt-10 max-md:py-4 px-5 flex-col">
 
-                <div className="flex mb-5 md:mb-10 max-md:items-center">
+                <div className="flex mb-5 md:mb-10 items-center">
 
                     <button
                         
@@ -160,9 +160,9 @@ export default function CategoryPage()
                     
                             <>
                             
-                                <img src={category.image_url} alt={category.name} className="w-8 md:w-10" />
+                                <img src={category.image_url} alt={category.name} className="w-6 md:w-10" />
 
-                                <h1 className="text-xl md:text-4xl text-yellow-500 font-extrabold">
+                                <h1 className="text-lg md:text-4xl text-yellow-500 font-extrabold">
 
                                     {category.name}
 

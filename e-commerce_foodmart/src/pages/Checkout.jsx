@@ -251,7 +251,7 @@ export default function Checkout()
                 
                     {/* BACK + TITLE + REFRESH */}
                     
-                        <div className="flex max-md:items-center md:mb-10 lg:mb-15">
+                        <div className="flex max-md:items-center mb-1 md:mb-10 lg:mb-15">
                     
 
                             {/* BACL BUTTON */}
@@ -274,7 +274,7 @@ export default function Checkout()
                              
                                 <div className="w-full flex items-center justify-center">
                                     
-                                    <h1 className="text-2xl md:text-4xl text-yellow-500 font-extrabold">
+                                    <h1 className="text-lg md:text-4xl text-yellow-500 font-extrabold">
                                         
                                         Checkout
                                         
@@ -303,7 +303,7 @@ export default function Checkout()
                                         disabled={refreshCartLoading || clearCartLoading || updatingItemId !== null || removingItemId !== null}
                                     >
     
-                                        <img src="/icons/refresh.png" alt="refresh" className="w-8 md:w-11" />
+                                        <img src="/icons/refresh.png" alt="refresh" className="w-7 md:w-11" />
                                         
                                 </button>
 
@@ -317,7 +317,7 @@ export default function Checkout()
                         
                         {/* CART ITEMS LIST */}
                     
-                            <div className="max-md:mt-3.5 md:max-lg:mt-5 lg:col-span-2 xl:col-span-4 2xl:col-span-4 space-y-2 md:space-y-6 lg:mb-20 lg:pr-5">
+                            <div className="max-md:mt-5.5 md:max-lg:mt-5 lg:col-span-2 xl:col-span-4 2xl:col-span-4 space-y-2 md:space-y-6 lg:mb-20 lg:pr-5">
                                 
                                 
                                 {localCart.map((item) => 
@@ -658,7 +658,7 @@ export default function Checkout()
                                 
                                         {/* Title */}
                                         
-                                            <h2 className="text-md md:text-3xl p-1.5 md:p-6 font-extrabold text-yellow-600 rounded-xl border-b-2 md:border-b-4 border-yellow-500 bg-yellow-100 md:bg-yellow-200 mb-2 md:mb-6 text-center">
+                                            <h2 className="text-sm md:text-3xl p-1.5 md:p-6 font-extrabold text-yellow-600 rounded-xl border-b-2 md:border-b-4 border-yellow-500 bg-yellow-100 md:bg-yellow-200 mb-2 md:mb-6 text-center">
                                         
                                                 Order Summary
                                                 
@@ -670,7 +670,7 @@ export default function Checkout()
                                         
                                             <div className="flex items-center justify-between md:text-xl font-bold mb-1 md:mb-4 px-5 md:px-10">
                                             
-                                                <span className="text-gray-700 max-md:text-[12px]">Items:</span>
+                                                <span className="text-gray-700 max-md:text-[11px]">Items:</span>
                                             
                                                 <span className="text-orange-600 max-md:text-[10px]">
                                                     
@@ -710,7 +710,7 @@ export default function Checkout()
                                     
                                             <div className="flex items-center justify-between md:text-xl font-bold mb-2 md:mb-6 px-5 md:px-10">
                                     
-                                                <span className="text-gray-700 max-md:text-[12px]">Subtotal:</span>
+                                                <span className="text-gray-700 max-md:text-[11px]">Subtotal:</span>
                                                 
                                                 <span className="text-orange-600 max-md:text-[10px]">
 
@@ -754,7 +754,7 @@ export default function Checkout()
                                             <div className="mb-2 md:mb-6 px-5 md:px-10">
                                         
                                         
-                                                <p className="max-md:text-md md:text-2xl font-extrabold text-yellow-600 mb-1 md:mb-3">Shipping</p>
+                                                <p className="max-md:text-sm md:text-2xl font-extrabold text-yellow-600 mb-1 md:mb-3">Shipping</p>
 
                                         
                                                 <div className="md:space-y-3 max-md:text-[10px] md:text-lg text-gray-700 font-semibold pl-5">
@@ -867,7 +867,7 @@ export default function Checkout()
                                         
                                             <div className="flex items-center justify-between lg:items-center font-bold mb-2 md:mb-4 px-5 md:px-10">
                                             
-                                                <span className="text-gray-700 max-md:text-[12px] md:text-xl md:max-lg:mr-17 lg:mr-15">Address:</span>
+                                                <span className="text-gray-700 max-md:text-[11px] md:text-xl md:max-lg:mr-17 lg:mr-15">Address:</span>
                                             
                                                 <span className="text-orange-600 max-md:text-[10px]">{profile.address}</span>
                                                 
@@ -901,7 +901,7 @@ export default function Checkout()
                                                         <div className="flex justify-between md:text-lg font-semibold mb-2 md:mb-4 mt-1 md:mt-2">
                                                             
 
-                                                            <span className="text-gray-800 font-semibold max-md:text-[13px]">Tax (10%):</span>
+                                                            <span className="text-gray-800 font-semibold max-md:text-[12px]">Tax (10%):</span>
                                                             
                                                             
                                                             <span className="text-orange-600 max-md:text-[11px]">
@@ -941,7 +941,7 @@ export default function Checkout()
                                                         </div>
 
                                                         
-                                                        <div className="flex justify-between max-md:text-md md:text-2xl font-extrabold">
+                                                        <div className="flex justify-between max-md:text-sm md:text-2xl font-extrabold">
                                                             
 
                                                             <span className="text-yellow-600">Total:</span>
@@ -1003,7 +1003,7 @@ export default function Checkout()
                                 
                                     {cartQuantity > 0 && (
                                         
-                                            <div className="mb-3 md:max-lg:mb-10">
+                                            <div className="mb-5 md:max-lg:mb-10">
 
                                         
                                                 {/* Buttons */}

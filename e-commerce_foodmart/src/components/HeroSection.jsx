@@ -14,7 +14,7 @@ export default function HeroSection()
       
         {/* Left main banner */}
       
-            <div className={`relative bg-blue-100 max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:-translate-y-3 hover:translate-x-1 rounded-2xl p-4 lg:p-6 overflow-hidden w-full h-fit lg:w-[510px] lg:h-[750px] xl:w-[600px] xl:h-[750px] 2xl:w-[680px] 2xl:h-[750px] transition-all duration-200`}>
+            <div className={`relative bg-blue-100 max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:-translate-y-3 hover:translate-x-1 rounded-2xl p-4 md:max-lg:py-7 max-md:py-8 lg:p-6 overflow-hidden w-full h-fit lg:w-[510px] lg:h-[750px] xl:w-[600px] xl:h-[750px] 2xl:w-[680px] 2xl:h-[750px] transition-all duration-200`}>
             
                 <div className="ml-2 md:ml-8">
             
@@ -56,7 +56,7 @@ export default function HeroSection()
             
                     alt="Smoothie"
 
-                    className="absolute max-md:active:-translate-3 md:hover:-translate-7 lg:hover:-translate-10 w-33 bottom-2 md:max-lg:-bottom-22 max-md:left-46 md:right-8 md:max-lg:left-77 md:w-115 lg:-right-3 lg:bottom-45 lg:w-60 xl:right-2 xl:bottom-50 xl:w-70 2xl:-right-3 2xl:bottom-30 2xl:w-85 drop-shadow-lg transition-all duration-200"
+                    className="absolute max-md:active:-translate-4 md:hover:-translate-7 lg:hover:-translate-10 w-37 bottom-2 md:max-lg:-bottom-22 max-md:left-45 md:right-8 md:max-lg:left-77 md:w-115 lg:-right-3 lg:bottom-45 lg:w-60 xl:right-2 xl:bottom-50 xl:w-70 2xl:-right-3 2xl:bottom-30 2xl:w-85 drop-shadow-lg transition-all duration-200"
 
                 />
         
@@ -69,7 +69,7 @@ export default function HeroSection()
       
             <div className="lg:col-span-2 lg:ml-[200px] flex flex-col gap-2 lg:gap-4 transition-all duration-200">
         
-              <div className="bg-[url('/images/hero/veggie_border.png')] bg-cover hover:bg-center max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-43 md:h-65 lg:h-90 transition-all duration-200">
+              <div className="bg-[url('/images/hero/veggie_border.png')] bg-cover hover:bg-center max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-40 md:h-62 lg:h-90 transition-all duration-200">
           
                 <div className="ml-2 md:ml-8">
             
@@ -98,7 +98,7 @@ export default function HeroSection()
               </div>
 
 
-              <div className="bg-[url('/images/hero/bread_border.png')] bg-top-right bg-cover bg-no-repeat max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:bg-center hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-43 md:h-65 lg:h-92 transition-all duration-200">
+              <div className="bg-[url('/images/hero/bread_border.png')] bg-top-right bg-cover bg-no-repeat max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:bg-center hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-40 md:h-62 lg:h-92 transition-all duration-200">
 
                     <div className="ml-2 md:ml-8">
 
