@@ -551,7 +551,7 @@ export default function ProductCard({ Product }) {
                             
                                             className={`/*max-md:mt-0.75 md:mt-1.5 max-md:text-[10px] font-semibold max-md:active:-translate-y-1 max-md:duration-200 max-md:transition-all`}
                                     
-                                            disabled={quantity === 0}
+                                            disabled={quantity === 0 || addToCartLoading}
                                     
                                             onClick=
                                             {

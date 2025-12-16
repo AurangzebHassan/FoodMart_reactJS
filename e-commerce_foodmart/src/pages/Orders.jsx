@@ -124,7 +124,7 @@ export default function Orders()
 
                 {/* PAGE HEADING */}
                         
-                    <div className="flex items-center mb-5 md:mb-10 lg:mb-15">
+                    <div className="flex items-center mb-3 md:mb-10 lg:mb-15">
                 
 
                         {/* BACK BUTTON */}
@@ -162,7 +162,7 @@ export default function Orders()
 
                 {/* FILTER BUTTONS - Allows user to filter orders by status */}
                 
-                    <div className="flex pl-8 md:pl-20 gap-2 md:gap-6 mb-6 md:mb-10 justify-center flex-wrap">
+                    <div className="flex pl-8 md:pl-20 gap-2 md:gap-6 mb-5 md:mb-10 justify-center flex-wrap">
                         
                         {/* ALL button - shows all orders regardless of status */}
                         

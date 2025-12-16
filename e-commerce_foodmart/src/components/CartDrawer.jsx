@@ -270,7 +270,7 @@ export default function CartDrawer({ onClose })
 
 				{/* Header */}
 				
-					<div className="flex justify-between items-center mb-2 md:mb-6 mt-1 md:mt-6">
+					<div className="flex justify-between items-center mb-1 md:mb-6 mt-2 md:mt-6">
 
 						<h1 className="text-2xl md:text-3xl font-extrabold text-yellow-500">Your Cart</h1>
 						
