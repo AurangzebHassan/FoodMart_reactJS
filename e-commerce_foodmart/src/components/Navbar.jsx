@@ -636,7 +636,7 @@ export default function Navbar()
                         
                         {/* Search modal search icon. Only for mobile and tablet view */}
                         
-                            <div className={`${(cartTotal <= 9.99) ? `max-md:-ml-8 md:max-lg:-ml-14.25` : (cartTotal <= 99.99) ? `max-md:-ml-8.25` : `max-md:-ml-8.5`} lg:hidden`} onClick={() => { setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50); }}>
+                            <div className={`${(cartTotal <= 9.99) ? `max-md:-ml-8 md:max-lg:-ml-14.25` : (cartTotal <= 99.99) ? `max-md:-ml-8.25` : `max-md:-ml-8.5`} lg:hidden`} onClick={() => { !showMobileProfileDropdown && setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50); }}>
                           
                                 <img src="/icons/search.png" alt="FoodMart" className="h-6.5 max-md:px-2 p-1.25 md:h-11 md:p-2 rounded-r-full lg:rounded-full bg-gray-100 hover:bg-gray-200 cursor-pointer" />
                 
@@ -755,7 +755,7 @@ export default function Navbar()
                             
                                 // className="flex md:hidden bg-gray-100 hover:bg-gray-200 rounded-full p-1.25"
                                 
-                                onClick={() => setShowMobileProfileDropdown(!showMobileProfileDropdown)}
+                                onClick={() => !showSearchModal && setShowMobileProfileDropdown(!showMobileProfileDropdown)}
                                 
                                 
                                 className={`flex md:hidden bg-gray-100 hover:bg-gray-200 rounded-full p-1.25`}
@@ -815,7 +815,7 @@ export default function Navbar()
                                     
                                         // className="flex md:hidden bg-gray-100 hover:bg-gray-200 rounded-full p-1.25"
                                         
-                                        onClick={() => setShowMobileProfileDropdown(!showMobileProfileDropdown)}
+                                        onClick={() => !showSearchModal && setShowMobileProfileDropdown(!showMobileProfileDropdown)}
                                         
                                         
                                         className={`hidden md:flex bg-gray-100 hover:bg-gray-200 rounded-full p-2`}
@@ -866,7 +866,7 @@ export default function Navbar()
       
             {/* if cart is allowed to open, open it and pass the function to close the drawer to the drawer component. */}
 
-                {openCart && <CartDrawer onClose={() => setTimeout(() => setOpenCart(false), 0)} />}
+                {!showMobileProfileDropdown && !showSearchModal && openCart && <CartDrawer onClose={() => setTimeout(() => setOpenCart(false), 0)} />}
                 
           
 
