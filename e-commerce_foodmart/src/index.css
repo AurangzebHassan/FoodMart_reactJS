@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* Enable dark mode variant - CORRECT syntax for v4 */
+
+    @variant dark (&:is(.dark *));
+
+
+    
 /* *
 {
     outline: 1px solid red;

@@ -171,34 +171,11 @@ export default function Checkout()
 
     if (isLoading)
     {
-        // return (
-    
-        //     <div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
-      
-        //         <p className="text-4xl font-extrabold text-white text-center">
-        
-        //             Loading Checkout
-      
-        //         </p>
-      
-                
-        //         <Loader size="xl" color="border-white border-9" />
-
-        //         <Loader size="large" color="border-white border-7" />
-
-        //         <Loader size="medium" color="border-white border-6" />
-    
-        //     </div>
-  
-        // );
-
-
-
         return (
 
 				<>
 		
-					<div className="hidden md:flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
+					<div className="dark:hidden md:flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
 
 						<span className="text-4xl font-extrabold text-white text-center"> Loading Checkout </span>
 
@@ -212,6 +189,23 @@ export default function Checkout()
 					</div>
 
 
+					<div className="hidden dark:md:flex w-full h-screen items-center justify-center bg-gray-600 gap-2">
+
+						<span className="text-4xl font-extrabold text-yellow-300 text-center"> Loading Checkout </span>
+
+						
+						<Loader size="xl" color="border-yellow-300 border-9" />
+
+						<Loader size="large" color="border-yellow-300 border-7" />
+
+						<Loader size="medium" color="border-yellow-300 border-6" />
+
+					</div>
+
+
+
+					
+
 					
 					<div className="flex md:hidden w-full h-screen fixed inset-0 items-center justify-center bg-yellow-500 gap-2">
 
@@ -223,6 +217,20 @@ export default function Checkout()
 						<Loader size="medium" color="border-white border-6" />
 
 						<Loader size="small" color="border-white border-5" />
+
+					</div>
+
+
+					<div className="hidden dark:flex dark:md:hidden w-full h-screen fixed inset-0 items-center justify-center bg-gray-600 gap-2">
+
+						<span className="text-xl font-extrabold text-yellow-300 text-center"> Loading Checkout </span>
+
+						
+						<Loader size="large" color="border-yellow-300 border-7" />
+
+						<Loader size="medium" color="border-yellow-300 border-6" />
+
+						<Loader size="small" color="border-yellow-300 border-5" />
 
 					</div>
 					

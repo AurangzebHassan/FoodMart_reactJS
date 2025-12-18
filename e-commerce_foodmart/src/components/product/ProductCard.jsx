@@ -83,7 +83,7 @@ export default function ProductCard({ Product }) {
         
             if (e.type === "mousedown" && isTouchingRef.current) return;
 
-            if (addToCartLoading) return;
+            // if (addToCartLoading) return;
 
         
             incrementTimeoutRef.current = setTimeout(() =>
@@ -143,7 +143,7 @@ export default function ProductCard({ Product }) {
         
                 incrementTimeoutRef.current = null;
 
-                if (addToCartLoading) return;
+                // if (addToCartLoading) return;
         
                 if (!incrementIntervalRef.current) setQuantity(q => Math.min(q + 1, existingStock));
             }
@@ -166,7 +166,7 @@ export default function ProductCard({ Product }) {
         
             if (e.type === "mousedown" && isTouchingRef.current) return;
 
-            if (addToCartLoading) return;
+            // if (addToCartLoading) return;
 
         
             decrementTimeoutRef.current = setTimeout(() =>
@@ -212,7 +212,7 @@ export default function ProductCard({ Product }) {
         
                 decrementTimeoutRef.current = null;
 
-                if (addToCartLoading) return;
+                // if (addToCartLoading) return;
         
                 if (!decrementIntervalRef.current) setQuantity(q => Math.max(q - 1, 0));
             }
@@ -316,13 +316,13 @@ export default function ProductCard({ Product }) {
     
     return (
       
-        <div className="relative p-3 md:p-5 flex-col items-center bg-white rounded-2xl shadow-lg max-md:active:shadow-2xl hover:shadow-2xl transition-all duration-300 w-40 h-fit md:w-70 mx-auto cursor-pointer">
+        <div className="relative p-3 md:p-5 flex-col items-center bg-white dark:bg-gray-600 rounded-2xl shadow-lg max-md:active:shadow-2xl hover:shadow-2xl transition-all duration-300 w-40 h-fit md:w-70 mx-auto cursor-pointer">
     
             {/* wishlist heart */}
     
                 <div
             
-                    className={`absolute top-4 right-4 md:top-7 md:right-7 bg-white active:-translate-y-0.5 hover:-translate-y-0.5 p-1.5 md:p-3 rounded-full transition-all duration-200`}
+                    className={`absolute top-4.5 right-4.5 md:top-7 md:right-7 bg-white dark:bg-gray-600 active:-translate-y-0.5 hover:-translate-y-0.5 p-1.5 md:p-3 rounded-full transition-all duration-200`}
             
                     onClick={() => {handleFavouriteClick()}}
                 >
@@ -333,7 +333,16 @@ export default function ProductCard({ Product }) {
                 
                         alt="wishlist"
                         
-                        className="w-5 md:w-8"
+                        className="dark:hidden flex w-4 md:w-6"
+                    />
+
+                    <img
+            
+                        src={isProductFavourite(liveProduct.$id) ? `/icons/heart.png` : `/icons/dark_heart.png`}
+                
+                        alt="wishlist"
+                        
+                        className="hidden dark:flex w-4 md:w-6"
                     />
                 
                 </div>
@@ -343,7 +352,7 @@ export default function ProductCard({ Product }) {
     
                 {formatDiscount(liveProduct.discount_tag) && (
             
-                    <div className="max-md:text-[10px] absolute top-5.25 left-5 md:top-8 md:left-7 bg-green-700 text-white font-bold active:-translate-y-1 hover:-translate-y-1 p-1 rounded-xl transition-all duration-300">
+                    <div className="max-md:text-[10px] absolute top-5 left-4.5 md:top-9 md:left-9 bg-green-700 text-white font-bold active:-translate-y-1 hover:-translate-y-1 p-1 rounded-xl transition-all duration-300">
                 
                         {liveProduct.discount_tag}
             
@@ -356,7 +365,7 @@ export default function ProductCard({ Product }) {
     
                 <div
             
-                    className="flex justify-center items-center bg-gray-200 w-full h-[35%] rounded-2xl p-3"
+                    className="flex justify-center items-center bg-gray-200 dark:bg-gray-500 w-full h-[35%] rounded-2xl p-3"
             
                     onClick={!addToCartLoading && handleClick}
                 >
@@ -379,7 +388,7 @@ export default function ProductCard({ Product }) {
     
                     {/* Product name */}
     
-                        <p className={`mt-1 md:mt-3  max-md:text-[11px] /*${(liveProduct.name.length > 20) ? `max-md:text-[11px]` : `max-md:text-[13px]`}*/ md:text-lg font-bold text-gray-700 hover:text-gray-900 transition`}
+                        <p className={`mt-1 md:mt-3  max-md:text-[11px] /*${(liveProduct.name.length > 20) ? `max-md:text-[11px]` : `max-md:text-[13px]`}*/ md:text-lg font-bold text-gray-700 dark:text-gray-100 dark:md:hover:text-gray-300 hover:text-gray-900 transition`}
                     
                             onClick={!addToCartLoading && handleClick}
                         >
@@ -391,7 +400,7 @@ export default function ProductCard({ Product }) {
     
                     {/* stock + rating */}
     
-                        <p className={`font-extralight max-md:text-[8px] /*${(liveProduct.name.length > 20) ? `max-md:text-[9px]` : `max-md:text-[10px]`}*/ md:text-sm text-left w-full mt-0.5 md:mt-2`}>
+                        <p className={`dark:text-gray-300 font-extralight max-md:text-[8px] /*${(liveProduct.name.length > 20) ? `max-md:text-[9px]` : `max-md:text-[10px]`}*/ md:text-sm text-left w-full mt-0.5 md:mt-2`}>
                     
                             {" "}
                     
@@ -429,7 +438,7 @@ export default function ProductCard({ Product }) {
                             (
                                 <div className={`flex gap-1 md:gap-2 items-center`}>
                     
-                                    <p className={`font-bold font-mono text-sm md:text-2xl mt-0.5 md:mt-2`}>
+                                    <p className={`dark:text-white font-bold font-mono text-sm md:text-2xl mt-0.5 md:mt-2`}>
                             
                                         {" "}
                             
@@ -443,7 +452,7 @@ export default function ProductCard({ Product }) {
                             
                                     {formatDiscount(liveProduct.discount_tag) && (
                             
-                                        <p className="text-gray-500 mt-1.25 md:mt-3 text-left font-bold text-[9px] md:text-lg line-through font-mono">
+                                        <p className="text-gray-500 dark:text-gray-400 mt-1.25 md:mt-3 text-left font-bold text-[9px] md:text-lg line-through font-mono">
                                 
                                             {formatPrice(liveProduct.price, "USD")}
                             
@@ -461,7 +470,7 @@ export default function ProductCard({ Product }) {
                             !existingStock && 
                             
                             (
-                                <p className="max-md:-mt-0.5 md:mt-1 text-center text-sm md:text-2xl italic"> 𝑂𝑢𝑡 𝑜𝑓 𝑆𝑡𝑜𝑐𝑘 </p>
+                                <p className="dark:text-white max-md:-mt-0.5 md:mt-1 text-center text-sm md:text-2xl italic"> 𝑂𝑢𝑡 𝑜𝑓 𝑆𝑡𝑜𝑐𝑘 </p>
                             )
                         }
 
@@ -480,7 +489,7 @@ export default function ProductCard({ Product }) {
 
                                             <button
 
-                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === liveProduct.stock) || addToCartLoading) ? `` : `hover:bg-gray-200 active:bg-gray-200`} max-md:h-4 w-5.5 md:w-8 font-bold rounded-md max-md:text-[12px] md:text-md`}
+                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 dark:bg-gray-500 ${((quantity === liveProduct.stock) || addToCartLoading) ? `` : `dark:hover:bg-gray-700 dark:active:bg-gray-700 dark:hover:text-white dark:active:text-white hover:bg-gray-200 active:bg-gray-200`} max-md:h-4 w-5.5 md:w-8 font-bold rounded-md max-md:text-[12px] md:text-md`}
 
                                                 disabled={(quantity === existingStock) || !addToCartLoading}
                                                 
@@ -509,12 +518,12 @@ export default function ProductCard({ Product }) {
                                             </button>
 
                                     
-                                            <span className="font-mono max-md:text-[12px] cursor-default">{quantity}</span>
+                                            <span className="dark:text-white font-mono max-md:text-[12px] cursor-default">{quantity}</span>
 
                                     
                                             <button
                                         
-                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 ${((quantity === 0) || addToCartLoading) ? `` : `hover:bg-gray-200 active:bg-gray-200`} max-md:h-4 w-5.5 md:w-8 font-bold rounded-md max-md:text-[12px] md:text-md`}
+                                                className={`flex cursor-pointer justify-center items-center bg-gray-100 dark:bg-gray-500 ${((quantity === 0) || addToCartLoading) ? `` : `dark:hover:bg-gray-700 dark:active:bg-gray-700 dark:hover:text-white dark:active:text-white hover:bg-gray-200 active:bg-gray-200`} max-md:h-4 w-5.5 md:w-8 font-bold rounded-md max-md:text-[12px] md:text-md`}
 
                                                 disabled={(quantity === 0) || addToCartLoading}
 
@@ -571,17 +580,32 @@ export default function ProductCard({ Product }) {
                                                 
                                                 (
                                                     <>
-                                                        <div className="hidden md:flex items-center justify-center">
+                                                        <div className="hidden md:flex dark:hidden items-center justify-center">
                                 
                                                             <Loader size="medium" color="border-yellow-500 border-5" />
                                 
                                                         </div>
                                                         
-                                                        <div className="flex md:hidden items-center justify-center">
+                                                        <div className="flex md:hidden dark:hidden items-center justify-center">
                                 
                                                             <Loader size="small" color="border-yellow-500 border-1" />
                                 
                                                         </div>
+                                                        
+                                                
+
+                                                        <div className="dark:hidden dark:md:flex items-center justify-center">
+                                
+                                                            <Loader size="medium" color="border-yellow-300 border-5" />
+                                
+                                                        </div>
+                                                        
+                                                        <div className="dark:flex dark:md:hidden items-center justify-center">
+                                
+                                                            <Loader size="small" color="border-yellow-300 border-1" />
+                                
+                                                        </div>
+                                                
                                                     </>
                                                 )         
                                         

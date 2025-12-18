@@ -37,14 +37,14 @@ export default function Home()
     
     return (
 
-        <>
+        <div className="dark:bg-gray-600 dark:h-full transition-all duration-200">
         
             <Navbar />
 
             <HeroSection />
 
 
-            <div className="md:mt-10 mb-5">
+            <div className="md:mt-10 5">
             
                 <CategoryCarousel />
                 
@@ -62,7 +62,7 @@ export default function Home()
                 
             </div>
 
-        </>
+        </div>
 
     );
 }

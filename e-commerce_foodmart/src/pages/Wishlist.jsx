@@ -45,34 +45,11 @@ export default function Wishlist()
 
     if (isLoading)
     {
-        // return (
-    
-        //     <div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
-      
-        //         <p className="text-4xl font-extrabold text-white text-center">
-        
-        //             Loading Wishlist
-      
-        //         </p>
-      
-                
-        //         <Loader size="xl" color="border-white border-9" />
-
-        //         <Loader size="large" color="border-white border-7" />
-
-        //         <Loader size="medium" color="border-white border-6" />
-    
-        //     </div>
-  
-        // );
-        
-
-
         return (
 
 				<>
 		
-					<div className="hidden md:flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
+					<div className="dark:hidden md:flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
 
 						<span className="text-4xl font-extrabold text-white text-center"> Loading Wishlist </span>
 
@@ -86,6 +63,23 @@ export default function Wishlist()
 					</div>
 
 
+					<div className="hidden dark:md:flex w-full h-screen items-center justify-center bg-gray-600 gap-2">
+
+						<span className="text-4xl font-extrabold text-yellow-300 text-center"> Loading Wishlist </span>
+
+						
+						<Loader size="xl" color="border-yellow-300 border-9" />
+
+						<Loader size="large" color="border-yellow-300 border-7" />
+
+						<Loader size="medium" color="border-yellow-300 border-6" />
+
+					</div>
+
+
+
+					
+
 					
 					<div className="flex md:hidden w-full h-screen fixed inset-0 items-center justify-center bg-yellow-500 gap-2">
 
@@ -97,6 +91,20 @@ export default function Wishlist()
 						<Loader size="medium" color="border-white border-6" />
 
 						<Loader size="small" color="border-white border-5" />
+
+					</div>
+
+
+					<div className="hidden dark:flex dark:md:hidden w-full h-screen fixed inset-0 items-center justify-center bg-gray-600 gap-2">
+
+						<span className="text-xl font-extrabold text-yellow-300 text-center"> Loading Wishlist </span>
+
+						
+						<Loader size="large" color="border-yellow-300 border-7" />
+
+						<Loader size="medium" color="border-yellow-300 border-6" />
+
+						<Loader size="small" color="border-yellow-300 border-5" />
 
 					</div>
 					
@@ -122,7 +130,7 @@ export default function Wishlist()
 
     return (
     
-        <>
+        <div className={`dark:bg-gray-600 ${(favouritesOrder.length > 4) ? `dark:h-full` : `dark:h-screen dark:max-md:fixed dark:max-md:inset-0`}`}>
         
             <Navbar />
 
@@ -145,7 +153,7 @@ export default function Wishlist()
                     </button>
 
                     
-                    <div className="w-full flex items-center justify-center text-xl md:text-4xl text-yellow-500 font-extrabold">
+                    <div className="w-full flex items-center justify-center text-xl md:text-4xl text-yellow-500 dark:text-yellow-300 font-extrabold">
 
                         Wishlist
                     
@@ -170,7 +178,7 @@ export default function Wishlist()
                     :
 
                     (
-                        <div className="flex w-full h-100 items-center justify-center pl-20 text-gray-400 font-bold text-sm md:text-2xl">
+                        <div className="flex w-full h-20 md:h-100 items-center justify-center pl-8 md:pl-20 text-gray-400 font-bold text-sm md:text-2xl">
 
                             No Products in Wishlist
 
@@ -179,6 +187,7 @@ export default function Wishlist()
                 }
 
             </div>
-        </>
+
+        </div>
     );
 }

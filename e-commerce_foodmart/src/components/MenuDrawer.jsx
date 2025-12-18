@@ -126,7 +126,7 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
       {/* same transform/transition classes as CartDrawer */}
 
       <nav
-        className={`relative bg-white w-[65%] md:w-120 max-w-full h-full transform transition-transform duration-300 ${
+        className={`relative bg-white dark:bg-gray-600 w-[60%] md:w-120 max-w-full h-full transform transition-transform duration-300 ${
           isVisible ? "translate-x-0" : "translate-x-full"
         } shadow-xl md:p-6 flex flex-col overflow-y-auto`}
         aria-label="Mobile menu"
@@ -137,7 +137,7 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
           <button
             onClick={handleClose}
             aria-label="Close menu"
-            className="text-gray-600 hover:text-gray-900 text-4xl md:text-6xl"
+            className="text-gray-600 dark:text-white hover:text-gray-900 text-3xl md:text-6xl cursor-pointer"
           >
             &times;
           </button>
@@ -154,7 +154,7 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
         <div className="mb-4 px-4 pt-4 md:mb-6 md:px-6 md:pt-6">
           <select
             id="mobile-departments"
-            className="md:w-full p-3 rounded-lg bg-gray-100 hover:bg-gray-200  md:text-xl"
+            className="md:w-full p-3 rounded-lg bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-700 dark:text-white hover:bg-gray-200 max-md:text-sm md:text-xl"
             onChange={(e) => {
               const v = e.target.value;
               if (!v) return;
@@ -171,12 +171,12 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
 
         {/* Vertical menu links */}
 
-        <ul className="md:space-y-4 px-4 md:px-6 md:text-xl text-gray-900">
+        <ul className="md:space-y-4 px-4 md:px-6 max-md:text-sm md:text-xl text-gray-900">
           {["Women", "Men", "Kids", "Accessories"].map((item) => (
             <li key={item}>
               <button
                 onClick={(e) => {e.preventDefault(); navigateTo(`/${item.toLowerCase()}`)}}
-                className="w-full text-left px-1 py-3 rounded hover:text-yellow-600"
+                className="w-full text-left px-1 py-3 rounded hover:text-yellow-600 dark:hover:text-yellow-300 dark:text-white"
               >
                 {item}
               </button>
@@ -190,7 +190,7 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
           
           <select
             id="mobile-pages"
-            className="md:w-full p-3 rounded-lg bg-gray-100 hover:bg-gray-200 md:text-xl"
+            className="md:w-full p-3 rounded-lg bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-700 dark:text-white hover:bg-gray-200 max-md:text-sm md:text-xl"
             defaultValue=""
             onChange={(e) => {
               const v = e.target.value;
@@ -216,12 +216,12 @@ export default function MobileMenuDrawer({ openMenuDrawer, onClose, onNavigate }
 
         {/* quick links at bottom */}
 
-        <ul className="md:space-y-4 px-4 md:px-6 md:text-xl text-gray-900">
+        <ul className="md:space-y-4 px-4 md:px-6 max-md:text-sm md:text-xl text-gray-900">
           {["Brand", "Sale", "Blog"].map((item) => (
             <li key={item}>
               <button
                 onClick={(e) => {e.preventDefault(); navigateTo(`/${item.toLowerCase()}`)}}
-                className="w-full text-left px-1 py-3 rounded hover:text-yellow-600"
+                className="w-full text-left px-1 py-3 rounded hover:text-yellow-600 dark:hover:text-yellow-300 dark:text-white"
               >
                 {item}
               </button>

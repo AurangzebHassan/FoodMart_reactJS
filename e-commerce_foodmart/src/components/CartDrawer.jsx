@@ -62,6 +62,10 @@ export default function CartDrawer({ onClose })
 
 
 
+	// let cartItemCount = 0;
+
+
+
 
 	useEffect(() =>
 	{
@@ -220,7 +224,7 @@ export default function CartDrawer({ onClose })
 				onClick={handleOverlayClick}
 			>
 				<div
-				className={`bg-white w-full md:w-120 h-full shadow-xl p-3 md:p-6 flex flex-col transform transition-transform duration-300 ${
+				className={`bg-white dark:bg-gray-600 w-full md:w-120 h-full shadow-xl p-3 md:p-6 flex flex-col transform transition-transform duration-300 ${
 					isVisible ? "translate-x-0" : "translate-x-full"
 				}`}
 				>
@@ -232,7 +236,7 @@ export default function CartDrawer({ onClose })
 						
 								onClick={handleClose}
 						
-								className="text-gray-600 hover:text-gray-900 text-4xl md:text-6xl mr-29 md:mr-33"
+								className="text-gray-600 dark:text-white dark:hover:text-gray-300 hover:text-gray-900 text-4xl md:text-6xl mr-29 md:mr-33"
 							>
 						
 								&times;
@@ -272,10 +276,10 @@ export default function CartDrawer({ onClose })
 				
 					<div className="flex justify-between items-center mb-1 md:mb-6 mt-2 md:mt-6">
 
-						<h1 className="text-2xl md:text-3xl font-extrabold text-yellow-500">Your Cart</h1>
+						<h1 className="text-2xl md:text-3xl font-extrabold text-yellow-500 dark:text-yellow-300">Your Cart</h1>
 						
 						<span
-						className={`text-white text-[17px] md:text-[25px] active:-translate-y-1 hover:-translate-y-1 bg-yellow-500 active:bg-orange-600 hover:bg-orange-600 ${
+						className={`text-white text-[17px] md:text-[25px] active:-translate-y-1 hover:-translate-y-1 dark:bg-yellow-300 dark:active:bg-orange-400 dark:hover:bg-orange-400 dark:text-gray-600 bg-yellow-500 active:bg-orange-600 hover:bg-orange-600 ${
 							cartQuantity > 9 ? "px-3" : "px-4.5"
 						} rounded-full font-bold transition-all duration-200`}
 						>
@@ -283,11 +287,21 @@ export default function CartDrawer({ onClose })
 							((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) ?
 							
 							(
-								<div className={`flex items-center justify-center py-1.25 md:py-2.75 ${cartQuantity > 9 ? `px-0.5 md:px-1.25`: ``}`}>
+								<>
+									<div className={`dark:hidden flex items-center justify-center py-1.25 md:py-2.75 ${cartQuantity > 9 ? `px-0.5 md:px-1.25`: ``}`}>
 
-									<Loader size="small" color="border-white" />
+										<Loader size="small" color="border-white" />
 
-								</div>
+									</div>
+									
+											
+									<div className={`hidden dark:flex items-center justify-center py-1.25 md:py-2.75 ${cartQuantity > 9 ? `px-0.5 md:px-1.25`: ``}`}>
+
+										<Loader size="small" color="border-gray-600" />
+
+									</div>
+
+								</>
 							) 
 						
 							: 
@@ -313,21 +327,29 @@ export default function CartDrawer({ onClose })
 							
 
 								if (!product) return null;
+
+
+								// ++cartItemCount;
+
+
+									// use this class inside the div below to not get a bottom border for the last cart item:
+
+										//	${(cartItemCount === localCart.length) ? `` : `border-b`}
 							
 
 								return (
 									
-									<div key={item.$id} className="relative flex gap-3 border-b py-3">
+									<div key={item.$id} className={`relative flex gap-3 max-md:border-gray-500 border-b py-2 md:py-3`}>
 									
 										{/* Discount badge */}
 										
 											{item.discount_value > 0 && (
 												<div
-												className={`absolute md:left-2 top-20 md:top-30 ${
+												className={`absolute top-17.5 md:top-30 ${
 													product.price > 9.99
 													? "px-0.75 md:px-1"
 													: "px-1.5 md:px-1.75"
-												} bg-green-700 text-white font-extrabold text-[8px] md:text-[11px] active:-translate-y-1  hover:-translate-y-1 p-0.5 md:p-0.75 rounded-full transition-all duration-200`}
+												} bg-green-700 text-white font-extrabold text-[7px] md:text-[11px] active:-translate-y-1  hover:-translate-y-1 p-0.5 md:p-0.75 rounded-full transition-all duration-200`}
 												>
 												{product.discount_tag}
 												</div>
@@ -338,7 +360,7 @@ export default function CartDrawer({ onClose })
 					
 											<div
 										
-												className={`absolute cursor-pointer left-11 top-18 md:top-28 md:left-12 active:-translate-y-0.5 hover:-translate-y-0.5 p-2 rounded-full transition-all duration-200`}
+												className={`absolute cursor-pointer left-14 top-15.75 md:top-28 active:-translate-y-0.5 hover:-translate-y-0.5 p-2 rounded-full transition-all duration-200`}
 										
 												onClick={() => {handleFavouriteClick(item.product.$id)}}
 											>
@@ -349,7 +371,7 @@ export default function CartDrawer({ onClose })
 											
 													alt="wishlist"
 													
-													className="w-4.25 md:w-6"
+													className="w-3.5 md:w-6"
 												/>
 											
 											</div>
@@ -360,7 +382,7 @@ export default function CartDrawer({ onClose })
 											<img
 												src={product.image_url}
 												alt={product.name}
-												className="cursor-pointer w-18 h-17 md:w-20 md:h-25 rounded-lg object-scale-down"
+												className="cursor-pointer w-20 h-15.75 md:w-22 md:h-26 rounded-lg object-scale-down"
 												onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleClick(product);}}
 											/>
 
@@ -373,7 +395,7 @@ export default function CartDrawer({ onClose })
 													{/* PRODUCT NAME */}
 													
 														<p
-															className="font-mono max-md:text-[11px] md:text-[17px]  text-black md:text-gray-700 cursor-pointer md:hover:text-gray-900 font-bold md:font-semibold mt-2.25 md:mt-2.5"
+															className="font-mono max-md:text-[11px] md:text-[17px]  text-black dark:text-white dark:md:text-gray-100 dark:md:hover:text-gray-300  md:text-gray-700 cursor-pointer md:hover:text-gray-900 font-bold md:font-semibold mt-1 md:mt-2.5"
 															onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleClick(product);}}
 														>
 															{product.name}
@@ -384,7 +406,7 @@ export default function CartDrawer({ onClose })
 													{/* PRODUCT QUANTITY */}
 														
 														<span
-														className={`text-white text-[17px] md:text-[25px] active:-translate-y-1 hover:-translate-y-1 bg-yellow-500 active:bg-orange-600 hover:bg-orange-600 ${
+														className={`text-white text-[17px] md:text-[25px] active:-translate-y-1 hover:-translate-y-1 dark:bg-yellow-300 dark:active:bg-orange-400 dark:hover:bg-orange-400 dark:text-gray-600 bg-yellow-500 active:bg-orange-600 hover:bg-orange-600 ${
 															item.quantity > 9 ? "px-3" : "px-4.5"
 														} rounded-full font-bold transition-all duration-200`}
 														>
@@ -392,11 +414,21 @@ export default function CartDrawer({ onClose })
 															((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ?
 															
 															(
-																<div className={`flex items-center justify-center py-1.25 md:py-2.75 ${item.quantity > 9 ? `px-0.5 md:px-1.5` : ``}`}>
-										
-																	<Loader size="small" color="border-white" />
-										
-																</div>
+																<>	
+																	<div className={`dark:hidden flex items-center justify-center py-1.25 md:py-2.75 ${item.quantity > 9 ? `px-0.5 md:px-1.5` : ``}`}>
+											
+																		<Loader size="small" color="border-white" />
+											
+																	</div>
+																	
+																	
+																	<div className={`hidden dark:flex items-center justify-center py-1.25 md:py-2.75 ${item.quantity > 9 ? `px-0.5 md:px-1.5` : ``}`}>
+											
+																		<Loader size="small" color="border-gray-600" />
+											
+																	</div>
+																
+																</>
 															) 
 														
 															: 
@@ -414,7 +446,7 @@ export default function CartDrawer({ onClose })
 
 												{/* PRODUCT UPDATION BUTTONS */}
 												
-													<div className="flex md: mt-2 md:mt-4 gap-5 md:gap-6">
+													<div className="flex md: mt-0.75 md:mt-4 gap-5 md:gap-6">
 															
 														<button
 															className={`flex mb-1 ${
@@ -473,24 +505,24 @@ export default function CartDrawer({ onClose })
 
 												{/* Price + Subtotal */}
 											
-													<div className="flex justify-between mt-2.75 md:mt-6">
+													<div className="flex justify-between mt-2 max-md:mb-px md:mb-1 md:mt-6">
 													<div className="flex gap-1 md:gap-2">
 														{item.discount_value > 0 && (
-														<p className="text-gray-500 max-md:text-[10px] md:text-md font-mono">
+														<p className="text-gray-500 dark:text-gray-300 max-md:text-[10px] md:text-md font-mono">
 															{formatPrice(product.price, product.currency, item.discount_value)}
 														</p>
 														)}
 														<p
 														className={`text-gray-500 md:text-md font-mono ${
 															item.discount_value
-															? "line-through max-md:text-[8px] md:text-sm"
-															: "max-md:text-[10px]"
+															? "line-through max-md:text-[8px] md:text-sm dark:text-gray-400"
+															: "max-md:text-[10px] dark:text-gray-300"
 														}`}
 														>
 														{formatPrice(product.price, product.currency)}
 														</p>
 													</div>
-													<p className={`text-gray-700 max-sm:text-[10px] font-mono */${(item.subtotal <= 9.99) ? `max-md:mr-2.5` :  (item.subtotal <= 99.99) ? `max-md:mr-1.75` : `max-md:mr-1.25`}*/`}>
+													<p className={`text-gray-700 dark:text-white dark:md:text-gray-100 max-sm:text-[10px] font-mono */${(item.subtotal <= 9.99) ? `max-md:mr-2.5` :  (item.subtotal <= 99.99) ? `max-md:mr-1.75` : `max-md:mr-1.25`}*/`}>
 														{formatPrice(item.subtotal, product.currency)}
 													</p>
 													</div>
@@ -509,13 +541,13 @@ export default function CartDrawer({ onClose })
 						
 				{/* Footer / Checkout */}
 				
-					<div className="border-t-3 pt-1 md:pt-5">
+					<div className="border-t-3 pt-2 md:pt-5">
 						
-						<p className="flex justify-between items-center font-extrabold text-orange-500">
+						<p className="flex justify-between items-center font-extrabold dark:text-orange-400 text-orange-500 max-md:mb-0.5">
 						
-							<span className="md:ml-1.5 text-black text-[18px] md:text-[20px]">Total (USD):</span>
+							<span className="text-black dark:text-white text-[15px] md:text-[23px]">Total (USD):</span>
 							
-							<span className="md:mr-1.5 text-[23px] md:text-[25px]">{formatPrice(cartTotal, "USD")}</span>
+							<span className="text-[21px] md:text-[32px]">{formatPrice(cartTotal, "USD")}</span>
 						
 						</p>
 						
@@ -524,7 +556,7 @@ export default function CartDrawer({ onClose })
 
 							<button
 						
-								className={`w-full ${(!cartQuantity || isOnCheckoutPage || clearCartLoading || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `${isCheckoutPage ? `bg-orange-600` : `bg-yellow-500 hover:bg-orange-600`} text-white hover:-translate-y-1 transition-all duration-200`} col-span-2 py-1.5 md:py-2 rounded-full mt-1 md:mt-3 md:text-[18px] font-bold md:font-extrabold`}
+								className={`w-full ${(!cartQuantity || isOnCheckoutPage || clearCartLoading || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `${isCheckoutPage ? `bg-orange-600 dark:bg-orange-500` : `bg-yellow-500 dark:bg-yellow-300 dark:hover:bg-orange-400 hover:bg-orange-600`} text-white dark:text-gray-600 hover:-translate-y-1 transition-all duration-200`} col-span-2 py-1 md:py-2 rounded-full mt-1 md:mt-3 md:text-2xl font-bold md:font-extrabold`}
 								
 								onClick={() => navigate("/checkout")}
 					
@@ -538,7 +570,7 @@ export default function CartDrawer({ onClose })
 									
 							<button 
 						
-								className={`${(!cartQuantity || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `bg-red-600 text-white hover:-translate-y-1 transition-all duration-200`} rounded-full mt-1 md:mt-3 py-1.5 md:py-2 font-bold md:font-extrabold`}
+								className={`${(!cartQuantity || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `bg-red-600 text-white hover:-translate-y-1 transition-all duration-200`} rounded-full mt-1 md:mt-3 py-1 md:py-2 font-bold max-md:text-sm md:text-xl md:font-extrabold`}
 								
 								onClick=
 								{

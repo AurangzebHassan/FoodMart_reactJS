@@ -141,13 +141,26 @@ export default function MostSearchedCarousel()
       
       return (
       
-        <div className="py-10 flex w-full gap-2 items-center justify-center">
-        
-          <span className="text-yellow-500 md:text-2xl font-extrabold"> Loading Most Searched </span>
+        <>
+		
+				<div className="dark:hidden py-10 flex w-full gap-2 items-center justify-center">
 
-          <Loader size="small md:xl" color="border-yellow-500" />
-        
-        </div>
+					<span className="text-yellow-500 md:text-2xl font-extrabold"> Loading Products Most Searched For </span>
+				
+					<Loader size="small md:xl" color="border-yellow-500" />
+
+				</div>
+
+
+				<div className="py-10 hidden dark:flex w-full gap-2 items-center justify-center">
+
+					<span className="text-yellow-300 md:text-2xl font-extrabold"> Loading Products Most Searched For </span>
+				
+					<Loader size="small md:xl" color="border-yellow-500" />
+
+				</div>
+			
+			</>
       
       );
   
@@ -163,7 +176,7 @@ export default function MostSearchedCarousel()
     <section className="container mx-auto px-5 py-6 overflow-hidden">
       {/* 🟩 HEADER ROW */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl md:text-3xl font-bold text-gray-800">Most Searched</h2>
+        <h2 className="text-xl md:text-3xl font-bold dark:text-white text-gray-800">Most Searched</h2>
 
         {/* 🟩 RIGHT SIDE: 'View All' + arrows */}
         <div className="flex items-center gap-3">
@@ -180,8 +193,8 @@ export default function MostSearchedCarousel()
             className={`text-xl md:text-3xl rounded-md w-10 h-7 md:w-12 md:h-9 flex items-center justify-center shadow-sm transition-all duration-200 
               ${
                 isBeginning
-                  ? "bg-gray-200 text-gray-400"
-                  : "bg-gray-200 active:bg-yellow-500 hover:bg-yellow-500 text-gray-900"
+                  ? "dark:bg-gray-400 dark:text-gray-600 text-gray-400"
+									: "bg-gray-200 dark:bg-gray-300 dark:active:bg-yellow-300 dark:hover:bg-yellow-300 active:bg-yellow-500 hover:bg-yellow-500 text-gray-900 dark:text-gray-600"
               }`}
           >
             ‹
@@ -193,8 +206,8 @@ export default function MostSearchedCarousel()
             className={`text-xl md:text-3xl rounded-md w-10 h-7 md:w-12 md:h-9 flex items-center justify-center shadow-sm transition-all duration-200 
               ${
                 isEnd
-                  ? "bg-gray-200 text-gray-400"
-                  : "bg-gray-200 active:bg-yellow-500 hover:bg-yellow-500 text-gray-900"
+                  ? "dark:bg-gray-400 dark:text-gray-600 text-gray-400"
+									: "bg-gray-200 dark:bg-gray-300 dark:active:bg-yellow-300 dark:hover:bg-yellow-300 active:bg-yellow-500 hover:bg-yellow-500 text-gray-900 dark:text-gray-600"
               }`}
           >
             ›

@@ -176,7 +176,7 @@ export default function ProductPage()
 
 				<>
 		
-					<div className="hidden md:flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
+					<div className="dark:hidden md:flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
 
 						<span className="text-4xl font-extrabold text-white text-center"> Loading Product </span>
 
@@ -190,6 +190,23 @@ export default function ProductPage()
 					</div>
 
 
+					<div className="hidden dark:md:flex w-full h-screen items-center justify-center bg-gray-600 gap-2">
+
+						<span className="text-4xl font-extrabold text-yellow-300 text-center"> Loading Product </span>
+
+						
+						<Loader size="xl" color="border-yellow-300 border-9" />
+
+						<Loader size="large" color="border-yellow-300 border-7" />
+
+						<Loader size="medium" color="border-yellow-300 border-6" />
+
+					</div>
+
+
+
+					
+
 					
 					<div className="flex md:hidden w-full h-screen fixed inset-0 items-center justify-center bg-yellow-500 gap-2">
 
@@ -201,6 +218,20 @@ export default function ProductPage()
 						<Loader size="medium" color="border-white border-6" />
 
 						<Loader size="small" color="border-white border-5" />
+
+					</div>
+
+
+					<div className="hidden dark:flex dark:md:hidden w-full h-screen fixed inset-0 items-center justify-center bg-gray-600 gap-2">
+
+						<span className="text-xl font-extrabold text-yellow-300 text-center"> Loading Product </span>
+
+						
+						<Loader size="large" color="border-yellow-300 border-7" />
+
+						<Loader size="medium" color="border-yellow-300 border-6" />
+
+						<Loader size="small" color="border-yellow-300 border-5" />
 
 					</div>
 					
@@ -228,7 +259,8 @@ export default function ProductPage()
     // ------------------------------
     
         return (
-        <>
+        <div className="dark:bg-gray-600 dark:h-screen dark:max-md:fixed dark:max-md:inset-0">
+            
             <Navbar />
 
             <div className="container mx-auto mt-4 lg:mt-10 px-5">
@@ -261,7 +293,7 @@ export default function ProductPage()
                                 
                                 alt={liveProduct.name}
                                 
-                                className="relative w-full h-full max-w-md max-h-md bg-gray-200 rounded-xl shadow-lg object-cover"
+                                className="relative w-full h-full max-w-md max-h-md bg-gray-200 dark:bg-gray-400 rounded-xl shadow-lg object-cover"
                             />
 
 
@@ -269,7 +301,7 @@ export default function ProductPage()
     
                                 <div
 
-                                    className={`absolute top-1.5 right-2.25 md:top-2.5 md:right-3.5 xl:right-13.5 2xl:right-23.5 bg-white hover:-translate-y-0.5 p-1.5 md:p-3 rounded-full transition-all duration-200`}
+                                    className={`absolute top-1.5 right-2.25 md:top-2.5 md:right-3.5 xl:right-13.5 2xl:right-23.5 bg-white dark:bg-gray-600 hover:-translate-y-0.5 p-1.5 md:p-3 rounded-full transition-all duration-200`}
 
                                     onClick={() => {handleFavouriteClick()}}
                                 >
@@ -310,7 +342,7 @@ export default function ProductPage()
                     
                             {/* Product Name */}
                     
-                                <h1 className="max-md:text-[13px] md:text-3xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-gray-800">
+                                <h1 className="max-md:text-[13px] md:max-lg:text-[27.75px] lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-gray-800 dark:text-white">
                         
                                     {liveProduct.name}
                     
@@ -325,7 +357,7 @@ export default function ProductPage()
                                     
                                         <div
                                     
-                                            className="flex max-md:text-[11px] md:text-md lg:text-lg xl:text-xl 2xl:text-2xl mt-1 md:mt-2 lg:mt-4 gap-0.5 md:gap-2 text-yellow-600 font-semibold cursor-pointer hover:underline"
+                                            className="flex max-md:text-[8.5px] md:max-lg:text-md lg:text-lg xl:text-xl 2xl:text-2xl mt-2 md:mt-2 lg:mt-4 gap-0.5 md:gap-2 text-yellow-600 dark:text-yellow-300 font-semibold cursor-pointer hover:underline"
                                     
                                             onClick={() => navigate(`/category/${category.slug}`)}
                                         >
@@ -349,7 +381,7 @@ export default function ProductPage()
                                 
                             {/* Stock + Rating */}
                                 
-                                <p className={`font-extralight max-md:text-[9px] md:text-sm text-left w-full mt-2 md:mt-6 xl:mt-8`}>
+                                <p className={`dark:text-gray-300 font-extralight max-md:text-[9px] md:text-sm text-left w-full mt-3 md:mt-6 xl:mt-8 max-md:ml-4.5`}>
                                                     
                                     {" "}
                             
@@ -381,7 +413,7 @@ export default function ProductPage()
                                 
                             {/* Description */}
                 
-                                <p className={`text-yellow-600 ${!liveProduct.stock ? `max-md:text-[10px] md:text-sm md:leading-7 lg:text-[16px] lg:leading-9 xl:text-lg xl:leading-11` : `max-md:text-[10px] md:text-sm xl:text-lg lg:leading-7 xl:leading-9 2xl:leading-11`} mt-2 md:mt-6 text-justify`}>
+                                <p className={`text-yellow-600 dark:text-yellow-300 ${!liveProduct.stock ? `max-md:text-[8.5px] md:text-sm md:leading-7 lg:text-[16px] lg:leading-9 xl:text-lg xl:leading-11` : `max-md:text-[8.5px] md:text-sm xl:text-lg lg:leading-7 xl:leading-9 2xl:leading-11`} mt-3 md:mt-6 text-justify`}>
                                     
                                     {liveProduct.description || "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia possimus quae earum, accusantium vitae saepe provident itaque dolorum optio et."}
                                     
@@ -396,7 +428,7 @@ export default function ProductPage()
                                     (
                                         <div className={`flex gap-1 md:gap-2 items-center max-md:mt-3`}>
                             
-                                            <p className={`font-bold font-mono text-lg md:text-3xl lg:text-4xl xl:text-5xl md:mt-8`}>
+                                            <p className={`dark:text-white font-bold font-mono text-lg md:text-3xl lg:text-4xl xl:text-5xl md:mt-8`}>
                                     
                                                 {" "}
                                     
@@ -411,7 +443,7 @@ export default function ProductPage()
                                     
                                             {formatDiscount(liveProduct.discount_tag) && (
                                     
-                                                <p className="text-gray-500 mt-1 md:mt-9 text-left font-bold max-md:text-[11px] md:text-xl xl:text-2xl line-through font-mono">
+                                                <p className="text-gray-500 dark:text-gray-400 mt-1 md:mt-9 text-left font-bold max-md:text-[11px] md:text-xl xl:text-2xl line-through font-mono">
                                         
                                                     {formatPrice(liveProduct.price, "USD")}
                                     
@@ -429,7 +461,7 @@ export default function ProductPage()
                                 !liveProduct.stock && 
                                 
                                 (
-                                    <p className="mt-3 md:mt-12 xl:mt-16 2xl:mt-20 text-center text-lg md:text-3xl lg:text-4xl xl:text-5xl italic"> 𝑂𝑢𝑡 𝑜𝑓 𝑆𝑡𝑜𝑐𝑘 </p>
+                                    <p className="dark:text-white mt-3 md:mt-8 xl:mt-16 2xl:mt-20 text-center text-lg md:text-3xl lg:text-4xl xl:text-5xl italic"> 𝑂𝑢𝑡 𝑜𝑓 𝑆𝑡𝑜𝑐𝑘 </p>
                                 )
                             }
 
@@ -448,7 +480,7 @@ export default function ProductPage()
 
                                                     <button
 
-                                                        className={`flex cursor-pointer justify-center items-center bg-gray-200 ${((quantity === liveProduct.stock) || addToCartLoading) ? `` : `hover:bg-gray-300`} w-6 max-md:h-5 md:w-8 lg:w-11 xl:w-14 2xl:h-11 font-extrabold rounded-md text-md`}
+                                                        className={`flex cursor-pointer justify-center items-center bg-gray-200 dark:bg-gray-500 ${((quantity === liveProduct.stock) || addToCartLoading) ? `` : `dark:hover:bg-gray-700 dark:active:bg-gray-700 dark:hover:text-white dark:active:text-white active:bg-gray-200 hover:bg-gray-300`} w-6 max-md:h-5 md:w-8 lg:w-11 xl:w-14 2xl:h-11 font-extrabold rounded-md text-md`}
 
                                                         disabled={(quantity === liveProduct.stock) || addToCartLoading}
                                                 
@@ -470,12 +502,12 @@ export default function ProductPage()
                                                     </button>
 
                                             
-                                                    <span className="font-mono md:text-xl lg:text-2xl cursor-default">{quantity}</span>
+                                                    <span className="dark:text-white font-mono md:text-xl lg:text-2xl cursor-default">{quantity}</span>
 
                                             
                                                     <button
                                                 
-                                                        className={`flex cursor-pointer justify-center items-center bg-gray-200 ${((quantity === 0) || addToCartLoading) ? `` : `hover:bg-gray-300`} w-6 max-md:h-5 md:w-8 lg:w-11 xl:w-14 2xl:h-11 font-extrabold rounded-md text-md`}
+                                                        className={`flex cursor-pointer justify-center items-center bg-gray-200 dark:bg-gray-500 ${((quantity === 0) || addToCartLoading) ? `` : `dark:hover:bg-gray-700 dark:active:bg-gray-700 dark:hover:text-white dark:active:text-white active:bg-gray-200 hover:bg-gray-300`} w-6 max-md:h-5 md:w-8 lg:w-11 xl:w-14 2xl:h-11 font-extrabold rounded-md text-md`}
 
                                                         disabled={(quantity === 0) || addToCartLoading}
                                                 
@@ -524,17 +556,44 @@ export default function ProductPage()
                                                         addToCartLoading ? 
                                                         
                                                         (
-                                                            <div className="flex items-center justify-center">
+                                                            <>
+                                                                <div className="dark:hidden hidden md:flex items-center justify-center">
+                                                                    
+                                                                    <Loader size="large" color="border-yellow-500" />
+                                        
+                                                                </div>
                                                                 
-                                                                <Loader size="large" color="border-yellow-500" />
-                                    
-                                                            </div>
+                                                                
+                                                                <div className="dark:hidden dark:md:flex items-center justify-center">
+                                                                    
+                                                                    <Loader size="large" color="border-yellow-300" />
+                                        
+                                                                </div>
+                                                                
+                                                            
+
+                                                            
+
+
+                                                                <div className="dark:hidden flex md:hidden items-center justify-center">
+                                                                        
+                                                                        <Loader size="medium" color="border-yellow-500" />
+                                        
+                                                                </div>
+
+
+                                                                <div className="dark:flex dark:md:hidden items-center justify-center">
+                                                                        
+                                                                        <Loader size="medium" color="border-yellow-300" />
+                                        
+                                                                </div>
+                                                            </>
                                                         )         
                                                 
                                                         :
                                                 
                                                         (
-                                                            <img src={isInCart ? `/icons/again-add-to-cart.png` : `/icons/add-to-cart.png`} title={isInCart ? `Again add to cart` : `Add to cart`} alt="Add to Cart" className="w-5 md:w-8 hover:-translate-y-1 cursor-pointer transition-all duration-200" />
+                                                            <img src={isInCart ? `/icons/again-add-to-cart.png` : `/icons/add-to-cart.png`} title={isInCart ? `Again add to cart` : `Add to cart`} alt="Add to Cart" className="w-5 md:w-8 hover:-translate-y-1 active:-translate-y-1 cursor-pointer transition-all duration-200" />
                                                         )
                                                     }
                                             
@@ -547,6 +606,6 @@ export default function ProductPage()
                 </div>
                 
             </div>
-        </>
+        </div>
         );
 }

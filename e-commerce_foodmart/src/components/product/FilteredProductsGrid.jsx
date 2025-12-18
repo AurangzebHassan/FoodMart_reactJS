@@ -62,13 +62,26 @@ export default function FilteredProductsGrid()
       
       return (
       
-        <div className="py-10 flex w-full gap-2 items-center justify-center">
-        
-          <span className="text-yellow-500 md:text-2xl font-extrabold"> Loading Filtered Products Grid </span>
+        <>
+		
+				<div className="dark:hidden py-10 flex w-full gap-2 items-center justify-center">
 
-          <Loader size="small md:xl" color="border-yellow-500" />
-        
-        </div>
+					<span className="text-yellow-500 md:text-2xl font-extrabold"> Loading Filtered Products Grid </span>
+				
+					<Loader size="small md:xl" color="border-yellow-500" />
+
+				</div>
+
+
+				<div className="py-10 hidden dark:flex w-full gap-2 items-center justify-center">
+
+					<span className="text-yellow-300 md:text-2xl font-extrabold"> Loading Filtered Products Grid </span>
+				
+					<Loader size="small md:xl" color="border-yellow-500" />
+
+				</div>
+			
+			</>
       
       );
   
@@ -88,14 +101,14 @@ export default function FilteredProductsGrid()
     
         <div className="flex justify-between gap-12 md:gap-30 mb-6">
         
-            <h2 className="text-xl md:text-3xl font-bold text-gray-800">Products</h2>
+            <h2 className="text-xl md:text-3xl font-bold dark:text-white text-gray-800">Products</h2>
               
 
             <div className="flex gap-3 lg:gap-6 xl:gap-7 2xl:gap-12 border-b border-gray-100 pr-5 mt-2 overflow-x-auto lg:overflow-x-visible">
 
                 <button
             
-                    className={`text-gray-400 text-nowrap text-[10px] md:text-sm lg:text-md xl:text-lg font-semibold border-b-3 border-gray-100 hover:border-yellow-500 hover:border-b-5 pb-2 transition-all duration-200 ease-in-out ${selectedCategory === "all" ? "text-gray-800 font-bold border-yellow-500 md:border-b-5" : ""}`}
+                    className={`text-gray-400 text-nowrap text-[10px] md:text-sm lg:text-md xl:text-lg font-semibold border-b-3 border-white dark:border-gray-600 hover:border-yellow-500 hover:border-b-5 pb-2 transition-all duration-200 ease-in-out ${selectedCategory === "all" ? "text-gray-800 dark:text-white font-bold border-yellow-500 dark:border-yellow-300 md:border-b-5" : ""}`}
             
                     onClick={() => setSelectedCategory("all")}
                 >
@@ -111,7 +124,7 @@ export default function FilteredProductsGrid()
                 
                         key={cat.$id}
                 
-                        className={`text-gray-400 text-nowrap text-[10px] md:text-sm lg:text-md xl:text-lg pb-2 font-semibold border-b-3 border-gray-100 hover:border-yellow-500 hover:border-b-5 transition-all duration-200 ease-in-out ${selectedCategory === cat.$id ? "text-gray-800 font-bold border-yellow-500 md:border-b-5" : ""}`}
+                        className={`text-gray-400 text-nowrap text-[10px] md:text-sm lg:text-md xl:text-lg pb-2 font-semibold border-b-3 border-white dark:border-gray-600 hover:border-yellow-500 hover:border-b-5 transition-all duration-200 ease-in-out ${selectedCategory === cat.$id ? "text-gray-800 dark:text-white font-bold border-yellow-500 dark:border-yellow-300 md:border-b-5" : ""}`}
                 
                         onClick={() => setSelectedCategory(cat.$id)}
                     >

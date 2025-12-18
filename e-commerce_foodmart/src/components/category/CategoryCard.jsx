@@ -40,7 +40,7 @@ export default function CategoryCard({ Category })
 
             <div
 
-                className="flex flex-col items-center justify-center bg-white rounded-2xl max-md:shadow-lg shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 w-38 h-30 md:w-60 md:h-48 mx-auto cursor-pointer"
+                className="flex flex-col items-center justify-center bg-white dark:bg-gray-600 rounded-2xl max-md:shadow-lg shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 w-38 h-30 md:w-60 md:h-48 mx-auto cursor-pointer"
                 
             onClick={handleClick}
             >
@@ -56,7 +56,7 @@ export default function CategoryCard({ Category })
         
                 {/* Category name */}
         
-                    <p className="max-md:text-[11px] md:text-lg font-semibold text-gray-700 hover:text-gray-900 transition">{Category.name}</p>
+                    <p className="max-md:text-[11px] md:text-lg font-semibold text-gray-700 dark:text-gray-200 dark:md:hover:text-gray-100 hover:text-gray-900 transition">{Category.name}</p>
             
         </div>
         

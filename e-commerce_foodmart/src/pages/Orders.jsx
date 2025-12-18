@@ -60,22 +60,11 @@ export default function Orders()
 
 
     if (isLoading) {
-        // return (
-        //     <div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
-        //         <p className="text-4xl font-extrabold text-white text-center">Loading Orders</p>
-        //         <Loader size="xl" color="border-white border-9" />
-        //         <Loader size="large" color="border-white border-7" />
-        //         <Loader size="medium" color="border-white border-6" />
-        //     </div>
-        // );
-        
-
-
         return (
 
 				<>
 		
-					<div className="hidden md:flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
+					<div className="dark:hidden md:flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
 
 						<span className="text-4xl font-extrabold text-white text-center"> Loading Orders </span>
 
@@ -88,6 +77,23 @@ export default function Orders()
 
 					</div>
 
+
+					<div className="hidden dark:md:flex w-full h-screen items-center justify-center bg-gray-600 gap-2">
+
+						<span className="text-4xl font-extrabold text-yellow-300 text-center"> Loading Orders </span>
+
+						
+						<Loader size="xl" color="border-yellow-300 border-9" />
+
+						<Loader size="large" color="border-yellow-300 border-7" />
+
+						<Loader size="medium" color="border-yellow-300 border-6" />
+
+					</div>
+
+
+
+					
 
 					
 					<div className="flex md:hidden w-full h-screen fixed inset-0 items-center justify-center bg-yellow-500 gap-2">
@@ -102,6 +108,20 @@ export default function Orders()
 						<Loader size="small" color="border-white border-5" />
 
 					</div>
+
+
+					<div className="hidden dark:flex dark:md:hidden w-full h-screen fixed inset-0 items-center justify-center bg-gray-600 gap-2">
+
+						<span className="text-xl font-extrabold text-yellow-300 text-center"> Loading Orders </span>
+
+						
+						<Loader size="large" color="border-yellow-300 border-7" />
+
+						<Loader size="medium" color="border-yellow-300 border-6" />
+
+						<Loader size="small" color="border-yellow-300 border-5" />
+
+					</div>
 					
 				</>
 				
@@ -114,7 +134,8 @@ export default function Orders()
 
 
     return (
-        <>
+        <div className={`dark:bg-gray-600 dark:h-full transition-all duration-200`}>
+            
             <Navbar />
 
 
@@ -147,7 +168,7 @@ export default function Orders()
                             
                             <div className="w-full flex items-center justify-center">
                                 
-                                <h1 className="text-xl md:text-4xl text-yellow-500 font-extrabold">
+                                <h1 className="text-xl md:text-4xl text-yellow-500 dark:text-yellow-300 font-extrabold">
                                     
                                     Orders
                                     
@@ -174,9 +195,9 @@ export default function Orders()
                                     
                                     filterStatus === "all" 
                                     
-                                    ? "bg-yellow-500 text-white"  // Active state - yellow background
+                                    ? "bg-yellow-500 dark:bg-yellow-300 text-white dark:text-gray-600"  // Active state - yellow background
                                     
-                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"  // Inactive state - gray background
+                                    : "bg-gray-200 text-gray-700 dark:text-gray-600 hover:bg-gray-300"  // Inactive state - gray background
                                 }`}
                             >
                                 All
@@ -195,7 +216,7 @@ export default function Orders()
                                 
                                     ? "bg-gray-500 text-white"  // Active state
                                 
-                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"  // Inactive state
+                                    : "bg-gray-200 text-gray-700 dark:text-gray-600 hover:bg-gray-300"  // Inactive state
                                 }`}
                             >
                                 Processing
@@ -212,9 +233,9 @@ export default function Orders()
                                 
                                     filterStatus === "shipped" 
                                 
-                                    ? "bg-blue-500 text-white"  // Active state - blue to match shipped badge
+                                    ? "bg-blue-500 dark:bg-blue-700 text-white"  // Active state - blue to match shipped badge
                                 
-                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"  // Inactive state
+                                    : "bg-gray-200 text-gray-700 dark:text-gray-600 hover:bg-gray-300"  // Inactive state
                                 }`}
                             >
                                 Shipped
@@ -231,9 +252,9 @@ export default function Orders()
                                 
                                     filterStatus === "delivered" 
                                 
-                                    ? "bg-green-600 text-white"  // Active state - green to match delivered badge
+                                    ? "bg-green-600 dark:bg-green-700 text-white"  // Active state - green to match delivered badge
                                 
-                                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"  // Inactive state
+                                    : "bg-gray-200 text-gray-700 dark:text-gray-600 hover:bg-gray-300"  // Inactive state
                                 }`}
                             >
                                 Delivered
@@ -247,7 +268,7 @@ export default function Orders()
                 
                     {orders.length === 0 && (
                     
-                        <div className="text-center max-md:text-sm md:text-xl lg:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-10 md:pl-23">
+                        <div className="dark:h-screen text-center max-md:text-sm md:text-xl lg:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-9 md:pl-23">
                         
                             You have no orders yet.
                         
@@ -261,7 +282,7 @@ export default function Orders()
                         
                         filterStatus === "all" || order.shipping_status === filterStatus).length === 0 &&
                         (
-                            <div className="text-center max-md:text-sm md:text-xl lg:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-10 md:pl-23">
+                            <div className="dark:h-screen text-center max-md:text-sm md:text-xl lg:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-9 md:pl-23">
                         
                                 No {filterStatus} orders found.
                             
@@ -286,7 +307,7 @@ export default function Orders()
                                 
                                 key={order.$id}
                                 
-                                className={`h-fit border-3 md:border-4 bg-gray-50 ${(order.shipping_status === "delivered") ? `border-green-500` : (order.shipping_status === "shipped") ? `border-blue-500` : `border-gray-500`} rounded-2xl active:drop-shadow-2xl active:-translate-y-1 hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200 p-3 md:p-6`}
+                                className={`h-fit border-3 md:border-4 bg-gray-50 /*dark:bg-[#414954]*/ dark:bg-gray-700 ${(order.shipping_status === "delivered") ? `border-green-600 dark:border-green-700` : (order.shipping_status === "shipped") ? `border-blue-500 dark:border-blue-700` : `border-gray-500`} rounded-2xl active:drop-shadow-2xl active:-translate-y-1 hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200 p-4 md:p-6`}
                             >
                                 {/* Top Section: Order ID + Status */}
                                 
@@ -296,14 +317,14 @@ export default function Orders()
                                         <div className="flex-col">
                                             
 
-                                            <p className="max-md:text-[13px] md:text-lg font-extrabold text-gray-700 lg:mb-1">
+                                            <p className="max-md:text-[12px] md:text-md font-extrabold text-gray-700 dark:text-gray-400 lg:mb-1">
                                     
-                                                Order <span title={order.$id.toUpperCase()} className="hover:text-gray-600 italic font-mono text-gray-500 max-md:text-[15px] lg:text-xl"> #{order.$id.slice(-6).toUpperCase()} </span>
+                                                Order <span title={order.$id.toUpperCase()} className="hover:text-gray-600 italic font-mono text-gray-500 dark:text-white dark:hover:text-gray-200 max-md:text-sm md:text-xl"> #{order.$id.slice(-6).toUpperCase()} </span>
                                     
                                             </p>
                                                 
                                                 
-                                        <p title="Order Creation At" className={`${(order.shipping_status === "processing") ? `max-md:text-[9px]` : `max-md:text-[10px]`} md:text-sm font-light italic text-gray-700`}>
+                                        <p title="Order Creation At" className={`${(order.shipping_status === "processing") ? `max-md:text-[9px]` : `max-md:text-[10px]`} md:text-sm font-light italic text-gray-700 dark:text-gray-200`}>
                                         
                                                 {formatDateTime(order.$createdAt, {withTime: true})}
                                         
@@ -341,9 +362,9 @@ export default function Orders()
 
                                     
                                             <span className={`active:-translate-y-1 hover:-translate-y-1 transition-all duration-200 max-md:text-[10px] md:max-lg:text-sm max-md:p-1.5 md:max-lg:py-1 md:max-lg:px-3 lg:px-4 lg:py-1 text-white font-bold rounded-full
-                                                ${order.shipping_status === "pending" ? "bg-yellow-500" :
-                                                order.shipping_status === "shipped" ? "bg-blue-500" :
-                                                order.shipping_status === "delivered" ? "bg-green-500" :
+                                                ${order.shipping_status === "pending" ? "bg-yellow-500 dark:bg-yellow-300" :
+                                                order.shipping_status === "shipped" ? "bg-blue-500 dark:bg-blue-700" :
+                                                order.shipping_status === "delivered" ? "bg-green-600 dark:bg-green-700" :
                                                 "bg-gray-500"
                                                 }`}
                                             >
@@ -378,7 +399,7 @@ export default function Orders()
 
                                 {/* ITEMS */}
                                 
-                                    <div className="space-y-1.5 lg:space-y-4 mb-2 md:mb-4 lg:mb-6 border-t pt-2 md:pt-4 lg:pt-6">
+                                    <div className="space-y-1.5 lg:space-y-4 mb-2 md:mb-4 lg:mb-6 border-t dark:border-gray-500 pt-2 md:pt-4 lg:pt-6">
 
                                     
                                         {order.items.map((item) => (
@@ -387,7 +408,7 @@ export default function Orders()
                                             
                                                 key={item.product_id}
                                                 
-                                                className={`max-md:text-[9.5px] md:text-sm relative cursor-default flex justify-between items-center border rounded-lg max-md:px-2 md:max-lg:px-3 md:max-lg:py-2 max-md:py-1 lg:p-3 bg-gray-50 hover:bg-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all duration-200`}
+                                                className={`max-md:text-[9.5px] md:text-sm relative cursor-default flex justify-between items-center border dark:border-gray-500 rounded-lg max-md:px-2 md:max-lg:px-3 md:max-lg:py-2 max-md:py-1 lg:p-3 bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-800 hover:bg-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all duration-200`}
 
                                                 onClick={() => !cancelOrderLoading && navigate(`/product/${item.product_slug_snapshot}`)}
 
@@ -395,14 +416,14 @@ export default function Orders()
                                             >
                                                 
 
-                                                <p className={`max-md:text-[9.5px] md:text-sm font-semibold text-gray-700`}>
+                                                <p className={`max-md:text-[9.5px] md:text-sm font-semibold text-gray-700 dark:text-gray-200`}>
                                                 
                                                     {item.product_name_snapshot} × {item.quantity}
                                                 
                                                 </p>
 
 
-                                                <p className="font-mono font-bold text-orange-600">
+                                                <p className="font-mono font-bold text-orange-600 dark:text-orange-400">
                                                      
                                                     {formatPrice(item.unit_price_snapshot, item.currency)} × {item.quantity} = {formatPrice(item.subtotal, item.currency)}
                                          
@@ -420,7 +441,7 @@ export default function Orders()
 
                                 {/* Shipping + PAYMENT + TAX + TOTAL */}
                                 
-                                    <div className="border-t pt-2 md:pt-4 lg:pt-6 max-md:text-[9.5px] md:max-lg:text-sm">
+                                    <div className="border-t dark:border-gray-500 pt-2 md:pt-4 lg:pt-6 max-md:text-[9.5px] md:max-lg:text-sm">
                                         
 
                                         {/* SHIPPING ADDRESS */}
@@ -428,10 +449,10 @@ export default function Orders()
                                             <div className="flex justify-between font-bold">
                                             
 
-                                                <span className="text-gray-700">Shipping Address: </span>
+                                                <span className="text-gray-700 dark:text-gray-300">Shipping Address: </span>
                                             
 
-                                                <span className="text-orange-600">
+                                                <span className="text-orange-600 dark:text-orange-400">
                                                 
                                                     {/* {profile.address} */}
                                                     
@@ -448,14 +469,14 @@ export default function Orders()
                                             <div className="flex justify-between font-bold mt-1 md:mt-1.5 lg:mt-2">
                                             
 
-                                                <span className="text-gray-700">Shipping: </span>
+                                                <span className="text-gray-700 dark:text-gray-300">Shipping: </span>
                                             
                                             
                                                 
                                                 <div className="flex gap-3">
                                                 
                                                 
-                                                    <span className="text-orange-600">
+                                                    <span className="text-orange-600 dark:text-orange-400">
                                                     
                                                         {(order.shipping_method === "standard") ? 
                                                         
@@ -470,10 +491,10 @@ export default function Orders()
                                                     
                                                     </span>
                                                     
-                                                    <span className="text-gray-600"> | </span>
+                                                    <span className="text-gray-600 dark:text-gray-500"> | </span>
 
                                                 
-                                                    <span className="text-orange-600">
+                                                    <span className="text-orange-600 dark:text-orange-400">
                                                     
                                                         {formatPrice(order.shipping_cost, "USD")}
                                                     
@@ -491,10 +512,10 @@ export default function Orders()
                                             <div className="flex justify-between font-bold mt-1 md:mt-1.5 lg:mt-2">
                                             
 
-                                                <span className="text-gray-700">Expected Delivery: </span>
+                                                <span className="text-gray-700 dark:text-gray-300">Expected Delivery: </span>
                                             
 
-                                                <span className="text-orange-600">
+                                                <span className="text-orange-600 dark:text-orange-400">
                                                 
                                                     {formatDateTime(order.expected_delivery_date)}
                                                 
@@ -509,10 +530,10 @@ export default function Orders()
                                             <div className="flex justify-between font-bold mt-1 md:mt-1.5 lg:mt-2 mb-2 md:mb-4 lg:mb-6">
                                             
 
-                                                <span className="text-gray-700">Payment Method: </span>
+                                                <span className="text-gray-700 dark:text-gray-300">Payment Method: </span>
                                             
 
-                                                <span className="text-orange-600">
+                                                <span className="text-orange-600 dark:text-orange-400">
                                                 
                                                     {order.payment_method}
                                                 
@@ -524,7 +545,7 @@ export default function Orders()
                                     
                                         {/* TAX + SUBTOTAL + TOTAL AMOUNT */}
                                         
-                                            <div className=" border-t pt-2 md:pt-4 lg:pt-6">
+                                            <div className=" border-t dark:border-gray-500 pt-2 md:pt-4 lg:pt-6">
 
                                         
                                                 {/* SUBTOTAL */}
@@ -532,10 +553,10 @@ export default function Orders()
                                                     <div className="flex justify-between max-md:text-[12px] md:text-[16px] lg:text-lg font-bold">
                                             
                                                 
-                                                        <span className="text-gray-700">Subtotal:</span>
+                                                        <span className="text-gray-700 dark:text-gray-200">Subtotal:</span>
                                                 
                                                 
-                                                        <span className="text-red-600">
+                                                        <span className="text-red-600 dark:text-red-400">
                                                 
                                                             {formatPrice((order.tax_amount * 10), "USD")}
                                                 
@@ -550,10 +571,10 @@ export default function Orders()
                                                     <div className="flex justify-between max-md:text-[12px] md:text-[16px] lg:text-lg font-bold mt-1 md:mt-1.5 lg:mt-2 mb-2 md:mb-4 lg:mb-6">
                                             
                                                 
-                                                        <span className="text-gray-700">Tax (10%):</span>
+                                                        <span className="text-gray-700 dark:text-gray-200">Tax (10%):</span>
                                                 
                                                 
-                                                        <span className="text-red-600">
+                                                        <span className="text-red-600 dark:text-red-400">
                                                 
                                                             {formatPrice((order.tax_amount), "USD")}
                                                 
@@ -565,13 +586,13 @@ export default function Orders()
 
                                                 {/* TOTAL AMOUNT */}
                                                 
-                                                    <div className="flex justify-between max-md:text-[14px] md:text-lg lg:text-2xl font-extrabold border-t pt-2 md:pt-4 lg:pt-6">
+                                                    <div className="flex justify-between max-md:text-[14px] md:text-lg lg:text-2xl font-extrabold border-t dark:border-gray-500 pt-2 md:pt-4 lg:pt-6">
                                             
                                                 
-                                                        <span className="text-yellow-600">Total:</span>
+                                                        <span className="text-yellow-600 dark:text-yellow-300">Total:</span>
                                                 
                                                 
-                                                        <span className="text-black">
+                                                        <span className="text-black dark:text-white">
                                                 
                                                             {formatPrice(order.total_amount, "USD")}
                                                 
@@ -602,7 +623,7 @@ export default function Orders()
             </div>
 
 
-        </>
+        </div>
 
     );
 }

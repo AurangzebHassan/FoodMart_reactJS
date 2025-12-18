@@ -71,29 +71,11 @@ export default function CategoryPage()
     
     if (loading)
     {
-        // return (
-    
-        //     <div className="flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
-            
-        //         <p className="text-4xl font-extrabold text-white text-center"> Loading Category </p>
-
-                
-        //         <Loader size="xl" color="border-white border-9" />
-
-        //         <Loader size="large" color="border-white border-7" />
-
-        //         <Loader size="medium" color="border-white border-6" />
-            
-        //     </div>
-        
-        // );
-
-
         return (
 
 				<>
 		
-					<div className="hidden md:flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
+					<div className="dark:hidden md:flex w-full h-screen items-center justify-center bg-yellow-500 gap-2">
 
 						<span className="text-4xl font-extrabold text-white text-center"> Loading Category </span>
 
@@ -107,6 +89,23 @@ export default function CategoryPage()
 					</div>
 
 
+					<div className="hidden dark:md:flex w-full h-screen items-center justify-center bg-gray-600 gap-2">
+
+						<span className="text-4xl font-extrabold text-yellow-300 text-center"> Loading Category </span>
+
+						
+						<Loader size="xl" color="border-yellow-300 border-9" />
+
+						<Loader size="large" color="border-yellow-300 border-7" />
+
+						<Loader size="medium" color="border-yellow-300 border-6" />
+
+					</div>
+
+
+
+					
+
 					
 					<div className="flex md:hidden w-full h-screen fixed inset-0 items-center justify-center bg-yellow-500 gap-2">
 
@@ -118,6 +117,20 @@ export default function CategoryPage()
 						<Loader size="medium" color="border-white border-6" />
 
 						<Loader size="small" color="border-white border-5" />
+
+					</div>
+
+
+					<div className="hidden dark:flex dark:md:hidden w-full h-screen fixed inset-0 items-center justify-center bg-gray-600 gap-2">
+
+						<span className="text-xl font-extrabold text-yellow-300 text-center"> Loading Category </span>
+
+						
+						<Loader size="large" color="border-yellow-300 border-7" />
+
+						<Loader size="medium" color="border-yellow-300 border-6" />
+
+						<Loader size="small" color="border-yellow-300 border-5" />
 
 					</div>
 					
@@ -133,7 +146,7 @@ export default function CategoryPage()
 
     return (
     
-        <>
+        <div className="dark:bg-gray-600 dark:h-screen dark:max-md:fixed dark:max-md:inset-0 transition-all duration-200">
         
             <Navbar />
 
@@ -162,7 +175,7 @@ export default function CategoryPage()
                             
                                 <img src={category.image_url} alt={category.name} className="w-6 md:w-10" />
 
-                                <h1 className="text-lg md:text-4xl text-yellow-500 font-extrabold">
+                                <h1 className="text-lg md:text-4xl text-yellow-500 dark:text-yellow-300 font-extrabold">
 
                                     {category.name}
 
@@ -193,7 +206,7 @@ export default function CategoryPage()
                     :
 
                     (
-                        <div className="flex w-full md:h-100 items-center justify-center pl-20 text-gray-400 font-bold max-md:mt-10 max-md:text-sm md:text-2xl">
+                        <div className="flex w-full md:h-100 items-center justify-center pl-12 md:pl-20 text-gray-400 font-bold max-md:mt-10 max-md:text-sm md:text-2xl">
 
                             No Products in Category
 
@@ -202,6 +215,7 @@ export default function CategoryPage()
                 }
 
             </div>
-        </>
+        
+        </div>
     );
 }
