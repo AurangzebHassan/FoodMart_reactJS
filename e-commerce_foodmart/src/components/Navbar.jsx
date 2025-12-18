@@ -898,7 +898,9 @@ export default function Navbar()
                                             onClick={handleLogout}
                                         >
                                             
-                                            <img src="/icons/logout.png" title="logout" alt="logout" className="w-9 hover:w-10 rounded-full transition-all duration-75" />
+                                            <img src="/icons/logout.png" title="logout" alt="logout" className="dark:hidden flex w-9 hover:w-10 rounded-full transition-all duration-75" />
+
+                                            <img src="/icons/dark_logout.png" title="logout" alt="logout" className="hidden dark:flex w-9 hover:w-10 rounded-full transition-all duration-75" />
 
                                         </button>
 
@@ -1327,14 +1329,14 @@ export default function Navbar()
                                                 
                                                 onClick={() => {handleLogout(); setShowMobileProfileDropdown(false);}}
                                                 
-                                                className="md:hidden cursor-pointer w-full flex items-center max-md:gap-1.5 gap-3 max-md:p-2 p-4 rounded-lg text-red-600 dark:text-red-500 max-md:text-[13px] md:text-lg font-bold font-mono"
+                                                className="md:hidden cursor-pointer w-full flex items-center max-md:gap-1.5 gap-3 max-md:p-2 p-4 rounded-lg  text-red-600 dark:text-red-500 max-md:text-[13px] md:text-lg font-bold font-mono"
                                             >
                                                 <img
                                                     src="/icons/logout.png"
                                                     alt="Logout"
                                                     className="max-md:w-4 w-7 md:hover:-translate-y-1 md:duration-200" 
                                                 />
-                                                
+
                                                 Logout
                                                 
                                             </button>
