@@ -759,16 +759,50 @@ export default function Navbar()
                                         
                                         </div>                
                         
-
-                                        <img
-                                        
-                                            src={isCheckoutPage ? `/icons/checkout.png` : `/icons/shopping-cart.png`}
+                                        {
+                                            isCheckoutPage ?
+                                            
+                                            (
+                                                <img
                                 
-                                            alt="Cart"
+                                                    src={`/icons/checkout.png`}
+                                        
+                                                    alt="Cart"
 
-                                            className="xl:mt-3 xl:mr-2 2xl:mt-3.5 h-4.25 md:h-7 cursor-pointer"
+                                                    className="xl:mt-3 xl:mr-2 2xl:mt-3.5 h-4.25 md:h-7 cursor-pointer"
 
-                                        />
+                                                />
+                                            )
+                                            
+                                            :
+                                            
+                                            (
+                                                <>
+                                                
+                                                     <img
+                                        
+                                                        src={`/icons/shopping-cart.png`}
+                                            
+                                                        alt="Cart"
+
+                                                        className="dark:hidden flex xl:mt-3 xl:mr-2 2xl:mt-3.5 h-4.25 md:h-7 cursor-pointer"
+
+                                                    />
+
+
+                                                    <img
+                                        
+                                                        src={`/icons/dark_cart.png`}
+                                            
+                                                        alt="Cart"
+
+                                                        className="hidden dark:flex xl:mt-3 xl:mr-2 2xl:mt-3.5 h-4.25 md:h-7 cursor-pointer"
+
+                                                    />
+                                                
+                                                </>
+                                            )
+                                        }
                                         
                             
                                         <span className={`absolute ${cartQuantity > 9 ? `-top-2 -right-2.5 md:-top-3.5 md:-right-4 xl:top-px xl:-right-2.5 2xl:top-px 2xl:-right-0.5` : `-top-2 -right-1 md:-top-3 md:-right-2 xl:-top-0.5 xl:right-1 2xl:top-px 2xl:right-1.5`} font-bold bg-yellow-500 dark:bg-yellow-300 dark:text-gray-600 dark:hover:bg-orange-400 hover:bg-orange-600 text-white text-md rounded-full max-md:text-[10px] px-1.25 md:px-2`}>
