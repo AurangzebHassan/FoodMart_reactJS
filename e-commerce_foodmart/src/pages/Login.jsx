@@ -10,6 +10,8 @@ import { useAuth } from "../context/AuthContext.jsx";
 
 import useBlockBack from "../hooks/useBlockBack.js";
 
+import DarkModeToggle from "../components/DarkModeToggle.jsx";
+
 
 
 const Login = () =>
@@ -296,15 +298,33 @@ const Login = () =>
 	
 	if (checkingUser) return (
 
-		<div className="flex w-full h-screen items-center justify-center bg-yellow-500">
-
-			<p className="text-3xl font-bold text-white text-center">
+		<>
 		
-				Checking User Status...
-	
-			</p>
+		
+			<div className="dark:hidden flex w-full h-screen items-center justify-center bg-yellow-500">
 
-		</div>
+				<p className="text-3xl font-bold text-white text-center">
+			
+					Checking User Status...
+		
+				</p>
+
+			</div>
+
+
+
+			<div className="hidden dark:flex w-full h-screen items-center justify-center bg-gray-600">
+
+				<p className="text-3xl font-bold text-yellow-300 text-center">
+			
+					Checking User Status...
+		
+				</p>
+
+			</div>
+		
+		
+		</>
 
 	);
 
@@ -314,18 +334,24 @@ const Login = () =>
 
 
 	return (
-    <div className="flex items-center justify-center min-h-[90vh] sm:min-h-screen bg-gray-50">
+    <div className="flex items-center justify-center max-md:fixed max-md:inset-0 min-h-screen bg-gray-50 dark:bg-gray-600">
       {/* Centered container with light background */}
 
       <form
         onSubmit={handleLogin}
-        className="bg-white shadow-xl rounded-xl p-4.5 sm:p-8 w-[43.5vh] sm:w-full sm:max-w-md"
+        className="bg-white dark:bg-gray-600 shadow-xl rounded-xl p-4.5 sm:p-8 w-[43.5vh] sm:w-full sm:max-w-md"
         /* White card with padding, shadow, rounded corners, and responsive width */
       >
-        <h2 className="text-2xl font-extrabold /*text-[#7c5cff]*/ text-yellow-500 text-center mb-4 sm:mb-6">
-          Login
-        </h2>
-        {/* Heading with theme color and spacing */}
+        <div className="flex justify-end">
+          <h2 className="w-[80%] text-2xl font-extrabold /*text-[#7c5cff]*/ text-yellow-500 dark:text-yellow-300 text-center mb-4 sm:mb-6">
+            Login
+          </h2>
+
+          <div className="mt-0.75">
+            {" "}
+            <DarkModeToggle />{" "}
+          </div>
+        </div>
 
         {/* Email Input */}
         <input
@@ -334,7 +360,7 @@ const Login = () =>
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="max-sm:text-[12px] w-full px-2.25 py-1.25 sm:px-4 sm:py-3 mb-4 font-mono border border-gray-300 rounded-lg focus:outline-none focus:ring-2 /*focus:ring-[#7c5cff]*/ focus:ring-yellow-600 focus:border-transparent"
+          className="max-sm:text-[12px] w-full px-2.25 py-1.25 sm:px-4 sm:py-3 mb-4 font-mono dark:text-white dark:placeholder:text-white dark:bg-gray-500 border border-gray-300 dark:border-gray-400 rounded-lg focus:outline-none focus:ring-2 /*focus:ring-[#7c5cff]*/ focus:ring-yellow-600 dark:focus:ring-yellow-300 focus:border-transparent"
           /* Full width, padding, rounded, focus ring matches theme */
         />
 
@@ -345,13 +371,13 @@ const Login = () =>
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="max-sm:text-[12px] w-full px-2.25 py-1.25 sm:px-4 sm:py-3 border font-mono border-gray-300 rounded-lg focus:outline-none focus:ring-2 /*focus:ring-[#7c5cff]*/ focus:ring-yellow-600 focus:border-transparent pr-12"
+            className="max-sm:text-[12px] w-full px-2.25 py-1.25 sm:px-4 sm:py-3 border font-mono dark:text-white dark:placeholder:text-white dark:bg-gray-500 border-gray-300 dark:border-gray-400 rounded-lg focus:outline-none focus:ring-2 /*focus:ring-[#7c5cff]*/ focus:ring-yellow-600 dark:focus:ring-yellow-300 focus:border-transparent pr-12"
           />
           {/* pr-12 ensures space for eye icon */}
 
           <span
             onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer /*text-[#7c5cff]*/ text-yellow-500"
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer /*text-[#7c5cff]*/ text-yellow-500 dark:text-yellow-300"
             title={showPassword ? "Hide password" : "Show password"}
           >
             {showPassword ? "🙈" : "👁️"}
@@ -360,7 +386,9 @@ const Login = () =>
 
         {/* Error Message */}
         {error && (
-          <p className="text-red-500 text-sm mb-3 text-center">{error}</p>
+          <p className="text-red-500 dark:text-red-400 text-sm mb-3 text-center">
+            {error}
+          </p>
         )}
 
         {/* Resend Verification */}
@@ -368,7 +396,7 @@ const Login = () =>
           <button
             type="button"
             onClick={handleSendVerification}
-            className="w-full bg-yellow-500 /*text-[#7c5cff]*/ text-white py-1.5 max-sm:text-sm sm:py-3 rounded-lg font-bold mb-3 sm:mb-4 /*hover:bg-gray-200*/ hover:bg-yellow-600 focus focus:bg-yellow-600 transition"
+            className="w-full bg-yellow-500 cursor-pointer dark:bg-yellow-300 dark:hover:bg-yellow-400 dark:active:bg-yellow-400 /*text-[#7c5cff]*/ text-white dark:text-gray-600 py-1.5 max-sm:text-sm sm:py-3 rounded-lg font-bold mb-3 sm:mb-4 /*hover:bg-gray-200*/ hover:bg-yellow-600  focus focus:bg-yellow-600 dark:focus:bg-yellow-400 transition"
           >
             Resend Verification Email
           </button>
@@ -377,7 +405,7 @@ const Login = () =>
         {/* Login Button */}
         <button
           type="submit"
-          className="w-full /*bg-[#7c5cff]*/ bg-yellow-500 text-white py-1.5 max-sm:text-sm sm:py-3 rounded-lg font-bold /*hover:bg-[#5a3ecc]/* hover:bg-yellow-600 focus focus:bg-yellow-600 transition mb-3 sm:mb-4"
+          className="w-full /*bg-[#7c5cff]*/ bg-yellow-500 dark:bg-yellow-300 dark:hover:bg-yellow-400 dark:active:bg-yellow-400 text-white dark:text-gray-600 py-1.5 max-sm:text-sm sm:py-3 rounded-lg font-bold /*hover:bg-[#5a3ecc]/* hover:bg-yellow-600 focus focus:bg-yellow-600 dark:focus:bg-yellow-400 transition mb-3 sm:mb-4 cursor-pointer"
         >
           Login
         </button>
@@ -387,7 +415,7 @@ const Login = () =>
           type="button"
           onClick={handleGoogleClick}
           disabled={showResend}
-          className={`w-full flex items-center justify-center gap-2 py-1.5 max-sm:text-sm sm:py-3 rounded-lg border border-gray-300 bg-gray-100 font-medium hover:bg-gray-300 focus:bg-gray-300 transition ${
+          className={`w-full flex items-center justify-center gap-2 py-1.5 max-sm:text-sm sm:py-3 rounded-lg border dark:text-gray-600 border-gray-300 dark:border-gray-400 dark:bg-gray-300 dark:hover:bg-gray-400 bg-gray-100 font-medium hover:bg-gray-300 dark:hover:text-white dark:focus:text-white focus:bg-gray-300 dark:focus:bg-gray-400 transition cursor-pointer ${
             showResend ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >
@@ -418,11 +446,11 @@ const Login = () =>
         </button>
 
         {/* Signup Link */}
-        <p className="text-center text-gray-600 text-[12px] sm:text-sm mt-4 sm:mt-6">
+        <p className="text-center text-gray-600 dark:text-gray-400 text-[12px] sm:text-sm mt-4 sm:mt-6">
           Don't have an account?{" "}
           <a
             href="/signup"
-            className="/*text-[#7c5cff]*/ text-yellow-600 hover:text-yellow-800 hover:underline"
+            className="focus:border-none focus:outline-none text-yellow-600 dark:text-yellow-500 dark:hover:text-yellow-600 dark:focus:text-yellow-600  hover:text-yellow-800 focus:text-yellow-800 focus:underline hover:underline"
           >
             Sign up
           </a>

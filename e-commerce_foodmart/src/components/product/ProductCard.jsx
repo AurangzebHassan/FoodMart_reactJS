@@ -70,163 +70,438 @@ export default function ProductCard({ Product }) {
         const holdInterval = 100;  // ms for repeated increments/decrements
         
         const isTouchingRef = useRef(false);
+        const isUsingMouseRef = useRef(false);
 
 
 
     // ---- Hold-to-repeat helpers ----
   
-        const handleIncrementHoldStart = (e) =>
-        {
-            // console.log(isTouchingRef.current);
+        // const handleIncrementHoldStart = (e) =>
+        // {
+        //     // console.log(isTouchingRef.current);
 
-            if (e.type === "touchstart") isTouchingRef.current = true;
+        //     if (e.type === "touchstart") isTouchingRef.current = true;
         
-            if (e.type === "mousedown" && isTouchingRef.current) return;
-
-            // if (addToCartLoading) return;
+        //     if (e.type === "mousedown" && isTouchingRef.current) return;
 
         
-            incrementTimeoutRef.current = setTimeout(() =>
-            {
-                incrementIntervalRef.current = setInterval(() =>
-                {
-                    setQuantity(q => Math.min(q + 1, existingStock));
+        //     incrementTimeoutRef.current = setTimeout(() =>
+        //     {
+        //         incrementIntervalRef.current = setInterval(() =>
+        //         {
+        //             setQuantity(q => Math.min(q + 1, existingStock));
                 
-                }, holdInterval);
+        //         }, holdInterval);
         
-            }, holdThreshold);
-        };
+        //     }, holdThreshold);
+        // };
 
   
+        // const handleIncrementMouseUp = (e) =>
+        // {
+        //     // console.log(isTouchingRef.current);
+
+        //     if (e.type === "mouseup" && isTouchingRef.current) return;
+            
+        //     // REJECTED:
+            
+        //         // Making isTouchingRef false here, didn't stop/disable the mousedown and the mouseup events, due to it being false.
+            
+        //             // if (e.type === "touchend") isTouchingRef.current = false;
+
+            
+        //     // SOLUTION:
+            
+        //         // Now, we set the touching ref to be false after a delay.
+                
+        //         // You might say, that 0 is the delay but infact, it only runs after the false mouse events have passed.
+                
+        //         // Thus, it now blocks the mousedown and mouseup events, preventing double updation.
+            
+        //         // Why a setTimeout(0)?
+
+        //         //     It allows the synthetic mousedown + mouseup events to pass
+
+        //         //     While isTouchingRef is still true → so they get ignored
+
+        //         //     After they finish, we reset the flag
+
+        //             if (e.type === "touchend")
+        //             {
+        //                 setTimeout(() =>
+        //                 {
+        //                     isTouchingRef.current = false;
+                    
+        //                 }, 0);
+        //             }
+
+        
+        //     if (incrementTimeoutRef.current)
+        //     {
+        //         clearTimeout(incrementTimeoutRef.current);
+        
+        //         incrementTimeoutRef.current = null;
+
+        
+        //         if (!incrementIntervalRef.current) setQuantity(q => Math.min(q + 1, existingStock));
+        //     }
+
+        
+        //     if (incrementIntervalRef.current)
+        //     {
+        //         clearInterval(incrementIntervalRef.current);
+        
+        //         incrementIntervalRef.current = null;
+        //     }
+        // };
+
+    
+    
+  
+        // const handleDecrementHoldStart = (e) =>
+        // {
+        //     if (e.type === "touchstart") isTouchingRef.current = true;
+        
+        //     if (e.type === "mousedown" && isTouchingRef.current) return;
+
+        
+        //     decrementTimeoutRef.current = setTimeout(() =>
+        //     {
+        //         decrementIntervalRef.current = setInterval(() =>
+        //         {
+        //             setQuantity(q => Math.max(q - 1, 0));
+        
+        //         }, holdInterval);
+        
+        //     }, holdThreshold);
+        // };
+
+  
+        // const handleDecrementMouseUp = (e) =>
+        // {
+        //     if (e.type === "mouseup" && isTouchingRef.current) return;
+        
+        //     // if (e.type === "touchend") isTouchingRef.current = false;
+
+
+        //     // Why a setTimeout(0)?
+
+        //     //     It allows the synthetic mousedown + mouseup events to pass
+
+        //     //     While isTouchingRef is still true → so they get ignored
+
+        //     //     After they finish, we reset the flag
+
+        //         if (e.type === "touchend")
+        //         {
+        //             setTimeout(() =>
+        //             {
+        //                 isTouchingRef.current = false;
+                
+        //             }, 0);
+        //         }
+
+        
+        //     if (decrementTimeoutRef.current)
+        //     {
+        //         clearTimeout(decrementTimeoutRef.current);
+        
+        //         decrementTimeoutRef.current = null;
+                
+        
+        //         if (!decrementIntervalRef.current) setQuantity(q => Math.max(q - 1, 0));
+        //     }
+
+        
+        //     if (decrementIntervalRef.current)
+        //     {
+        //         clearInterval(decrementIntervalRef.current);
+        
+        //         decrementIntervalRef.current = null;
+        //     }
+        // };
+
+    
+
+
+
+    
+
+
+
+
+    // ---- Fixed Hold-to-repeat helpers ----
+
+        const handleIncrementHoldStart = (e) =>
+        {
+            // Touch detection - block mouse events during touch
+    
+                if (e.type === "touchstart")
+                {
+                    isTouchingRef.current = true;
+            
+                    isUsingMouseRef.current = false;
+            
+                    e.preventDefault(); // CRITICAL: Prevent synthetic mouse events
+                }
+    
+    
+            // Mouse detection
+    
+                if (e.type === "mousedown")
+                {
+                    // If we just had a touch, ignore this mouse event
+            
+                        if (isTouchingRef.current) return;
+            
+                    
+                    isUsingMouseRef.current = true;
+                }
+
+    
+            // Start the increment logic
+    
+                incrementTimeoutRef.current = setTimeout(() =>
+                {
+                    incrementIntervalRef.current = setInterval(() =>
+                    {
+                        setQuantity(q => Math.min(q + 1, existingStock));
+            
+                    }, holdInterval);
+        
+                }, holdThreshold);
+        };
+
+
+    
         const handleIncrementMouseUp = (e) =>
         {
-            // console.log(isTouchingRef.current);
-
-            if (e.type === "mouseup" && isTouchingRef.current) return;
+            // Handle touch end
+    
+                if (e.type === "touchend" || e.type === "touchcancel")
+                {
+                    e.preventDefault(); // CRITICAL
+        
+        
+                    // Clear timers
             
-            // REJECTED:
-            
-                // Making isTouchingRef false here, didn't stop/disable the mousedown and the mouseup events, due to it being false.
-            
-                    // if (e.type === "touchend") isTouchingRef.current = false;
-
-            
-            // SOLUTION:
-            
-                // Now, we set the touching ref to be false after a delay.
+                        if (incrementTimeoutRef.current)
+                        {
+                            clearTimeout(incrementTimeoutRef.current);
                 
-                // You might say, that 0 is the delay but infact, it only runs after the false mouse events have passed.
+                            incrementTimeoutRef.current = null;
                 
-                // Thus, it now blocks the mousedown and mouseup events, preventing double updation.
+                
+                            if (!incrementIntervalRef.current)
+                            {
+                                setQuantity(q => Math.min(q + 1, existingStock));
+                            }
+                        }
+        
+        
+                        if (incrementIntervalRef.current)
+                        {
+                            clearInterval(incrementIntervalRef.current);
             
-                // Why a setTimeout(0)?
-
-                //     It allows the synthetic mousedown + mouseup events to pass
-
-                //     While isTouchingRef is still true → so they get ignored
-
-                //     After they finish, we reset the flag
-
-                    if (e.type === "touchend")
-                    {
+                            incrementIntervalRef.current = null;
+                        }
+        
+        
+                    // Reset touch flag with a delay to catch any late synthetic events
+        
                         setTimeout(() =>
                         {
                             isTouchingRef.current = false;
+            
+                        }, 350); // Increased to >300ms (typical synthetic event delay)
+        
                     
-                        }, 0);
-                    }
+                    return;
+                }
+    
+    
+            // Handle mouse up - ONLY if we're using mouse (not touch)
+    
+                if (e.type === "mouseup" || e.type === "mouseleave")
+                {
+                    if (isTouchingRef.current) return; // Still blocking if touch happened
+            
+            
+                    // Clear timers
+            
+                        if (incrementTimeoutRef.current)
+                        {
+                            clearTimeout(incrementTimeoutRef.current);
+                
+                            incrementTimeoutRef.current = null;
+                
 
-        
-            if (incrementTimeoutRef.current)
-            {
-                clearTimeout(incrementTimeoutRef.current);
-        
-                incrementTimeoutRef.current = null;
-
-                // if (addToCartLoading) return;
-        
-                if (!incrementIntervalRef.current) setQuantity(q => Math.min(q + 1, existingStock));
-            }
-
-        
-            if (incrementIntervalRef.current)
-            {
-                clearInterval(incrementIntervalRef.current);
-        
-                incrementIntervalRef.current = null;
-            }
+                            if (!incrementIntervalRef.current)
+                            {
+                                setQuantity(q => Math.min(q + 1, existingStock));
+                            }
+                        }
+                
+                
+                        if (incrementIntervalRef.current)
+                        {
+                            clearInterval(incrementIntervalRef.current);
+                    
+                            incrementIntervalRef.current = null;
+                        }
+                }
         };
 
-    
-    
-  
+
+        
         const handleDecrementHoldStart = (e) =>
         {
-            if (e.type === "touchstart") isTouchingRef.current = true;
-        
-            if (e.type === "mousedown" && isTouchingRef.current) return;
-
-            // if (addToCartLoading) return;
-
-        
-            decrementTimeoutRef.current = setTimeout(() =>
-            {
-                decrementIntervalRef.current = setInterval(() =>
+            // Touch detection - block mouse events during touch
+    
+                if (e.type === "touchstart")
                 {
-                    setQuantity(q => Math.max(q - 1, 0));
+                    isTouchingRef.current = true;
+            
+                    isUsingMouseRef.current = false;
+            
+                    e.preventDefault(); // CRITICAL: Prevent synthetic mouse events
+                }
+    
+    
+            // Mouse detection
+    
+                if (e.type === "mousedown")
+                {
+                    // If we just had a touch, ignore this mouse event
+            
+                    if (isTouchingRef.current) return;
+            
+                    isUsingMouseRef.current = true;
+                }
+
+    
+            // Start the decrement logic
+    
+                decrementTimeoutRef.current = setTimeout(() =>
+                {
+                    decrementIntervalRef.current = setInterval(() =>
+                    {
+                        setQuantity(q => Math.max(q - 1, 0));
+            
+                    }, holdInterval);
         
-                }, holdInterval);
-        
-            }, holdThreshold);
+                }, holdThreshold);
         };
 
-  
+
+        
         const handleDecrementMouseUp = (e) =>
         {
-            if (e.type === "mouseup" && isTouchingRef.current) return;
-        
-            // if (e.type === "touchend") isTouchingRef.current = false;
-
-
-            // Why a setTimeout(0)?
-
-            //     It allows the synthetic mousedown + mouseup events to pass
-
-            //     While isTouchingRef is still true → so they get ignored
-
-            //     After they finish, we reset the flag
-
-                if (e.type === "touchend")
+            // Handle touch end
+    
+                if (e.type === "touchend" || e.type === "touchcancel")
                 {
+                    e.preventDefault(); // CRITICAL
+            
+            
+                    // Clear timers
+            
+                    if (decrementTimeoutRef.current)
+                    {
+                        clearTimeout(decrementTimeoutRef.current);
+            
+                        decrementTimeoutRef.current = null;
+            
+            
+                        if (!decrementIntervalRef.current)
+                        {
+                            setQuantity(q => Math.max(q - 1, 0));
+                        }
+                    }
+            
+            
+                    if (decrementIntervalRef.current)
+                    {
+                        clearInterval(decrementIntervalRef.current);
+            
+                        decrementIntervalRef.current = null;
+                    }
+            
+            
+                    // Reset touch flag with a delay to catch any late synthetic events
+            
                     setTimeout(() =>
                     {
                         isTouchingRef.current = false;
-                
-                    }, 0);
+                    
+                    }, 350); // Increased to >300ms (typical synthetic event delay)
+            
+                    return;
                 }
-
-        
-            if (decrementTimeoutRef.current)
-            {
-                clearTimeout(decrementTimeoutRef.current);
-        
-                decrementTimeoutRef.current = null;
-
-                // if (addToCartLoading) return;
-        
-                if (!decrementIntervalRef.current) setQuantity(q => Math.max(q - 1, 0));
-            }
-
-        
-            if (decrementIntervalRef.current)
-            {
-                clearInterval(decrementIntervalRef.current);
-        
-                decrementIntervalRef.current = null;
-            }
+    
+    
+            // Handle mouse up - ONLY if we're using mouse (not touch)
+    
+                if (e.type === "mouseup" || e.type === "mouseleave")
+                {
+                    if (isTouchingRef.current) return; // Still blocking if touch happened
+                
+                
+                    // Clear timers
+                
+                    if (decrementTimeoutRef.current)
+                    {
+                        clearTimeout(decrementTimeoutRef.current);
+                
+                        decrementTimeoutRef.current = null;
+                
+                
+                        if (!decrementIntervalRef.current)
+                        {
+                            setQuantity(q => Math.max(q - 1, 0));
+                        }
+                    }
+                
+                
+                    if (decrementIntervalRef.current)
+                    {
+                        clearInterval(decrementIntervalRef.current);
+                    
+                        decrementIntervalRef.current = null;
+                    }
+                }
         };
 
 
+
+
+
+
+    // Add cleanup on unmount
+
+        useEffect(() =>
+        {
+            return () =>
+            {
+                if (incrementTimeoutRef.current) clearTimeout(incrementTimeoutRef.current);
+            
+                if (incrementIntervalRef.current) clearInterval(incrementIntervalRef.current);
+            
+                if (decrementTimeoutRef.current) clearTimeout(decrementTimeoutRef.current);
+            
+                if (decrementIntervalRef.current) clearInterval(decrementIntervalRef.current);
+            };
+
+        }, []);
+
+
+
+
+
+
+
+
+    
 
     const navigate = useNavigate();
 
@@ -316,7 +591,7 @@ export default function ProductCard({ Product }) {
     
     return (
       
-        <div className="relative p-3 md:p-5 flex-col items-center bg-white dark:bg-gray-600 rounded-2xl shadow-lg max-md:active:shadow-2xl hover:shadow-2xl transition-all duration-300 w-40 h-fit md:w-70 mx-auto cursor-pointer">
+        <div className="relative p-3 md:p-5 flex-col items-center bg-white dark:bg-gray-600 rounded-2xl shadow-lg dark:max-md:shadow-xl dark:max-md:active:shadow-2xl max-md:active:shadow-2xl hover:shadow-2xl transition-all duration-300 w-39 h-fit md:w-70 mx-auto cursor-pointer">
     
             {/* wishlist heart */}
     
@@ -491,7 +766,7 @@ export default function ProductCard({ Product }) {
 
                                                 className={`flex cursor-pointer justify-center items-center bg-gray-100 dark:bg-gray-500 ${((quantity === liveProduct.stock) || addToCartLoading) ? `` : `dark:hover:bg-gray-700 dark:active:bg-gray-700 dark:hover:text-white dark:active:text-white hover:bg-gray-200 active:bg-gray-200`} max-md:h-4 w-5.5 md:w-8 font-bold rounded-md max-md:text-[12px] md:text-md`}
 
-                                                disabled={(quantity === existingStock) || !addToCartLoading}
+                                                disabled={(quantity === existingStock) || addToCartLoading}
                                                 
                                                 onMouseDown={(e) => handleIncrementHoldStart(e)}
                                                 onMouseUp={(e) => handleIncrementMouseUp(e)}
@@ -580,7 +855,7 @@ export default function ProductCard({ Product }) {
                                                 
                                                 (
                                                     <>
-                                                        <div className="hidden md:flex dark:hidden items-center justify-center">
+                                                        <div className="dark:hidden hidden md:flex items-center justify-center">
                                 
                                                             <Loader size="medium" color="border-yellow-500 border-5" />
                                 
@@ -594,13 +869,13 @@ export default function ProductCard({ Product }) {
                                                         
                                                 
 
-                                                        <div className="dark:hidden dark:md:flex items-center justify-center">
+                                                        <div className="hidden dark:md:flex items-center justify-center">
                                 
                                                             <Loader size="medium" color="border-yellow-300 border-5" />
                                 
                                                         </div>
                                                         
-                                                        <div className="dark:flex dark:md:hidden items-center justify-center">
+                                                        <div className="hidden dark:flex dark:md:hidden items-center justify-center">
                                 
                                                             <Loader size="small" color="border-yellow-300 border-1" />
                                 

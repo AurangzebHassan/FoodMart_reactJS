@@ -104,7 +104,7 @@ export default function FilteredProductsGrid()
             <h2 className="text-xl md:text-3xl font-bold dark:text-white text-gray-800">Products</h2>
               
 
-            <div className="flex gap-3 lg:gap-6 xl:gap-7 2xl:gap-12 border-b border-gray-100 pr-5 mt-2 overflow-x-auto lg:overflow-x-visible">
+            <div className="flex gap-3 lg:gap-6 xl:gap-7 2xl:gap-12 border-b border-gray-100 dark:border-gray-600 pr-5 mt-2 overflow-x-auto lg:overflow-x-visible">
 
                 <button
             

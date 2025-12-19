@@ -10,11 +10,11 @@ export default function HeroSection()
 
   return (
 
-      <section className="container mx-auto mt-3 lg:mt-12 grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-4 px-3 md:px-5 transition-all duration-200">
+      <section className="container mx-auto max-md:-mt-1 lg:mt-12 grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-4 px-3 md:px-5 transition-all duration-200">
       
         {/* Left main banner */}
       
-            <div className={`relative bg-blue-100 dark:bg-slate-500 max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:-translate-y-3 hover:translate-x-1 rounded-2xl p-4 md:max-lg:py-7 max-md:py-8 lg:p-6 overflow-hidden w-full h-fit lg:w-[510px] lg:h-[750px] xl:w-[600px] xl:h-[750px] 2xl:w-[680px] 2xl:h-[750px] transition-all duration-200`}>
+            <div className={`relative bg-blue-100 dark:bg-slate-500 max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:-translate-y-3 hover:translate-x-1 rounded-2xl max-md:p-4 md:p-8 md:max-lg:py-10 max-md:py-9 lg:p-6 overflow-hidden w-full h-fit lg:w-[510px] lg:h-[750px] xl:w-[600px] xl:h-[750px] 2xl:w-[680px] 2xl:h-[750px] transition-all duration-200`}>
             
                 <div className="ml-2 md:ml-8">
             
@@ -56,7 +56,7 @@ export default function HeroSection()
             
                     alt="Smoothie"
 
-                    className="absolute max-md:active:-translate-4 md:hover:-translate-7 lg:hover:-translate-10 w-37 bottom-2 md:max-lg:-bottom-22 max-md:left-45 md:right-8 md:max-lg:left-77 md:w-115 lg:-right-3 lg:bottom-45 lg:w-60 xl:right-2 xl:bottom-50 xl:w-70 2xl:-right-3 2xl:bottom-30 2xl:w-85 drop-shadow-lg transition-all duration-200"
+                    className="absolute max-md:active:-translate-4 md:hover:-translate-7 lg:hover:-translate-10 w-70 max-md:-bottom-8 md:max-lg:-bottom-28 max-md:left-38 md:right-8 md:max-lg:left-77 md:w-145 lg:-right-3 lg:bottom-45 lg:w-60 xl:right-2 xl:bottom-50 xl:w-70 2xl:-right-3 2xl:bottom-30 2xl:w-85 drop-shadow-lg transition-all duration-200"
 
                 />
         
@@ -69,9 +69,9 @@ export default function HeroSection()
       
             <div className="lg:col-span-2 lg:ml-[200px] flex flex-col gap-2 lg:gap-4 transition-all duration-200">
         
-              <div className="bg-[url('/images/hero/veggie_border.png')] dark:bg-[url('/images/hero/dark_veggies_border.jpg')] bg-cover hover:bg-center max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-40 md:h-62 lg:h-90 transition-all duration-200">
+              <div className="bg-[url('/images/hero/veggie_border.png')] dark:bg-[url('/images/hero/dark_veggies_border.jpg')] bg-cover hover:bg-center max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-44.25 md:h-66 lg:h-90 transition-all duration-200">
           
-                <div className="ml-2 md:ml-8">
+                <div className="ml-2 md:ml-10">
             
                     <p className="text-black dark:text-yellow-300 text-md md:text-3xl lg:text-4xl font-serif md:mb-2 mt-6 md:mt-4">20% Off</p>
                     
@@ -98,9 +98,9 @@ export default function HeroSection()
               </div>
 
 
-              <div className="bg-[url('/images/hero/bread_border.png')] dark:bg-[url('/images/hero/dark_bread_border.png')] bg-top-right bg-cover bg-no-repeat max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:bg-center hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-40 md:h-62 lg:h-92 transition-all duration-200">
+              <div className="bg-[url('/images/hero/bread_border.png')] dark:bg-[url('/images/hero/dark_bread_border.png')] bg-top-right bg-cover bg-no-repeat max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:bg-center hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-44.25 md:h-66 lg:h-92 transition-all duration-200">
 
-                    <div className="ml-2 md:ml-8">
+                    <div className="ml-2 md:ml-10">
 
                         <p className="text-black dark:text-yellow-300 text-md md:text-3xl lg:text-4xl font-serif md:mb-2 mt-2 md:mt-4">15% Off</p>
 

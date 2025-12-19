@@ -151,7 +151,7 @@ export default function CategoryPage()
             <Navbar />
 
             
-            <div className="container mx-auto md:mt-10 max-md:py-4 px-5 flex-col">
+            <div className="container max-md:-mt-3 mx-auto lg:mt-10 max-md:py-4 px-5 flex-col">
 
                 <div className="flex mb-5 md:mb-10 items-center">
 
@@ -162,7 +162,9 @@ export default function CategoryPage()
                     
                         {/* ← Back */}
 
-                        <img src="/icons/back.png" alt="back" className="w-8 md:w-12 hover:-translate-y-1 active:-translate-y-1 transition-all duration-150" title="Back" />
+                        <img src="/icons/back.png" alt="back" className="dark:hidden w-8 md:w-12 hover:-translate-y-1 active:-translate-y-1 transition-all duration-150" title="Back" />
+
+                        <img src="/icons/dark_back.png" alt="back" className="hidden dark:flex w-8 md:w-12 hover:-translate-y-1 active:-translate-y-1 transition-all duration-150" title="Back" />
 
                     </button>
 

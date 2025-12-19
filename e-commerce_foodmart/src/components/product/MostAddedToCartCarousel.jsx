@@ -176,7 +176,9 @@ export default function MostAddedToCartCarousel()
     <section className="container mx-auto px-5 py-6 overflow-hidden">
       {/* 🟩 HEADER ROW */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl md:text-3xl font-bold dark:text-white text-gray-800">Most Added To Cart</h2>
+        <h2 className="text-xl md:text-3xl font-bold dark:text-white text-gray-800">
+          Most Added To Cart
+        </h2>
 
         {/* 🟩 RIGHT SIDE: 'View All' + arrows */}
         <div className="flex items-center gap-3">
@@ -190,11 +192,11 @@ export default function MostAddedToCartCarousel()
           <button
             ref={prevRef}
             disabled={isBeginning}
-            className={`text-xl md:text-3xl rounded-md w-10 h-7 md:w-12 md:h-9 flex items-center justify-center shadow-sm transition-all duration-200 
+            className={`cursor-pointer text-xl md:text-3xl rounded-md w-10 h-7 md:w-12 md:h-9 flex items-center justify-center shadow-sm transition-all duration-200 
               ${
                 isBeginning
-                  ? "dark:bg-gray-400 dark:text-gray-600 text-gray-400"
-									: "bg-gray-200 dark:bg-gray-300 dark:active:bg-yellow-300 dark:hover:bg-yellow-300 active:bg-yellow-500 hover:bg-yellow-500 text-gray-900 dark:text-gray-600"
+                  ? "bg-gray-200 dark:bg-gray-500 dark:text-gray-600 text-gray-400"
+                  : "bg-gray-200 dark:bg-gray-400 dark:active:bg-yellow-300 dark:hover:bg-yellow-300 active:bg-yellow-500 hover:bg-yellow-500 text-gray-900 dark:text-gray-600"
               }`}
           >
             ‹
@@ -203,11 +205,11 @@ export default function MostAddedToCartCarousel()
           <button
             ref={nextRef}
             disabled={isEnd}
-            className={`text-xl md:text-3xl rounded-md w-10 h-7 md:w-12 md:h-9 flex items-center justify-center shadow-sm transition-all duration-200 
+            className={`cursor-pointer text-xl md:text-3xl rounded-md w-10 h-7 md:w-12 md:h-9 flex items-center justify-center shadow-sm transition-all duration-200 
               ${
                 isEnd
-                  ? "dark:bg-gray-400 dark:text-gray-600 text-gray-400"
-									: "bg-gray-200 dark:bg-gray-300 dark:active:bg-yellow-300 dark:hover:bg-yellow-300 active:bg-yellow-500 hover:bg-yellow-500 text-gray-900 dark:text-gray-600"
+                  ? "bg-gray-200 dark:bg-gray-500 dark:text-gray-600 text-gray-400"
+                  : "bg-gray-200 dark:bg-gray-400 dark:active:bg-yellow-300 dark:hover:bg-yellow-300 active:bg-yellow-500 hover:bg-yellow-500 text-gray-900 dark:text-gray-600"
               }`}
           >
             ›
@@ -244,18 +246,11 @@ export default function MostAddedToCartCarousel()
           });
         }}
       >
-        
-        
         {products.map((prod) => (
-          
-            <SwiperSlide key={prod.$id}>
-            
-                <ProductCard Product={prod} />
-          
-            </SwiperSlide>
+          <SwiperSlide key={prod.$id}>
+            <ProductCard Product={prod} />
+          </SwiperSlide>
         ))}
-        
-              
       </Swiper>
     </section>
   );

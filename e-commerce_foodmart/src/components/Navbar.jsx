@@ -445,205 +445,223 @@ export default function Navbar()
                             
                             ref={wrapperRef}    
                         >
-                                
-                            {/* departments dropdown */}
+
+                            <div className="max-lg:flex">
+                          
+                                {/* Menu drawer button moved here for md and below */}
                             
-                            <div className="text-[12px] md:text-[16px] lg:text-lg text-yellow-600 dark:text-yellow-300 font-semibold rounded-l-full bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-700 hover:bg-gray-200 focus:bg-gray-200 cursor-pointer">
+                                    <button className="lg:hidden" onClick={() => setOpenMobileMenu(true)}>
+                        
+                                        <img src="/icons/hamburger_menu.png" alt="hamburger_menu_icon" 
+                                            
+                                        className="max-md:h-6.5 max-md:p-1.25 max-md:px-2.5 max-md:pr-1.5 md:h-10.75 md:p-1.75 md:py-2 md:pl-4.25 cursor-pointer /*border border-gray-400*/ dark:bg-gray-500 dark:hover:bg-gray-700 hover:bg-gray-200 bg-gray-100 /*rounded-lg*/ rounded-l-full"
                                     
-                                <select name="departments" id="departments" value={selectedDepartment} onChange={handleCategoryChange} className="dark:bg-gray-500 dark:hover:bg-gray-700 rounded-l-full focus:border-none p-1.25 md:p-3 md:max-lg:pb-3.25 lg:p-3.25 xl:pb-3.25 md:max-lg:px-6 text-center">
+                                        />
 
-                                    <option value="shopbydepartments"> Categories </option>
-                                    
-                                    <option value="fruits-veggies"> Fruits </option>
-                                    
-                                    <option value="bread-sweets"> Sweets </option>
+                                    </button>
+                      
 
-                                    <option value="drinks-juices"> Drinks </option>
-                                    
-                                    <option value="herbs-condiments"> Condiments </option>
-                                    
-                                    <option value="meat-poultry"> Meat </option>
+                                
+                                {/* departments dropdown */}
+                            
+                                    <div className="md:max-lg:pr-4 text-[12px] md:text-[16px] lg:text-lg text-yellow-600 dark:text-yellow-300 font-semibold lg:rounded-l-full bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-700 hover:bg-gray-200 focus:bg-gray-200 cursor-pointer">
+                                            
+                                        <select name="departments" id="departments" value={selectedDepartment} onChange={handleCategoryChange} className="dark:bg-gray-500 dark:hover:bg-gray-700 lg:rounded-l-full focus:border-none focus:outline-none p-1.25 md:p-2.25 md:max-lg:pb-3 lg:p-3.25 xl:pb-3.25 max-md:px-0 max-md:w-20 md:max-lg:px-0 text-center md:max-lg:pt-3">
+                                  
+                                            <option value="shopbydepartments"> Categories </option>
+                                            
+                                            <option value="fruits-veggies"> Fruits </option>
+                                            
+                                            <option value="bread-sweets"> Sweets </option>
 
-                                    <option value="wine"> Wine </option>
+                                            <option value="drinks-juices"> Drinks </option>
+                                            
+                                            <option value="herbs-condiments"> Condiments </option>
+                                            
+                                            <option value="meat-poultry"> Meat </option>
 
-                                </select>
+                                            <option value="wine"> Wine </option>
+
+                                        </select>
+
+                                    </div>
 
                             </div>
-                        
+
                             
                             {/* search input box + icon */}
                             
-                            <div className="hidden lg:flex bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-700 hover:bg-gray-200 focus:bg-gray-200 rounded-r-full">
-                                
-                                <input 
-                                
-                                    type="text"
+                                <div className="hidden lg:flex bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-700 hover:bg-gray-200 focus:bg-gray-200 rounded-r-full">
                                     
-                                    placeholder="Search"
-
-                                    value={searchInput}
-
-                                    onChange={handleSearchChange}
-
-                                    // onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
+                                    <input 
                                     
-                                    onKeyDown={(e) => 
-                                    {
-                                        if (showDropdown && searchResults.length > 0)
-                                        {
-                                            // Move DOWN: Tab or ArrowDown
-                                            
-                                                if ((e.key === "Tab" && !e.shiftKey) || (e.key === "ArrowDown"))
-                                                {
-                                                    e.preventDefault();
-                                                
-                                                    setHighlightedIndex((prev) => (prev < searchResults.length - 1) ? (prev + 1) : 0);
-                                                    
-                                                    return;
-                                                }
-
-                                            // Move UP: Shift+Tab or ArrowUp
-        
-                                                if ((e.key === "Tab" && e.shiftKey) || (e.key === "ArrowUp"))
-                                                {
-                                                    e.preventDefault();
-                                                
-                                                    setHighlightedIndex((prev) => (prev > 0) ? (prev - 1) : (searchResults.length - 1));
-                                                    
-                                                    return;
-                                                }
-
-                                            // Enter selects highlighted item
-                                            
-                                                if ((e.key === "Enter") && (highlightedIndex >= 0))
-                                                {
-                                                    const picked = searchResults[highlightedIndex];
-
-                                                
-                                                    setShowDropdown(false);
-
-                                                    if (picked.type === "product")
-                                                        navigate(`/product/${picked.item.slug}`);
-
-                                                    if (picked.type === "category")
-                                                        navigate(`/category/${picked.item.slug}`);
-
-                                                    setSearchResults([]);
-                                                
-                                                    setSearchInput("");
-                                                
-                                                    return;
-                                                }
-
-                                            // Escape closes dropdown
-                                            
-                                                if (e.key === "Escape")
-                                                {
-                                                    setShowDropdown(false);
-                                                    return;
-                                                }
-                                        }
-
-                                        if (e.key === "Enter") handleSearchSubmit();
-                                    }}
-
-                                    
-                                    ref={searchRef}
-                                    
-                                    className={`relative ${user?.name.length > 9 ? `lg:w-20 xl:w-42 2xl:w-73` : `lg:w-36 xl:w-63 2xl:w-93`} p-3 text-yellow-600 dark:text-yellow-300 placeholder:text-xl placeholder:font-semibold font-extrabold`}
-                                
-                                />
-
-                                
-                                <img src="/icons/search.png" alt="search" tabIndex={0} className="dark:hidden flex h-12 p-3" onClick={handleSearchIconClick} />
-                                
-                                <img src="/icons/dark_search.png" alt="search" tabIndex={0} className="hidden dark:flex h-12 p-3" onClick={handleSearchIconClick} />
-                                
-                            
-                                
-                                {/* ====================== START: SEARCH FEATURE CHANGES ====================== */}
-                                    
-                                    {(showDropdown && searchResults.length > 0) && (
+                                        type="text"
                                         
-                                        <div className="absolute left-[5%] lg:left-[22%] top-24 xl:top-29.75 xl:w-[53%] 2xl:w-[40%] 2xl:left-[22%] xl:left-[17.5%] w-[55%] bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-lg shadow-xl mt-1 z-300">
-                                            
-                                            {searchResults.map((res, index) => (
+                                        placeholder="Search"
+
+                                        value={searchInput}
+
+                                        onChange={handleSearchChange}
+
+                                        // onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
+                                        
+                                        onKeyDown={(e) => 
+                                        {
+                                            if (showDropdown && searchResults.length > 0)
+                                            {
+                                                // Move DOWN: Tab or ArrowDown
                                                 
-                                                <div
-                                                    
-                                                    key={res.item.$id}
-
-                                                    tabIndex={0}    // make HTML element focusable.
-                                                    
-                                                    // className="p-3 hover:bg-gray-100 focus:bg-gray-100 focus:outline-0 border-b border-gray-200 cursor-pointer text-black"
-
-                                                    className={`p-3 border-b border-gray-200 dark:border-gray-500 cursor-pointer text-black dark:text-white ${highlightedIndex === index ? "bg-gray-200 dark:bg-gray-500" : "hover:bg-gray-100 dark:hover:bg-gray-500"}`}
-
-                                                    onMouseEnter={() => setHighlightedIndex(index)}
-
-                                                    onClick={() =>
+                                                    if ((e.key === "Tab" && !e.shiftKey) || (e.key === "ArrowDown"))
                                                     {
+                                                        e.preventDefault();
+                                                    
+                                                        setHighlightedIndex((prev) => (prev < searchResults.length - 1) ? (prev + 1) : 0);
+                                                        
+                                                        return;
+                                                    }
+
+                                                // Move UP: Shift+Tab or ArrowUp
+            
+                                                    if ((e.key === "Tab" && e.shiftKey) || (e.key === "ArrowUp"))
+                                                    {
+                                                        e.preventDefault();
+                                                    
+                                                        setHighlightedIndex((prev) => (prev > 0) ? (prev - 1) : (searchResults.length - 1));
+                                                        
+                                                        return;
+                                                    }
+
+                                                // Enter selects highlighted item
+                                                
+                                                    if ((e.key === "Enter") && (highlightedIndex >= 0))
+                                                    {
+                                                        const picked = searchResults[highlightedIndex];
+
+                                                    
                                                         setShowDropdown(false);
 
-                                                        if (res.type === "product")
-                                                        {
-                                                            incrementProductSearchCount(res.item.$id);
-                                                        
-                                                            navigate(`/product/${res.item.slug}`);
-                                                        }
-                                                        
-                                                        if (res.type === "category")
-                                                        {
-                                                            incrementCategorySearchCount(res.item.$id);
+                                                        if (picked.type === "product")
+                                                            navigate(`/product/${picked.item.slug}`);
 
-                                                            navigate(`/category/${res.item.slug}`);
-                                                        }
+                                                        if (picked.type === "category")
+                                                            navigate(`/category/${picked.item.slug}`);
 
                                                         setSearchResults([]);
-                                                        setSearchInput("");
-                                                    }}
-                                                >
                                                     
-                                                    <div className="flex justify-between items-center gap-2">
+                                                        setSearchInput("");
+                                                    
+                                                        return;
+                                                    }
 
-                                                        <span className="text-yellow-500 dark:text-yellow-300 font-extrabold text-lg">
-                                                            
-                                                            {res.type === "category" ? "Category: " : "Product: "}
+                                                // Escape closes dropdown
+                                                
+                                                    if (e.key === "Escape")
+                                                    {
+                                                        setShowDropdown(false);
+                                                        return;
+                                                    }
+                                            }
 
-                                                        </span>
+                                            if (e.key === "Enter") handleSearchSubmit();
+                                        }}
+
+                                        
+                                        ref={searchRef}
+                                        
+                                        className={`relative ${user?.name.length > 9 ? `lg:w-20 xl:w-42 2xl:w-73` : `lg:w-36 xl:w-63 2xl:w-93`} p-3 text-yellow-600 dark:text-yellow-300 placeholder:text-xl placeholder:font-semibold font-extrabold`}
+                                    
+                                    />
+
+                                    
+                                    <img src="/icons/search.png" alt="search" tabIndex={0} className="dark:hidden flex h-12 p-3" onClick={handleSearchIconClick} />
+                                    
+                                    <img src="/icons/dark_search.png" alt="search" tabIndex={0} className="hidden dark:flex h-12 p-3" onClick={handleSearchIconClick} />
+                                    
+                                
+                                    
+                                    {/* ====================== START: SEARCH FEATURE CHANGES ====================== */}
+                                        
+                                        {(showDropdown && searchResults.length > 0) && (
+                                            
+                                            <div className="absolute left-[5%] lg:left-[22%] top-24 xl:top-29.75 xl:w-[53%] 2xl:w-[40%] 2xl:left-[22%] xl:left-[17.5%] w-[55%] bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-lg shadow-xl mt-1 z-300">
+                                                
+                                                {searchResults.map((res, index) => (
+                                                    
+                                                    <div
                                                         
+                                                        key={res.item.$id}
 
-                                                        <span className={`font-mono flex items-center ${(res.type === "category") ? `gap-5.5` : `gap-4`}`}>
+                                                        tabIndex={0}    // make HTML element focusable.
+                                                        
+                                                        // className="p-3 hover:bg-gray-100 focus:bg-gray-100 focus:outline-0 border-b border-gray-200 cursor-pointer text-black"
+
+                                                        className={`p-3 border-b border-gray-200 dark:border-gray-500 cursor-pointer text-black dark:text-white ${highlightedIndex === index ? "bg-gray-200 dark:bg-gray-500" : "hover:bg-gray-100 dark:hover:bg-gray-500"}`}
+
+                                                        onMouseEnter={() => setHighlightedIndex(index)}
+
+                                                        onClick={() =>
+                                                        {
+                                                            setShowDropdown(false);
+
+                                                            if (res.type === "product")
+                                                            {
+                                                                incrementProductSearchCount(res.item.$id);
                                                             
-                                                            {/* {res.item.name} */}
-
-                                                            {highlightMatch(res.item.name, searchInput)}
-
-                                                            {/*{console.log(res.item.image_url)}*/}
-
-                                                            <img 
+                                                                navigate(`/product/${res.item.slug}`);
+                                                            }
                                                             
-                                                                src={res.item.image_url} alt="icon" 
+                                                            if (res.type === "category")
+                                                            {
+                                                                incrementCategorySearchCount(res.item.$id);
+
+                                                                navigate(`/category/${res.item.slug}`);
+                                                            }
+
+                                                            setSearchResults([]);
+                                                            setSearchInput("");
+                                                        }}
+                                                    >
+                                                        
+                                                        <div className="flex justify-between items-center gap-2 ml-2.75">
+
+                                                            <span className="text-yellow-500 dark:text-yellow-300 font-extrabold text-lg">
+                                                                
+                                                                {res.type === "category" ? "Category: " : "Product: "}
+
+                                                            </span>
                                                             
-                                                                // className={`${(res.type === "product") ? `w-14` : `w-10 mr-2.5`}`}
-                                                            
-                                                                className={`${res.type === "product" ? (res.item.slug === "fruita-vitals-orange-juice" || res.item.slug === "heinz-tomato-ketchup") ? `max-md:w-10 max-md:h-11 max-md:ml-0.5 md:w-14 md:h-16` : `max-md:w-10 max-md:ml-0.5 md:w-14` : "max-md:w-5.5 md:w-10 max-md:ml-2 mr-2.75"}`}
-                                                            />
+
+                                                            <span className={`font-mono flex items-center ${(res.type === "category") ? `gap-5.5` : `gap-4`}`}>
+                                                                
+                                                                {/* {res.item.name} */}
+
+                                                                {highlightMatch(res.item.name, searchInput)}
+
+                                                                {/*{console.log(res.item.image_url)}*/}
+
+                                                                <img 
+                                                                
+                                                                    src={res.item.image_url} alt="icon" 
+                                                                
+                                                                    // className={`${(res.type === "product") ? `w-14` : `w-10 mr-2.5`}`}
+                                                                
+                                                                    className={`${res.type === "product" ? (res.item.slug === "fruita-vitals-orange-juice" || res.item.slug === "heinz-tomato-ketchup") ? `max-md:w-10 max-md:h-11 max-md:ml-0.5 md:w-14 md:h-16` : `max-md:w-10 max-md:ml-0.5 md:w-14` : "max-md:w-5.5 md:w-10 max-md:ml-2 mr-2.75"}`}
+                                                                />
 
 
-                                                        </span>
+                                                            </span>
+
+                                                        </div>
 
                                                     </div>
 
-                                                </div>
-
-                                            ))}
-                                        
-                                        </div>
-                                        
-                                    )}
-                                
-                            </div>           
+                                                ))}
+                                            
+                                            </div>
+                                            
+                                        )}
+                                    
+                                </div>           
                 
                         </div>
                     
@@ -651,15 +669,15 @@ export default function Navbar()
                         
                     {/* Right side icons. Right side of the navbar */}
 
-                        <div className={`flex shrink-0 justify-end items-center ${cartTotal <= 9.99 ? `max-md:gap-6` : (cartTotal <= 99.99) ? `max-md:gap-5` : `max-md:gap-4.5` } ${user?.name.length > 9 ? `lg:gap-3.5` : `xl:-ml-2 max-md:gap-3 lg:gap-5`} md:max-lg:gap-5 transition-all duration-200`}>
+                        <div className={`flex shrink-0 justify-end items-center ${cartTotal <= 9.99 ? `max-md:gap-4` : (cartTotal <= 99.99) ? `max-md:gap-2` : `max-md:gap-2` } ${user?.name.length > 9 ? `lg:gap-3.5` : `xl:-ml-2 max-md:gap-3 lg:gap-5`} md:max-lg:gap-5 transition-all duration-200`}>
                             
                             {/* Search modal search icon. Only for mobile and tablet view */}
                             
-                                <div className={`${(cartTotal <= 9.99) ? `max-md:-ml-7.5` : (cartTotal <= 99.99) ? `max-md:-ml-7.75` : `max-md:-ml-7`} lg:hidden md:max-lg:-ml-16.25`} onClick={() => { !showMobileProfileDropdown && setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50); }}>
+                                <div className={`${(cartTotal <= 9.99) ? `max-md:-ml-6.25` : (cartTotal <= 99.99) ? `max-md:-ml-6.5` : `max-md:-ml-5.5`} lg:hidden md:max-lg:-ml-16.25`} onClick={() => { !showMobileProfileDropdown && setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50); }}>
                             
-                                    <img src="/icons/search.png" alt="FoodMart" className="dark:hidden flex h-6.5 max-md:px-2 p-1.25 md:h-11 md:p-2 rounded-r-full lg:rounded-full bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-700 hover:bg-gray-200 cursor-pointer" />
+                                    <img src="/icons/search.png" alt="FoodMart" className="dark:hidden flex h-6.5 max-md:px-1.5 p-1.25 md:h-10.75 md:p-2 md:px-3 rounded-r-full lg:rounded-full bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-700 hover:bg-gray-200 cursor-pointer" />
 
-                                    <img src="/icons/dark_search.png" alt="FoodMart" className="hidden dark:flex h-6.5 max-md:px-2 p-1.25 md:h-11 md:p-2 rounded-r-full lg:rounded-full bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-700 hover:bg-gray-200 cursor-pointer" />
+                                    <img src="/icons/dark_search.png" alt="FoodMart" className="hidden dark:flex h-6.5 max-md:px-1.5 p-1.25 md:h-10.75 md:p-2 md:pr-3 md:pl-0 rounded-r-full lg:rounded-full bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-700 hover:bg-gray-200 cursor-pointer" />
                     
                                 </div>
                             
@@ -826,7 +844,7 @@ export default function Navbar()
                                     onClick={() => !showSearchModal && setShowMobileProfileDropdown(!showMobileProfileDropdown)}
                                     
                                     
-                                    className={`flex md:hidden bg-gray-100 hover:bg-gray-200 dark:bg-gray-500 dark:hover:bg-gray-700 rounded-full p-1.25`}
+                                    className={`${cartTotal > 99.99 ? `ml-3.5` : (cartTotal > 9.99) ? `ml-5` : `ml-2`} flex md:hidden bg-gray-100 hover:bg-gray-200 dark:bg-gray-500 dark:hover:bg-gray-700 rounded-full p-1.25`}
 
                                 >
                                     
@@ -932,9 +950,9 @@ export default function Navbar()
                                             onClick={handleLogout}
                                         >
                                             
-                                            <img src="/icons/logout.png" title="logout" alt="logout" className="dark:hidden flex w-9 hover:w-10 rounded-full transition-all duration-75" />
+                                            <img src="/icons/logout.png" title="logout" alt="logout" className="cursor-pointer dark:hidden flex w-9 hover:w-10 rounded-full transition-all duration-75" />
 
-                                            <img src="/icons/dark_logout.png" title="logout" alt="logout" className="hidden dark:flex w-9 hover:w-10 rounded-full transition-all duration-75" />
+                                            <img src="/icons/dark_logout.png" title="logout" alt="logout" className="cursor-pointer hidden dark:flex w-9 hover:w-10 rounded-full transition-all duration-75" />
 
                                         </button>
 
@@ -973,13 +991,13 @@ export default function Navbar()
 
         {/* Menu & dropdown placeholders */}
 
-            <section className="container mx-auto flex items-center justify-start pt-3 lg:pt-12 px-3 sm:px-5 transition-all duration-200">
+            <section className="container mx-auto flex items-center justify-start pt-3 lg:pt-8 px-3 sm:px-5 transition-all duration-200">
 
                 {/* Hamburger menu for menu and dropdowns */}
                 
                 {/* Only shown until large(lg) breakpoint */}
                     
-                    <button className="lg:hidden" onClick={() => setOpenMobileMenu(true)}>
+                    {/* <button className="lg:hidden" onClick={() => setOpenMobileMenu(true)}>
                     
                         <img src="/icons/hamburger_menu.png" alt="hamburger_menu_icon" 
                             
@@ -987,7 +1005,7 @@ export default function Navbar()
                     
                         />
 
-                    </button>
+                    </button> */}
                 
 
                 
@@ -1152,18 +1170,18 @@ export default function Navbar()
                                                         setShowSearchModal(false);
                                                     }
                                                 }}
-                                                className="w-full bg-transparent outline-none max-md:p-0.75 md:p-2 text-yellow-600 dark:text-yellow-300 font-bold md:font-extrabold max-md:text-[12px] text-lg placeholder:text-sm md:placeholder:text-xl"
+                                                className="w-full bg-transparent outline-none max-md:p-0.75 max-md:pl-3.25 md:max-lg:pl-4.75 md:p-2 text-yellow-600 dark:text-yellow-300 font-bold md:font-extrabold max-md:text-[12px] text-lg placeholder:text-sm md:placeholder:text-xl"
                                             />
 
                                             <img
                                                 src="/icons/search.png"
-                                                className="dark:hidden flex h-8 md:h-10 p-2 cursor-pointer"
+                                                className="dark:hidden flex h-8 md:h-10 p-2 max-md:pr-3.75 md:max-lg:pr-5.5 cursor-pointer"
                                                 onClick={handleSearchSubmit}
                                             />
                                             
                                             <img
                                                 src="/icons/dark_search.png"
-                                                className="hidden dark:flex h-8 md:h-10 p-2 cursor-pointer"
+                                                className="hidden dark:flex h-8 md:h-10 p-2 max-md:pr-3.75 md:max-lg:pr-5.5 cursor-pointer"
                                                 onClick={handleSearchSubmit}
                                             />
                                             
@@ -1196,7 +1214,7 @@ export default function Navbar()
                                                             ${highlightedIndex === index ? "bg-gray-200 dark:bg-gray-500" : "hover:bg-gray-100 dark:bg-gray-600"}
                                                         `}
                                                     >
-                                                        <span className={`text-yellow-500 dark:text-yellow-300 font-extrabold max-md:text-[11px] md:text-lg`}>
+                                                        <span className={`text-yellow-500 dark:text-yellow-300 font-extrabold max-md:text-[11px] md:text-lg ml-2.75`}>
                                                             {res.type === "category" ? "Category: " : "Product: "}
                                                         </span>
 
@@ -1256,7 +1274,7 @@ export default function Navbar()
                                                     {user?.name || "Guest"}
                                                 </p>
                                                 
-                                                <p className="max-md:text-[10px] md:text-md 2xl:text-lg text-gray-500 dark:text-gray-100 truncate md:mt-1 2xl:mt-2">
+                                                <p className="max-md:text-[9px] md:text-md 2xl:text-lg text-gray-500 dark:text-gray-100 truncate md:mt-1 2xl:mt-2">
                                                     {user?.email || "guest@example.com"}
                                                 </p>
                                                 
@@ -1363,12 +1381,20 @@ export default function Navbar()
                                                 
                                                 onClick={() => {handleLogout(); setShowMobileProfileDropdown(false);}}
                                                 
-                                                className="md:hidden cursor-pointer w-full flex items-center max-md:gap-1.5 gap-3 max-md:p-2 p-4 rounded-lg  text-red-600 dark:text-red-500 max-md:text-[13px] md:text-lg font-bold font-mono"
+                                                className="md:hidden cursor-pointer w-full flex items-center max-md:gap-1.5 gap-3 max-md:p-1.75 p-4 rounded-lg  text-red-600 dark:text-black max-md:text-[13px] md:text-lg font-bold font-mono"
                                             >
+
                                                 <img
                                                     src="/icons/logout.png"
                                                     alt="Logout"
-                                                    className="max-md:w-4 w-7 md:hover:-translate-y-1 md:duration-200" 
+                                                    className="dark:hidden flex max-md:w-4.75 w-7 md:hover:-translate-y-1 md:duration-200" 
+                                                />
+
+                              
+                                                <img
+                                                    src="/icons/dark_logout.png"
+                                                    alt="Logout"
+                                                    className="hidden dark:flex max-md:w-4.75 w-7 md:hover:-translate-y-1 md:duration-200" 
                                                 />
 
                                                 Logout
@@ -1386,7 +1412,7 @@ export default function Navbar()
                       
                                     {/* Dark Mode Toggle */}
                                         
-                                        <div className="hidden md:flex mb-1.5 px-2 2xl:px-4"> 
+                                        <div className="hidden md:flex mb-1.5 px-3.25 2xl:px-4.5"> 
                                                 
                                             <DarkModeToggle />
                                             

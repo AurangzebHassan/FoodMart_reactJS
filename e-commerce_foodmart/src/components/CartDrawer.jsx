@@ -541,7 +541,7 @@ export default function CartDrawer({ onClose })
 						
 				{/* Footer / Checkout */}
 				
-					<div className="border-t-3 pt-2 md:pt-5">
+					<div className="border-t-3 dark:max-md:border-gray-500 pt-2 md:pt-5">
 						
 						<p className="flex justify-between items-center font-extrabold dark:text-orange-400 text-orange-500 max-md:mb-0.5">
 						

@@ -263,7 +263,7 @@ export default function ProductPage()
             
             <Navbar />
 
-            <div className="container mx-auto mt-4 lg:mt-10 px-5">
+            <div className="container mx-auto lg:mt-10 px-5">
             
                 {/* Back Button */}
                 
@@ -275,7 +275,9 @@ export default function ProductPage()
                     >
                         {/* ← Back */}
 
-                        <img src="/icons/back.png" alt="back" className="mb-2 md:mb-5 w-8 md:w-12 hover:-translate-y-1 active:-translate-y-1 transition-all duration-150" title="Back" />
+                        <img src="/icons/back.png" alt="back" className="dark:hidden w-8 md:w-12 hover:-translate-y-1 active:-translate-y-1 transition-all duration-150" title="Back" />
+
+                        <img src="/icons/dark_back.png" alt="back" className="hidden dark:flex w-8 md:w-12 hover:-translate-y-1 active:-translate-y-1 transition-all duration-150" title="Back" />
 
                     </button>
 
@@ -558,35 +560,31 @@ export default function ProductPage()
                                                         (
                                                             <>
                                                                 <div className="dark:hidden hidden md:flex items-center justify-center">
-                                                                    
-                                                                    <Loader size="large" color="border-yellow-500" />
+                                        
+                                                                    <Loader size="large" color="border-yellow-500 border-5" />
                                         
                                                                 </div>
                                                                 
-                                                                
-                                                                <div className="dark:hidden dark:md:flex items-center justify-center">
-                                                                    
-                                                                    <Loader size="large" color="border-yellow-300" />
+                                                                <div className="flex md:hidden dark:hidden items-center justify-center">
+                                        
+                                                                    <Loader size="medium" color="border-yellow-500 border-1" />
                                         
                                                                 </div>
                                                                 
-                                                            
+                                                        
 
-                                                            
-
-
-                                                                <div className="dark:hidden flex md:hidden items-center justify-center">
-                                                                        
-                                                                        <Loader size="medium" color="border-yellow-500" />
+                                                                <div className="hidden dark:md:flex items-center justify-center">
+                                        
+                                                                    <Loader size="large" color="border-yellow-300 border-5" />
                                         
                                                                 </div>
-
-
-                                                                <div className="dark:flex dark:md:hidden items-center justify-center">
-                                                                        
-                                                                        <Loader size="medium" color="border-yellow-300" />
+                                                                
+                                                                <div className="hidden dark:flex dark:md:hidden items-center justify-center">
+                                        
+                                                                    <Loader size="medium" color="border-yellow-300 border-1" />
                                         
                                                                 </div>
+                                                
                                                             </>
                                                         )         
                                                 

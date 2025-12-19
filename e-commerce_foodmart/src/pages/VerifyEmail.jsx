@@ -6,6 +6,8 @@ import { account } from "../appwrite/appwrite";
 
 import useBlockBack from "../hooks/useBlockBack";
 
+import DarkModeToggle from "../components/DarkModeToggle";
+
 
 
 const VerifyEmail = () =>
@@ -224,29 +226,34 @@ const VerifyEmail = () =>
 
 
     return (
-      <div className="flex items-center justify-center min-h-[90vh] sm:min-h-screen bg-gray-50">
+      <div className="flex items-center justify-center max-md:fixed max-md:inset-0 min-h-screen bg-gray-50 dark:bg-gray-600">
         {/* Centered page container with light background */}
 
-        <div className="bg-white shadow-xl rounded-xl p-4.5 sm:p-8 w-[43.5vh] sm:w-full sm:max-w-md">
-          {/* Card layout with shadow, rounded corners, padding */}
+        <div className="bg-white dark:bg-gray-600 shadow-xl rounded-xl p-4.5 sm:p-8 w-[43.5vh] sm:w-full sm:max-w-md">
+          <div className="flex justify-end">
+            <h2 className="text-2xl w-[79%] font-extrabold text-yellow-500 dark:text-yellow-300 text-center">
+              Email Verification
+            </h2>
 
-          <h2 className="text-2xl font-extrabold text-yellow-500 text-center mb-4 sm:mb-6">
-            Email Verification
-          </h2>
+            <div className="max-md:mt-0.75">
+              {" "}
+              <DarkModeToggle />{" "}
+            </div>
+          </div>
 
-          <hr className="border-yellow-600 mt-4 mb-4 sm:mt-6 sm:mb-6" />
+          <hr className="border-yellow-600 dark:border-yellow-500 mt-4 mb-4 sm:mt-6 sm:mb-6" />
 
           {/* Verification message */}
-          <p className="text-gray-700 text-[12px] sm:text-md whitespace-pre-line text-center">
+          <p className="text-gray-700 dark:max-md:text-gray-400 dark:md:text-gray-300 text-[12px] sm:text-md whitespace-pre-line text-center">
             {message}
           </p>
 
           {/* Optional hint when verification succeeded */}
           {message.startsWith("✅") && (
             <>
-              <hr className="border-yellow-600 mt-4 mb-4 sm:mt-6 sm:mb-6" />
+              <hr className="border-yellow-600 dark:border-yellow-500 mt-4 mb-4 sm:mt-6 sm:mb-6" />
 
-              <p className="text-gray-800 mt-8 text-[12px] sm:text-sm text-center">
+              <p className="text-gray-800 dark:text-white mt-8 text-[12px] sm:text-sm text-center">
                 Close this tab and log in from your main window.
               </p>
             </>
@@ -255,14 +262,14 @@ const VerifyEmail = () =>
           {/* Resend form for failed verification */}
           {(message.startsWith("❌") || reason === "oauth_unverified") && (
             <>
-              <p className="text-gray-500 mt-4 sm:mt-6 text-[13px] sm:text-sm text-center">
+              <p className="text-gray-500 dark:text-white mt-4 sm:mt-6 text-[13px] sm:text-sm text-center">
                 The verification link is invalid or expired.
               </p>
 
-              <hr className="border-yellow-600 mt-4 mb-4 sm:mt-6 sm:mb-6" />
+              <hr className="border-yellow-600 dark:border-yellow-500 mt-4 mb-4 sm:mt-6 sm:mb-6" />
 
               <div>
-                <p className="text-gray-500 mb-4 text-center text-[12px] sm:text-sm">
+                <p className="text-gray-500 dark:text-gray-300 mb-4 text-center text-[12px] sm:text-sm">
                   Email & Password (OAuth Credentials)
                 </p>
 
@@ -272,7 +279,7 @@ const VerifyEmail = () =>
                   placeholder="Email"
                   value={resendEmail}
                   onChange={(e) => setResendEmail(e.target.value)}
-                  className="max-sm:text-[12px] w-full px-2.25 py-1.5 sm:px-4 sm:py-3 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent"
+                  className="max-sm:text-[12px] w-full px-2.25 py-1.25 sm:px-4 sm:py-3 mb-4 font-mono dark:text-white dark:placeholder:text-white dark:bg-gray-500 border border-gray-300 dark:border-gray-400 rounded-lg focus:outline-none focus:ring-2 /*focus:ring-[#7c5cff]*/ focus:ring-yellow-600 dark:focus:ring-yellow-300 focus:border-transparent"
                 />
 
                 {/* Password with toggle */}
@@ -283,11 +290,11 @@ const VerifyEmail = () =>
                     value={resendPassword}
                     onChange={(e) => setResendPassword(e.target.value)}
                     required
-                    className="max-sm:text-[12px] w-full px-2.25 py-1.5 sm:px-4 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:border-transparent pr-12"
+                    className="max-sm:text-[12px] w-full px-2.25 py-1.25 sm:px-4 sm:py-3 border font-mono dark:text-white dark:placeholder:text-white dark:bg-gray-500 border-gray-300 dark:border-gray-400 rounded-lg focus:outline-none focus:ring-2 /*focus:ring-[#7c5cff]*/ focus:ring-yellow-600 dark:focus:ring-yellow-300 focus:border-transparent pr-12"
                   />
                   <span
                     onClick={() => setShowResendPassword((prev) => !prev)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-yellow-500"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-yellow-500 dark:text-yellow-300"
                     title={
                       showResendPassword ? "Hide password" : "Show password"
                     }
@@ -298,14 +305,14 @@ const VerifyEmail = () =>
 
                 {/* Resend error message */}
                 {resendMsg && (
-                  <p className="text-red-500 text-sm mb-3 text-center">
+                  <p className="text-red-500 dark:text-red-400 text-sm mb-3 text-center">
                     {resendMsg}
                   </p>
                 )}
 
                 {/* Resend button */}
                 <button
-                  className="w-full bg-yellow-500 text-white py-1.5 max-sm:text-sm sm:py-3 rounded-lg font-bold hover:bg-yellow-600 transition mb-4 sm:mb-6"
+                  className="w-full bg-yellow-500 dark:bg-yellow-300 dark:hover:bg-yellow-400 dark:focus:bg-yellow-400 dark:text-gray-600 text-white py-1.5 max-sm:text-sm sm:py-3 rounded-lg font-bold hover:bg-yellow-600 focus:bg-yellow-600 transition mb-4 sm:mb-6"
                   onClick={handleResendVerification}
                 >
                   Resend Verification Email
@@ -316,7 +323,7 @@ const VerifyEmail = () =>
               <div className="text-center">
                 <a
                   href="/login"
-                  className="text-yellow-600 text-md sm:text-lg font-bold hover:text-yellow-800 hover:underline transition"
+                  className="focus:border-none focus:outline-none text-yellow-600 dark:text-yellow-500 dark:hover:text-yellow-600 dark:focus:text-yellow-600 text-md sm:text-lg font-bold hover:text-yellow-800 focus:text-yellow-800 hover:underline focus:underline transition"
                 >
                   ⬅ Login
                 </a>

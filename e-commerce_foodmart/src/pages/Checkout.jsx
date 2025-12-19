@@ -273,7 +273,9 @@ export default function Checkout()
                                     
                                     {/* ← Back */}
                                     
-                                    <img src="/icons/back.png" alt="back" className="w-8 md:w-12 hover:-translate-y-1 active:-translate-y-1 transition-all duration-150" title="Back" />
+                                    <img src="/icons/back.png" alt="back" className="dark:hidden w-8 md:w-12 hover:-translate-y-1 active:-translate-y-1 transition-all duration-150" title="Back" />
+
+                                    <img src="/icons/dark_back.png" alt="back" className="hidden dark:flex w-8 md:w-12 hover:-translate-y-1 active:-translate-y-1 transition-all duration-150" title="Back" />
                                     
                                 </button>
 

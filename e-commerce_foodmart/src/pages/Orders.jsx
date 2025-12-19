@@ -140,7 +140,7 @@ export default function Orders()
 
 
             
-            <div className="container mx-auto lg:mt-3 py-3 md:py-6 px-5">
+            <div className="container mx-auto lg:mt-3 max-md:pb-3 md:py-2 px-5">
                 
 
                 {/* PAGE HEADING */}
@@ -159,7 +159,9 @@ export default function Orders()
                                 
                                 {/* ← Back */}
 
-                                <img src="/icons/back.png" alt="back" className="w-8 md:w-12 hover:-translate-y-1 active:-translate-y-1 transition-all duration-150" title="Back" />
+                                <img src="/icons/back.png" alt="back" className="dark:hidden w-8 md:w-12 hover:-translate-y-1 active:-translate-y-1 transition-all duration-150" title="Back" />
+
+                                <img src="/icons/dark_back.png" alt="back" className="hidden dark:flex w-8 md:w-12 hover:-translate-y-1 active:-translate-y-1 transition-all duration-150" title="Back" />
                         
                             </button>
 

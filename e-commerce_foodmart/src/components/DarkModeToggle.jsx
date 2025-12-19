@@ -45,7 +45,7 @@ export default function DarkModeToggle()
       
             onClick={toggleTheme}
       
-            className="relative w-10 h-7 cursor-pointer hover:-translate-y-1 transition-all md:duration-200 /*rounded-lg*/ 
+            className="relative w-8.25 h-7 cursor-pointer hover:-translate-y-1 transition-all md:duration-200 /*rounded-lg*/ 
                  
                 /*text-gray-500*/ /*dark:text-gray-400*/ 
                 
