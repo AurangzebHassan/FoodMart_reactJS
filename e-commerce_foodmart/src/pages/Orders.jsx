@@ -134,7 +134,7 @@ export default function Orders()
 
 
     return (
-        <div className={`dark:bg-gray-600 dark:h-full transition-all duration-200`}>
+        <div className={`dark:bg-gray-600 ${(orders.length === 1) ? `dark:h-full` : `dark:h-screen`} transition-all duration-200`}>
             
             <Navbar />
 
