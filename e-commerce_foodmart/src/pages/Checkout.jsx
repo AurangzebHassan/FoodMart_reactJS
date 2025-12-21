@@ -246,7 +246,7 @@ export default function Checkout()
 
     return (
 
-        <>
+        <div className="dark:bg-gray-600 transition-all duration-200">
         
             <Navbar />
 
@@ -254,7 +254,7 @@ export default function Checkout()
 
             {/* CONTAINER */}
             
-                <div className="container mx-auto lg:mt-3 py-3.5 md:py-6 px-5 flex-col">
+                <div className="container mx-auto lg:mt-3 max-md:pb-3 md:py-3 px-5 flex-col">
 
                 
                     {/* BACK + TITLE + REFRESH */}
@@ -284,7 +284,7 @@ export default function Checkout()
                              
                                 <div className="w-full flex items-center justify-center">
                                     
-                                    <h1 className="text-lg md:text-4xl text-yellow-500 font-extrabold">
+                                    <h1 className="text-lg md:text-4xl text-yellow-500 dark:text-yellow-300 font-extrabold">
                                         
                                         Checkout
                                         
@@ -344,7 +344,7 @@ export default function Checkout()
                                             
                                             key={item.$id}
                                             
-                                            className="relative border border-gray-50 bg-white rounded-lg drop-shadow-lg hover:drop-shadow-2xl hover:-translate-y-1 active:drop-shadow-2xl active:-translate-y-1 transition-all duration-300 p-2 md:p-4 flex lg:max-xl:flex-col gap-2 md:gap-4"
+                                            className="relative border border-gray-50 dark:border-gray-500 bg-white dark:bg-gray-700 rounded-lg drop-shadow-lg hover:drop-shadow-2xl hover:-translate-y-1 active:drop-shadow-2xl active:-translate-y-1 transition-all duration-300 p-2 md:p-4 flex lg:max-xl:flex-col gap-2 md:gap-4"
                                         >
                                             
                                             {/* discount */}
@@ -365,7 +365,7 @@ export default function Checkout()
                                             
                                                 <div
                                                     
-                                                    className={`absolute top-2.75 ${(product.slug === 'fruita-vitals-orange-juice') ? `left-21`: `left-21.25`} md:top-6 md:left-6 bg-white rounded-full p-0.75 md:p-2.5 cursor-pointer hover:-translate-y-0.5 transition-all duration-200`}
+                                                    className={`absolute top-2.75 ${(product.slug === 'fruita-vitals-orange-juice') ? `left-20.5`: `left-20.75`} md:top-6 md:left-6 bg-white dark:bg-gray-600 rounded-full p-1 md:p-2.5 cursor-pointer hover:-translate-y-0.5 transition-all duration-200`}
                                                     
                                                     onClick={() => handleFavouriteClick(product.$id)}
                                                 >
@@ -374,7 +374,15 @@ export default function Checkout()
                                                         
                                                         src={isProductFavourite(product.$id) ? "/icons/heart.png" : "/icons/heart.svg"}
                                                         
-                                                        className="w-3.5 md:w-8.5"
+                                                        className="dark:hidden flex w-3.5 md:w-6.5"
+                                                    />
+
+
+                                                    <img
+                                                        
+                                                        src={isProductFavourite(product.$id) ? "/icons/heart.png" : "/icons/dark_heart.png"}
+                                                        
+                                                        className="hidden dark:flex w-3.5 md:w-6.5"
                                                     />
                                                 
                                                 </div>
@@ -389,7 +397,7 @@ export default function Checkout()
                                                     
                                                     alt={product.name}
                                                     
-                                                    className="max-md:w-25 max-md:h-25 lg:w-90 xl:w-70 lg:h-50 xl:h-55 md:h-41 md:w-75 rounded-lg object-contain cursor-pointer bg-gray-100 hover:bg-gray-200 transtition-all duration-200"
+                                                    className="max-md:w-25 max-md:h-25 lg:w-90 xl:w-70 lg:h-50 xl:h-55 md:h-41 md:w-75 rounded-lg object-contain cursor-pointer bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 hover:bg-gray-200 transtition-all duration-200"
                                                     
                                                     onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleProductClick(product)}}
                                                 />
@@ -408,7 +416,7 @@ export default function Checkout()
                                                     
                                                             <p
                                                             
-                                                                className="font-mono max-md:text-[10.5px] md:text-xl font-bold cursor-pointer text-gray-700 hover:text-black"
+                                                                className="font-mono max-md:text-[10px] md:text-xl font-bold cursor-pointer text-gray-700 dark:text-gray-200 dark:hover:text-gray-300 hover:text-black"
                                                                 
                                                                 onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleProductClick(product)}}
                                                             >
@@ -420,7 +428,7 @@ export default function Checkout()
                                                 
                                                         {/* quantity badge */}
                                                             
-                                                            <span className={`lg:max-xl:absolute lg:top-5.75 lg:right-5.75 cursor-default text-white max-md:text-[12px] md:text-3xl lg:py-2 hover:-translate-y-1 active:-translate-y-1 bg-yellow-500 transition-all duration-200 hover:bg-orange-600 active:bg-orange-600 ${item.quantity > 9 ? "px-1.5 lg:px-3" : `${((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ? `px-1.5 md:px-2 lg:px-4` : `px-2.25 md:px-3 lg:px-5`}`} rounded-full font-extrabold`}>
+                                                            <span className={`lg:max-xl:absolute lg:top-5.75 lg:right-5.75 cursor-default text-white dark:bg-yellow-300 dark:text-gray-600 max-md:text-[12px] md:text-3xl lg:py-2 hover:-translate-y-1 active:-translate-y-1 bg-yellow-500 transition-all duration-200 hover:bg-orange-600 active:bg-orange-600 dark:hover:bg-orange-400 dark:active:bg-orange-400 ${item.quantity > 9 ? "px-1.5 lg:px-3" : `${((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ? `px-1.5 md:px-2 lg:px-4` : `px-2.25 md:px-3 lg:px-5`}`} rounded-full font-extrabold`}>
                                                                 
                                                                 {
                                                                     ((updatingItemId === item.$id) || (removingItemId === item.$id) || clearCartLoading || refreshCartLoading) ?
@@ -428,15 +436,29 @@ export default function Checkout()
                                                                     (
                                                                         <>
                                                                         
-                                                                            <div className={`hidden md:flex items-center justify-center py-1.75 ${item.quantity > 9 ? `lg:px-1.25` : ``}`}>
+                                                                            <div className={`dark:hidden hidden md:flex items-center justify-center py-1.75 ${item.quantity > 9 ? `lg:px-1.25` : ``}`}>
                                                     
                                                                                 <Loader size="medium" color="border-white border-6" />
                                                     
                                                                             </div>
                                                                             
-                                                                            <div className={`md:hidden flex items-center justify-center ${item.quantity > 9 ? `max-md:py-px` : ``}`}>
+                                                                            <div className={`dark:hidden md:hidden flex items-center justify-center ${item.quantity > 9 ? `max-md:py-px` : ``}`}>
                                                     
                                                                                 <Loader size="small" color="border-white" />
+                                                    
+                                                                            </div>
+
+                                                                        
+
+                                                                            <div className={`hidden dark:md:flex items-center justify-center py-1.75 ${item.quantity > 9 ? `lg:px-1.25` : ``}`}>
+                                                    
+                                                                                <Loader size="medium" color="border-gray-600 border-6" />
+                                                    
+                                                                            </div>
+                                                                            
+                                                                            <div className={`hidden dark:md:hidden dark:flex items-center justify-center ${item.quantity > 9 ? `max-md:py-px` : ``}`}>
+                                                    
+                                                                                <Loader size="small" color="border-gray-600" />
                                                     
                                                                             </div>
                                                                     
@@ -461,7 +483,7 @@ export default function Checkout()
                                                         <div className="flex-col pl-3 md:pl-6 mt-1 md:mt-2">
                                                             
                                                     
-                                                            <p className={`font-light max-md:text-[9px] md:text-sm`}>
+                                                            <p className={`dark:md:text-gray-400 dark:max-md:text-gray-500 font-light max-md:text-[9px] md:text-sm`}>
                                                                                 
                                                                 {" "}
                                                         
@@ -597,7 +619,7 @@ export default function Checkout()
                                                         
                                                                 {item.discount_value > 0 && (
                                                             
-                                                                    <p className="text-gray-600 max-md:text-[11px] lg:text-[22px] font-mono">
+                                                                    <p className="text-gray-600 dark:text-gray-300 max-md:text-[11px] lg:text-[22px] font-mono">
                                                                     
                                                                         {formatPrice(
                                                                     
@@ -615,7 +637,7 @@ export default function Checkout()
                                                         
                                                                 <p
                                                         
-                                                                    className={`font-mono ${ item.discount_value ? "mt-1 md:mt-1.5 line-through text-gray-400 max-md:text-[9px] md:text-md " : "text-gray-600 max-md:text-[11px] lg:text-[22px]" }`}
+                                                                    className={`font-mono ${ item.discount_value ? "mt-0.75 md:mt-1 line-through text-gray-400 dark:text-gray-500 max-md:text-[9px] md:text-sm" : "text-gray-600 dark:text-gray-300 max-md:text-[11px] lg:text-[22px]" }`}
                                                                 >
                                                                     
                                                                     {formatPrice(
@@ -631,7 +653,7 @@ export default function Checkout()
                                                             </div>
 
                                                     
-                                                            <p className="max-md:text-[12px] md:text-[18px] lg:text-[23px] text-gray-800 font-mono font-bold">
+                                                            <p className="max-md:text-[11px] md:text-[18px] lg:text-[23px] text-gray-800 dark:text-white font-mono font-bold">
                                                     
                                                                 {formatPrice(item.subtotal, product.currency)}
                                                                 
@@ -663,12 +685,12 @@ export default function Checkout()
                                 <div className="col-span-4 mb-3 md:mb-5 hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200">
 
                             
-                                    <div className="border-2 md:border-4 bg-gray-50 border-yellow-500 rounded-2xl">
+                                    <div className="border-2 md:border-4 bg-gray-50 dark:bg-gray-600 border-yellow-500 dark:border-yellow-300 rounded-2xl">
 
                                 
                                         {/* Title */}
                                         
-                                            <h2 className="text-sm md:text-3xl p-1.5 md:p-6 font-extrabold text-yellow-600 rounded-xl border-b-2 md:border-b-4 border-yellow-500 bg-yellow-100 md:bg-yellow-200 mb-2 md:mb-6 text-center">
+                                            <h2 className="text-sm md:text-3xl p-1.5 md:p-6 font-extrabold text-yellow-600 dark:text-yellow-400 rounded-xl border-b-2 md:border-b-4 border-yellow-500 dark:border-yellow-300 bg-yellow-100 dark:bg-gray-700 md:bg-yellow-200 mb-2 md:mb-6 text-center">
                                         
                                                 Order Summary
                                                 
@@ -680,9 +702,9 @@ export default function Checkout()
                                         
                                             <div className="flex items-center justify-between md:text-xl font-bold mb-1 md:mb-4 px-5 md:px-10">
                                             
-                                                <span className="text-gray-700 max-md:text-[11px]">Items:</span>
+                                                <span className="text-gray-700 dark:text-gray-400 max-md:text-[11px]">Items:</span>
                                             
-                                                <span className="text-orange-600 max-md:text-[10px]">
+                                                <span className="text-orange-600 dark:text-orange-400 max-md:text-[10px]">
                                                     
 
                                                     {
@@ -690,18 +712,34 @@ export default function Checkout()
                                                         
                                                         (
                                                             <>
-                                                                <div className={`hidden md:flex items-center justify-center`}>
+                                                                <div className={`dark:hidden hidden md:flex items-center justify-center`}>
                                         
                                                                     <Loader size="medium" color="border-orange-600 border-4" />
                                         
                                                                 </div>
                                                         
                                                                 
-                                                                <div className={`flex md:hidden items-center justify-center`}>
+                                                                <div className={`dark:hidden flex md:hidden items-center justify-center`}>
                                     
                                                                     <Loader size="small" color="border-orange-600 border-1" />
                                     
                                                                 </div>
+                                                                
+                                                        
+
+                                                                <div className={`hidden dark:md:flex items-center justify-center`}>
+                                        
+                                                                    <Loader size="medium" color="border-orange-400 border-4" />
+                                        
+                                                                </div>
+                                                        
+                                                                
+                                                                <div className={`hidden dark:flex dark:md:hidden items-center justify-center`}>
+                                    
+                                                                    <Loader size="small" color="border-orange-400 border-1" />
+                                    
+                                                                </div>
+                                                        
                                                             </>
                                                         ) 
                                                     
@@ -720,9 +758,9 @@ export default function Checkout()
                                     
                                             <div className="flex items-center justify-between md:text-xl font-bold mb-2 md:mb-6 px-5 md:px-10">
                                     
-                                                <span className="text-gray-700 max-md:text-[11px]">Subtotal:</span>
+                                                <span className="text-gray-700 dark:text-gray-400 max-md:text-[11px]">Subtotal:</span>
                                                 
-                                                <span className="text-orange-600 max-md:text-[10px]">
+                                                <span className="text-orange-600 dark:text-orange-400 max-md:text-[10px]">
 
                                         
                                                     {
@@ -730,18 +768,34 @@ export default function Checkout()
                                                         
                                                         (
                                                              <>
-                                                                <div className={`hidden md:flex items-center justify-center`}>
+                                                                <div className={`dark:hidden hidden md:flex items-center justify-center`}>
                                         
                                                                     <Loader size="medium" color="border-orange-600 border-4" />
                                         
                                                                 </div>
                                                         
                                                                 
-                                                                <div className={`flex md:hidden items-center justify-center`}>
+                                                                <div className={`dark:hidden flex md:hidden items-center justify-center`}>
                                     
                                                                     <Loader size="small" color="border-orange-600 border-1" />
                                     
                                                                 </div>
+                                                                
+                                                        
+
+                                                                <div className={`hidden dark:md:flex items-center justify-center`}>
+                                        
+                                                                    <Loader size="medium" color="border-orange-400 border-4" />
+                                        
+                                                                </div>
+                                                        
+                                                                
+                                                                <div className={`hidden dark:flex dark:md:hidden items-center justify-center`}>
+                                    
+                                                                    <Loader size="small" color="border-orange-400 border-1" />
+                                    
+                                                                </div>
+                                                        
                                                             </>
                                                         ) 
                                                     
@@ -764,16 +818,16 @@ export default function Checkout()
                                             <div className="mb-2 md:mb-6 px-5 md:px-10">
                                         
                                         
-                                                <p className="max-md:text-sm md:text-2xl font-extrabold text-yellow-600 mb-1 md:mb-3">Shipping</p>
+                                                <p className="max-md:text-sm md:text-2xl font-extrabold text-yellow-600 dark:text-yellow-500 mb-1 md:mb-3">Shipping</p>
 
                                         
-                                                <div className="md:space-y-3 max-md:text-[10px] md:text-lg text-gray-700 font-semibold pl-5">
+                                                <div className="md:space-y-3 max-md:text-[10px] md:text-lg text-gray-700 dark:text-gray-400 font-semibold pl-5">
 
                                             
 
                                                     {/* Standard Shipping */}
                                                     
-                                                        <label className={`flex justify-between items-center ${(selectedShipping === "standard" ? `bg-gray-100` : `hover:bg-gray-100`)} cursor-pointer p-2 rounded-lg transition-all duration-200`}>
+                                                        <label className={`flex justify-between items-center ${(selectedShipping === "standard" ? `bg-gray-100 dark:bg-gray-700` : `hover:bg-gray-100 dark:hover:bg-gray-700`)} cursor-pointer p-2 rounded-lg transition-all duration-200`}>
                                                             
                                                 
                                                             <div className="max-md:flex max-md:items-center">
@@ -784,7 +838,7 @@ export default function Checkout()
                                                                     value="standard"
                                                                     checked={selectedShipping === "standard"}
                                                                     onChange={() => setSelectedShipping("standard")}
-                                                                    className="mr-3 w-1.5 md:w-2.5 accent-orange-600"
+                                                                    className="mr-3 w-1.5 md:w-2.5 accent-orange-600 dark:accent-orange-400"
                                                                 />
                                                             
                                                                 Standard (4–6 days)
@@ -792,7 +846,7 @@ export default function Checkout()
                                                             </div>
 
                                                 
-                                                            <span className="text-orange-600">
+                                                            <span className="text-orange-600 dark:text-orange-400">
                                                 
                                                                 {formatPrice(4.99, "USD")}
                                                                 
@@ -805,7 +859,7 @@ export default function Checkout()
 
                                                     {/* Fast Shipping */}
                                                     
-                                                        <label className={`flex justify-between items-center cursor-pointer ${(selectedShipping === "fast" ? `bg-gray-100` : `hover:bg-gray-100`)} p-2 rounded-lg transition-all duration-200`}>
+                                                        <label className={`flex justify-between items-center cursor-pointer ${(selectedShipping === "fast" ? `bg-gray-100 dark:bg-gray-700` : `hover:bg-gray-100 dark:hover:bg-gray-700`)} p-2 rounded-lg transition-all duration-200`}>
                                                             
                                                 
                                                             <div className="max-md:flex max-md:items-center">
@@ -816,7 +870,7 @@ export default function Checkout()
                                                                     value="fast"
                                                                     checked={selectedShipping === "fast"}
                                                                     onChange={() => setSelectedShipping("fast")}
-                                                                    className="mr-3 w-1.5 md:w-2.5 accent-orange-600"
+                                                                    className="mr-3 w-1.5 md:w-2.5 accent-orange-600 dark:accent-orange-400"
                                                                 />
                                                             
                                                                 Fast (2–3 days)
@@ -824,7 +878,7 @@ export default function Checkout()
                                                             </div>
 
                                                 
-                                                            <span className="text-orange-600">
+                                                            <span className="text-orange-600 dark:text-orange-400">
                                                 
                                                                 {formatPrice(9.99, "USD")}
                                                                 
@@ -837,7 +891,7 @@ export default function Checkout()
                                             
                                                     {/* Express Delivery */}
                                                     
-                                                        <label className={`flex justify-between items-center cursor-pointer ${(selectedShipping === "express" ? `bg-gray-100` : `hover:bg-gray-100`)} p-2 rounded-lg transition-all duration-200`}>
+                                                        <label className={`flex justify-between items-center cursor-pointer ${(selectedShipping === "express" ? `bg-gray-100 dark:bg-gray-700` : `hover:bg-gray-100 dark:hover:bg-gray-700`)} p-2 rounded-lg transition-all duration-200`}>
                                                             
                                                             
                                                             <div className="max-md:flex max-md:items-center">
@@ -848,7 +902,7 @@ export default function Checkout()
                                                                     value="express"
                                                                     checked={selectedShipping === "express"}
                                                                     onChange={() => setSelectedShipping("express")}
-                                                                    className="mr-3 w-1.5 md:w-2.5 accent-orange-600"
+                                                                    className="mr-3 w-1.5 md:w-2.5 accent-orange-600 dark:accent-orange-400"
                                                                 />
                                                             
                                                                     Express (1 day)
@@ -856,7 +910,7 @@ export default function Checkout()
                                                             </div>
 
                                                 
-                                                            <span className="text-orange-600">
+                                                            <span className="text-orange-600 dark:text-orange-400">
                                                 
                                                                 {formatPrice(19.99, "USD")}
                                                                 
@@ -877,9 +931,9 @@ export default function Checkout()
                                         
                                             <div className="flex items-center justify-between lg:items-center font-bold mb-2 md:mb-4 px-5 md:px-10">
                                             
-                                                <span className="text-gray-700 max-md:text-[11px] md:text-xl md:max-lg:mr-17 lg:mr-15">Address:</span>
+                                                <span className="text-gray-700 dark:text-gray-400 max-md:text-[11px] md:text-xl md:max-lg:mr-17 lg:mr-15">Address:</span>
                                             
-                                                <span className="text-orange-600 max-md:text-[10px]">{profile.address}</span>
+                                                <span className="text-orange-600 dark:text-orange-400 max-md:text-[10px]">{profile.address}</span>
                                                 
                                             </div>
 
@@ -905,16 +959,16 @@ export default function Checkout()
                                                                     
                                                 return (
                                                     
-                                                    <div className="bg-yellow-100 md:bg-yellow-200 rounded-xl text-yellow-500 p-2 md:p-4 mt-2 md:mt-6 px-5 md:px-10 border-t-3 md:border-t-4">
+                                                    <div className="bg-yellow-100 dark:bg-gray-700 md:bg-yellow-200 rounded-xl text-yellow-500 dark:text-yellow-300 p-2 md:p-4 mt-2 md:mt-6 px-5 md:px-10 border-t-3 md:border-t-4">
                                                         
                                                         
                                                         <div className="flex justify-between md:text-lg font-semibold mb-2 md:mb-4 mt-1 md:mt-2">
                                                             
 
-                                                            <span className="text-gray-800 font-semibold max-md:text-[12px]">Tax (10%):</span>
+                                                            <span className="text-gray-800 dark:text-gray-200 font-semibold max-md:text-[12px]">Tax (10%):</span>
                                                             
                                                             
-                                                            <span className="text-orange-600 max-md:text-[11px]">
+                                                            <span className="text-red-600 dark:text-red-400 max-md:text-[11px]">
                                                             
                                                                 
                                                                 {
@@ -922,18 +976,34 @@ export default function Checkout()
                                                                     
                                                                     (
                                                                          <>
-                                                                            <div className={`hidden md:flex items-center justify-center`}>
+                                                                            <div className={`dark:hidden hidden md:flex items-center justify-center`}>
                                                     
-                                                                                <Loader size="medium" color="border-orange-600 border-4" />
+                                                                                <Loader size="medium" color="border-red-600 border-4" />
                                                     
                                                                             </div>
                                                                     
                                                                             
-                                                                            <div className={`flex md:hidden items-center justify-center`}>
+                                                                            <div className={`dark:hidden flex md:hidden items-center justify-center`}>
                                                 
-                                                                                <Loader size="small" color="border-orange-600 border-1" />
+                                                                                <Loader size="small" color="border-red-600 border-1" />
                                                 
                                                                             </div>
+                                                                            
+                                                                    
+
+                                                                            <div className={`hidden dark:md:flex items-center justify-center`}>
+                                                    
+                                                                                <Loader size="medium" color="border-red-400 border-4" />
+                                                    
+                                                                            </div>
+                                                                    
+                                                                            
+                                                                            <div className={`hidden dark:flex dark:md:hidden items-center justify-center`}>
+                                                
+                                                                                <Loader size="small" color="border-red-400 border-1" />
+                                                
+                                                                            </div>
+                                                                    
                                                                         </>
                                                                     ) 
                                                                 
@@ -954,29 +1024,45 @@ export default function Checkout()
                                                         <div className="flex justify-between max-md:text-sm md:text-2xl font-extrabold">
                                                             
 
-                                                            <span className="text-yellow-600">Total:</span>
+                                                            <span className="text-yellow-600 dark:text-yellow-400">Total:</span>
                                                             
                                                             
-                                                            <span className="text-black font-extrabold">
+                                                            <span className="text-black dark:text-white font-extrabold">
                                                             
                                                                 
                                                                 {
                                                                     (updatingItemId || removingItemId || clearCartLoading || refreshCartLoading) ?
                                                                     
                                                                     (
-                                                                         <>
-                                                                            <div className={`hidden md:flex items-center justify-center`}>
+                                                                        <>
+                                                                            <div className={`dark:hidden hidden md:flex items-center justify-center`}>
                                                     
                                                                                 <Loader size="large" color="border-black border-6" />
                                                     
                                                                             </div>
                                                                     
                                                                             
-                                                                            <div className={`flex md:hidden items-center justify-center`}>
+                                                                            <div className={`dark:hidden flex md:hidden items-center justify-center`}>
                                                 
-                                                                                <Loader size="medium" color="border-black border-6" />
+                                                                                <Loader size="medium" color="border-black border-5" />
                                                 
                                                                             </div>
+                                                                            
+                                                                    
+
+                                                                            <div className={`hidden dark:md:flex items-center justify-center`}>
+                                                    
+                                                                                <Loader size="large" color="border-white border-6" />
+                                                    
+                                                                            </div>
+                                                                    
+                                                                            
+                                                                            <div className={`hidden dark:flex dark:md:hidden items-center justify-center`}>
+                                                
+                                                                                <Loader size="medium" color="border-white border-5" />
+                                                
+                                                                            </div>
+                                                                    
                                                                         </>
                                                                     ) 
                                                                 
@@ -1025,7 +1111,7 @@ export default function Checkout()
                                             
                                                             <button
                                                                 
-                                                                className={`col-span-3 ${clearCartLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null ? `bg-gray-400 text-black` : `bg-yellow-500 text-white hover:bg-orange-600 hover:-translate-y-1`} transition-all duration-200 rounded-full md:py-2 font-bold md:font-extrabold`}
+                                                                className={`col-span-3 ${clearCartLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null ? `bg-gray-400 text-black` : `bg-yellow-500 dark:bg-yellow-300 dark:text-gray-600 text-white hover:bg-orange-600 dark:hover:bg-orange-400 hover:-translate-y-1`} transition-all duration-200 rounded-full md:py-2 font-bold md:font-extrabold cursor-pointer`}
                                                                 
                                                                 onClick=
                                                                 {
@@ -1061,11 +1147,20 @@ export default function Checkout()
                                                                 {placingOrderLoading ? 
                                                                 
                                                                     (
-                                                                        <div className="flex justify-center">
-                                                                    
-                                                                            <Loader size="medium" color="border-white" />
+                                                                        <>
+                                                                            <div className="dark:hidden flex justify-center">
+                                                                        
+                                                                                <Loader size="medium" color="border-white" />
+                                                                                
+                                                                            </div>
                                                                             
-                                                                        </div>
+
+                                                                            <div className="hidden dark:flex justify-center">
+                                                                        
+                                                                                <Loader size="medium" color="border-gray-600" />
+                                                                                
+                                                                            </div>
+                                                                        </>
                                                                     ) 
                                                                     
                                                                     : 
@@ -1083,7 +1178,7 @@ export default function Checkout()
                                                         
                                                             <button
                                                                 
-                                                                className={`${ clearCartLoading || placingOrderLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null ? "bg-gray-400 text-black" : "bg-red-600 text-white hover:-translate-y-1" } transition-all duration-200 rounded-full py-2 font-bold md:font-extrabold col-span-2`}
+                                                                className={`${ clearCartLoading || placingOrderLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null ? "bg-gray-400 text-black" : "bg-red-600 text-white hover:-translate-y-1" } transition-all duration-200 rounded-full py-2 font-bold md:font-extrabold col-span-2 cursor-pointer`}
                                                                 
                                                                 onClick=
                                                                 {
@@ -1127,7 +1222,7 @@ export default function Checkout()
                                             
                                                             <button
                                                                 
-                                                                className={`${ clearCartLoading || placingOrderLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null ? "bg-gray-400 text-black" : "bg-red-600 text-white hover:-translate-y-1" } col-span-2 transition-all duration-200 rounded-full py-2 font-bold md:font-extrabold`}
+                                                                className={`${ clearCartLoading || placingOrderLoading || refreshCartLoading || updatingItemId !== null || removingItemId !== null ? "bg-gray-400 text-black" : "bg-red-600 text-white hover:-translate-y-1" } col-span-2 transition-all duration-200 rounded-full py-2 font-bold md:font-extrabold cursor-pointer`}
                                                                 
                                                                 onClick={() => {clearCheckoutFlag(); navigate(-1);}}
                                                                 
@@ -1156,7 +1251,7 @@ export default function Checkout()
                 
                 </div>
         
-        </>
+        </div>
         
     );
 }
