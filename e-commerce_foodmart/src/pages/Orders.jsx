@@ -30,6 +30,10 @@ export default function Orders()
     // State to track which filter is active (all, processing, shipped, or delivered)
     
         const [filterStatus, setFilterStatus] = useState("all");
+        
+    
+
+    const [ordersOnScreen, setOrdersOnScreen] = useState(0);
 
 
 
@@ -55,6 +59,29 @@ export default function Orders()
     
     
     const isLoading = !delayDone || !orders;
+
+
+
+    useEffect(() =>
+    {
+        if (orders.length > 0 && (orders.filter(order => filterStatus === "all" || order.shipping_status === filterStatus).length === 1))
+        {
+            setOrdersOnScreen(1);
+        }
+
+
+        else if (orders.length > 0 && (orders.filter(order => filterStatus === "all" || order.shipping_status === filterStatus).length === 0))
+        {
+            setOrdersOnScreen(0);
+        }
+
+        else
+        {
+            setOrdersOnScreen(2);
+        }
+
+
+    }, [orders, filterStatus]);
 
 
 
@@ -134,7 +161,7 @@ export default function Orders()
 
 
     return (
-        <div className={`dark:bg-gray-600 dark:h-screen transition-all duration-200`}>
+        <div className={`dark:bg-gray-600 ${(ordersOnScreen === 1) ? `dark:h-screen dark:fixed dark:inset-0` : (ordersOnScreen === 0) ? `dark:fixed dark:inset-0` : `dark:h-full`} transition-all duration-200`}>
             
             <Navbar />
 
@@ -284,9 +311,9 @@ export default function Orders()
                         
                         filterStatus === "all" || order.shipping_status === filterStatus).length === 0 &&
                         (
-                            <div className="dark:h-screen text-center max-md:text-sm md:text-xl lg:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-9 md:pl-23">
+                            <div className={`dark:h-screen text-center max-md:text-sm md:text-xl lg:text-2xl font-bold text-gray-400 mt-10 md:mt-20 pl-9 md:pl-23`}>
                         
-                                No {filterStatus} orders found.
+                                No {(filterStatus === 'all') ? `` : filterStatus} orders found.
                             
                             </div>
                         )

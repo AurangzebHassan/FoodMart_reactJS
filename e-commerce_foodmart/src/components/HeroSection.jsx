@@ -14,7 +14,7 @@ export default function HeroSection()
       
         {/* Left main banner */}
       
-            <div className={`relative bg-blue-100 dark:bg-slate-500 max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:-translate-y-3 hover:translate-x-1 rounded-2xl max-md:p-4 md:p-8 md:max-lg:py-10 max-md:py-9 lg:p-6 overflow-hidden w-full h-fit lg:w-[510px] lg:h-[750px] xl:w-[600px] xl:h-[750px] 2xl:w-[680px] 2xl:h-[750px] transition-all duration-200`}>
+            <div className={`relative bg-blue-100 dark:bg-slate-500 max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:-translate-y-3 hover:translate-x-1 rounded-2xl max-md:p-4 md:p-8 md:max-lg:py-10 max-md:py-10 lg:p-6 overflow-hidden w-full h-fit lg:w-[510px] lg:h-[750px] xl:w-[600px] xl:h-[750px] 2xl:w-[680px] 2xl:h-[750px] transition-all duration-200`}>
             
                 <div className="ml-2 md:ml-8">
             
@@ -69,7 +69,7 @@ export default function HeroSection()
       
             <div className="lg:col-span-2 lg:ml-[200px] flex flex-col gap-2 lg:gap-4 transition-all duration-200">
         
-              <div className="bg-[url('/images/hero/veggie_border.png')] dark:bg-[url('/images/hero/dark_veggies_border.jpg')] bg-cover hover:bg-center max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-44.25 md:h-66 lg:h-90 transition-all duration-200">
+              <div className="bg-[url('/images/hero/veggie_border.png')] dark:bg-[url('/images/hero/dark_veggies_border.jpg')] bg-cover hover:bg-center max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-45.75 md:h-65.75 lg:h-90 transition-all duration-200">
           
                 <div className="ml-2 md:ml-10">
             
@@ -98,7 +98,7 @@ export default function HeroSection()
               </div>
 
 
-              <div className="bg-[url('/images/hero/bread_border.png')] dark:bg-[url('/images/hero/dark_bread_border.png')] bg-top-right bg-cover bg-no-repeat max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:bg-center hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-44.25 md:h-66 lg:h-92 transition-all duration-200">
+              <div className="bg-[url('/images/hero/bread_border.png')] dark:bg-[url('/images/hero/dark_bread_border.png')] bg-top-right bg-cover bg-no-repeat max-md:active:bg-center max-md:active:-translate-y-1 max-md:active:translate-x-1 hover:bg-center hover:-translate-y-3 hover:translate-x-1 rounded-2xl flex items-center justify-between p-4.25 lg:p-6 w-full max-md:h-45.75 md:h-65.75 lg:h-92 transition-all duration-200">
 
                     <div className="ml-2 md:ml-10">
 
