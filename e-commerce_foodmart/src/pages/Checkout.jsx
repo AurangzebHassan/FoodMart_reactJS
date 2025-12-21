@@ -246,7 +246,7 @@ export default function Checkout()
 
     return (
 
-        <div className="dark:bg-gray-600 transition-all duration-200">
+        <div className={`dark:bg-gray-600 ${(localCart.length === 1) ? `dark:md:max-lg:h-full dark:h-screen dark:max-md:fixed dark:max-md:inset-0` : ``} transition-all duration-200`}>
         
             <Navbar />
 
@@ -254,7 +254,7 @@ export default function Checkout()
 
             {/* CONTAINER */}
             
-                <div className="container mx-auto lg:mt-3 max-md:pb-3 md:py-3 px-5 flex-col">
+                <div className="container mx-auto lg:mt-3 max-md:pb-3 md:max-lg:pb-5 md:py-3 px-5 flex-col">
 
                 
                     {/* BACK + TITLE + REFRESH */}
