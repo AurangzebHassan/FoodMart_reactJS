@@ -159,7 +159,7 @@ export default function FilteredProductsGrid()
                 :
                 
                 (
-                    <div className="flex w-full h-10 md:h-40 lg:h-100 mt-10 md:mt-25 justify-center text-gray-400 font-bold max-md:text-[12px] md:text-xl">
+                    <div className="flex w-full h-42.5 md:h-58 mt-20 md:mt-35 justify-center text-gray-400 font-bold max-md:text-[12px] md:text-xl">
 
                         No Products in Category
 
