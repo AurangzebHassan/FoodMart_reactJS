@@ -523,7 +523,7 @@ export default function Checkout()
                                                                     
                                                                     <button
                                                                         
-                                                                        className={`px-1.75 md:px-3 max-md:text-[14px] md:text-2xl lg:text-3xl cursor-pointer rounded-full font-semibold ${product.stock === 0 || clearCartLoading || placingOrderLoading || refreshCartLoading ? "bg-gray-300" : "bg-yellow-300 hover:bg-orange-600 active:bg-orange-600" }`}
+                                                                        className={`px-1.75 md:px-3 max-md:text-[14px] md:text-2xl lg:text-3xl cursor-pointer rounded-full font-semibold ${product.stock === 0 || clearCartLoading || placingOrderLoading || refreshCartLoading ? "bg-gray-300" : "bg-yellow-500 dark:hover:bg-orange-400 dak:active:bg-orange-400 dark:bg-yellow-300 hover:bg-orange-600 active:bg-orange-600" }`}
                                                                         
                                                                         onClick=
                                                                         {
@@ -547,7 +547,7 @@ export default function Checkout()
                                                                     
                                                                     <button
                                                                         
-                                                                        className={`px-1.75 md:px-3 max-md:text-[14px] md:text-2xl lg:text-3xl rounded-full cursor-pointer font-bold ${ item.quantity === 1 || clearCartLoading || placingOrderLoading || refreshCartLoading ? "bg-gray-300" : "bg-yellow-300 hover:bg-orange-600 active:bg-orange-600" }`}
+                                                                        className={`px-1.75 md:px-3 max-md:text-[14px] md:text-2xl lg:text-3xl rounded-full cursor-pointer font-bold ${ item.quantity === 1 || clearCartLoading || placingOrderLoading || refreshCartLoading ? "bg-gray-300" : "bg-yellow-500 dark:hover:bg-orange-400 dak:active:bg-orange-400 dark:bg-yellow-300 hover:bg-orange-600 active:bg-orange-600" }`}
                                                                         
                                                                         onClick=
                                                                         {

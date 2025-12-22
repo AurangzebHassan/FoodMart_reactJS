@@ -452,7 +452,7 @@ export default function CartDrawer({ onClose })
 															className={`flex mb-1 ${
 															((product.stock === 0) || clearCartLoading || refreshCartLoading)
 																? "bg-gray-300"
-																: "bg-yellow-300 hover:bg-orange-600"
+																: "bg-yellow-500 dark:bg-yellow-300 dark:hover:bg-yellow-400 hover:bg-orange-600"
 															} cursor-pointer justify-center items-center w-4.5 h-4.5 md:w-7 md:h-6 font-bold md:font-extrabold rounded-md max-md:text-[12px] md:text-md`}
 															onClick=
 															{
@@ -474,7 +474,7 @@ export default function CartDrawer({ onClose })
 															className={`flex mb-1 ${
 															((item.quantity === 1) || clearCartLoading || refreshCartLoading)
 																? "bg-gray-300"
-																: "bg-yellow-300 hover:bg-orange-600"
+																: "bg-yellow-500 dark:bg-yellow-300 dark:hover:bg-yellow-400 hover:bg-orange-600"
 															} cursor-pointer justify-center items-center w-4.5 h-4.5 md:w-7 md:h-6 font-bold md:font-extrabold rounded-md text-sm max-md:text-[12px] md:text-md`}
 															onClick=
 															{
