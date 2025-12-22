@@ -235,7 +235,7 @@ export default function CartDrawer({ onClose })
 						<div className="flex justify-between items-center">
 
 
-							<div className="mt-2 md:mt-3.5">
+							<div className="mt-2.5 md:mt-3.5">
 
 								<DarkModeToggle />
 							
