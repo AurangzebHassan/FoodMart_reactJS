@@ -327,7 +327,7 @@ export default function Checkout()
                         
                         {/* CART ITEMS LIST */}
                     
-                            <div className="max-md:mt-5.5 md:max-lg:mt-8 lg:col-span-2 xl:col-span-4 2xl:col-span-4 space-y-2 md:space-y-3 lg:mb-2 lg:pr-3">
+                            <div className="max-md:mt-4.75 md:max-lg:mt-8 lg:col-span-2 xl:col-span-4 2xl:col-span-4 space-y-2 md:space-y-3 lg:mb-2 lg:pr-4">
                                 
                                 
                                 {localCart.map((item) => 
@@ -700,7 +700,7 @@ export default function Checkout()
 
                                         {/* Total Items + Subtotal */}
                                         
-                                            <div className="flex items-center justify-between md:text-xl font-bold mb-2 md:mb-6 px-5 md:px-10">
+                                            <div className="flex items-center justify-between md:text-xl font-bold mb-2 md:mb-4 px-5 md:px-10">
                                             
                                                 <span className="text-gray-700 dark:text-gray-400 max-md:text-[11px]">Items:</span>
                                             
@@ -754,6 +754,19 @@ export default function Checkout()
                                                 </span>
                                                 
                                             </div>
+
+
+                                
+                                            {/* ADDRESS */}
+                                        
+                                                <div className="flex items-center justify-between lg:items-center font-bold mb-4 md:mb-6 px-5 md:px-10">
+                                                
+                                                    <span className="text-gray-700 dark:text-gray-400 max-md:text-[11px] md:text-xl md:max-lg:mr-17 lg:mr-15">Address:</span>
+                                                
+                                                    <span className="text-orange-600 dark:text-orange-400 max-md:text-[10px]">{profile.address}</span>
+                                                    
+                                                </div>
+                                
 
                                     
                                             {/* <div className="flex items-center justify-between md:text-xl font-bold mb-2 md:mb-6 px-5 md:px-10">
@@ -815,7 +828,7 @@ export default function Checkout()
 
                                         {/* SHIPPING OPTIONS */}
                                         
-                                            <div className="mb-2 md:mb-6 px-5 md:px-10">
+                                            <div className="mb-4 md:mb-6 px-5 md:px-10">
                                         
                                         
                                                 <p className="max-md:text-[11.5px] md:text-2xl font-extrabold text-yellow-600 dark:text-yellow-400 mb-1 md:mb-3">Shipping</p>
@@ -929,13 +942,13 @@ export default function Checkout()
                                     
                                         {/* ADDRESS */}
                                         
-                                            <div className="flex items-center justify-between lg:items-center font-bold mb-4 md:mb-4 px-5 md:px-10">
+                                            {/* <div className="flex items-center justify-between lg:items-center font-bold mb-4 md:mb-4 px-5 md:px-10">
                                             
                                                 <span className="text-gray-700 dark:text-gray-400 max-md:text-[11px] md:text-xl md:max-lg:mr-17 lg:mr-15">Address:</span>
                                             
                                                 <span className="text-orange-600 dark:text-orange-400 max-md:text-[10px]">{profile.address}</span>
                                                 
-                                            </div>
+                                            </div> */}
 
                                     
 
@@ -1019,7 +1032,7 @@ export default function Checkout()
 
 
 
-                                                        <div className="flex justify-between md:text-lg font-bold mb-3 md:mb-6">
+                                                        <div className="flex justify-between md:text-lg font-bold mb-2 md:mb-4">
                                                             
 
                                                             <span className="text-gray-800 dark:text-gray-200 font-bold max-md:text-[11.5px]">Tax (10%):</span>
