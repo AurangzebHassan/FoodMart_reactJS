@@ -682,7 +682,7 @@ export default function Checkout()
                             
                                 {/* CHECKOUT SUMMARY CARD */}
                             
-                                <div className="col-span-4 mb-3 md:mb-5 hover:drop-shadow-2xl hover:-translate-y-1 transition-all duration-200">
+                                <div className="col-span-4 mb-3 md:mb-5 hover:drop-shadow-2xl hover:-translate-y-1 active:drop-shadow-2xl active:max-md:-translate-y-0.5 active:md:-translate-y-1 transition-all duration-200">
 
                             
                                     <div className="border-2 md:border-4 bg-gray-50 dark:bg-gray-600 border-yellow-500 dark:border-yellow-300 rounded-2xl">
