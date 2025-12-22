@@ -12,6 +12,8 @@ import { useLocation } from "react-router-dom";
 
 import Loader from "./Loader.jsx"
 
+import DarkModeToggle from "./DarkModeToggle.jsx";
+
 
 
 export default function CartDrawer({ onClose })
@@ -200,7 +202,7 @@ export default function CartDrawer({ onClose })
 
 	return (
 
-		<>
+		<div className="transiiton-all duration-200">
 			{/* Background blur overlay */}
 						
 					{(isVisible) && (
@@ -230,13 +232,21 @@ export default function CartDrawer({ onClose })
 				>
 				{/* Close + Refresh button */}
 					
-						<div className="flex justify-end items-center">
+						<div className="flex justify-between items-center">
 
+
+							<div className="mt-2 md:mt-3.5">
+
+								<DarkModeToggle />
+							
+							</div>
+							
+						
 							<button
 						
 								onClick={handleClose}
 						
-								className="text-gray-600 dark:text-white dark:hover:text-gray-300 hover:text-gray-900 text-4xl md:text-6xl mr-29 md:mr-33"
+								className="text-gray-600 dark:text-white dark:hover:text-gray-300 hover:text-gray-900 text-4xl md:text-6xl /*mr-29 md:mr-33*/"
 							>
 						
 								&times;
@@ -260,7 +270,7 @@ export default function CartDrawer({ onClose })
 								
 								title="Refresh Cart" 
 								
-								className={`mr-2.5 md:mr-2 ${(!cartQuantity || clearCartLoading || removingItemId || updatingItemId) ? `invisible` : `active:-translate-y-1 hover:-translate-y-1 transition-all duration-200`}`}
+								className={`md:mt-2.25 mr-2.5 md:mr-2 ${(!cartQuantity || clearCartLoading || removingItemId || updatingItemId) ? `invisible` : `active:-translate-y-1 hover:-translate-y-1 transition-all duration-200`}`}
 								
 								disabled={!cartQuantity || clearCartLoading || removingItemId || updatingItemId}
 							>
@@ -616,7 +626,7 @@ export default function CartDrawer({ onClose })
 
 			</div>
 		
-		</>
+		</div>
 
 	);
 }
