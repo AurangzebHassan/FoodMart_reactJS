@@ -964,9 +964,9 @@ export default function Checkout()
                                                         
                                                         <div className="flex items-center justify-between md:text-xl font-bold mb-2 md:mb-4 mt-1 md:mt-2">
                                     
-                                                            <span className="text-gray-800 dark:text-gray-200 max-md:text-[12px]">Subtotal:</span>
+                                                            <span className="text-gray-800 dark:text-gray-200 max-md:text-[11.5px]">Subtotal:</span>
                                                             
-                                                            <span className="text-red-600 dark:text-red-400 max-md:text-[11px]">
+                                                            <span className="text-red-600 dark:text-red-400 max-md:text-[10.5px]">
 
                                                     
                                                                 {
@@ -1019,13 +1019,13 @@ export default function Checkout()
 
 
 
-                                                        <div className="flex justify-between md:text-lg font-semibold mb-2 md:mb-4">
+                                                        <div className="flex justify-between md:text-lg font-bold mb-3 md:mb-6">
                                                             
 
-                                                            <span className="text-gray-800 dark:text-gray-200 font-semibold max-md:text-[12px]">Tax (10%):</span>
+                                                            <span className="text-gray-800 dark:text-gray-200 font-bold max-md:text-[11.5px]">Tax (10%):</span>
                                                             
                                                             
-                                                            <span className="text-red-600 dark:text-red-400 max-md:text-[11px]">
+                                                            <span className="text-red-600 dark:text-red-400 max-md:text-[10.5px]">
                                                             
                                                                 
                                                                 {
