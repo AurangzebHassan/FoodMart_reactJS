@@ -480,7 +480,7 @@ export default function Checkout()
                                                 
                                                     {/* Stock + Rating + Quantity control buttons */}
                                                                                     
-                                                        <div className="flex-col pl-3 mt-1 md:mt-2">
+                                                        <div className="flex-col pl-3 mt-1 md:mt-0 lg:mt-2">
                                                             
                                                     
                                                             <p className={`dark:md:text-gray-400 dark:max-md:text-gray-500 font-light max-md:text-[9px] md:text-sm`}>
@@ -518,7 +518,7 @@ export default function Checkout()
                                             
                                                             {/* buttons */}
                                                             
-                                                                <div className="flex gap-3 md:gap-5 max-md:mt-2 lg:mt-6 justify-end items-center">
+                                                                <div className="flex gap-3 md:gap-5 max-md:mt-2 md:mt-5.5 lg:mt-6 items-center">
                                                                     
                                                                     
                                                                     <button
@@ -611,7 +611,7 @@ export default function Checkout()
                                                 
                                                     {/* price row */}
                                                     
-                                                        <div className="flex justify-between mt-2 lg:mt-6 md:mt-7">
+                                                        <div className="flex justify-between mt-2 lg:mt-6 md:mt-4.75">
                                                             
                                                     
                                                             <div className="flex gap-1 md:gap-3">
