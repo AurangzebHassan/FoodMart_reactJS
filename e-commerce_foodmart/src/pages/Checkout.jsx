@@ -1115,7 +1115,7 @@ export default function Checkout()
                                                                             
                                                                             <div className={`dark:hidden flex md:hidden items-center justify-center`}>
                                                 
-                                                                                <Loader size="small" color="border-black border-5" />
+                                                                                <Loader size="small" color="border-black border-1" />
                                                 
                                                                             </div>
                                                                             
@@ -1130,7 +1130,7 @@ export default function Checkout()
                                                                             
                                                                             <div className={`hidden dark:flex dark:md:hidden items-center justify-center`}>
                                                 
-                                                                                <Loader size="small" color="border-white border-5" />
+                                                                                <Loader size="small" color="border-white border-1" />
                                                 
                                                                             </div>
                                                                     
