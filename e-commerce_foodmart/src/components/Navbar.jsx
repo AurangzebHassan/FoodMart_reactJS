@@ -454,7 +454,7 @@ export default function Navbar()
                         
                                         <img src="/icons/hamburger_menu.png" alt="hamburger_menu_icon" 
                                             
-                                        className="max-md:h-6.5 max-md:p-1.25 max-md:px-2.5 max-md:pr-1.5 md:h-10.75 md:p-1.75 md:py-2 md:pl-4.25 cursor-pointer /*border border-gray-400*/ dark:bg-gray-500 dark:hover:bg-gray-700 hover:bg-gray-200 bg-gray-100 /*rounded-lg*/ rounded-l-full"
+                                        className="max-md:h-6.75 max-md:p-1.25 max-md:px-2.5 max-md:pr-1.5 md:h-10.75 md:p-1.75 md:py-2 md:pl-4.25 cursor-pointer /*border border-gray-400*/ dark:bg-gray-500 dark:hover:bg-gray-700 hover:bg-gray-200 bg-gray-100 /*rounded-lg*/ rounded-l-full"
                                     
                                         />
 
@@ -675,9 +675,9 @@ export default function Navbar()
                             
                                 <div className={`${(cartTotal <= 9.99) ? `max-md:-ml-6.25` : (cartTotal <= 99.99) ? `max-md:-ml-6.5` : `max-md:-ml-5.5`} lg:hidden md:max-lg:-ml-16.25`} onClick={() => { !showMobileProfileDropdown && setShowSearchModal(true); setTimeout(() => searchRef.current?.focus(), 50); }}>
                             
-                                    <img src="/icons/search.png" alt="FoodMart" className="dark:hidden flex h-6.5 max-md:px-1.5 p-1.25 md:h-10.75 md:p-2 md:px-3 rounded-r-full lg:rounded-full bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-700 hover:bg-gray-200 cursor-pointer" />
+                                    <img src="/icons/search.png" alt="FoodMart" className="dark:hidden flex h-6.75 max-md:px-1.5 p-1.25 md:h-10.75 md:p-2 md:px-3 rounded-r-full lg:rounded-full bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-700 hover:bg-gray-200 cursor-pointer" />
 
-                                    <img src="/icons/dark_search.png" alt="FoodMart" className="hidden dark:flex h-6.5 max-md:px-1.5 p-1.25 md:h-10.75 md:p-2 md:pr-3 md:pl-0 rounded-r-full lg:rounded-full bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-700 hover:bg-gray-200 cursor-pointer" />
+                                    <img src="/icons/dark_search.png" alt="FoodMart" className="hidden dark:flex h-6.75 max-md:px-1.5 p-1.25 md:h-10.75 md:p-2 md:pr-3 md:pl-0 rounded-r-full lg:rounded-full bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-700 hover:bg-gray-200 cursor-pointer" />
                     
                                 </div>
                             
