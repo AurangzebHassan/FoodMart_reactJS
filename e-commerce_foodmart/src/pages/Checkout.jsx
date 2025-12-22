@@ -351,7 +351,7 @@ export default function Checkout()
                                             
                                                 {item.discount_value > 0 && (
                                                     
-                                                    <div className={`absolute ${(item.discount_value > 9.99) ? `max-md:bottom-3.25 left-3 md:left-65 md:top-33.5 lg:left-74 xl:left-49.5 xl:top-45 lg:top-42` : `max-md:bottom-3.25 left-3 md:left-66.5 md:top-33.5 lg:left-75.5 xl:left-52 xl:top-45.5 lg:top-41.75`} p-0.75 md:p-2 bg-green-700 hover:-translate-y-1 transition-all duration-200 text-white max-md:text-[7px] md:text-sm lg:text-md font-extrabold rounded-full`}>
+                                                    <div className={`absolute ${(item.discount_value > 9.99) ? `max-md:bottom-3.25 left-3 md:left-65.25 md:top-34.5 lg:left-74 xl:left-49.5 xl:top-45 lg:top-42` : `max-md:bottom-3.25 left-3 md:left-66.75 md:top-34.5 lg:left-75.5 xl:left-52 xl:top-45.5 lg:top-41.75`} p-0.75 md:p-2 bg-green-700 hover:-translate-y-1 transition-all duration-200 text-white max-md:text-[7px] md:text-sm lg:text-md font-extrabold rounded-full`}>
                                                     
                                                         {product.discount_tag}
                                                         
