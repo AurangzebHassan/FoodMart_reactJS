@@ -327,7 +327,7 @@ export default function Checkout()
                         
                         {/* CART ITEMS LIST */}
                     
-                            <div className="max-md:mt-5.5 md:max-lg:mt-5 lg:col-span-2 xl:col-span-4 2xl:col-span-4 space-y-2 md:space-y-6 lg:mb-20 lg:pr-5">
+                            <div className="max-md:mt-5.5 md:max-lg:mt-8 lg:col-span-2 xl:col-span-4 2xl:col-span-4 space-y-2 md:space-y-3 lg:mb-2 lg:pr-3">
                                 
                                 
                                 {localCart.map((item) => 
