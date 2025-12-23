@@ -566,7 +566,7 @@ export default function CartDrawer({ onClose })
 
 							<button
 						
-								className={`w-full ${(!cartQuantity || isOnCheckoutPage || clearCartLoading || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `${isCheckoutPage ? `bg-orange-600 dark:bg-orange-500` : `bg-yellow-500 dark:bg-yellow-300 dark:hover:bg-orange-400 hover:bg-orange-600`} text-white dark:text-gray-600 hover:-translate-y-1 transition-all duration-200`} col-span-2 py-1 md:py-2 rounded-full mt-1 md:mt-3 md:text-2xl font-bold md:font-extrabold`}
+								className={`cursor-pointer w-full ${(!cartQuantity || isOnCheckoutPage || clearCartLoading || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `${isCheckoutPage ? `bg-orange-600 dark:bg-orange-500` : `bg-yellow-500 dark:bg-yellow-300 dark:hover:bg-orange-400 hover:bg-orange-600`} text-white dark:text-gray-600 hover:-translate-y-1 transition-all duration-200`} col-span-2 py-1 md:py-2 rounded-full mt-1 md:mt-3 md:text-2xl font-bold md:font-extrabold`}
 								
 								onClick={() => navigate("/checkout")}
 					
@@ -580,7 +580,7 @@ export default function CartDrawer({ onClose })
 									
 							<button 
 						
-								className={`${(!cartQuantity || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `bg-red-600 text-white hover:-translate-y-1 transition-all duration-200`} rounded-full mt-1 md:mt-3 py-1 md:py-2 font-bold max-md:text-sm md:text-xl md:font-extrabold`}
+								className={`cursor-pointer ${(!cartQuantity || refreshCartLoading || removingItemId !== null || updatingItemId !== null) ? `bg-gray-400 text-black` : `bg-red-600 text-white hover:-translate-y-1 transition-all duration-200`} rounded-full mt-1 md:mt-3 py-1 md:py-2 font-bold max-md:text-sm md:text-xl md:font-extrabold`}
 								
 								onClick=
 								{
