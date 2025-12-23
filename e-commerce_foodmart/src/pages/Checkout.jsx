@@ -351,7 +351,7 @@ export default function Checkout()
                                             
                                                 {item.discount_value > 0 && (
                                                     
-                                                    <div className={`absolute ${(item.discount_value > 9.99) ? `max-md:bottom-3.25 left-3 md:left-65.25 md:top-34.5 lg:left-74 xl:left-49.5 xl:top-45 lg:top-42` : `max-md:bottom-3.25 left-3 md:left-66.75 md:top-34.5 lg:left-75.5 xl:left-52 xl:top-45.5 lg:top-41.75`} p-0.75 md:p-2 bg-green-700 hover:-translate-y-1 transition-all duration-200 text-white max-md:text-[7px] md:text-sm lg:text-md font-extrabold rounded-full`}>
+                                                    <div className={`absolute ${(item.discount_value > 9.99) ? `max-md:bottom-3.25 left-3 md:left-60.75 md:top-34.5 lg:left-74 xl:left-49.5 2xl:left-74.5 xl:top-43.25 lg:top-42` : `max-md:bottom-3.25 left-3 md:left-62.5 md:top-34.5 lg:left-75.5 xl:left-52 2xl:left-76.5 xl:top-43.25 lg:top-41.75`} p-0.75 md:p-2 bg-green-700 hover:-translate-y-1 transition-all duration-200 text-white max-md:text-[7px] md:text-sm lg:text-md font-extrabold rounded-full`}>
                                                     
                                                         {product.discount_tag}
                                                         
@@ -365,7 +365,7 @@ export default function Checkout()
                                             
                                                 <div
                                                     
-                                                    className={`absolute top-2.75 ${(product.slug === 'fruita-vitals-orange-juice') ? `left-20.5`: `left-20.75`} md:top-6 md:left-6 bg-white dark:bg-gray-600 rounded-full p-1 md:p-2.5 cursor-pointer hover:-translate-y-0.5 transition-all duration-200`}
+                                                    className={`absolute top-2.75 left-20.75 md:top-6 md:left-6.25 bg-white dark:bg-gray-600 rounded-full p-1 md:p-2.5 cursor-pointer hover:-translate-y-0.5 transition-all duration-200`}
                                                     
                                                     onClick={() => handleFavouriteClick(product.$id)}
                                                 >
@@ -397,7 +397,7 @@ export default function Checkout()
                                                     
                                                     alt={product.name}
                                                     
-                                                    className="max-md:w-25 max-md:h-25 lg:w-90 xl:w-60 lg:h-50 xl:h-52 md:h-41 md:w-75 rounded-lg object-contain cursor-pointer bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 hover:bg-gray-200 transtition-all duration-200"
+                                                    className="max-md:w-25 max-md:h-25 lg:w-90 xl:w-60 lg:h-50 xl:h-50 2xl:w-85 md:h-41 md:w-70.5 rounded-lg object-contain cursor-pointer bg-gray-100 dark:bg-gray-500 dark:hover:bg-gray-600 hover:bg-gray-200 transtition-all duration-200"
                                                     
                                                     onClick={() => {!((updatingItemId) || (removingItemId) || clearCartLoading || refreshCartLoading) && handleProductClick(product)}}
                                                 />
@@ -480,7 +480,7 @@ export default function Checkout()
                                                 
                                                     {/* Stock + Rating + Quantity control buttons */}
                                                                                     
-                                                        <div className="flex-col pl-3 mt-1 md:mt-0 lg:mt-2">
+                                                        <div className="flex-col pl-3 mt-1 md:mt-0 lg:max-xl:mt-2">
                                                             
                                                     
                                                             <p className={`dark:md:text-gray-400 dark:max-md:text-gray-500 font-light max-md:text-[9px] md:text-sm`}>
