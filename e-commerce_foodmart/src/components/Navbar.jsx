@@ -568,7 +568,7 @@ export default function Navbar()
                                         
                                         ref={searchRef}
                                         
-                                        className={`relative ${user?.name.length > 9 ? `lg:w-20 xl:w-42 2xl:w-73` : `lg:w-36 xl:w-63 2xl:w-93`} p-3 text-yellow-600 dark:text-yellow-300 placeholder:text-xl placeholder:font-semibold font-extrabold`}
+                                        className={`relative lg:w-20 xl:w-42 2xl:w-73 p-3 text-yellow-600 dark:text-yellow-300 placeholder:text-xl placeholder:font-semibold font-extrabold`}
                                     
                                     />
 
